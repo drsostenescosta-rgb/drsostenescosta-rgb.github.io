@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sóstenes Costa Paiva — Ciência que cuida, inteligência que multiplica</title>
+<meta name="description" content="Uma década transformando pacientes e formando profissionais de saúde — agora direcionada a levar o poder da Inteligência Artificial para a saúde de milhões." />
+<meta property="og:title" content="Sóstenes Costa Paiva — Ciência que cuida, inteligência que multiplica" />
+<meta property="og:description" content="Do interior do Nordeste ao Vale do Silício: ciência, neurociência e IA a serviço de mais vidas." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05070a;
+    --bg-2: #080b11;
+    --card: rgba(18, 24, 33, 0.55);
+    --gold: #c9a227;
+    --gold-light: #e2c464;
+    --jade: #2fae7d;
+    --jade-light: #45cf99;
+    --text: #eae8e1;
+    --text-muted: #99a2ad;
+    --border: rgba(234, 232, 225, 0.09);
+    --serif: 'Fraunces', serif;
+    --sans: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  /* ---------- FUTURISTIC BACKGROUND ---------- */
+  .bg-orbs { position: fixed; inset: 0; z-index: -3; overflow: hidden; pointer-events: none; }
+  .orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.55; }
+  .orb-gold { width: 620px; height: 620px; top: -12%; left: -8%;
+    background: radial-gradient(circle, rgba(201,162,39,0.40), transparent 70%);
+    animation: drift1 24s ease-in-out infinite; }
+  .orb-jade { width: 560px; height: 560px; bottom: -14%; right: -10%;
+    background: radial-gradient(circle, rgba(47,174,125,0.34), transparent 70%);
+    animation: drift2 30s ease-in-out infinite; }
+  .orb-gold-2 { width: 420px; height: 420px; top: 45%; right: 20%;
+    background: radial-gradient(circle, rgba(226,196,100,0.18), transparent 70%);
+    animation: drift1 34s ease-in-out infinite reverse; }
+  @keyframes drift1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(60px,50px)} }
+  @keyframes drift2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-50px,-40px)} }
+
+  .bg-grid {
+    position: fixed; inset: 0; z-index: -2; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(234,232,225,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(234,232,225,0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 0%, transparent 80%);
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 0%, transparent 80%);
+  }
+  .bg-noise {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold-light); font-weight: 600;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::before { content: ''; width: 26px; height: 1px; background: linear-gradient(90deg, var(--gold), transparent); }
+  .eyebrow.jade { color: var(--jade-light); }
+  .eyebrow.jade::before { background: linear-gradient(90deg, var(--jade), transparent); }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.1; }
+  em { font-style: italic; color: var(--gold-light); }
+  .jade-em { font-style: italic; color: var(--jade-light); }
+
+  .grad-text {
+    background: linear-gradient(115deg, #fff 0%, #f3ead0 40%, var(--gold-light) 70%, var(--gold) 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+
+  [data-lang="pt"] .en { display: none; }
+  [data-lang="en"] .pt { display: none; }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(30px) scale(0.985); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+  .reveal.is-visible { opacity: 1; transform: none; }
+
+  /* ---------- NAV ---------- */
+  header.nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    backdrop-filter: blur(18px) saturate(1.2);
+    background: rgba(5, 7, 10, 0.6);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1180px; margin: 0 auto; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .monogram {
+    width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 0.95rem; color: var(--gold-light);
+    background: linear-gradient(145deg, rgba(201,162,39,0.15), rgba(201,162,39,0.02));
+    border: 1px solid rgba(201,162,39,0.4);
+    box-shadow: 0 0 18px rgba(201,162,39,0.18), inset 0 0 12px rgba(201,162,39,0.08);
+  }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.25; }
+  .brand-name { font-family: var(--serif); font-size: 0.98rem; font-weight: 500; }
+  .brand-sub { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.05em; color: var(--text-muted); }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+
+  .lang-toggle { display: flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden; }
+  .lang-toggle button {
+    background: transparent; border: none; color: var(--text-muted);
+    padding: 7px 13px; cursor: pointer; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em;
+    transition: color 0.2s;
+  }
+  .lang-toggle button.active { background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #0a0803; font-weight: 600; }
+
+  .btn {
+    position: relative; display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 22px; border-radius: 999px; font-weight: 600; font-size: 0.9rem;
+    cursor: pointer; border: 1px solid transparent; white-space: nowrap;
+    transition: transform 0.2s ease, box-shadow 0.3s ease, filter 0.2s ease;
+  }
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #14100a;
+    box-shadow: 0 4px 20px rgba(201,162,39,0.28);
+  }
+  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,162,39,0.5); filter: brightness(1.06); }
+  .btn-ghost { border-color: var(--border); color: var(--text); background: rgba(255,255,255,0.02); }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold-light); box-shadow: 0 0 24px rgba(201,162,39,0.16); transform: translateY(-2px); }
+
+  @media (max-width: 720px) {
+    .nav-inner { padding: 12px 16px; gap: 10px; }
+    .brand-sub { display: none; }
+    .brand-name { font-size: 0.85rem; white-space: nowrap; }
+    .monogram { width: 36px; height: 36px; font-size: 0.82rem; }
+    .nav-right { gap: 10px; }
+    .lang-toggle button { padding: 6px 10px; }
+    .btn.btn-gold { padding: 9px 14px; font-size: 0.82rem; }
+  }
+  @media (max-width: 420px) { .brand-name { display: none; } }
+
+  /* ---------- IMAGE FRAMES + DEPTH ---------- */
+  .frame {
+    position: relative; border-radius: 22px; overflow: hidden;
+    border: 1px solid rgba(234,232,225,0.12);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,162,39,0.05);
+    transform-style: preserve-3d; will-change: transform;
+    transition: box-shadow 0.4s ease;
+  }
+  .frame::after {
+    content: ''; position: absolute; inset: 0; border-radius: 22px; pointer-events: none;
+    background: linear-gradient(135deg, rgba(226,196,100,0.18), transparent 40%, transparent 65%, rgba(47,174,125,0.14));
+    mix-blend-mode: screen; opacity: 0.7;
+  }
+  .frame-glow::before {
+    content: ''; position: absolute; inset: -2px; border-radius: 24px; z-index: -1;
+    background: linear-gradient(135deg, var(--gold), transparent 45%, transparent 55%, var(--jade));
+    opacity: 0.5; filter: blur(14px);
+  }
+  .frame img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.06); transition: transform 6s ease; will-change: transform; }
+  .frame:hover img { transform: scale(1.12); }
+
+  .kenburns img { animation: kenburns 18s ease-in-out infinite alternate; }
+  @keyframes kenburns { from { transform: scale(1.05) translate(0,0); } to { transform: scale(1.16) translate(-1.5%, -1.5%); } }
+
+  .photo-chip {
+    position: absolute; left: 16px; bottom: 16px; z-index: 3;
+    background: rgba(5,7,10,0.7); backdrop-filter: blur(10px);
+    border: 1px solid rgba(234,232,225,0.16); padding: 8px 14px; border-radius: 999px;
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.05em; color: var(--gold-light);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .photo-chip.jade { color: var(--jade-light); }
+  .chip-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 10px currentColor; animation: pulseDot 2s ease-in-out infinite; }
+  @keyframes pulseDot { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+  /* ---------- HERO ---------- */
+  .hero { position: relative; padding: 150px 0 90px; }
+  .hero-grid { display: grid; grid-template-columns: 1.12fr 0.88fr; gap: 60px; align-items: center; }
+  .hero h1 { font-size: clamp(2.3rem, 4.4vw, 3.6rem); margin: 20px 0 22px; letter-spacing: -0.01em; }
+  .hero-sub { color: var(--text-muted); font-size: 1.05rem; max-width: 46ch; margin-bottom: 34px; }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 54px; }
+  .hero-photo { height: 580px; }
+  .hero-photo img { object-position: 60% center; }
+
+  .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; border-top: 1px solid var(--border); padding-top: 32px; }
+  .stat-num { font-family: var(--serif); font-size: 2rem; color: var(--gold-light); text-shadow: 0 0 24px rgba(226,196,100,0.3); }
+  .stat-label { color: var(--text-muted); font-size: 0.84rem; margin-top: 4px; }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-photo { height: 420px; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+  }
+
+  /* ---------- SECTION ---------- */
+  .section { padding: 100px 0; position: relative; }
+  .section::before { content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+  .section h2 { font-size: clamp(1.8rem, 3.2vw, 2.5rem); margin: 16px 0 20px; letter-spacing: -0.01em; }
+  .section-sub { color: var(--text-muted); max-width: 60ch; margin-bottom: 20px; }
+
+  /* ---------- MISSAO ---------- */
+  .missao-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 56px; align-items: center; }
+  .missao-photo { height: 470px; }
+  .missao-photo img { object-position: center center; }
+  .missao-lead { font-size: 1.1rem; margin: 24px 0 36px; max-width: 58ch; }
+  .missao-lead strong { color: var(--gold-light); }
+
+  .benefit-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .benefit-card {
+    background: var(--card); backdrop-filter: blur(12px);
+    border: 1px solid var(--border); border-radius: 16px; padding: 24px;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .benefit-card:hover { transform: translateY(-5px); border-color: rgba(201,162,39,0.4); box-shadow: 0 18px 40px rgba(0,0,0,0.4), 0 0 30px rgba(201,162,39,0.08); }
+  .benefit-card.jade:hover { border-color: rgba(47,174,125,0.5); box-shadow: 0 18px 40px rgba(0,0,0,0.4), 0 0 30px rgba(47,174,125,0.12); }
+  .benefit-icon { width: 36px; height: 36px; margin-bottom: 14px; color: var(--gold-light); filter: drop-shadow(0 0 8px rgba(226,196,100,0.35)); }
+  .benefit-card.jade .benefit-icon { color: var(--jade-light); filter: drop-shadow(0 0 8px rgba(47,174,125,0.4)); }
+  .benefit-card h3 { font-size: 1.02rem; margin-bottom: 8px; }
+  .benefit-card p { color: var(--text-muted); font-size: 0.92rem; }
+
+  @media (max-width: 900px) {
+    .missao-grid { grid-template-columns: 1fr; }
+    .missao-photo { height: 320px; }
+    .benefit-cards { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- TRAJETORIA ---------- */
+  .traj-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: start; }
+  .traj-visual { position: sticky; top: 110px; }
+  .traj-photo { height: 620px; }
+  .traj-photo img { object-position: center 18%; }
+
+  .timeline { position: relative; margin-top: 42px; padding-left: 30px; }
+  .timeline::before { content: ''; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: linear-gradient(var(--gold), var(--jade)); opacity: 0.4; }
+  .tl-item { position: relative; padding-bottom: 44px; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot { position: absolute; left: -30px; top: 4px; width: 11px; height: 11px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(201,162,39,0.14), 0 0 14px rgba(201,162,39,0.5); }
+  .tl-item.jade .tl-dot { background: var(--jade); box-shadow: 0 0 0 4px rgba(47,174,125,0.16), 0 0 14px rgba(47,174,125,0.55); }
+  .tl-chapter { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .tl-item h3 { font-size: 1.22rem; margin-bottom: 8px; }
+  .tl-item p { color: var(--text-muted); max-width: 54ch; }
+  .tl-chip { display: inline-block; margin-top: 12px; padding: 5px 12px; border: 1px solid rgba(201,162,39,0.4); border-radius: 999px; font-family: var(--mono); font-size: 0.68rem; color: var(--gold-light); background: rgba(201,162,39,0.05); }
+  .tl-item.jade .tl-chip { border-color: rgba(47,174,125,0.45); color: var(--jade-light); background: rgba(47,174,125,0.06); }
+
+  @media (max-width: 900px) {
+    .traj-grid { grid-template-columns: 1fr; }
+    .traj-visual { position: static; order: -1; }
+    .traj-photo { height: 440px; }
+  }
+
+  /* ---------- INTERLUDE ---------- */
+  .interlude { position: relative; min-height: 78vh; display: flex; align-items: flex-end; overflow: hidden; }
+  .interlude-bg { position: absolute; inset: -10% 0; background-size: cover; background-position: center; will-change: transform; z-index: 0; }
+  .interlude::before { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(0deg, rgba(5,7,10,0.96) 8%, rgba(5,7,10,0.55) 45%, rgba(5,7,10,0.2) 100%); }
+  .interlude-inner { position: relative; z-index: 2; padding: 64px 24px 72px; max-width: 660px; margin: 0 auto; width: 100%; }
+  .interlude h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); margin: 14px 0 16px; }
+  .interlude p { color: #cfd3da; font-size: 1.02rem; }
+
+  /* ---------- VISAO ---------- */
+  .visao-sequence { display: flex; align-items: flex-start; justify-content: center; gap: clamp(14px, 4vw, 40px); margin: 56px 0 16px; flex-wrap: wrap; }
+  .visao-item { display: flex; flex-direction: column; align-items: center; }
+  .visao-num { font-family: var(--serif); font-size: clamp(2.3rem, 6vw, 4.2rem); color: var(--gold-light); text-shadow: 0 0 34px rgba(226,196,100,0.4); }
+  .visao-num.mid, .visao-num.last { color: var(--jade-light); text-shadow: 0 0 34px rgba(47,174,125,0.45); }
+  .visao-caption { display: block; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.08em; color: var(--text-muted); margin-top: 10px; text-align: center; text-transform: uppercase; }
+  .visao-arrow { color: var(--jade); font-size: 1.7rem; opacity: 0.7; align-self: center; animation: arrowPulse 2.4s ease-in-out infinite; }
+  .visao-arrow:nth-of-type(2) { animation-delay: 0.4s; }
+  @keyframes arrowPulse { 0%,100%{opacity:0.4; transform:translateX(0)} 50%{opacity:1; transform:translateX(5px)} }
+
+  /* ---------- REDES ---------- */
+  .redes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; max-width: 760px; margin-left: auto; margin-right: auto; }
+  .redes-card {
+    background: var(--card); backdrop-filter: blur(12px);
+    border: 1px solid var(--border); border-radius: 16px; padding: 30px 20px; text-align: center;
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .redes-card:hover { border-color: var(--gold); transform: translateY(-6px); box-shadow: 0 20px 44px rgba(0,0,0,0.45), 0 0 30px rgba(201,162,39,0.12); }
+  .redes-card svg { width: 32px; height: 32px; stroke: var(--gold-light); margin: 0 auto 14px; filter: drop-shadow(0 0 8px rgba(226,196,100,0.35)); transition: transform 0.3s ease; }
+  .redes-card:hover svg { transform: scale(1.12); }
+  .redes-card h3 { font-size: 1rem; margin-bottom: 4px; }
+  .redes-card span { color: var(--text-muted); font-size: 0.82rem; }
+
+  @media (max-width: 700px) { .redes-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- CONTATO ---------- */
+  .contato-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; }
+  .contato-photo { height: 480px; order: 2; }
+  .contato-photo img { object-position: 52% 16%; }
+  .contato-text { order: 1; }
+  .contato-ctas { display: flex; gap: 14px; margin-top: 28px; flex-wrap: wrap; }
+
+  @media (max-width: 900px) {
+    .contato-grid { grid-template-columns: 1fr; }
+    .contato-photo, .contato-text { order: unset; }
+    .contato-photo { height: 340px; }
+  }
+
+  /* ---------- FLOATING WHATSAPP ---------- */
+  .wa-float {
+    position: fixed; right: 22px; bottom: 22px; z-index: 200;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 13px 20px 13px 15px; border-radius: 999px;
+    background: linear-gradient(135deg, #34d17a, #1c9d52);
+    color: #05130b; font-weight: 700; font-size: 0.92rem;
+    box-shadow: 0 10px 30px rgba(31,157,82,0.45);
+    transform: translateY(120px); opacity: 0; pointer-events: none;
+    transition: transform 0.45s cubic-bezier(0.16,1,0.3,1), opacity 0.45s ease, box-shadow 0.3s ease;
+  }
+  .wa-float.show { transform: none; opacity: 1; pointer-events: auto; }
+  .wa-float:hover { box-shadow: 0 14px 40px rgba(31,157,82,0.65); transform: translateY(-3px); }
+  .wa-float svg { width: 22px; height: 22px; fill: #05130b; }
+  .wa-float .wa-ring { position: absolute; inset: -4px; border-radius: 999px; border: 2px solid rgba(52,209,122,0.6); animation: waPulse 2s ease-out infinite; pointer-events: none; }
+  @keyframes waPulse { 0%{transform:scale(1);opacity:0.7} 100%{transform:scale(1.25);opacity:0} }
+  @media (max-width: 520px) { .wa-float .wa-label { display: none; } .wa-float { padding: 15px; } }
+
+  /* ---------- FOOTER ---------- */
+  footer { padding: 44px 24px; text-align: center; position: relative; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--text-muted); }
+  footer::before { content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+
+  :focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+    .orb, .kenburns img, .visao-arrow, .chip-dot, .wa-float .wa-ring { animation: none !important; }
+    .frame img { transform: none; transition: none; }
+    .frame:hover img { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-orbs" aria-hidden="true">
+  <div class="orb orb-gold"></div>
+  <div class="orb orb-jade"></div>
+  <div class="orb orb-gold-2"></div>
+</div>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-noise" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="monogram">SC</div>
+      <div class="brand-text">
+        <span class="brand-name">Sóstenes Costa Paiva</span>
+        <span class="brand-sub pt">BIOMÉDICO · FISIOTERAPEUTA · ESTUDANTE DE MEDICINA</span>
+        <span class="brand-sub en">BIOMEDICAL SCIENTIST · PHYSIOTHERAPIST · MEDICAL STUDENT</span>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language toggle">
+        <button type="button" data-set-lang="pt" class="active">PT</button>
+        <button type="button" data-set-lang="en">EN</button>
+      </div>
+      <a class="btn btn-gold" href="https://wa.me/5584999869468" target="_blank" rel="noopener">
+        <span class="pt">Fale comigo</span><span class="en">Talk to me</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="eyebrow pt">CIÊNCIA · INTELIGÊNCIA · IMPACTO</span>
+      <span class="eyebrow en">SCIENCE · INTELLIGENCE · IMPACT</span>
+      <h1>
+        <span class="pt"><span class="grad-text">Ciência que cuida.</span> <em>Inteligência que multiplica.</em></span>
+        <span class="en"><span class="grad-text">Science that cares.</span> <em>Intelligence that multiplies.</em></span>
+      </h1>
+      <p class="hero-sub pt">Do interior do Nordeste ao coração do Vale do Silício: uma década transformando vidas e formando profissionais — agora direcionada a levar o poder da IA para a saúde de milhões.</p>
+      <p class="hero-sub en">From inland Northeast Brazil to the heart of Silicon Valley: a decade transforming lives and training professionals — now channeled into bringing the power of AI to the health of millions.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-gold" href="https://wa.me/5584999869468" target="_blank" rel="noopener">
+          <span class="pt">Fale comigo</span><span class="en">Talk to me</span>
+        </a>
+        <a class="btn btn-ghost" href="#missao">
+          <span class="pt">Saiba mais</span><span class="en">Learn more</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="frame frame-glow hero-photo kenburns tilt reveal">
+      <img src="assets/hero.jpg" alt="Sóstenes Costa Paiva" loading="eager" />
+      <span class="photo-chip"><span class="chip-dot"></span>Birthplace of Silicon Valley · Palo Alto</span>
+    </div>
+  </div>
+</section>
+
+<!-- MISSAO -->
+<section id="missao" class="section">
+  <div class="wrap missao-grid">
+    <div class="frame frame-glow missao-photo tilt reveal">
+      <img src="assets/mission.jpg" alt="Mesa de estudos com livros de medicina, IA e neurociência" loading="lazy" />
+    </div>
+    <div class="reveal">
+      <span class="eyebrow pt">O QUE EU GERO</span>
+      <span class="eyebrow en">THE VALUE I CREATE</span>
+      <h2>
+        <span class="pt">Saúde melhor, para <em>mais pessoas</em>.</span>
+        <span class="en">Better health, for <em>more people</em>.</span>
+      </h2>
+      <p class="missao-lead pt"><strong>Minha missão é simples:</strong> usar ciência, neurociência e Inteligência Artificial para tornar o cuidado mais acessível, personalizado e eficaz — para quem cuida e para quem é cuidado.</p>
+      <p class="missao-lead en"><strong>My mission is simple:</strong> use science, neuroscience and Artificial Intelligence to make care more accessible, personalized and effective — for those who care and those who are cared for.</p>
+
+      <div class="benefit-cards">
+        <div class="benefit-card">
+          <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-4.35-9.5-8.5C.5 8.5 3 4.5 7 4.5c2 0 3.5 1 5 3 1.5-2 3-3 5-3 4 0 6.5 4 4.5 8-2.5 4.15-9.5 8.5-9.5 8.5z"/></svg>
+          <h3 class="pt">Para as pessoas</h3><h3 class="en">For individuals</h3>
+          <p class="pt">Prevenção, longevidade e alta performance — saúde que devolve energia, foco e qualidade de vida.</p>
+          <p class="en">Prevention, longevity and high performance — health that gives back energy, focus and quality of life.</p>
+        </div>
+        <div class="benefit-card">
+          <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a5 5 0 015 5v2a5 5 0 01-2 4v3l4 2v2H5v-2l4-2v-3a5 5 0 01-2-4V7a5 5 0 015-5z"/></svg>
+          <h3 class="pt">Para os profissionais de saúde</h3><h3 class="en">For healthcare professionals</h3>
+          <p class="pt">Educação e ferramentas de IA que multiplicam tempo, precisão e capacidade de cuidar.</p>
+          <p class="en">Education and AI tools that multiply time, precision and the capacity to care.</p>
+        </div>
+        <div class="benefit-card jade">
+          <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h4l3-9 4 18 3-9h2"/></svg>
+          <h3 class="pt">Para o sistema de saúde</h3><h3 class="en">For the health system</h3>
+          <p class="pt">Pontes entre a clínica e a tecnologia do Vale do Silício — inovação que chega ao paciente real.</p>
+          <p class="en">Bridges between the clinic and Silicon Valley technology — innovation that reaches the real patient.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRAJETORIA -->
+<section id="trajetoria" class="section">
+  <div class="wrap traj-grid">
+    <div>
+      <div class="reveal">
+        <span class="eyebrow pt">POR QUE CONFIAR</span>
+        <span class="eyebrow en">WHY TRUST</span>
+        <h2 class="pt">A jornada</h2><h2 class="en">The journey</h2>
+        <p class="section-sub pt">Cada etapa gerou valor para alguém — e me trouxe até aqui.</p>
+        <p class="section-sub en">Every stage created value for someone — and brought me here.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <span class="tl-dot"></span>
+          <div class="tl-chapter pt">FUNDAMENTOS</div><div class="tl-chapter en">FOUNDATIONS</div>
+          <h3 class="pt">Vender é servir</h3><h3 class="en">Selling is serving</h3>
+          <p class="pt">Chocolates aos 13, pamonha na rua aos 15. Ali aprendi o que sustenta tudo: entender pessoas e resolver problemas reais.</p>
+          <p class="en">Selling chocolates at 13, pamonha on the street at 15. That's where I learned what sustains everything: understanding people and solving real problems.</p>
+        </div>
+        <div class="tl-item reveal">
+          <span class="tl-dot"></span>
+          <div class="tl-chapter pt">PRÁTICA CLÍNICA &amp; PROGRAMAS</div><div class="tl-chapter en">CLINICAL PRACTICE &amp; PROGRAMS</div>
+          <h3 class="pt">Da clínica ao resultado</h3><h3 class="en">From clinic to results</h3>
+          <p class="pt">Fisioterapeuta e biomédico: quiropraxia, dermato-funcional e protocolos autorais de emagrecimento e estética. Meus programas de maestria e estética transformaram a vida de centenas de pessoas.</p>
+          <p class="en">Physiotherapist and biomedical scientist: chiropractic, dermato-functional care and original weight-loss and aesthetics protocols. My mastery and aesthetics programs transformed the lives of hundreds of people.</p>
+          <span class="tl-chip pt">Resultados multiplicados em até 10×</span><span class="tl-chip en">Results multiplied up to 10×</span>
+        </div>
+        <div class="tl-item reveal">
+          <span class="tl-dot"></span>
+          <div class="tl-chapter pt">ENSINAR &amp; COMPARTILHAR</div><div class="tl-chapter en">TEACHING &amp; SHARING</div>
+          <h3 class="pt">Multiplicar quem cuida</h3><h3 class="en">Multiplying those who care</h3>
+          <p class="pt">Palestras e treinamentos no Brasil e no exterior. Cada profissional formado passa a impactar centenas de pacientes.</p>
+          <p class="en">Talks and training across Brazil and abroad. Every professional trained goes on to impact hundreds of patients.</p>
+          <span class="tl-chip pt">+1.000 profissionais formados</span><span class="tl-chip en">+1,000 professionals trained</span>
+        </div>
+        <div class="tl-item reveal">
+          <span class="tl-dot"></span>
+          <div class="tl-chapter pt">MARKETING &amp; NEGÓCIOS</div><div class="tl-chapter en">MARKETING &amp; BUSINESS</div>
+          <h3 class="pt">Fazer o valor chegar longe</h3><h3 class="en">Making value travel far</h3>
+          <p class="pt">De franqueado da V4 Company a lançamentos digitais. Fiz um "6 em 7" — seis dígitos em sete dias — e fui entrevistado por Érico Rocha. Aprendi a escalar mensagens que transformam.</p>
+          <p class="en">From V4 Company franchisee to digital launches. I hit a "6 in 7" — six figures in seven days — and was interviewed by Érico Rocha. I learned to scale messages that transform.</p>
+          <span class="tl-chip pt">Entrevistado por Érico Rocha · 6 em 7</span><span class="tl-chip en">Interviewed by Érico Rocha · 6 in 7</span>
+        </div>
+        <div class="tl-item jade reveal">
+          <span class="tl-dot"></span>
+          <div class="tl-chapter pt">O CAPÍTULO ATUAL</div><div class="tl-chapter en">THE CURRENT CHAPTER</div>
+          <h3 class="pt">Biomedicina + Inteligência Artificial</h3><h3 class="en">Biomedicine + Artificial Intelligence</h3>
+          <p class="pt">Imerso no ecossistema do Vale do Silício, conectando biomedicina, saúde, neurociência e IA. Um capítulo em aberto — escrito em tempo real, para beneficiar milhões.</p>
+          <p class="en">Immersed in the Silicon Valley ecosystem, connecting biomedicine, health, neuroscience and AI. An open chapter — being written in real time, to benefit millions.</p>
+          <span class="tl-chip pt">Próxima meta: impactar milhões de vidas</span><span class="tl-chip en">Next goal: impact millions of lives</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="traj-visual reveal">
+      <div class="frame frame-glow traj-photo tilt">
+        <img src="assets/anthropic.jpg" alt="Sóstenes Costa Paiva conectando biomedicina, ciência e tecnologia" loading="lazy" />
+        <span class="photo-chip jade"><span class="chip-dot"></span>Biomedicina · Neurociência · IA</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERLUDIO -->
+<section class="interlude">
+  <div class="interlude-bg" style="background-image: url('assets/future.jpg');"></div>
+  <div class="interlude-inner reveal">
+    <span class="eyebrow jade pt">O FUTURO QUE ESTOU CONSTRUINDO</span>
+    <span class="eyebrow jade en">THE FUTURE I'M BUILDING</span>
+    <h2>
+      <span class="pt">Ajudando a construir o futuro da medicina <span class="jade-em">com Inteligência Artificial</span>.</span>
+      <span class="en">Helping build the future of medicine <span class="jade-em">with Artificial Intelligence</span>.</span>
+    </h2>
+    <p class="pt">Informação. Inteligência. Impacto. — para que o melhor cuidado deixe de ser privilégio.</p>
+    <p class="en">Information. Intelligence. Impact. — so the best care stops being a privilege.</p>
+  </div>
+</section>
+
+<!-- VISAO -->
+<section id="visao" class="section">
+  <div class="wrap" style="text-align:center;">
+    <div class="reveal">
+      <span class="eyebrow jade pt" style="justify-content:center;">VISÃO DE FUTURO</span>
+      <span class="eyebrow jade en" style="justify-content:center;">FUTURE VISION</span>
+      <h2 class="pt">Impactar milhões de <span class="jade-em">vidas</span></h2>
+      <h2 class="en">Impacting millions of <span class="jade-em">lives</span></h2>
+      <p class="section-sub pt" style="margin:0 auto;">O sonho que guia cada passo: saúde mais acessível, personalizada e eficaz — em escala.</p>
+      <p class="section-sub en" style="margin:0 auto;">The dream that guides every step: more accessible, personalized and effective health — at scale.</p>
+    </div>
+
+    <div class="visao-sequence reveal">
+      <div class="visao-item">
+        <span class="visao-num">1M</span>
+        <span class="visao-caption pt">um milhão de vidas</span><span class="visao-caption en">one million lives</span>
+      </div>
+      <span class="visao-arrow">→</span>
+      <div class="visao-item">
+        <span class="visao-num mid">100M</span>
+        <span class="visao-caption pt">cem milhões de vidas</span><span class="visao-caption en">one hundred million lives</span>
+      </div>
+      <span class="visao-arrow">→</span>
+      <div class="visao-item">
+        <span class="visao-num last">∞</span>
+        <span class="visao-caption pt">impacto infinito</span><span class="visao-caption en">infinite impact</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REDES -->
+<section id="redes" class="section">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center;">
+      <span class="eyebrow pt" style="justify-content:center;">APRENDA COMIGO</span>
+      <span class="eyebrow en" style="justify-content:center;">LEARN WITH ME</span>
+      <h2 class="pt">Redes</h2><h2 class="en">Channels</h2>
+      <p class="section-sub pt" style="margin:0 auto;">IA na medicina, neurociência, performance e longevidade — direto nas redes.</p>
+      <p class="section-sub en" style="margin:0 auto;">AI in medicine, neuroscience, performance and longevity — straight from the channels.</p>
+    </div>
+
+    <div class="redes-grid reveal">
+      <a class="redes-card" href="https://www.instagram.com/drsostenes/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+        <h3>Instagram</h3>
+        <span>@drsostenes</span>
+      </a>
+      <a class="redes-card" href="https://www.youtube.com/channel/UC2d-BgBasNZ1nldwCLJ9zGw" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3V9z"/></svg>
+        <h3>YouTube</h3>
+        <span>Sóstenes Costa</span>
+      </a>
+      <a class="redes-card" href="https://uk.linkedin.com/in/s%C3%B3stenes-costa-paiva-184137165/en" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="7" y1="10" x2="7" y2="16"/><circle cx="7" cy="7" r="0.5"/><path d="M11 16v-6M11 10s0-1 2-1 3 1 3 3v4"/></svg>
+        <h3>LinkedIn</h3>
+        <span>Sóstenes Costa Paiva</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="section">
+  <div class="wrap contato-grid">
+    <div class="contato-text reveal">
+      <span class="eyebrow pt">VAMOS CONVERSAR</span>
+      <span class="eyebrow en">LET'S TALK</span>
+      <h2>
+        <span class="pt">Vamos gerar <em>impacto</em> juntos.</span>
+        <span class="en">Let's create <em>impact</em> together.</span>
+      </h2>
+      <p class="section-sub pt">Parcerias, projetos, palestras e conexões — se a sua missão também é melhorar vidas, vamos conversar.</p>
+      <p class="section-sub en">Partnerships, projects, talks and connections — if your mission is also to improve lives, let's talk.</p>
+      <div class="contato-ctas">
+        <a class="btn btn-gold" href="https://wa.me/5584999869468" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn btn-ghost" href="mailto:drsostenescosta@gmail.com">
+          <span class="pt">E-mail</span><span class="en">Email</span>
+        </a>
+      </div>
+    </div>
+    <div class="frame frame-glow contato-photo tilt reveal">
+      <img src="assets/retrato.jpg" alt="Sóstenes Costa Paiva" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="pt">&copy; 2026 SÓSTENES COSTA PAIVA · CIÊNCIA · INTELIGÊNCIA · IMPACTO</span>
+  <span class="en">&copy; 2026 SÓSTENES COSTA PAIVA · SCIENCE · INTELLIGENCE · IMPACT</span>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a class="wa-float" href="https://wa.me/5584999869468" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <span class="wa-ring" aria-hidden="true"></span>
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.8 14.14c-.24.68-1.42 1.32-1.95 1.36-.5.05-.99.24-3.32-.69-2.79-1.1-4.55-3.96-4.69-4.14-.14-.19-1.12-1.49-1.12-2.84s.71-2.02.96-2.3c.24-.28.53-.35.71-.35.18 0 .36 0 .51.01.16.01.38-.06.6.46.24.56.79 1.94.86 2.08.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.37-.42.49-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.93 1.93 1.22 2.21 1.36.28.14.44.12.6-.07.19-.21.69-.8.88-1.08.18-.28.37-.23.62-.14.25.09 1.61.76 1.89.9.28.14.46.21.53.32.07.12.07.66-.17 1.34z"/></svg>
+  <span class="wa-label pt">Fale comigo</span><span class="wa-label en">Talk to me</span>
+</a>
+
+<script>
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setLang(lang) {
+    document.documentElement.setAttribute('data-lang', lang);
+    document.documentElement.setAttribute('lang', lang === 'en' ? 'en' : 'pt-BR');
+    document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-set-lang') === lang);
+    });
+  }
+  document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
+    btn.addEventListener('click', function () { setLang(btn.getAttribute('data-set-lang')); });
+  });
+
+  // Reveal on scroll
+  if ('IntersectionObserver' in window && !prefersReducedMotion) {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function (el) { revealObserver.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
+  }
+
+  // Animated counters
+  function animateCount(el) {
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    var suffix = el.getAttribute('data-suffix') || '';
+    if (prefersReducedMotion) { el.textContent = target.toLocaleString('pt-BR') + suffix; return; }
+    var duration = 1500, start = null;
+    function step(ts) {
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased).toLocaleString('pt-BR') + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if ('IntersectionObserver' in window) {
+    var countObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { animateCount(entry.target); countObserver.unobserve(entry.target); }
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('[data-count]').forEach(function (el) { countObserver.observe(el); });
+  } else {
+    document.querySelectorAll('[data-count]').forEach(animateCount);
+  }
+
+  // 3D tilt on images for depth
+  if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
+    document.querySelectorAll('.tilt').forEach(function (el) {
+      el.addEventListener('mousemove', function (e) {
+        var r = el.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transform = 'perspective(900px) rotateX(' + (-py * 6).toFixed(2) + 'deg) rotateY(' + (px * 6).toFixed(2) + 'deg) translateY(-4px)';
+      });
+      el.addEventListener('mouseleave', function () { el.style.transform = ''; });
+    });
+  }
+
+  // Parallax depth on interlude background
+  var interludeBg = document.querySelector('.interlude-bg');
+  var interludeSection = document.querySelector('.interlude');
+  if (interludeBg && interludeSection && !prefersReducedMotion) {
+    var ticking = false;
+    function updateParallax() {
+      var rect = interludeSection.getBoundingClientRect();
+      if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        interludeBg.style.transform = 'translateY(' + ((progress - 0.5) * 12).toFixed(2) + '%)';
+      }
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; }
+    }, { passive: true });
+    updateParallax();
+  }
+
+  // Floating WhatsApp button appears after scrolling past hero
+  var waFloat = document.querySelector('.wa-float');
+  if (waFloat) {
+    var waTicking = false;
+    function updateWa() {
+      if (window.scrollY > 500) waFloat.classList.add('show');
+      else waFloat.classList.remove('show');
+      waTicking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!waTicking) { requestAnimationFrame(updateWa); waTicking = true; }
+    }, { passive: true });
+    updateWa();
+  }
+</script>
+
+</body>
+</html>
