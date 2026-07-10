@@ -37,11 +37,35 @@
   }
   /* background orbs */
   .bg-orbs { position: fixed; inset: 0; z-index: -3; overflow: hidden; pointer-events: none; }
-  .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.4; }
+  .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.4; will-change: transform; }
   .orb-gold { width: 560px; height: 560px; top: -14%; left: -10%;
-    background: radial-gradient(circle, rgba(201,162,39,0.35), transparent 70%); }
+    background: radial-gradient(circle, rgba(201,162,39,0.35), transparent 70%); animation: drift1 26s ease-in-out infinite; }
   .orb-jade { width: 520px; height: 520px; bottom: -16%; right: -12%;
-    background: radial-gradient(circle, rgba(47,174,125,0.30), transparent 70%); }
+    background: radial-gradient(circle, rgba(47,174,125,0.30), transparent 70%); animation: drift2 32s ease-in-out infinite; }
+  @keyframes drift1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(70px,50px)} }
+  @keyframes drift2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-60px,-40px)} }
+  @media (prefers-reduced-motion: reduce){ .orb{ animation:none!important; } }
+
+  /* futuristic scan sweep */
+  .bg-scan { position: fixed; inset: 0; z-index: -2; pointer-events: none; opacity: 0.5;
+    background: linear-gradient(180deg, transparent 0%, rgba(201,162,39,0.04) 50%, transparent 100%);
+    background-size: 100% 260px; animation: scan 9s linear infinite; }
+  @keyframes scan { 0%{background-position:0 -260px} 100%{background-position:0 100vh} }
+  @media (prefers-reduced-motion: reduce){ .bg-scan{ display:none; } }
+
+  /* splash / boot */
+  #splash { position: fixed; inset: 0; z-index: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+    background: radial-gradient(ellipse at center, #0a0e14 0%, #05070a 70%); transition: opacity 0.6s ease, visibility 0.6s; }
+  #splash.hide { opacity: 0; visibility: hidden; }
+  #splash .s-logo { width: 78px; height: 78px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 2rem; color: var(--gold-light);
+    background: linear-gradient(145deg, rgba(201,162,39,0.18), rgba(201,162,39,0.02)); border: 1px solid rgba(201,162,39,0.5);
+    box-shadow: 0 0 40px rgba(201,162,39,0.35), inset 0 0 20px rgba(201,162,39,0.12); animation: pop 1s cubic-bezier(0.16,1,0.3,1); }
+  #splash .s-name { font-family: var(--serif); font-size: 1.5rem; letter-spacing: 0.02em; }
+  #splash .s-bar { width: 160px; height: 3px; border-radius: 3px; background: rgba(234,232,225,0.1); overflow: hidden; }
+  #splash .s-bar i { display: block; height: 100%; width: 40%; border-radius: 3px; background: linear-gradient(90deg, var(--gold-light), var(--jade-light)); animation: load 1.1s ease-in-out infinite; }
+  @keyframes pop { from{ transform: scale(0.6); opacity: 0; } to{ transform: scale(1); opacity: 1; } }
+  @keyframes load { 0%{ transform: translateX(-120%);} 100%{ transform: translateX(320%);} }
   .bg-grid {
     position: fixed; inset: 0; z-index: -2; pointer-events: none;
     background-image:
@@ -133,7 +157,11 @@
   .card {
     background: var(--card); backdrop-filter: blur(10px); border: 1px solid var(--border);
     border-radius: 16px; padding: 20px; margin-bottom: 18px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
   }
+  .card:hover { border-color: rgba(201,162,39,0.22); box-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(201,162,39,0.05); }
+  .stat { transition: border-color 0.25s, transform 0.25s; }
+  .stat:hover { border-color: rgba(201,162,39,0.25); transform: translateY(-2px); }
   .card h3 { font-size: 1.05rem; margin-bottom: 4px; }
   .card-sub { color: var(--text-muted); font-size: 0.82rem; margin-bottom: 14px; }
   .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -268,8 +296,10 @@
 </style>
 </head>
 <body>
+<div id="splash"><div class="s-logo">M</div><div class="s-name grad-text">MedEasy</div><div class="s-bar"><i></i></div></div>
 <div class="bg-orbs"><span class="orb orb-gold"></span><span class="orb orb-jade"></span></div>
 <div class="bg-grid"></div>
+<div class="bg-scan"></div>
 
 <header class="nav">
   <div class="nav-inner">
@@ -334,6 +364,8 @@ DB.categorias = DB.categorias || [
 ];
 DB.produtos  = DB.produtos  || [];
 DB.vendas    = DB.vendas    || [];
+DB.agenda    = DB.agenda    || [];
+DB.sinais    = DB.sinais    || [];
 if(DB.perfil.carimbo===undefined) DB.perfil.carimbo=true;
 persist();
 
@@ -378,6 +410,24 @@ const CAT_APLICADOS = [
   {n:'Soro / hidratação venosa', p:'EV', pos:'Hidratação venosa em consultório', tipo:'Aplicado', tags:['urgencia']},
   {n:'Dexametasona', p:'Ampola IM/EV', pos:'Aplicação conforme quadro', tipo:'Aplicado', tags:['urgencia']},
 ];
+const CAT_CID = [
+  {c:'E66.0', d:'Obesidade'}, {c:'E11', d:'Diabetes mellitus tipo 2'}, {c:'E10', d:'Diabetes mellitus tipo 1'},
+  {c:'I10', d:'Hipertensão essencial'}, {c:'E78.0', d:'Hipercolesterolemia'}, {c:'E78.5', d:'Dislipidemia'},
+  {c:'E03.9', d:'Hipotireoidismo'}, {c:'E05.9', d:'Hipertireoidismo'}, {c:'E55.9', d:'Deficiência de vitamina D'},
+  {c:'F41.1', d:'Ansiedade generalizada'}, {c:'F32.9', d:'Episódio depressivo'}, {c:'F51.0', d:'Insônia não orgânica'},
+  {c:'M54.5', d:'Dor lombar baixa'}, {c:'M54.2', d:'Cervicalgia'}, {c:'M25.5', d:'Dor articular'},
+  {c:'J06.9', d:'Infecção aguda das vias aéreas superiores'}, {c:'J00', d:'Nasofaringite aguda (resfriado)'},
+  {c:'A09', d:'Diarreia e gastroenterite'}, {c:'K21.9', d:'Doença do refluxo gastroesofágico'},
+  {c:'R51', d:'Cefaleia'}, {c:'N39.0', d:'Infecção do trato urinário'}, {c:'Z00.0', d:'Exame médico geral'},
+  {c:'E66.9', d:'Obesidade não especificada'}, {c:'R53', d:'Mal-estar e fadiga'},
+];
+const TEMPLATES = {
+  'Consulta geral':{ q:'Paciente comparece para avaliação clínica de rotina. Nega queixas agudas.', o:'BEG, corado, hidratado, afebril, eupneico. ACV: RCR 2T BNF sem sopros. AR: MV+ sem RA. Abdome flácido, indolor.', d:'', c:'Solicitados exames de rotina. Orientações sobre hábitos de vida. Retorno com resultados.' },
+  'Emagrecimento':{ q:'Paciente busca acompanhamento para perda de peso. Relata dificuldade com dieta e sedentarismo.', o:'Antropometria aferida. Distribuição de gordura predominantemente central.', d:'E66.0 - Obesidade', c:'Plano alimentar e atividade física orientados. Discutido protocolo terapêutico. Reavaliação em 30 dias.' },
+  'Saúde metabólica':{ q:'Acompanhamento de doença metabólica. Adesão medicamentosa referida.', o:'Sinais vitais aferidos. Sem sinais de descompensação aguda.', d:'', c:'Ajuste terapêutico conforme exames. Reforço de adesão e mudança de estilo de vida.' },
+  'Urgência':{ q:'Paciente procura atendimento com queixa aguda de início recente.', o:'Avaliação dirigida. Sinais vitais aferidos.', d:'', c:'Conduta imediata instituída. Orientado sinais de alerta e reavaliação.' },
+  'Saúde mental':{ q:'Queixas de humor/ansiedade. Avaliação do sono, apetite e funcionalidade.', o:'Paciente colaborativo, orientado, discurso organizado.', d:'', c:'Abordagem terapêutica discutida. Orientações de higiene do sono. Encaminhamento se necessário. Retorno agendado.' },
+};
 const CAT_PRODUTOS = [
   {nome:'Protocolo Emagrecimento 90 dias', categoria:'Programa', preco:1497, tags:['emagrecimento','metabolica'], tipo:'Programa'},
   {nome:'Acompanhamento mensal', categoria:'Recorrente', preco:397, tags:['metabolica','emagrecimento'], tipo:'Assinatura'},
@@ -516,6 +566,7 @@ modalBack.addEventListener('click', e=>{ if(e.target===modalBack) closeModal(); 
 const NAV = [
   {group:'Atendimento', items:[
     {id:'painel', label:'Painel', ico:'▤'},
+    {id:'agenda', label:'Agenda', ico:'📆'},
     {id:'consulta', label:'Escuta & Transcrição', ico:'🎙'},
     {id:'pacientes', label:'Pacientes', ico:'👥'},
   ]},
@@ -712,9 +763,23 @@ PAGES.consulta = function(){
     <div class="card">
       <h3 style="font-size:1rem">Registro clínico (SOAP)</h3>
       <div class="card-sub">Estruture a consulta a partir da escuta</div>
+      <div class="field"><label class="f">Modelo de anamnese</label><select id="cTemplate" onchange="App.aplicarTemplate(this.value)"><option value="">— preencher em branco —</option>${Object.keys(TEMPLATES).map(t=>`<option>${t}</option>`).join('')}</select></div>
       <div class="field"><label class="f">Queixa principal / Subjetivo</label><textarea id="cQueixa" style="min-height:60px"></textarea></div>
       <div class="field"><label class="f">Exame / Objetivo</label><textarea id="cObjetivo" style="min-height:60px"></textarea></div>
-      <div class="field"><label class="f">Avaliação / Diagnóstico (CID)</label><textarea id="cDiagnostico" style="min-height:60px"></textarea></div>
+      <details style="margin-bottom:14px"><summary style="cursor:pointer;font-size:.78rem;color:var(--gold-light);margin-bottom:8px">🩺 Sinais vitais & antropometria</summary>
+        <div class="row c3" style="margin-bottom:10px">
+          <div class="field" style="margin:0"><label class="f">PA (mmHg)</label><input id="cv_pa" placeholder="120/80"></div>
+          <div class="field" style="margin:0"><label class="f">FC (bpm)</label><input id="cv_fc" type="number"></div>
+          <div class="field" style="margin:0"><label class="f">Temp (°C)</label><input id="cv_temp" type="number" step="0.1"></div>
+        </div>
+        <div class="row c3">
+          <div class="field" style="margin:0"><label class="f">SpO₂ (%)</label><input id="cv_spo2" type="number"></div>
+          <div class="field" style="margin:0"><label class="f">Peso (kg)</label><input id="cv_peso" type="number" step="0.1"></div>
+          <div class="field" style="margin:0"><label class="f">Altura (cm)</label><input id="cv_altura" type="number"></div>
+        </div>
+        <div class="field" style="margin-top:10px;margin-bottom:0"><label class="f">Glicemia (mg/dL)</label><input id="cv_glic" type="number"></div>
+      </details>
+      <div class="field"><label class="f">Avaliação / Diagnóstico (CID-10)</label><input list="cidList" id="cCidPick" placeholder="🔎 Buscar CID..." onchange="App.addCid(this.value)" style="margin-bottom:6px"><datalist id="cidList">${CAT_CID.map(x=>`<option value="${x.c} - ${esc(x.d)}">`).join('')}</datalist><textarea id="cDiagnostico" style="min-height:60px"></textarea></div>
       <div class="field"><label class="f">Conduta / Plano</label><textarea id="cConduta" style="min-height:60px"></textarea></div>
       <div class="row c2">
         <div class="field"><label class="f">Linha de cuidado</label><select id="cCategoria"><option value="">—</option>${DB.categorias.map(cat=>`<option value="${cat.id}">${esc(cat.nome)}</option>`).join('')}</select></div>
@@ -1005,6 +1070,26 @@ function recomendarProdutos(pid){
   return DB.produtos.map(pr=>({pr, match:(pr.tags||[]).filter(t=>tags.includes(t)).length}))
     .filter(x=>x.match>0).sort((a,b)=>b.match-a.match || b.pr.preco-a.pr.preco);
 }
+function patientTimeline(pid){
+  const ev=[];
+  DB.consultas.filter(x=>x.pacienteId===pid).forEach(c=>ev.push({t:c.data,ico:'🎙',tipo:'Consulta',desc:(c.queixa||'Atendimento').slice(0,60),act:`App.viewConsulta('${c.id}')`}));
+  DB.exames.filter(x=>x.pacienteId===pid).forEach(e=>ev.push({t:e.data,ico:'🧪',tipo:'Exame',desc:e.nome||'Exame',act:`App.viewExame('${e.id}')`}));
+  DB.avaliacoes.filter(x=>x.pacienteId===pid).forEach(a=>{const s=computeScore(a);ev.push({t:a.data,ico:'❤',tipo:'Índice de Saúde',desc:s.geral+'/100 ('+gradeOf(s.geral).g+')',act:`App.viewAvaliacao('${pid}')`});});
+  DB.agenda.filter(x=>x.pacienteId===pid).forEach(a=>ev.push({t:a.data,ico:'📆',tipo:'Agendamento',desc:(a.tipo==='tele'?'Teleconsulta':'Consulta')+' · '+(AG_STATUS[a.status||'agendado'].l)}));
+  [['receitas','℞','Receita'],['pedidos','📋','Pedido de exame'],['encaminhamentos','➦','Encaminhamento'],['laudos','📄','Laudo'],['atestados','✎','Atestado']].forEach(([k,ico,lbl])=>{
+    DB[k].filter(x=>x.pacienteId===pid).forEach(d=>ev.push({t:d.data,ico,tipo:lbl,desc:d.titulo||lbl,act:`App.printDoc('${k}','${d.id}')`}));
+  });
+  DB.vendas.filter(x=>x.pacienteId===pid).forEach(v=>ev.push({t:v.data,ico:'🛒',tipo:'Venda',desc:esc(v.nome)+' · '+BRL(v.valor)}));
+  return ev.sort((a,b)=>(b.t||'').localeCompare(a.t||''));
+}
+function pesoSpark(pid){
+  const s=DB.sinais.filter(x=>x.pacienteId===pid && x.peso).sort((a,b)=>(a.data||'').localeCompare(b.data||''));
+  if(s.length<2) return '';
+  const vals=s.map(x=>+x.peso); const min=Math.min(...vals),max=Math.max(...vals),range=(max-min)||1; const w=180,h=40;
+  const pts=vals.map((v,i)=>`${(i/(vals.length-1))*w},${(h-4)-((v-min)/range)*(h-8)+2}`).join(' ');
+  const delta=+(vals[vals.length-1]-vals[0]).toFixed(1);
+  return `<div style="display:flex;align-items:center;gap:14px;margin:6px 0 4px"><svg width="${w}" height="${h}" style="overflow:visible"><polyline points="${pts}" fill="none" stroke="${delta<=0?'#45cf99':'#e2c464'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><div class="li-title">${vals[vals.length-1]} kg</div><div class="li-sub" style="color:${delta<=0?'var(--jade-light)':'var(--gold-light)'}">${delta>0?'+':''}${delta} kg no período</div></div></div>`;
+}
 function receitaTotal(){ return DB.consultas.filter(c=>c.pagamento==='pago').reduce((s,c)=>s+(c.valor||0),0) + DB.vendas.reduce((s,v)=>s+(v.valor||0),0); }
 function aReceber(){ return DB.consultas.filter(c=>c.pagamento==='pendente').reduce((s,c)=>s+(c.valor||0),0); }
 function mesAtual(iso){ return (iso||'').slice(0,7)===todayISO().slice(0,7); }
@@ -1182,6 +1267,43 @@ PAGES.portal = function(){
   <div class="disclaimer">📱 O portal é gerado a partir dos dados atuais do paciente e enviado como um link (funciona offline após aberto). Ao emitir novos documentos, gere o link novamente para atualizar. Nenhum dado trafega por servidores — tudo fica no link e no aparelho do paciente.</div>`;
 };
 
+/* ============================ PÁGINA: AGENDA ============================ */
+const AG_STATUS = {agendado:{l:'Agendado',c:'gold'}, realizado:{l:'Realizado',c:'jade'}, faltou:{l:'Faltou',c:'red'}, cancelado:{l:'Cancelado',c:''}};
+PAGES.agenda = function(){
+  const items=[...DB.agenda].sort((a,b)=>(a.data||'').localeCompare(b.data||''));
+  const hoje=items.filter(a=>(a.data||'').slice(0,10)===todayISO());
+  const futuros=items.filter(a=>(a.data||'').slice(0,10)>todayISO());
+  const anteriores=items.filter(a=>(a.data||'').slice(0,10)<todayISO()).reverse();
+  const row=a=>{
+    const st=AG_STATUS[a.status||'agendado'];
+    return `<div class="list-item">
+      <div class="avatar" style="flex-direction:column;font-size:.7rem;line-height:1.1">${new Date(a.data).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</div>
+      <div class="grow"><div class="li-title">${esc(patientName(a.pacienteId))} ${a.tipo==='tele'?'<span class="tag jade">🎥 Tele</span>':''} <span class="tag ${st.c}">${st.l}</span></div>
+        <div class="li-sub">${fmtDateTime(a.data)}${a.obs?' · '+esc(a.obs):''}</div></div>
+      <div class="li-actions">
+        ${a.tipo==='tele'&&a.teleLink?`<a class="btn btn-jade btn-sm" href="${esc(a.teleLink)}" target="_blank" rel="noopener">Entrar</a>`:''}
+        <button class="btn btn-jade btn-sm" onclick="App.startFromAgenda('${a.id}')">🎙 Atender</button>
+        <button class="btn btn-ghost btn-sm" onclick="App.cycleAgenda('${a.id}')">${st.l}</button>
+        <button class="icon-btn" onclick="App.delAgenda('${a.id}')">✕</button>
+      </div></div>`;
+  };
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">Agenda</h2><div class="sub">${fmtLongDate()} · ${hoje.length} consulta(s) hoje</div></div>
+    <div class="head-actions"><button class="btn btn-gold" onclick="App.newAgenda()">+ Agendar consulta</button></div>
+  </div>
+  <div class="grid-4" style="margin-bottom:18px">
+    <div class="stat jade"><div class="n">${hoje.length}</div><div class="l">Hoje</div></div>
+    <div class="stat"><div class="n">${futuros.length}</div><div class="l">Próximas</div></div>
+    <div class="stat"><div class="n">${items.filter(a=>a.status==='realizado').length}</div><div class="l">Realizadas</div></div>
+    <div class="stat"><div class="n" style="color:var(--red-light)">${items.filter(a=>a.status==='faltou').length}</div><div class="l">Faltas</div></div>
+  </div>
+  <div class="card"><h3 style="font-size:1rem">📆 Hoje</h3><div class="card-sub">${fmtLongDate()}</div>
+    ${hoje.length? '<div class="list">'+hoje.map(row).join('')+'</div>' : '<div class="empty" style="padding:24px"><div class="big">📆</div>Nenhuma consulta agendada para hoje.</div>'}</div>
+  ${futuros.length?`<div class="card"><h3 style="font-size:1rem">Próximas</h3><div class="list">${futuros.slice(0,20).map(row).join('')}</div></div>`:''}
+  ${anteriores.length?`<div class="card"><h3 style="font-size:1rem">Anteriores</h3><div class="list">${anteriores.slice(0,10).map(row).join('')}</div></div>`:''}`;
+};
+
 /* ============================ APP OBJECT (handlers) ============================ */
 const App = {
   go(r){ route=r; render(); },
@@ -1294,12 +1416,16 @@ const App = {
       ${p.alergias?`<div class="tag red" style="margin-bottom:10px">⚠ Alergias: ${esc(p.alergias)}</div>`:''}
       ${p.condicoes?`<div class="field"><label class="f">Condições</label><div>${esc(p.condicoes)}</div></div>`:''}
       <div class="row c2" style="margin-bottom:12px"><div><label class="f">Telefone</label><div>${esc(p.telefone||'—')}</div></div><div><label class="f">CPF</label><div>${esc(p.cpf||'—')}</div></div></div>
+      ${pesoSpark(id)?`<div class="divider"></div><label class="f">Evolução de peso</label>${pesoSpark(id)}`:''}
       <div class="divider"></div>
-      <label class="f">Histórico de consultas</label>
-      ${cons.length? '<div class="list" style="margin-top:8px">'+cons.slice(0,6).map(c=>`<div class="list-item"><div class="grow"><div class="li-title">${esc((c.queixa||'Consulta').slice(0,50))}</div><div class="li-sub">${fmtDateTime(c.data)}</div></div><button class="btn btn-ghost btn-sm" onclick="App.viewConsulta('${c.id}')">Ver</button></div>`).join('')+'</div>' : '<div class="muted" style="font-size:.85rem">Sem consultas.</div>'}
+      <label class="f">Linha do tempo</label>
+      ${(()=>{ const tl=patientTimeline(id); return tl.length? '<div class="list" style="margin-top:8px">'+tl.slice(0,12).map(e=>`<div class="list-item" style="padding:9px 13px${e.act?';cursor:pointer':''}" ${e.act?`onclick="${e.act}"`:''}>
+        <div class="avatar" style="width:32px;height:32px;font-size:.9rem">${e.ico}</div>
+        <div class="grow"><div class="li-title" style="font-size:.85rem">${esc(e.desc)}</div><div class="li-sub">${esc(e.tipo)} · ${fmtDateTime(e.t)}</div></div>${e.act?'<span class="muted">›</span>':''}</div>`).join('')+'</div>' : '<div class="muted" style="font-size:.85rem">Sem registros ainda.</div>'; })()}
       <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
         <button class="btn btn-jade" onclick="App.startFor('${id}')">🎙 Nova consulta</button>
-        <button class="btn btn-ghost" onclick="App.editPaciente('${id}');">✎ Editar</button>
+        <button class="btn btn-gold btn-sm" onclick="App.closeModal();App.newAgenda('${id}')">📆 Agendar</button>
+        <button class="btn btn-ghost btn-sm" onclick="App.editPaciente('${id}');">✎ Editar</button>
         <button class="btn btn-danger btn-sm" onclick="App.delPaciente('${id}')">Excluir</button>
       </div>`, true);
   },
@@ -1350,15 +1476,22 @@ const App = {
   transcriptEdited(el){ rec.finalText = el.innerText; },
   _pag:'pago',
   setPag(v){ App._pag=v; setVal('cPag',v); ['p','x','c'].forEach(k=>{const e=document.getElementById('cpg_'+k); if(e)e.classList.remove('active');}); const map={pago:'p',pendente:'x',cortesia:'c'}; const el=document.getElementById('cpg_'+map[v]); if(el)el.classList.add('active'); },
+  aplicarTemplate(t){ const tp=TEMPLATES[t]; if(!tp)return; ['cQueixa','cObjetivo','cDiagnostico','cConduta'].forEach((id,i)=>{ const cur=val(id); if(cur && !confirm('Substituir o texto atual pelo modelo?')) return; }); setVal('cQueixa',tp.q); setVal('cObjetivo',tp.o); setVal('cDiagnostico',tp.d); setVal('cConduta',tp.c); toast('Modelo aplicado','jade'); },
+  addCid(v){ if(!v)return; const t=document.getElementById('cDiagnostico'); if(t){ t.value=(t.value?t.value.replace(/\s*$/,'')+'\n':'')+v; } const pick=document.getElementById('cCidPick'); if(pick)pick.value=''; },
   saveConsulta(){
     if(!rec.pacienteId){ toast('Selecione o paciente','red'); return; }
+    const sinais={ pa:val('cv_pa'), fc:val('cv_fc'), temp:val('cv_temp'), spo2:val('cv_spo2'), peso:val('cv_peso'), altura:val('cv_altura'), glicemia:val('cv_glic') };
+    const temSinais=Object.values(sinais).some(v=>v);
     const c = {
       id:uid(), pacienteId:rec.pacienteId, data:now(),
       transcricao: rec.finalText.trim(),
       queixa: val('cQueixa'), objetivo: val('cObjetivo'), diagnostico: val('cDiagnostico'), conduta: val('cConduta'),
-      categoriaId: val('cCategoria')||'', valor: parseFloat(val('cValor'))||0, pagamento: val('cPag')||'pago'
+      categoriaId: val('cCategoria')||'', valor: parseFloat(val('cValor'))||0, pagamento: val('cPag')||'pago',
+      sinais: temSinais?sinais:null
     };
-    DB.consultas.push(c); persist();
+    DB.consultas.push(c);
+    if(temSinais){ DB.sinais.push({id:uid(), pacienteId:rec.pacienteId, data:c.data, ...sinais, imc: imcCalc(sinais.peso,sinais.altura)}); }
+    persist();
     rec.finalText=''; rec.elapsed=0; rec.consultaId=c.id; App._pag='pago';
     toast('Consulta salva','jade');
     render();
@@ -1754,6 +1887,33 @@ const App = {
     App._print('Resumo da Consulta', p, `<div class="doc-body">${esc(partes.join('\n\n'))}</div>`, now());
   },
 
+  /* ---- AGENDA ---- */
+  newAgenda(pacienteId){
+    const opts=DB.pacientes.map(p=>`<option value="${p.id}" ${pacienteId===p.id?'selected':''}>${esc(p.nome)}</option>`).join('');
+    const d=new Date(); d.setHours(d.getHours()+1,0,0,0); const dv=new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16);
+    openModal(`
+      <div class="modal-head"><h3>Agendar consulta 📆</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="field"><label class="f">Paciente *</label><select id="ag_pac"><option value="">—</option>${opts}</select></div>
+      <div class="row c2"><div class="field"><label class="f">Data e hora *</label><input type="datetime-local" id="ag_data" value="${dv}"></div>
+      <div class="field"><label class="f">Modalidade</label><select id="ag_tipo" onchange="document.getElementById('ag_teleWrap').style.display=this.value==='tele'?'block':'none'"><option value="presencial">Presencial</option><option value="tele">Teleconsulta</option></select></div></div>
+      <div class="field" id="ag_teleWrap" style="display:none"><label class="f">Link da teleconsulta</label><input id="ag_tele" placeholder="Cole o link do Meet/Zoom/WhatsApp vídeo"></div>
+      <div class="field"><label class="f">Observações</label><input id="ag_obs" placeholder="Motivo, retorno, preparo..."></div>
+      <label class="f" style="display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" id="ag_lembrete" checked style="width:auto"> Criar alerta em Lembretes</label>
+      <button class="btn btn-gold btn-block" style="margin-top:12px" onclick="App.saveAgenda()">Agendar</button>`);
+  },
+  saveAgenda(){
+    const pid=val('ag_pac'); if(!pid){ toast('Selecione o paciente','red'); return; }
+    const dt=val('ag_data'); if(!dt){ toast('Informe data e hora','red'); return; }
+    const iso=new Date(dt).toISOString();
+    const a={ id:uid(), pacienteId:pid, data:iso, tipo:val('ag_tipo'), teleLink:val('ag_tele')||'', obs:val('ag_obs'), status:'agendado' };
+    DB.agenda.push(a);
+    if(document.getElementById('ag_lembrete').checked){ DB.lembretes.push({id:uid(), tipo:'consulta', pacienteId:pid, titulo:(a.tipo==='tele'?'Teleconsulta':'Consulta'), data:iso, ativo:true, criado:now()}); }
+    persist(); closeModal(); render(); toast('Consulta agendada','jade');
+  },
+  cycleAgenda(id){ const a=DB.agenda.find(x=>x.id===id); if(!a)return; const order=['agendado','realizado','faltou','cancelado']; a.status=order[(order.indexOf(a.status||'agendado')+1)%order.length]; persist(); render(); },
+  delAgenda(id){ if(!confirm('Excluir agendamento?'))return; DB.agenda=DB.agenda.filter(a=>a.id!==id); persist(); render(); toast('Excluído','red'); },
+  startFromAgenda(id){ const a=DB.agenda.find(x=>x.id===id); if(!a)return; a.status='realizado'; persist(); rec.pacienteId=a.pacienteId; this.go('consulta'); },
+
   /* ---- LINHAS DE CUIDADO ---- */
   newCategoria(){
     openModal(`
@@ -1942,7 +2102,7 @@ const App = {
     const inp=document.createElement('input'); inp.type='file'; inp.accept='.json,application/json';
     inp.onchange=()=>{ const f=inp.files[0]; if(!f)return; const r=new FileReader();
       r.onload=()=>{ try{ const data=JSON.parse(r.result); if(!confirm('Substituir todos os dados atuais pelo arquivo importado?'))return;
-        DB=Object.assign({perfil:seedPerfil,pacientes:[],consultas:[],receitas:[],laudos:[],atestados:[],exames:[],lembretes:[],suplementos:[],encaminhamentos:[],pedidos:[],avaliacoes:[],categorias:[],produtos:[],vendas:[]}, data);
+        DB=Object.assign({perfil:seedPerfil,pacientes:[],consultas:[],receitas:[],laudos:[],atestados:[],exames:[],lembretes:[],suplementos:[],encaminhamentos:[],pedidos:[],avaliacoes:[],categorias:[],produtos:[],vendas:[],agenda:[],sinais:[]}, data);
         persist(); render(); toast('Dados importados','jade'); }catch(e){ toast('Arquivo inválido','red'); } };
       r.readAsText(f); };
     inp.click();
@@ -1979,6 +2139,7 @@ document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 
 /* ============================ INIT ============================ */
 render();
+(function(){ const sp=document.getElementById('splash'); if(sp){ setTimeout(()=>sp.classList.add('hide'), 950); setTimeout(()=>sp.remove(), 1600); } })();
 })();
 </script>
 </body>

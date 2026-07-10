@@ -109,6 +109,31 @@
   .flow-step h3 { font-size:1.05rem; margin:8px 0 6px; }
   .flow-step p { color:var(--text-muted); font-size:0.85rem; }
 
+  /* DIAGRAM */
+  .diagram { border:1px solid var(--border); border-radius:22px; padding:34px 26px; background:linear-gradient(160deg,rgba(18,24,33,0.6),rgba(8,11,17,0.5)); position:relative; overflow:hidden; }
+  .diagram::before{ content:''; position:absolute; inset:0; background:linear-gradient(90deg,transparent,rgba(201,162,39,0.06),transparent); background-size:60% 100%; animation:sweep 6s linear infinite; }
+  @keyframes sweep{ 0%{background-position:-60% 0} 100%{background-position:160% 0} }
+  .dg-flow { display:flex; align-items:stretch; justify-content:center; gap:0; flex-wrap:wrap; position:relative; z-index:2; }
+  .dg-node { flex:1; min-width:150px; max-width:200px; text-align:center; padding:18px 14px; border:1px solid var(--border); border-radius:16px; background:rgba(5,7,10,0.55); position:relative; }
+  .dg-node .ic{ font-size:1.5rem; margin-bottom:8px; }
+  .dg-node h4{ font-size:0.95rem; margin-bottom:4px; }
+  .dg-node p{ font-size:0.74rem; color:var(--text-muted); }
+  .dg-node.gold{ border-color:rgba(201,162,39,0.4); box-shadow:0 0 26px rgba(201,162,39,0.1); }
+  .dg-node.jade{ border-color:rgba(47,174,125,0.4); box-shadow:0 0 26px rgba(47,174,125,0.1); }
+  .dg-arrow { display:flex; align-items:center; color:var(--gold-light); font-size:1.4rem; padding:0 6px; flex:0 0 auto; }
+  .dg-fan { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:20px; position:relative; z-index:2; }
+  .dg-chip { border:1px solid var(--border); border-radius:12px; padding:12px; text-align:center; background:rgba(5,7,10,0.5); font-size:0.8rem; }
+  .dg-chip .ic{ font-size:1.2rem; display:block; margin-bottom:4px; }
+  @media (max-width:760px){ .dg-arrow{ transform:rotate(90deg); padding:6px 0; } .dg-node{ max-width:none; } }
+
+  /* FAQ */
+  .faq details { border:1px solid var(--border); border-radius:14px; padding:0 18px; margin-bottom:12px; background:var(--card); }
+  .faq summary { cursor:pointer; padding:16px 0; font-weight:600; font-size:0.98rem; list-style:none; display:flex; justify-content:space-between; align-items:center; }
+  .faq summary::-webkit-details-marker{ display:none; }
+  .faq summary::after{ content:'+'; color:var(--gold-light); font-size:1.3rem; }
+  .faq details[open] summary::after{ content:'−'; }
+  .faq details p { color:var(--text-muted); font-size:0.9rem; padding:0 0 16px; }
+
   .grade-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
   .grade-pill { width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:1.4rem; border:1px solid var(--border); }
   .g-a { color:var(--jade-light); background:rgba(47,174,125,0.12); border-color:rgba(47,174,125,0.35); }
@@ -284,6 +309,36 @@
   </div>
 </section>
 
+<!-- DIAGRAMA / ECOSSISTEMA -->
+<section class="section" id="ecossistema">
+  <div class="wrap center">
+    <span class="eyebrow jade" style="justify-content:center">Arquitetura</span>
+    <h2>Um <span class="grad-text">ecossistema</span>, do áudio ao paciente</h2>
+    <p class="section-sub">Cada consulta alimenta um fluxo único — inteligência, documentos, gestão e o app do paciente.</p>
+  </div>
+  <div class="wrap">
+    <div class="diagram">
+      <div class="dg-flow">
+        <div class="dg-node jade"><div class="ic">🎙</div><h4>Escuta</h4><p>Áudio da consulta em tempo real</p></div>
+        <div class="dg-arrow">→</div>
+        <div class="dg-node"><div class="ic">📝</div><h4>Transcrição</h4><p>Texto em pt-BR + registro SOAP</p></div>
+        <div class="dg-arrow">→</div>
+        <div class="dg-node gold"><div class="ic">🧠</div><h4>Inteligência</h4><p>Índice de Saúde, riscos e recomendações</p></div>
+        <div class="dg-arrow">→</div>
+        <div class="dg-node jade"><div class="ic">📱</div><h4>Paciente</h4><p>App com lembretes e documentos</p></div>
+      </div>
+      <div class="dg-fan">
+        <div class="dg-chip"><span class="ic">℞</span>Documentos assinados</div>
+        <div class="dg-chip"><span class="ic">❤</span>Índice de Saúde A–F</div>
+        <div class="dg-chip"><span class="ic">💰</span>Financeiro & vendas</div>
+        <div class="dg-chip"><span class="ic">📆</span>Agenda & lembretes</div>
+        <div class="dg-chip"><span class="ic">📈</span>Desempenho por linha</div>
+        <div class="dg-chip"><span class="ic">🧪</span>Exames & interpretação</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ÍNDICE DE SAÚDE -->
 <section class="section" id="indice">
   <div class="wrap grid-2" style="align-items:center; gap:50px">
@@ -342,6 +397,22 @@
       </div>
     </div>
     <div class="disc">⚠️ <b>Aviso importante:</b> O MedEasy é uma ferramenta de <b>apoio à documentação e à decisão clínica</b> — não substitui o julgamento profissional nem realiza diagnóstico. O Índice de Saúde é um instrumento de triagem e acompanhamento. Os dados são armazenados <b>localmente no navegador</b> do usuário; nenhuma informação é enviada a servidores. Em conformidade com a LGPD, obtenha o consentimento do paciente para gravação e transcrição.</div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="wrap center">
+    <span class="eyebrow" style="justify-content:center">Dúvidas</span>
+    <h2>Perguntas <em>frequentes</em></h2>
+  </div>
+  <div class="wrap faq" style="max-width:780px">
+    <details open><summary>Preciso instalar alguma coisa?</summary><p>Não. O MedEasy roda direto no navegador (Chrome recomendado). Abra o link e comece a usar — funciona no computador e no celular.</p></details>
+    <details><summary>A transcrição por voz funciona no iPhone?</summary><p>A transcrição por voz funciona melhor no Google Chrome (computador e Android). No iPhone/Safari há limitação do sistema da Apple — nesse caso você pode digitar a transcrição normalmente; todo o resto funciona.</p></details>
+    <details><summary>Onde ficam os dados dos pacientes?</summary><p>Tudo é armazenado localmente no seu navegador (localStorage). Nenhum dado é enviado a servidores. Você pode exportar um backup em JSON a qualquer momento no Painel.</p></details>
+    <details><summary>Como o paciente recebe o app?</summary><p>Você gera um link na aba "App do Paciente" e envia por WhatsApp. Ele abre no celular, adiciona à tela inicial e acessa lembretes, exames e documentos — mesmo offline.</p></details>
+    <details><summary>Os documentos têm validade com assinatura?</summary><p>Você assina digitalmente na tela e o sistema aplica um carimbo com seu nome e CRM. Para validade jurídica plena de assinatura eletrônica avançada (ICP-Brasil), pode-se integrar um certificado — fale conosco.</p></details>
+    <details><summary>É gratuito?</summary><p>O núcleo é gratuito para uso individual. Recursos de consultório, clínica, nuvem e suporte são planos sob consulta.</p></details>
   </div>
 </section>
 
