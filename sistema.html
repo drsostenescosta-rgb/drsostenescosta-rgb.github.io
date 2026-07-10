@@ -260,8 +260,10 @@
   .doc .rx-item { padding: 10px 0; border-bottom: 1px dashed #d8cba0; }
   .doc .rx-item .rx-name { font-weight: 700; }
   .doc .rx-item .rx-pos { font-size: 13px; color: #444; }
-  .doc .doc-sign { margin-top: 70px; text-align: center; }
+  .doc .doc-sign { margin-top: 54px; text-align: center; position: relative; }
   .doc .doc-sign .line { width: 300px; border-top: 1px solid #14110b; margin: 0 auto 6px; }
+  .doc .doc-stamp { display: inline-block; margin-top: 14px; border: 2px solid #2b5c86; color: #2b5c86; border-radius: 8px; padding: 8px 18px; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.03em; transform: rotate(-3deg); opacity: 0.92; text-transform: uppercase; }
+  .doc .doc-stamp span { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.05em; }
   .doc .doc-foot { margin-top: 34px; font-size: 11px; color: #888; text-align: center; border-top: 1px solid #eee; padding-top: 10px; }
 </style>
 </head>
@@ -305,7 +307,7 @@
 
 /* ============================ STORE ============================ */
 const KEY = 'scp_clinic_v1';
-const seedPerfil = { nome:'Sóstenes Costa Paiva', crm:'', especialidade:'Biomedicina · Fisioterapia', clinica:'', endereco:'', telefone:'(84) 99986-9468', cidade:'' };
+const seedPerfil = { nome:'Sóstenes Costa Paiva', crm:'', especialidade:'Biomedicina · Fisioterapia', clinica:'', endereco:'', telefone:'(84) 99986-9468', cidade:'', assinatura:'', carimbo:true };
 
 function load(){
   try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){ return {}; }
@@ -324,6 +326,15 @@ DB.suplementos = DB.suplementos || [];
 DB.encaminhamentos = DB.encaminhamentos || [];
 DB.pedidos   = DB.pedidos   || [];
 DB.avaliacoes = DB.avaliacoes || [];
+DB.categorias = DB.categorias || [
+  {id:'met', nome:'Doenças metabólicas', cor:'#c9a227'},
+  {id:'ema', nome:'Emagrecimento', cor:'#2fae7d'},
+  {id:'urg', nome:'Urgência e emergência', cor:'#e05a5a'},
+  {id:'end', nome:'Endemias', cor:'#5a8fe0'},
+];
+DB.produtos  = DB.produtos  || [];
+DB.vendas    = DB.vendas    || [];
+if(DB.perfil.carimbo===undefined) DB.perfil.carimbo=true;
 persist();
 
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
@@ -355,6 +366,25 @@ const CAT_MEDS = [
   {n:'Ciclobenzaprina 5mg', p:'Comprimido', pos:'1 comprimido à noite por 10 dias'},
   {n:'Nimesulida 100mg', p:'Comprimido', pos:'1 comprimido de 12/12h após alimentação por 5 dias'},
   {n:'Diclofenaco gel', p:'Gel tópico', pos:'Aplicar na região dolorida 3x/dia'},
+];
+/* Medicamentos de aplicação direta (injetáveis/procedimento em consultório) e recomendados */
+const CAT_APLICADOS = [
+  {n:'Ozempic (Semaglutida)', p:'Caneta SC', pos:'Aplicação subcutânea semanal — titular conforme resposta', tipo:'Aplicado', tags:['emagrecimento','metabolica']},
+  {n:'Mounjaro (Tirzepatida)', p:'Caneta SC', pos:'Aplicação subcutânea semanal', tipo:'Aplicado', tags:['emagrecimento','metabolica']},
+  {n:'Vitamina D (megadose)', p:'Ampola IM', pos:'Aplicação intramuscular conforme dosagem sérica', tipo:'Aplicado', tags:['metabolica']},
+  {n:'Vitamina B12', p:'Ampola IM', pos:'Aplicação intramuscular — reposição', tipo:'Aplicado', tags:['metabolica']},
+  {n:'Complexo B injetável', p:'Ampola IM', pos:'Aplicação intramuscular', tipo:'Aplicado', tags:[]},
+  {n:'Toxina botulínica', p:'Aplicação', pos:'Aplicação em pontos motores/estéticos', tipo:'Aplicado', tags:['estetica']},
+  {n:'Soro / hidratação venosa', p:'EV', pos:'Hidratação venosa em consultório', tipo:'Aplicado', tags:['urgencia']},
+  {n:'Dexametasona', p:'Ampola IM/EV', pos:'Aplicação conforme quadro', tipo:'Aplicado', tags:['urgencia']},
+];
+const CAT_PRODUTOS = [
+  {nome:'Protocolo Emagrecimento 90 dias', categoria:'Programa', preco:1497, tags:['emagrecimento','metabolica'], tipo:'Programa'},
+  {nome:'Acompanhamento mensal', categoria:'Recorrente', preco:397, tags:['metabolica','emagrecimento'], tipo:'Assinatura'},
+  {nome:'Kit suplementação metabólica', categoria:'Produto', preco:289, tags:['metabolica'], tipo:'Produto'},
+  {nome:'Aplicação semanal (pacote)', categoria:'Procedimento', preco:890, tags:['emagrecimento'], tipo:'Pacote'},
+  {nome:'Avaliação nutricional completa', categoria:'Serviço', preco:250, tags:['emagrecimento','metabolica'], tipo:'Serviço'},
+  {nome:'Protocolo saúde mental & sono', categoria:'Programa', preco:690, tags:['mental'], tipo:'Programa'},
 ];
 const CAT_SUP = [
   {n:'Vitamina D3', d:'2.000 UI/dia', i:'Imunidade, saúde óssea e muscular'},
@@ -488,7 +518,15 @@ const NAV = [
     {id:'painel', label:'Painel', ico:'▤'},
     {id:'consulta', label:'Escuta & Transcrição', ico:'🎙'},
     {id:'pacientes', label:'Pacientes', ico:'👥'},
+  ]},
+  {group:'Análise', items:[
     {id:'saude', label:'Índice de Saúde', ico:'❤'},
+    {id:'desempenho', label:'Meu Desempenho', ico:'📈'},
+    {id:'linhas', label:'Linhas de Cuidado', ico:'🗂'},
+  ]},
+  {group:'Negócio', items:[
+    {id:'financeiro', label:'Financeiro', ico:'💰'},
+    {id:'produtos', label:'Produtos & Vendas', ico:'🛒'},
   ]},
   {group:'Documentos', items:[
     {id:'receitas', label:'Receitas', ico:'℞'},
@@ -502,6 +540,9 @@ const NAV = [
     {id:'exames', label:'Exames', ico:'🧪'},
     {id:'suplementos', label:'Suplementos', ico:'🌿'},
     {id:'lembretes', label:'Lembretes & Alertas', ico:'🔔'},
+  ]},
+  {group:'Paciente', items:[
+    {id:'portal', label:'App do Paciente', ico:'📱'},
   ]},
 ];
 let route = 'painel';
@@ -675,6 +716,14 @@ PAGES.consulta = function(){
       <div class="field"><label class="f">Exame / Objetivo</label><textarea id="cObjetivo" style="min-height:60px"></textarea></div>
       <div class="field"><label class="f">Avaliação / Diagnóstico (CID)</label><textarea id="cDiagnostico" style="min-height:60px"></textarea></div>
       <div class="field"><label class="f">Conduta / Plano</label><textarea id="cConduta" style="min-height:60px"></textarea></div>
+      <div class="row c2">
+        <div class="field"><label class="f">Linha de cuidado</label><select id="cCategoria"><option value="">—</option>${DB.categorias.map(cat=>`<option value="${cat.id}">${esc(cat.nome)}</option>`).join('')}</select></div>
+        <div class="field"><label class="f">Valor da consulta (R$)</label><input type="number" id="cValor" placeholder="0,00" step="0.01"></div>
+      </div>
+      <div class="field"><label class="f">Pagamento</label>
+        <div class="pill-select" style="width:100%"><button type="button" class="active" id="cpg_p" onclick="App.setPag('pago')">Particular · Pago</button><button type="button" id="cpg_x" onclick="App.setPag('pendente')">A receber</button><button type="button" id="cpg_c" onclick="App.setPag('cortesia')">Cortesia</button></div>
+        <input type="hidden" id="cPag" value="pago">
+      </div>
       <button class="btn btn-gold btn-block" onclick="App.saveConsulta()">💾 Salvar consulta</button>
       <button class="btn btn-ghost btn-block btn-sm" style="margin-top:8px" onclick="App.gerarResumo()">📄 Gerar resumo / relatório imprimível</button>
     </div>
@@ -741,8 +790,15 @@ PAGES.medicamentos = function(){
     <div class="head-actions"><button class="btn btn-gold" onclick="App.newReceita()">℞ Nova receita</button></div>
   </div>
   <div class="field"><input type="text" id="medSearch" placeholder="🔎 Buscar medicamento..." oninput="App.filterMeds(this.value)"></div>
-  <div class="list" id="medList">${CAT_MEDS.map(medRow).join('')}</div>
-  <div class="disclaimer">💊 Posologias apresentadas são <strong>modelos de referência</strong> e devem ser individualizadas conforme avaliação clínica, peso, função renal/hepática e interações. Verifique alergias do paciente antes de prescrever.</div>`;
+  <div class="card"><h3 style="font-size:1rem">💊 Prescrição oral / uso domiciliar</h3><div class="card-sub">Bulário de referência</div>
+    <div class="list" id="medList">${CAT_MEDS.map(medRow).join('')}</div></div>
+  <div class="card"><h3 style="font-size:1rem">💉 Aplicação direta & recomendados</h3><div class="card-sub">Injetáveis e procedimentos aplicados em consultório</div>
+    <div class="list">${CAT_APLICADOS.map(m=>`<div class="list-item">
+      <div class="avatar" style="color:var(--jade-light);background:rgba(47,174,125,0.14);border-color:rgba(47,174,125,0.35)">💉</div>
+      <div class="grow"><div class="li-title">${esc(m.n)} <span class="tag jade">${esc(m.tipo)}</span></div><div class="li-sub">${esc(m.p)} · ${esc(m.pos)}</div></div>
+      <button class="btn btn-ghost btn-sm" onclick="App.newReceita('${esc(m.n)}')">+ Receita</button>
+    </div>`).join('')}</div></div>
+  <div class="disclaimer">💊 Posologias são <strong>modelos de referência</strong> e devem ser individualizadas conforme avaliação clínica, peso, função renal/hepática e interações. Medicamentos de aplicação direta exigem estrutura e responsabilidade profissional. Verifique alergias antes de prescrever.</div>`;
 };
 function medRow(m){
   return `<div class="list-item">
@@ -922,6 +978,210 @@ function lembreteRow(l){
   </div>`;
 }
 
+/* ============================ NEGÓCIO / DESEMPENHO — HELPERS ============================ */
+function BRL(n){ return 'R$ '+(Number(n)||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function catById(id){ return DB.categorias.find(c=>c.id===id); }
+function seedProdutos(){ if(!DB.produtos.length){ DB.produtos=CAT_PRODUTOS.map((p,i)=>({id:'prd'+i+Date.now().toString(36),...p})); persist(); } }
+function patientImprovement(pid){
+  const avs=DB.avaliacoes.filter(a=>a.pacienteId===pid).sort((a,b)=>(a.data||'').localeCompare(b.data||''));
+  if(avs.length<2) return null;
+  const first=computeScore(avs[0]).geral, last=computeScore(avs[avs.length-1]).geral;
+  return {first,last,delta:last-first,n:avs.length};
+}
+function patientTags(pid){
+  const tags=new Set();
+  DB.consultas.filter(c=>c.pacienteId===pid).forEach(c=>{ if(c.categoriaId==='ema')tags.add('emagrecimento'); if(c.categoriaId==='met')tags.add('metabolica'); if(c.categoriaId==='urg')tags.add('urgencia'); if(c.categoriaId==='end')tags.add('endemia'); });
+  const r=patientScore(pid);
+  if(r){ if(r.sc.imc && r.sc.imc>=25) tags.add('emagrecimento'); if(r.sc.mental<60) tags.add('mental'); if(examFlagsForPatient(pid)>0) tags.add('metabolica'); }
+  const p=patient(pid);
+  if(p && p.condicoes){ const c=(p.condicoes+' '+(p.obs||'')).toLowerCase();
+    if(/diab|glic|colest|press|tireoi|metab|hipert/.test(c)) tags.add('metabolica');
+    if(/obes|peso|emagre|gordura/.test(c)) tags.add('emagrecimento');
+    if(/ansi|depress|estress|p[aâ]nico|sono|ins[ôo]nia/.test(c)) tags.add('mental'); }
+  return [...tags];
+}
+function recomendarProdutos(pid){
+  const tags=patientTags(pid);
+  return DB.produtos.map(pr=>({pr, match:(pr.tags||[]).filter(t=>tags.includes(t)).length}))
+    .filter(x=>x.match>0).sort((a,b)=>b.match-a.match || b.pr.preco-a.pr.preco);
+}
+function receitaTotal(){ return DB.consultas.filter(c=>c.pagamento==='pago').reduce((s,c)=>s+(c.valor||0),0) + DB.vendas.reduce((s,v)=>s+(v.valor||0),0); }
+function aReceber(){ return DB.consultas.filter(c=>c.pagamento==='pendente').reduce((s,c)=>s+(c.valor||0),0); }
+function mesAtual(iso){ return (iso||'').slice(0,7)===todayISO().slice(0,7); }
+
+/* ============================ PÁGINA: LINHAS DE CUIDADO ============================ */
+PAGES.linhas = function(){
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">Linhas de Cuidado</h2><div class="sub">Crie seus próprios repositórios de tipos de doença e acompanhe cada linha</div></div>
+    <div class="head-actions"><button class="btn btn-gold" onclick="App.newCategoria()">+ Nova linha de cuidado</button></div>
+  </div>
+  <div class="grid-2">
+    ${DB.categorias.map(cat=>{
+      const cons=DB.consultas.filter(c=>c.categoriaId===cat.id);
+      const pacs=new Set(cons.map(c=>c.pacienteId));
+      const melhoras=[...pacs].map(patientImprovement).filter(Boolean);
+      const mediaMelhora= melhoras.length? Math.round(melhoras.reduce((s,m)=>s+m.delta,0)/melhoras.length):null;
+      const receita=cons.filter(c=>c.pagamento==='pago').reduce((s,c)=>s+(c.valor||0),0);
+      return `<div class="card" style="border-left:3px solid ${cat.cor}">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div><h3 style="font-size:1.05rem">${esc(cat.nome)}</h3><div class="card-sub" style="margin-bottom:8px">${cons.length} consulta(s) · ${pacs.size} paciente(s)</div></div>
+          <button class="icon-btn" onclick="App.delCategoria('${cat.id}')" title="Excluir">✕</button>
+        </div>
+        <div class="grid-3" style="gap:10px">
+          <div class="stat" style="padding:10px 12px"><div class="n" style="font-size:1.2rem">${cons.length}</div><div class="l">consultas</div></div>
+          <div class="stat" style="padding:10px 12px"><div class="n" style="font-size:1.2rem;color:${mediaMelhora>0?'var(--jade-light)':mediaMelhora<0?'var(--red-light)':'var(--text)'}">${mediaMelhora!=null?(mediaMelhora>0?'+':'')+mediaMelhora:'—'}</div><div class="l">melhora média</div></div>
+          <div class="stat" style="padding:10px 12px"><div class="n" style="font-size:1rem;color:var(--gold-light)">${BRL(receita).replace('R$ ','')}</div><div class="l">receita</div></div>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>
+  <div class="disclaimer">🗂 As linhas de cuidado organizam seus atendimentos por tipo (metabólico, emagrecimento, urgência, endemias…). A "melhora média" compara o primeiro e o último Índice de Saúde dos pacientes daquela linha.</div>`;
+};
+
+/* ============================ PÁGINA: MEU DESEMPENHO ============================ */
+PAGES.desempenho = function(){
+  const total=DB.consultas.length;
+  const mes=DB.consultas.filter(c=>mesAtual(c.data)).length;
+  const pacientesAtivos=new Set(DB.consultas.map(c=>c.pacienteId)).size;
+  const melhoras=DB.pacientes.map(p=>patientImprovement(p.id)).filter(Boolean);
+  const melhoraram=melhoras.filter(m=>m.delta>0).length;
+  const taxaMelhora= melhoras.length? Math.round(melhoraram/melhoras.length*100):0;
+  const mediaDelta= melhoras.length? Math.round(melhoras.reduce((s,m)=>s+m.delta,0)/melhoras.length):0;
+  // consultas por mês (últimos 6)
+  const meses=[]; for(let i=5;i>=0;i--){ const d=new Date(); d.setMonth(d.getMonth()-i); meses.push(d.toISOString().slice(0,7)); }
+  const counts=meses.map(m=>DB.consultas.filter(c=>(c.data||'').slice(0,7)===m).length);
+  const maxC=Math.max(1,...counts);
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">Meu Desempenho</h2><div class="sub">${esc(DB.perfil.nome||'Profissional')}${DB.perfil.crm?' · '+esc(DB.perfil.crm):''} · ${esc(DB.perfil.especialidade||'')}</div></div>
+    <div class="head-actions"><button class="btn btn-ghost" onclick="App.openPerfil()">⚕ Editar perfil</button></div>
+  </div>
+  <div class="grid-4" style="margin-bottom:18px">
+    <div class="stat"><div class="n">${total}</div><div class="l">Consultas totais</div></div>
+    <div class="stat jade"><div class="n">${mes}</div><div class="l">Consultas no mês</div></div>
+    <div class="stat"><div class="n">${pacientesAtivos}</div><div class="l">Pacientes atendidos</div></div>
+    <div class="stat jade"><div class="n">${taxaMelhora}%</div><div class="l">Taxa de melhora</div></div>
+  </div>
+  <div class="grid-2">
+    <div class="card"><h3 style="font-size:1rem">Consultas por mês</h3><div class="card-sub">Últimos 6 meses</div>
+      <div style="display:flex;align-items:flex-end;gap:10px;height:150px;padding-top:10px">
+        ${counts.map((c,i)=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end">
+          <div style="font-size:.72rem;color:var(--gold-light)">${c}</div>
+          <div style="width:70%;background:linear-gradient(180deg,var(--gold-light),var(--gold));border-radius:6px 6px 0 0;height:${Math.round(c/maxC*100)}%;min-height:${c?6:2}px"></div>
+          <div style="font-size:.62rem;color:var(--text-muted)">${meses[i].slice(5)}/${meses[i].slice(2,4)}</div></div>`).join('')}
+      </div>
+    </div>
+    <div class="card"><h3 style="font-size:1rem">Melhora dos pacientes</h3><div class="card-sub">Variação do Índice de Saúde (2+ avaliações)</div>
+      <div style="text-align:center;margin:10px 0 14px"><span style="font-family:var(--serif);font-size:2.2rem;color:${mediaDelta>0?'var(--jade-light)':'var(--text)'}">${mediaDelta>0?'+':''}${mediaDelta}</span> <span class="muted">pontos em média</span></div>
+      ${melhoras.length? '<div class="list">'+DB.pacientes.map(p=>({p,m:patientImprovement(p.id)})).filter(x=>x.m).sort((a,b)=>b.m.delta-a.m.delta).slice(0,5).map(({p,m})=>`
+        <div class="list-item" style="padding:9px 13px"><div class="grow li-title" style="font-size:.86rem">${esc(p.nome)}</div>
+        <span class="tag ${m.delta>0?'jade':m.delta<0?'red':''}">${m.first} → ${m.last} (${m.delta>0?'+':''}${m.delta})</span></div>`).join('')+'</div>'
+        : '<div class="muted" style="font-size:.85rem">Faça ao menos 2 avaliações de saúde por paciente para medir a evolução.</div>'}
+    </div>
+  </div>
+  <div class="card"><h3 style="font-size:1rem">Índice de tratamento por linha de cuidado</h3><div class="card-sub">Volume e evolução por tipo de doença</div>
+    <div class="list">${DB.categorias.map(cat=>{
+      const cons=DB.consultas.filter(c=>c.categoriaId===cat.id);
+      const pacs=[...new Set(cons.map(c=>c.pacienteId))];
+      const mel=pacs.map(patientImprovement).filter(Boolean);
+      const md=mel.length?Math.round(mel.reduce((s,m)=>s+m.delta,0)/mel.length):null;
+      return `<div class="list-item"><div class="avatar" style="background:${cat.cor}22;border-color:${cat.cor}66;color:${cat.cor}">🗂</div>
+        <div class="grow"><div class="li-title">${esc(cat.nome)}</div><div class="li-sub">${cons.length} consulta(s) · ${pacs.length} paciente(s)</div></div>
+        <span class="tag ${md>0?'jade':md<0?'red':''}">${md!=null?'melhora '+(md>0?'+':'')+md:'sem dados'}</span></div>`;
+    }).join('')}</div>
+  </div>`;
+};
+
+/* ============================ PÁGINA: FINANCEIRO ============================ */
+PAGES.financeiro = function(){
+  const receita=receitaTotal(), pend=aReceber();
+  const receitaMes=DB.consultas.filter(c=>c.pagamento==='pago'&&mesAtual(c.data)).reduce((s,c)=>s+(c.valor||0),0)+DB.vendas.filter(v=>mesAtual(v.data)).reduce((s,v)=>s+(v.valor||0),0);
+  const pagas=DB.consultas.filter(c=>c.pagamento==='pago'&&c.valor>0);
+  const ticket= pagas.length? receita/ (pagas.length+DB.vendas.length||1):0;
+  // oportunidades: recomendações não vendidas
+  const oport=DB.pacientes.map(p=>{ const recs=recomendarProdutos(p.id); const pot=recs.reduce((s,r)=>s+r.pr.preco,0); return {p,recs,pot}; }).filter(x=>x.recs.length).sort((a,b)=>b.pot-a.pot);
+  const potTotal=oport.reduce((s,o)=>s+o.pot,0);
+  const consFin=[...DB.consultas].filter(c=>c.valor>0||c.pagamento).sort((a,b)=>(b.data||'').localeCompare(a.data||'')).slice(0,12);
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">Financeiro</h2><div class="sub">Consultas particulares, recebimentos e oportunidades de venda</div></div>
+    <div class="head-actions"><button class="btn btn-gold" onclick="App.go('produtos')">🛒 Produtos & vendas</button></div>
+  </div>
+  <div class="grid-4" style="margin-bottom:18px">
+    <div class="stat"><div class="n" style="font-size:1.5rem;color:var(--jade-light)">${BRL(receita)}</div><div class="l">Receita recebida</div></div>
+    <div class="stat"><div class="n" style="font-size:1.5rem;color:var(--gold-light)">${BRL(receitaMes)}</div><div class="l">Recebido no mês</div></div>
+    <div class="stat"><div class="n" style="font-size:1.5rem;color:var(--red-light)">${BRL(pend)}</div><div class="l">A receber</div></div>
+    <div class="stat"><div class="n" style="font-size:1.5rem">${BRL(ticket)}</div><div class="l">Ticket médio</div></div>
+  </div>
+  <div class="grid-2">
+    <div class="card"><h3 style="font-size:1rem">💡 Oportunidades de venda</h3><div class="card-sub">Potencial estimado: <b style="color:var(--gold-light)">${BRL(potTotal)}</b> — produtos recomendados por paciente</div>
+      ${oport.length? '<div class="list">'+oport.slice(0,6).map(o=>`<div class="list-item" style="cursor:pointer" onclick="App.recomendarPara('${o.p.id}')">
+        <div class="avatar">${esc(initials(o.p.nome))}</div>
+        <div class="grow"><div class="li-title">${esc(o.p.nome)}</div><div class="li-sub">${o.recs.slice(0,2).map(r=>esc(r.pr.nome)).join(', ')}${o.recs.length>2?'…':''}</div></div>
+        <span class="tag gold">${BRL(o.pot)}</span></div>`).join('')+'</div>'
+        : '<div class="empty" style="padding:24px"><div class="big">💡</div>Cadastre produtos e pacientes para ver oportunidades.</div>'}
+    </div>
+    <div class="card"><h3 style="font-size:1rem">Movimentação recente</h3><div class="card-sub">Consultas particulares</div>
+      ${consFin.length? '<div class="list">'+consFin.map(c=>`<div class="list-item" style="padding:10px 13px">
+        <div class="grow"><div class="li-title" style="font-size:.86rem">${esc(patientName(c.pacienteId))}</div><div class="li-sub">${fmtDate(c.data)}${c.categoriaId?' · '+esc((catById(c.categoriaId)||{}).nome||''):''}</div></div>
+        <span style="font-family:var(--mono);font-size:.82rem;margin-right:8px">${BRL(c.valor)}</span>
+        <button class="btn btn-sm ${c.pagamento==='pago'?'btn-jade':c.pagamento==='pendente'?'btn-danger':'btn-ghost'}" onclick="App.togglePagamento('${c.id}')">${c.pagamento==='pago'?'Pago':c.pagamento==='pendente'?'A receber':'Cortesia'}</button>
+        </div>`).join('')+'</div>'
+        : '<div class="muted" style="font-size:.85rem">Nenhuma consulta com valor registrada.</div>'}
+    </div>
+  </div>`;
+};
+
+/* ============================ PÁGINA: PRODUTOS & VENDAS ============================ */
+PAGES.produtos = function(){
+  seedProdutos();
+  const vendaTotal=DB.vendas.reduce((s,v)=>s+(v.valor||0),0);
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">Produtos & Vendas</h2><div class="sub">Catálogo de produtos/serviços e recomendação inteligente por paciente</div></div>
+    <div class="head-actions"><button class="btn btn-gold" onclick="App.newProduto()">+ Novo produto</button></div>
+  </div>
+  <div class="grid-3" style="margin-bottom:18px">
+    <div class="stat"><div class="n">${DB.produtos.length}</div><div class="l">Produtos no catálogo</div></div>
+    <div class="stat jade"><div class="n">${DB.vendas.length}</div><div class="l">Vendas registradas</div></div>
+    <div class="stat"><div class="n" style="color:var(--gold-light)">${BRL(vendaTotal)}</div><div class="l">Receita de produtos</div></div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:1rem">🎯 Recomendação por paciente</h3><div class="card-sub">O sistema sugere o que oferecer com base no perfil, riscos e linha de cuidado</div>
+    <div class="field"><select id="recPac" onchange="App.recomendarPara(this.value)"><option value="">— Selecione o paciente —</option>${DB.pacientes.map(p=>`<option value="${p.id}">${esc(p.nome)}</option>`).join('')}</select></div>
+    <div id="recResult"></div>
+  </div>
+  <div class="card"><h3 style="font-size:1rem">Catálogo</h3><div class="card-sub">Produtos, programas, procedimentos e serviços</div>
+    <div class="list">${DB.produtos.map(pr=>`<div class="list-item">
+      <div class="avatar">🛒</div>
+      <div class="grow"><div class="li-title">${esc(pr.nome)} <span class="tag">${esc(pr.tipo||pr.categoria||'')}</span></div><div class="li-sub">${(pr.tags||[]).join(', ')||'—'}</div></div>
+      <span style="font-family:var(--mono);color:var(--gold-light);margin-right:8px">${BRL(pr.preco)}</span>
+      <button class="icon-btn" onclick="App.delProduto('${pr.id}')" title="Excluir">✕</button>
+    </div>`).join('')}</div>
+  </div>`;
+};
+
+/* ============================ PÁGINA: APP DO PACIENTE (PORTAL) ============================ */
+PAGES.portal = function(){
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">App do Paciente</h2><div class="sub">Gere um portal pessoal para o paciente acessar no celular — lembretes, medicamentos, exames e documentos</div></div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:1rem">📱 Gerar acesso do paciente</h3>
+    <div class="card-sub">Selecione o paciente. O sistema cria um link que você envia pelo WhatsApp — ele abre no celular e pode salvar na tela inicial como um app.</div>
+    <div class="field"><select id="portalPac" onchange="App.gerarPortal(this.value)"><option value="">— Selecione o paciente —</option>${DB.pacientes.map(p=>`<option value="${p.id}">${esc(p.nome)}</option>`).join('')}</select></div>
+    <div id="portalResult"></div>
+  </div>
+  <div class="grid-3">
+    <div class="card"><div class="feat-ico" style="font-size:1.5rem">🔔</div><h3 style="font-size:.95rem">Lembra consultas</h3><div class="card-sub" style="margin:0">O paciente vê os retornos agendados e lembretes de medicação.</div></div>
+    <div class="card"><div style="font-size:1.5rem">🧪</div><h3 style="font-size:.95rem">Exames com link</h3><div class="card-sub" style="margin:0">Acessa exames solicitados e links de laboratório.</div></div>
+    <div class="card"><div style="font-size:1.5rem">📄</div><h3 style="font-size:.95rem">Baixa documentos</h3><div class="card-sub" style="margin:0">Receitas, atestados e laudos disponíveis a qualquer hora.</div></div>
+  </div>
+  <div class="disclaimer">📱 O portal é gerado a partir dos dados atuais do paciente e enviado como um link (funciona offline após aberto). Ao emitir novos documentos, gere o link novamente para atualizar. Nenhum dado trafega por servidores — tudo fica no link e no aparelho do paciente.</div>`;
+};
+
 /* ============================ APP OBJECT (handlers) ============================ */
 const App = {
   go(r){ route=r; render(); },
@@ -939,10 +1199,44 @@ const App = {
       <div class="field"><label class="f">Clínica / Instituição</label><input id="pf_clin" value="${esc(p.clinica)}"></div>
       <div class="row c2"><div class="field"><label class="f">Endereço</label><input id="pf_end" value="${esc(p.endereco)}"></div>
       <div class="field"><label class="f">Cidade</label><input id="pf_cid" value="${esc(p.cidade)}"></div></div>
+      <div class="divider"></div>
+      <label class="f">Assinatura digital <span class="muted">— desenhe abaixo (mouse ou dedo)</span></label>
+      <div style="position:relative;border:1px solid var(--border-strong);border-radius:12px;background:#fff;overflow:hidden;margin-bottom:8px">
+        <canvas id="sigPad" width="520" height="150" style="width:100%;height:150px;touch-action:none;display:block;cursor:crosshair"></canvas>
+        <span style="position:absolute;bottom:8px;left:12px;color:#bbb;font-size:.7rem;pointer-events:none">✍ assine aqui</span>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="App.sigClear()">Limpar assinatura</button>
+        ${p.assinatura?'<span class="tag jade">✓ Assinatura salva</span>':''}
+      </div>
+      <label class="f" style="display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" id="pf_carimbo" ${p.carimbo!==false?'checked':''} style="width:auto"> Incluir carimbo virtual nos documentos</label>
+      <div class="disclaimer">O carimbo é gerado automaticamente com seu nome, CRM e especialidade. A assinatura desenhada aparece acima da linha de assinatura em receitas, laudos, atestados, pedidos e encaminhamentos.</div>
       <button class="btn btn-gold btn-block" onclick="App.savePerfil()">Salvar perfil</button>`);
+    setTimeout(()=>App.sigInit(p.assinatura),50);
   },
+  sigInit(existing){
+    const c=document.getElementById('sigPad'); if(!c) return;
+    const ctx=c.getContext('2d'); ctx.lineWidth=2.2; ctx.lineCap='round'; ctx.strokeStyle='#14110b';
+    App._sig={c,ctx,drawing:false,dirty:false};
+    if(existing){ const img=new Image(); img.onload=()=>ctx.drawImage(img,0,0,c.width,c.height); img.src=existing; }
+    const pos=e=>{ const r=c.getBoundingClientRect(); const t=e.touches?e.touches[0]:e; return {x:(t.clientX-r.left)*(c.width/r.width), y:(t.clientY-r.top)*(c.height/r.height)}; };
+    const start=e=>{ e.preventDefault(); App._sig.drawing=true; App._sig.dirty=true; const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); };
+    const move=e=>{ if(!App._sig.drawing)return; e.preventDefault(); const p=pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); };
+    const end=()=>{ App._sig.drawing=false; };
+    c.onmousedown=start; c.onmousemove=move; window.addEventListener('mouseup',end);
+    c.ontouchstart=start; c.ontouchmove=move; c.ontouchend=end;
+  },
+  sigClear(){ const s=App._sig; if(s){ s.ctx.clearRect(0,0,s.c.width,s.c.height); s.dirty=true; } },
   savePerfil(){
-    DB.perfil = { nome:val('pf_nome'), crm:val('pf_crm'), especialidade:val('pf_esp'), telefone:val('pf_tel'), clinica:val('pf_clin'), endereco:val('pf_end'), cidade:val('pf_cid') };
+    let assinatura = DB.perfil.assinatura||'';
+    const s=App._sig;
+    if(s && s.dirty){
+      // detect if canvas has ink
+      const d=s.ctx.getImageData(0,0,s.c.width,s.c.height).data; let ink=false;
+      for(let i=3;i<d.length;i+=4){ if(d[i]!==0){ ink=true; break; } }
+      assinatura = ink ? s.c.toDataURL('image/png') : '';
+    }
+    DB.perfil = { nome:val('pf_nome'), crm:val('pf_crm'), especialidade:val('pf_esp'), telefone:val('pf_tel'), clinica:val('pf_clin'), endereco:val('pf_end'), cidade:val('pf_cid'), assinatura, carimbo:document.getElementById('pf_carimbo').checked };
     persist(); closeModal(); renderNav(); toast('Perfil salvo','jade');
   },
   closeModal,
@@ -1054,15 +1348,18 @@ const App = {
     const t=document.getElementById('recTimer'); if(t)t.textContent='00:00';
   },
   transcriptEdited(el){ rec.finalText = el.innerText; },
+  _pag:'pago',
+  setPag(v){ App._pag=v; setVal('cPag',v); ['p','x','c'].forEach(k=>{const e=document.getElementById('cpg_'+k); if(e)e.classList.remove('active');}); const map={pago:'p',pendente:'x',cortesia:'c'}; const el=document.getElementById('cpg_'+map[v]); if(el)el.classList.add('active'); },
   saveConsulta(){
     if(!rec.pacienteId){ toast('Selecione o paciente','red'); return; }
     const c = {
       id:uid(), pacienteId:rec.pacienteId, data:now(),
       transcricao: rec.finalText.trim(),
-      queixa: val('cQueixa'), objetivo: val('cObjetivo'), diagnostico: val('cDiagnostico'), conduta: val('cConduta')
+      queixa: val('cQueixa'), objetivo: val('cObjetivo'), diagnostico: val('cDiagnostico'), conduta: val('cConduta'),
+      categoriaId: val('cCategoria')||'', valor: parseFloat(val('cValor'))||0, pagamento: val('cPag')||'pago'
     };
     DB.consultas.push(c); persist();
-    rec.finalText=''; rec.elapsed=0; rec.consultaId=c.id;
+    rec.finalText=''; rec.elapsed=0; rec.consultaId=c.id; App._pag='pago';
     toast('Consulta salva','jade');
     render();
   },
@@ -1457,6 +1754,103 @@ const App = {
     App._print('Resumo da Consulta', p, `<div class="doc-body">${esc(partes.join('\n\n'))}</div>`, now());
   },
 
+  /* ---- LINHAS DE CUIDADO ---- */
+  newCategoria(){
+    openModal(`
+      <div class="modal-head"><h3>Nova linha de cuidado 🗂</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="card-sub" style="margin-top:-8px">Ex.: Doença metabólica, Emagrecimento, Urgência, Endemias, Reabilitação…</div>
+      <div class="row c2"><div class="field"><label class="f">Nome *</label><input id="cat_nome" placeholder="Tipo de doença / linha"></div>
+      <div class="field"><label class="f">Cor</label><input type="color" id="cat_cor" value="#c9a227" style="height:42px;padding:4px"></div></div>
+      <button class="btn btn-gold btn-block" onclick="App.saveCategoria()">Criar linha de cuidado</button>`);
+  },
+  saveCategoria(){
+    const nome=val('cat_nome').trim(); if(!nome){ toast('Informe o nome','red'); return; }
+    DB.categorias.push({id:uid(), nome, cor:val('cat_cor')||'#c9a227'}); persist(); closeModal(); render(); toast('Linha criada','jade');
+  },
+  delCategoria(id){ if(!confirm('Excluir esta linha de cuidado? As consultas continuam, mas sem a marcação.'))return; DB.categorias=DB.categorias.filter(c=>c.id!==id); DB.consultas.forEach(c=>{ if(c.categoriaId===id) c.categoriaId=''; }); persist(); render(); toast('Linha excluída','red'); },
+
+  /* ---- FINANCEIRO ---- */
+  togglePagamento(id){ const c=DB.consultas.find(x=>x.id===id); if(!c)return; c.pagamento = c.pagamento==='pago'?'pendente':c.pagamento==='pendente'?'cortesia':'pago'; persist(); render(); },
+
+  /* ---- PRODUTOS & VENDAS ---- */
+  newProduto(){
+    openModal(`
+      <div class="modal-head"><h3>Novo produto / serviço 🛒</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="field"><label class="f">Nome *</label><input id="pr_nome" placeholder="Ex.: Protocolo emagrecimento 90 dias"></div>
+      <div class="row c2"><div class="field"><label class="f">Tipo</label><input id="pr_tipo" placeholder="Programa / Produto / Serviço"></div>
+      <div class="field"><label class="f">Preço (R$)</label><input type="number" id="pr_preco" step="0.01" placeholder="0,00"></div></div>
+      <div class="field"><label class="f">Direcionamento (tags)</label>
+        <div class="chips" id="pr_tags">${['emagrecimento','metabolica','mental','urgencia','endemia','estetica'].map(t=>`<span class="tag chip-add" data-t="${t}" onclick="this.classList.toggle('gold')">+ ${t}</span>`).join('')}</div>
+        <div class="muted" style="font-size:.66rem;margin-top:6px">Para quais perfis de paciente este produto deve ser recomendado.</div></div>
+      <button class="btn btn-gold btn-block" onclick="App.saveProduto()">Salvar produto</button>`);
+  },
+  saveProduto(){
+    const nome=val('pr_nome').trim(); if(!nome){ toast('Informe o nome','red'); return; }
+    const tags=[...document.querySelectorAll('#pr_tags .tag.gold')].map(e=>e.dataset.t);
+    DB.produtos.push({id:uid(), nome, tipo:val('pr_tipo')||'Produto', categoria:val('pr_tipo')||'Produto', preco:parseFloat(val('pr_preco'))||0, tags}); persist(); closeModal(); render(); toast('Produto salvo','jade');
+  },
+  delProduto(id){ if(!confirm('Excluir produto?'))return; DB.produtos=DB.produtos.filter(p=>p.id!==id); persist(); render(); toast('Excluído','red'); },
+  recomendarPara(pid){
+    const el=document.getElementById('recResult'); const sel=document.getElementById('recPac'); if(sel) sel.value=pid;
+    if(!pid){ if(el)el.innerHTML=''; return; }
+    const recs=recomendarProdutos(pid); const tags=patientTags(pid);
+    const html = `<div class="divider"></div>
+      <div style="margin-bottom:10px">Perfil detectado: ${tags.length?tags.map(t=>`<span class="tag jade">${t}</span>`).join(' '):'<span class="muted">sem sinais suficientes — cadastre condições/avaliação</span>'}</div>
+      ${recs.length? '<div class="list">'+recs.map(r=>`<div class="list-item">
+        <div class="avatar">🎯</div>
+        <div class="grow"><div class="li-title">${esc(r.pr.nome)}</div><div class="li-sub">Compatibilidade ${r.match} · ${(r.pr.tags||[]).join(', ')}</div></div>
+        <span style="font-family:var(--mono);color:var(--gold-light);margin-right:8px">${BRL(r.pr.preco)}</span>
+        <button class="btn btn-jade btn-sm" onclick="App.registrarVenda('${pid}','${r.pr.id}')">Registrar venda</button></div>`).join('')+'</div>'
+        : '<div class="muted" style="font-size:.85rem">Nenhum produto compatível. Cadastre produtos com tags que combinem com o perfil.</div>'}`;
+    if(el){ el.innerHTML=html; } else { openModal(`<div class="modal-head"><h3>Recomendações — ${esc(patientName(pid))}</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>${html}`, true); }
+  },
+  registrarVenda(pid, prid){
+    const pr=DB.produtos.find(p=>p.id===prid); if(!pr) return;
+    DB.vendas.push({id:uid(), pacienteId:pid, produtoId:prid, nome:pr.nome, valor:pr.preco, data:now()}); persist();
+    toast('Venda registrada: '+BRL(pr.preco),'jade'); render();
+  },
+
+  /* ---- PORTAL DO PACIENTE ---- */
+  gerarPortal(pid){
+    const el=document.getElementById('portalResult'); if(!pid){ if(el)el.innerHTML=''; return; }
+    const p=patient(pid); if(!p) return;
+    const docs=[];
+    DB.receitas.filter(d=>d.pacienteId===pid).forEach(d=>docs.push({t:'Receita', nome:d.titulo||'Receita', data:d.data, key:'receitas', id:d.id}));
+    DB.pedidos.filter(d=>d.pacienteId===pid).forEach(d=>docs.push({t:'Pedido de exame', nome:'Pedido de exames', data:d.data, key:'pedidos', id:d.id}));
+    DB.encaminhamentos.filter(d=>d.pacienteId===pid).forEach(d=>docs.push({t:'Encaminhamento', nome:d.especialidade, data:d.data, key:'encaminhamentos', id:d.id}));
+    DB.atestados.filter(d=>d.pacienteId===pid).forEach(d=>docs.push({t:'Atestado', nome:'Atestado', data:d.data, key:'atestados', id:d.id}));
+    DB.laudos.filter(d=>d.pacienteId===pid).forEach(d=>docs.push({t:'Laudo', nome:d.titulo||'Laudo', data:d.data, key:'laudos', id:d.id}));
+    const consultas=DB.lembretes.filter(l=>l.pacienteId===pid && l.tipo==='consulta' && l.ativo!==false).map(l=>({titulo:l.titulo, data:l.data}));
+    const remedios=DB.lembretes.filter(l=>l.pacienteId===pid && l.tipo==='remedio' && l.ativo!==false).map(l=>({titulo:l.titulo, horarios:l.horarios, freq:l.freq}));
+    const exames=DB.pedidos.filter(d=>d.pacienteId===pid).flatMap(d=>(d.itens||[]).map(nome=>({nome, link:''})));
+    const payload={ v:1, medico:{nome:DB.perfil.nome, crm:DB.perfil.crm, tel:DB.perfil.telefone}, paciente:{nome:p.nome},
+      consultas, remedios, exames,
+      docs: docs.map(d=>({...d, html: App._docHtml(d.key, d.id)})) };
+    let b64; try{ b64=btoa(unescape(encodeURIComponent(JSON.stringify(payload)))); }catch(e){ b64=''; }
+    const base = location.href.replace(/[^/]*$/,'') + 'paciente.html';
+    const link = base + '#d=' + b64;
+    const wa = `https://wa.me/?text=${encodeURIComponent('Olá '+p.nome+'! Aqui está seu acesso MedEasy (lembretes, exames e documentos): '+link)}`;
+    el.innerHTML = `<div class="divider"></div>
+      <label class="f">Link do paciente (${docs.length} documento(s), ${consultas.length} consulta(s), ${remedios.length} lembrete(s))</label>
+      <textarea id="portalLink" style="min-height:70px;font-family:var(--mono);font-size:.72rem" readonly>${esc(link)}</textarea>
+      <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">
+        <button class="btn btn-jade" onclick="navigator.clipboard.writeText(document.getElementById('portalLink').value); App.toast('Link copiado','jade')">📋 Copiar link</button>
+        <a class="btn btn-jade" href="${wa}" target="_blank" rel="noopener">📲 Enviar no WhatsApp</a>
+        <a class="btn btn-ghost" href="${link}" target="_blank" rel="noopener">👁 Pré-visualizar</a>
+      </div>`;
+  },
+  toast(m,t){ toast(m,t); },
+  _docHtml(key, id){
+    // reconstrói o corpo do documento como HTML simples para o portal
+    const d=DB[key].find(x=>x.id===id); if(!d) return '';
+    if(key==='receitas') return (d.itens||[]).map(it=>`<p><b>${esc(it.nome)}</b>${it.qtd?' — '+esc(it.qtd):''}<br><small>${esc(it.pos)}</small></p>`).join('')+(d.orientacoes?`<p><b>Orientações:</b> ${esc(d.orientacoes)}</p>`:'');
+    if(key==='pedidos') return (d.itens||[]).map(it=>`<p>☐ ${esc(it)}</p>`).join('')+(d.obs?`<p>${esc(d.obs)}</p>`:'');
+    if(key==='encaminhamentos') return `<p>Encaminhamento para <b>${esc(d.especialidade)}</b></p><p>${esc(d.motivo||'')}</p>`;
+    if(key==='atestados') return `<p>${esc(d.corpo||'')}</p>${d.cid?`<p>CID: ${esc(d.cid)}</p>`:''}`;
+    if(key==='laudos') return `<p>${esc(d.corpo||'')}</p>${d.conclusao?`<p><b>Conclusão:</b> ${esc(d.conclusao)}</p>`:''}`;
+    return '';
+  },
+
   /* ---- LEMBRETES ---- */
   newLembrete(tipo){
     const opts=DB.pacientes.map(p=>`<option value="${p.id}">${esc(p.nome)}</option>`).join('');
@@ -1527,8 +1921,12 @@ const App = {
       <h1 class="doc-title">${title}</h1>
       <div class="doc-patient"><strong>Paciente:</strong> ${esc(p?p.nome:'—')} ${idade?'· '+idade:''} ${p&&p.cpf?'· CPF: '+esc(p.cpf):''}</div>
       ${bodyHtml}
-      <div class="doc-sign"><div class="line"></div>${esc(pf.nome||'')}${pf.crm?'<br>'+esc(pf.crm):''}</div>
-      <div class="doc-foot">${esc(pf.cidade||'')}, ${fmtLongDate(dataIso)} — Documento emitido pelo Sistema Clínico</div>
+      <div class="doc-sign">
+        ${pf.assinatura?`<img src="${pf.assinatura}" alt="assinatura" style="height:60px;margin:0 auto 2px;display:block">`:'<div style="height:56px"></div>'}
+        <div class="line"></div>${esc(pf.nome||'')}${pf.crm?'<br>'+esc(pf.crm):''}
+        ${pf.carimbo!==false?`<div class="doc-stamp">${esc(pf.nome||'')}<span>${esc(pf.especialidade||'')}</span><span>${esc(pf.crm||'CRM —')}</span></div>`:''}
+      </div>
+      <div class="doc-foot">${esc(pf.cidade||'')}, ${fmtLongDate(dataIso)} — Documento emitido pelo MedEasy · assinado digitalmente</div>
     </div>`;
     setTimeout(()=>window.print(), 60);
   },
@@ -1544,7 +1942,7 @@ const App = {
     const inp=document.createElement('input'); inp.type='file'; inp.accept='.json,application/json';
     inp.onchange=()=>{ const f=inp.files[0]; if(!f)return; const r=new FileReader();
       r.onload=()=>{ try{ const data=JSON.parse(r.result); if(!confirm('Substituir todos os dados atuais pelo arquivo importado?'))return;
-        DB=Object.assign({perfil:seedPerfil,pacientes:[],consultas:[],receitas:[],laudos:[],atestados:[],exames:[],lembretes:[],suplementos:[]}, data);
+        DB=Object.assign({perfil:seedPerfil,pacientes:[],consultas:[],receitas:[],laudos:[],atestados:[],exames:[],lembretes:[],suplementos:[],encaminhamentos:[],pedidos:[],avaliacoes:[],categorias:[],produtos:[],vendas:[]}, data);
         persist(); render(); toast('Dados importados','jade'); }catch(e){ toast('Arquivo inválido','red'); } };
       r.readAsText(f); };
     inp.click();

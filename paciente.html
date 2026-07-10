@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#05070a" />
+<title>MedEasy — Meu acompanhamento</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#05070a; --card:rgba(18,24,33,0.6); --gold:#c9a227; --gold-light:#e2c464; --jade:#2fae7d; --jade-light:#45cf99; --red-light:#f18b8b; --text:#eae8e1; --text-muted:#99a2ad; --border:rgba(234,232,225,0.1); --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.55; min-height:100vh; padding-bottom:40px; }
+  .orb{ position:fixed; border-radius:50%; filter:blur(90px); opacity:0.4; z-index:-1; }
+  .o1{ width:420px;height:420px;top:-12%;left:-14%;background:radial-gradient(circle,rgba(201,162,39,0.4),transparent 70%); }
+  .o2{ width:400px;height:400px;bottom:-10%;right:-16%;background:radial-gradient(circle,rgba(47,174,125,0.35),transparent 70%); }
+  a{ color:inherit; text-decoration:none; }
+  h1,h2,h3{ font-family:var(--serif); font-weight:500; }
+  .wrap{ max-width:640px; margin:0 auto; padding:0 18px; }
+  header{ padding:26px 0 14px; text-align:center; }
+  .mono-badge{ width:56px;height:56px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.4rem;color:var(--gold-light);background:linear-gradient(145deg,rgba(201,162,39,0.16),rgba(201,162,39,0.02));border:1px solid rgba(201,162,39,0.4); }
+  .hello{ font-size:1.5rem; margin-bottom:2px; }
+  .doc-by{ font-family:var(--mono); font-size:0.7rem; color:var(--text-muted); letter-spacing:0.04em; }
+  .card{ background:var(--card); backdrop-filter:blur(10px); border:1px solid var(--border); border-radius:16px; padding:18px; margin-bottom:16px; }
+  .card h2{ font-size:1.05rem; margin-bottom:3px; display:flex; align-items:center; gap:9px; }
+  .card .sub{ color:var(--text-muted); font-size:0.78rem; margin-bottom:12px; }
+  .item{ display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:11px; background:rgba(255,255,255,0.02); border:1px solid var(--border); margin-bottom:9px; }
+  .item .ic{ width:36px;height:36px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.05rem;background:rgba(201,162,39,0.12);border:1px solid rgba(201,162,39,0.25); }
+  .item .ic.j{ background:rgba(47,174,125,0.12); border-color:rgba(47,174,125,0.25); }
+  .item .grow{ flex:1; min-width:0; }
+  .it-title{ font-weight:600; font-size:0.9rem; }
+  .it-sub{ font-size:0.76rem; color:var(--text-muted); margin-top:2px; }
+  .btn{ display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:999px; font-weight:600; font-size:0.8rem; cursor:pointer; border:1px solid transparent; font-family:var(--sans); }
+  .btn-gold{ background:linear-gradient(135deg,var(--gold-light),var(--gold)); color:#14100a; }
+  .btn-ghost{ border-color:var(--border); color:var(--text); background:rgba(255,255,255,0.03); }
+  .btn-sm{ padding:6px 11px; font-size:0.74rem; }
+  .empty{ text-align:center; color:var(--text-muted); padding:30px 10px; }
+  .empty .big{ font-size:2rem; opacity:0.6; margin-bottom:8px; }
+  .tip{ font-size:0.74rem; color:var(--text-muted); border:1px dashed var(--border); border-radius:11px; padding:12px 14px; margin-top:6px; line-height:1.5; }
+  footer{ text-align:center; color:var(--text-muted); font-size:0.72rem; margin-top:22px; }
+  .load-box{ max-width:520px; margin:60px auto; text-align:center; padding:0 20px; }
+  .load-box input{ width:100%; background:rgba(5,7,10,0.6); border:1px solid var(--border); color:var(--text); padding:11px; border-radius:10px; font-family:var(--mono); font-size:0.76rem; margin:12px 0; }
+  /* PRINT DOC */
+  #docArea{ display:none; }
+  @media print{ body *{ visibility:hidden; } #docArea, #docArea *{ visibility:visible; } #docArea{ display:block!important; position:absolute; inset:0; background:#fff; color:#111; } .orb{ display:none; } }
+  .pdoc{ color:#14110b; font-family:'Inter',sans-serif; max-width:720px; margin:0 auto; padding:40px 44px; font-size:14px; line-height:1.6; }
+  .pdoc .ph{ display:flex; justify-content:space-between; border-bottom:2px solid #c9a227; padding-bottom:12px; margin-bottom:22px; }
+  .pdoc .ph .nm{ font-family:'Fraunces',serif; font-size:19px; }
+  .pdoc .ph .mt{ font-size:12px; color:#555; }
+  .pdoc h1{ font-family:'Fraunces',serif; font-size:20px; text-align:center; text-transform:uppercase; margin:6px 0 20px; letter-spacing:0.04em; }
+  .pdoc .pat{ background:#f6f2e6; border-radius:8px; padding:10px 14px; margin-bottom:18px; font-size:13px; }
+  .pdoc .foot{ margin-top:40px; font-size:11px; color:#888; text-align:center; border-top:1px solid #eee; padding-top:10px; }
+</style>
+</head>
+<body>
+<span class="orb o1"></span><span class="orb o2"></span>
+<div id="app"></div>
+<div id="docArea"></div>
+<script>
+(function(){
+  "use strict";
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function fmtDate(iso){ if(!iso) return ''; const d=new Date(iso); return isNaN(d)?esc(iso):d.toLocaleDateString('pt-BR'); }
+  function fmtDT(iso){ if(!iso) return ''; const d=new Date(iso); return isNaN(d)?esc(iso):d.toLocaleDateString('pt-BR')+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
+
+  let data=null;
+  const hash=location.hash||'';
+  const m=hash.match(/[#&]d=([^&]+)/);
+  if(m){ try{ data=JSON.parse(decodeURIComponent(escape(atob(m[1])))); }catch(e){ data=null; } }
+
+  const app=document.getElementById('app');
+  if(!data){
+    app.innerHTML=`<div class="load-box">
+      <div class="mono-badge" style="margin-bottom:16px">M</div>
+      <h1 style="font-size:1.5rem;margin-bottom:8px">MedEasy — Meu acompanhamento</h1>
+      <p style="color:var(--text-muted);font-size:0.9rem">Este é o portal do paciente. Abra o link que seu profissional de saúde enviou (por WhatsApp) para ver seus lembretes, exames e documentos.</p>
+      <input id="lk" placeholder="Cole aqui o link recebido">
+      <button class="btn btn-gold" onclick="(function(){var v=document.getElementById('lk').value.trim();var i=v.indexOf('#');if(i>=0){location.href=location.pathname+v.slice(i);}else{location.hash='d='+v;}location.reload();})()">Abrir meu acompanhamento</button>
+    </div>`;
+    return;
+  }
+
+  window.__docs = (data.docs||[]);
+  window.abrirDoc=function(i){
+    const d=window.__docs[i]; if(!d) return;
+    const med=data.medico||{};
+    document.getElementById('docArea').innerHTML=`<div class="pdoc">
+      <div class="ph"><div><div class="nm">${esc(med.nome||'—')}</div><div class="mt">${esc(med.crm||'')}</div></div><div class="mt">${esc(med.tel||'')}</div></div>
+      <h1>${esc(d.nome||d.t)}</h1>
+      <div class="pat"><b>Paciente:</b> ${esc((data.paciente||{}).nome||'')}</div>
+      <div>${d.html||''}</div>
+      <div class="foot">${fmtDate(d.data)} — Documento emitido pelo MedEasy</div>
+    </div>`;
+    setTimeout(()=>window.print(),80);
+  };
+
+  const cons=data.consultas||[], rem=data.remedios||[], exa=data.exames||[], docs=data.docs||[];
+  app.innerHTML=`
+  <header><div class="wrap">
+    <div class="mono-badge">M</div>
+    <div class="hello">Olá, ${esc((data.paciente||{}).nome||'')} 👋</div>
+    <div class="doc-by">Acompanhamento com ${esc((data.medico||{}).nome||'seu profissional')}</div>
+  </div></header>
+  <div class="wrap">
+    <div class="card">
+      <h2>🔔 Minhas consultas</h2><div class="sub">Retornos e agendamentos</div>
+      ${cons.length? cons.map(c=>`<div class="item"><div class="ic">📅</div><div class="grow"><div class="it-title">${esc(c.titulo||'Consulta')}</div><div class="it-sub">${fmtDT(c.data)}</div></div></div>`).join('') : '<div class="empty"><div class="big">📅</div>Nenhuma consulta agendada.</div>'}
+    </div>
+    <div class="card">
+      <h2>💊 Meus medicamentos</h2><div class="sub">Lembretes de uso</div>
+      ${rem.length? rem.map(r=>`<div class="item"><div class="ic j">💊</div><div class="grow"><div class="it-title">${esc(r.titulo)}</div><div class="it-sub">${esc((r.horarios||'')+(r.freq?' · '+r.freq:''))||'Conforme orientação'}</div></div></div>`).join('') : '<div class="empty"><div class="big">💊</div>Nenhum medicamento cadastrado.</div>'}
+    </div>
+    <div class="card">
+      <h2>🧪 Meus exames</h2><div class="sub">Solicitados pelo profissional</div>
+      ${exa.length? exa.map(e=>`<div class="item"><div class="ic">🧪</div><div class="grow"><div class="it-title">${esc(e.nome)}</div>${e.link?`<div class="it-sub">Link disponível</div>`:''}</div>${e.link?`<a class="btn btn-ghost btn-sm" href="${esc(e.link)}" target="_blank" rel="noopener">Abrir</a>`:''}</div>`).join('') : '<div class="empty"><div class="big">🧪</div>Nenhum exame solicitado.</div>'}
+    </div>
+    <div class="card">
+      <h2>📄 Meus documentos</h2><div class="sub">Baixe ou imprima a qualquer hora</div>
+      ${docs.length? docs.map((d,i)=>`<div class="item"><div class="ic">📄</div><div class="grow"><div class="it-title">${esc(d.nome||d.t)}</div><div class="it-sub">${esc(d.t)} · ${fmtDate(d.data)}</div></div><button class="btn btn-gold btn-sm" onclick="abrirDoc(${i})">⬇ Baixar</button></div>`).join('') : '<div class="empty"><div class="big">📄</div>Nenhum documento disponível.</div>'}
+    </div>
+    <div class="tip">📱 <b>Dica:</b> toque em <b>Compartilhar → Adicionar à Tela de Início</b> (iPhone) ou <b>menu ⋮ → Adicionar à tela inicial</b> (Android) para acessar como um aplicativo. Este acesso funciona offline após aberto.</div>
+    <footer>MedEasy · gerado pelo seu profissional de saúde · seus dados ficam apenas neste aparelho</footer>
+  </div>`;
+})();
+</script>
+</body>
+</html>
