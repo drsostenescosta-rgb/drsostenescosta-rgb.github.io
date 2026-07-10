@@ -6,7 +6,7 @@
 <title>Sóstenes Costa Paiva — Ciência que cuida, inteligência que multiplica</title>
 <meta name="description" content="Uma década transformando pacientes e formando profissionais de saúde — agora direcionada a levar o poder da Inteligência Artificial para a saúde de milhões." />
 <meta property="og:title" content="Sóstenes Costa Paiva — Ciência que cuida, inteligência que multiplica" />
-<meta property="og:description" content="Do interior do Nordeste ao Vale do Silício: ciência, neurociência e IA a serviço de mais vidas." />
+<meta property="og:description" content="Criador do MedEasy — ciência, neurociência e IA a serviço de mais vidas." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -206,8 +206,10 @@
     background: radial-gradient(circle, rgba(69,207,153,0.20), rgba(201,162,39,0.10) 45%, transparent 70%);
     filter: blur(22px); animation: gpulse 6s ease-in-out infinite; }
   @keyframes gpulse { 0%,100%{ opacity:.7; transform:scale(1); } 50%{ opacity:1; transform:scale(1.06); } }
-  .globe { position: relative; width: 350px; height: 350px; transform-style: preserve-3d; animation: gspin 24s linear infinite; }
-  @keyframes gspin { from{ transform: rotateX(8deg) rotateY(0deg); } to{ transform: rotateX(8deg) rotateY(360deg); } }
+  .globe-stage { position: relative; width: 350px; height: 350px; display: flex; align-items: center; justify-content: center; transform-style: preserve-3d; animation: gfloat3d 7s ease-in-out infinite; }
+  @keyframes gfloat3d { 0%,100%{ transform: translateY(-12px) rotateZ(-1.6deg); } 50%{ transform: translateY(14px) rotateZ(1.6deg); } }
+  .globe { position: absolute; width: 350px; height: 350px; transform-style: preserve-3d; animation: gspin 22s linear infinite; }
+  @keyframes gspin { from{ transform: rotateX(10deg) rotateY(0deg); } to{ transform: rotateX(10deg) rotateY(360deg); } }
   .globe .sphere { position: absolute; inset: 0; border-radius: 50%;
     background: radial-gradient(circle at 36% 30%, rgba(130,190,230,0.18), rgba(25,55,90,0.12) 52%, rgba(5,10,20,0.02) 74%);
     border: 1px solid rgba(130,195,235,0.20);
@@ -222,10 +224,10 @@
     background: linear-gradient(115deg, #fff 0%, #f3ead0 45%, var(--gold-light) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     text-shadow: 0 0 30px rgba(226,196,100,0.3); }
   .globe-center .ia-sub { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.22em; color: var(--text-muted); text-transform: uppercase; margin-top: 6px; }
-  @keyframes gfloat { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-11px); } }
-  @media (prefers-reduced-motion: reduce){ .globe, .globe-ico, .globe-glow{ animation: none !important; } }
-  @media (max-width: 900px){ .hero-globe{ height: 420px; } .globe{ transform: scale(0.8); } }
-  @media (max-width: 420px){ .globe{ transform: scale(0.66); } }
+  @keyframes gfloat { 0%,100%{ transform: translateY(0) scale(1); } 50%{ transform: translateY(-16px) scale(1.05); } }
+  @media (prefers-reduced-motion: reduce){ .globe, .globe-ico, .globe-glow, .globe-stage{ animation: none !important; } }
+  @media (max-width: 900px){ .hero-globe{ height: 440px; transform: scale(0.82); } }
+  @media (max-width: 420px){ .hero-globe{ transform: scale(0.62); } }
 
   .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; border-top: 1px solid var(--border); padding-top: 32px; }
   .stat-num { font-family: var(--serif); font-size: 2rem; color: var(--gold-light); text-shadow: 0 0 24px rgba(226,196,100,0.3); }
@@ -421,8 +423,8 @@
         <span class="pt"><span class="grad-text">Ciência que cuida.</span> <em>Inteligência que multiplica.</em></span>
         <span class="en"><span class="grad-text">Science that cares.</span> <em>Intelligence that multiplies.</em></span>
       </h1>
-      <p class="hero-sub pt">Do interior do Nordeste ao coração do Vale do Silício: uma década transformando vidas e formando profissionais — agora direcionada a levar o poder da IA para a saúde de milhões.</p>
-      <p class="hero-sub en">From inland Northeast Brazil to the heart of Silicon Valley: a decade transforming lives and training professionals — now channeled into bringing the power of AI to the health of millions.</p>
+      <p class="hero-sub pt">Uma década transformando vidas e formando profissionais — agora direcionada a levar o poder da Inteligência Artificial para a saúde de milhões. Criador do <b>MedEasy</b>.</p>
+      <p class="hero-sub en">A decade transforming lives and training professionals — now channeled into bringing the power of Artificial Intelligence to the health of millions. Creator of <b>MedEasy</b>.</p>
       <div class="hero-ctas">
         <a class="btn btn-gold" href="https://wa.me/5584999869468" target="_blank" rel="noopener">
           <span class="pt">Fale comigo</span><span class="en">Talk to me</span>
@@ -435,27 +437,31 @@
 
     <div class="hero-globe reveal">
       <span class="globe-glow"></span>
-      <div class="globe">
-        <span class="sphere"></span>
-        <span class="lon" style="transform:rotateY(0deg)"></span>
-        <span class="lon dot" style="transform:rotateY(30deg)"></span>
-        <span class="lon" style="transform:rotateY(60deg)"></span>
-        <span class="lon dot" style="transform:rotateY(90deg)"></span>
-        <span class="lon" style="transform:rotateY(120deg)"></span>
-        <span class="lon dot" style="transform:rotateY(150deg)"></span>
-        <span class="lat" style="width:350px;height:350px;margin:-175px 0 0 -175px;transform:rotateX(90deg)"></span>
-        <span class="lat" style="width:303px;height:303px;margin:-151px 0 0 -151px;transform:translateY(-88px) rotateX(90deg)"></span>
-        <span class="lat" style="width:303px;height:303px;margin:-151px 0 0 -151px;transform:translateY(88px) rotateX(90deg)"></span>
-        <span class="lat" style="width:175px;height:175px;margin:-87px 0 0 -87px;transform:translateY(-152px) rotateX(90deg)"></span>
-        <span class="lat" style="width:175px;height:175px;margin:-87px 0 0 -87px;transform:translateY(152px) rotateX(90deg)"></span>
+      <div class="globe-stage">
+        <div class="globe">
+          <span class="sphere"></span>
+          <span class="lon" style="transform:rotateY(0deg)"></span>
+          <span class="lon dot" style="transform:rotateY(22deg)"></span>
+          <span class="lon" style="transform:rotateY(45deg)"></span>
+          <span class="lon dot" style="transform:rotateY(67deg)"></span>
+          <span class="lon" style="transform:rotateY(90deg)"></span>
+          <span class="lon dot" style="transform:rotateY(112deg)"></span>
+          <span class="lon" style="transform:rotateY(135deg)"></span>
+          <span class="lon dot" style="transform:rotateY(157deg)"></span>
+          <span class="lat" style="width:350px;height:350px;margin:-175px 0 0 -175px;transform:rotateX(90deg)"></span>
+          <span class="lat" style="width:303px;height:303px;margin:-151px 0 0 -151px;transform:translateY(-88px) rotateX(90deg)"></span>
+          <span class="lat" style="width:303px;height:303px;margin:-151px 0 0 -151px;transform:translateY(88px) rotateX(90deg)"></span>
+          <span class="lat" style="width:175px;height:175px;margin:-87px 0 0 -87px;transform:translateY(-152px) rotateX(90deg)"></span>
+          <span class="lat" style="width:175px;height:175px;margin:-87px 0 0 -87px;transform:translateY(152px) rotateX(90deg)"></span>
+        </div>
+        <span class="globe-ico" style="top:11%;left:4%;animation-delay:0s">🧠</span>
+        <span class="globe-ico" style="top:37%;left:-3%;animation-delay:.7s">🧬</span>
+        <span class="globe-ico" style="bottom:14%;left:10%;animation-delay:1.4s">💓</span>
+        <span class="globe-ico" style="top:9%;right:6%;animation-delay:.35s">➕</span>
+        <span class="globe-ico" style="top:43%;right:-4%;animation-delay:1.1s">⚛</span>
+        <span class="globe-ico" style="bottom:16%;right:8%;animation-delay:1.9s">🩺</span>
+        <div class="globe-center"><div class="ia">IA</div><div class="ia-sub">Informação · Inteligência · Impacto</div></div>
       </div>
-      <span class="globe-ico" style="top:13%;left:5%;animation-delay:0s">🧠</span>
-      <span class="globe-ico" style="top:37%;left:-2%;animation-delay:.8s">🧬</span>
-      <span class="globe-ico" style="bottom:15%;left:11%;animation-delay:1.6s">💓</span>
-      <span class="globe-ico" style="top:11%;right:7%;animation-delay:.4s">➕</span>
-      <span class="globe-ico" style="top:43%;right:-3%;animation-delay:1.2s">⚛</span>
-      <span class="globe-ico" style="bottom:17%;right:9%;animation-delay:2s">🩺</span>
-      <div class="globe-center"><div class="ia">IA</div><div class="ia-sub">Informação · Inteligência · Impacto</div></div>
       <span class="photo-chip" style="left:50%;transform:translateX(-50%)"><span class="chip-dot"></span>Ciência · Neurociência · IA</span>
     </div>
   </div>
@@ -476,36 +482,15 @@
         <div class="en" style="color:var(--text-muted); font-size:.84rem;">professionals trained</div>
       </div>
       <div>
-        <div style="font-family:var(--serif); font-size:2.1rem; color:var(--gold-light);">6&nbsp;em&nbsp;7</div>
-        <div class="pt" style="color:var(--text-muted); font-size:.84rem;">entrevistado por Érico Rocha</div>
-        <div class="en" style="color:var(--text-muted); font-size:.84rem;">interviewed by Érico Rocha</div>
+        <div style="font-family:var(--serif); font-size:2.1rem; color:var(--jade-light);">MedEasy</div>
+        <div class="pt" style="color:var(--text-muted); font-size:.84rem;">criador do sistema clínico com IA</div>
+        <div class="en" style="color:var(--text-muted); font-size:.84rem;">creator of the AI clinical system</div>
       </div>
       <div>
-        <div style="font-family:var(--serif); font-size:2.1rem; color:var(--jade-light);">Vale do Silício</div>
-        <div class="pt" style="color:var(--text-muted); font-size:.84rem;">saúde + neurociência + IA</div>
-        <div class="en" style="color:var(--text-muted); font-size:.84rem;">health + neuroscience + AI</div>
+        <div style="font-family:var(--serif); font-size:2.1rem; color:var(--gold-light);">+10 anos</div>
+        <div class="pt" style="color:var(--text-muted); font-size:.84rem;">de ciência aplicada à saúde</div>
+        <div class="en" style="color:var(--text-muted); font-size:.84rem;">of science applied to health</div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- SHOWCASE CHATGOSIPT -->
-<section class="section" style="border-top:1px solid var(--border);">
-  <div class="wrap showcase-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;">
-    <div class="reveal">
-      <span class="eyebrow pt">CIÊNCIA APLICADA</span><span class="eyebrow en">APPLIED SCIENCE</span>
-      <h2 style="font-family:var(--serif); font-size:2rem; margin:14px 0;">
-        <span class="pt">Não só falo de IA na saúde — <em>eu construo</em>.</span>
-        <span class="en">I don't just talk about AI in health — <em>I build it</em>.</span>
-      </h2>
-      <p class="pt" style="color:var(--text-muted);">Criei o <b>ChatGosipt</b>: transcrição e resumo por IA, <b>100% local e privado</b>. Prova concreta de ciência + tecnologia a serviço das pessoas.</p>
-      <p class="en" style="color:var(--text-muted);">I built <b>ChatGosipt</b>: AI transcription and summaries, <b>100% local and private</b>. Concrete proof of science + technology serving people.</p>
-      <a class="btn btn-gold" href="https://drsostenescosta-rgb.github.io/chatgosipt/" target="_blank" rel="noopener" style="margin-top:16px;">
-        <span class="pt">Conhecer o ChatGosipt</span><span class="en">Explore ChatGosipt</span>
-      </a>
-    </div>
-    <div class="frame frame-glow reveal" style="display:flex; align-items:center; justify-content:center; padding:44px; background:#0d1219; min-height:260px;">
-      <img src="assets/chatgosipt.png" alt="ChatGosipt" width="150" style="border-radius:26px; box-shadow:0 20px 50px rgba(0,0,0,.5);" />
     </div>
   </div>
 </section>
@@ -527,13 +512,13 @@
       </div>
     </div>
     <div class="reveal">
-      <span class="eyebrow jade pt">MEU NOVO PRODUTO</span><span class="eyebrow jade en">MY NEW PRODUCT</span>
-      <h2 style="font-family:var(--serif); font-size:2rem; margin:14px 0;">
-        <span class="pt">Criei o <em>MedEasy</em> — a consulta que se documenta sozinha.</span>
-        <span class="en">I created <em>MedEasy</em> — the consultation that documents itself.</span>
+      <span class="eyebrow jade pt">CIÊNCIA APLICADA · EU CONSTRUO</span><span class="eyebrow jade en">APPLIED SCIENCE · I BUILD</span>
+      <h2 style="font-family:var(--serif); font-size:2.3rem; margin:14px 0;">
+        <span class="pt">Sou o criador do <em>MedEasy</em> — a consulta que se documenta sozinha.</span>
+        <span class="en">I'm the creator of <em>MedEasy</em> — the consultation that documents itself.</span>
       </h2>
-      <p class="pt" style="color:var(--text-muted);">Sistema clínico que <b>escuta, transcreve e gera toda a papelada</b> — receitas, exames, laudos e atestados — com <b>assinatura digital</b>, um <b>Índice de Saúde de A a F</b> (clínico, mental e hábitos), agenda, financeiro e um <b>app para o paciente</b>. Do consultório ao celular do paciente.</p>
-      <p class="en" style="color:var(--text-muted);">A clinical system that <b>listens, transcribes and generates all the paperwork</b> — prescriptions, exams, reports and certificates — with <b>digital signature</b>, an <b>A–F Health Index</b> (clinical, mental, habits), scheduling, finance and a <b>patient app</b>.</p>
+      <p class="pt" style="color:var(--text-muted);">Não só falo de IA na saúde — <b>eu construo</b>. O MedEasy <b>escuta, transcreve e gera toda a papelada</b> — receitas, exames, laudos e atestados — com <b>assinatura digital</b>, um <b>Índice de Saúde de A a F</b> (clínico, mental e hábitos), agenda, financeiro e um <b>app para o paciente</b>. Do consultório ao celular do paciente.</p>
+      <p class="en" style="color:var(--text-muted);">I don't just talk about AI in health — <b>I build it</b>. MedEasy <b>listens, transcribes and generates all the paperwork</b> — with <b>digital signature</b>, an <b>A–F Health Index</b> (clinical, mental, habits), scheduling, finance and a <b>patient app</b>.</p>
       <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:16px;">
         <a class="btn btn-gold" href="medeasy.html">
           <span class="pt">Conhecer o MedEasy</span><span class="en">Explore MedEasy</span>
@@ -542,6 +527,11 @@
           <span class="pt">Abrir o sistema</span><span class="en">Open the system</span>
         </a>
       </div>
+      <p style="margin-top:16px; font-size:0.8rem; color:var(--text-muted);">
+        <span class="pt">Também criei o </span><span class="en">I also built </span>
+        <a href="https://drsostenescosta-rgb.github.io/chatgosipt/" target="_blank" rel="noopener" style="color:var(--gold-light); border-bottom:1px solid rgba(201,162,39,0.4);">ChatGosipt</a>
+        <span class="pt"> — transcrição por IA, 100% local e privado.</span><span class="en"> — private, local AI transcription.</span>
+      </p>
     </div>
   </div>
 </section>
@@ -584,8 +574,8 @@
         <div class="benefit-card jade">
           <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h4l3-9 4 18 3-9h2"/></svg>
           <h3 class="pt">Para os negócios em saúde</h3><h3 class="en">For health businesses</h3>
-          <p class="pt">Pontes entre a clínica, os negócios e a tecnologia do Vale do Silício — inovação que chega ao paciente real.</p>
-          <p class="en">Bridges between clinic, business and Silicon Valley technology — innovation that reaches the real patient.</p>
+          <p class="pt">Pontes entre a clínica, os negócios e a tecnologia — inovação em IA que chega ao paciente real.</p>
+          <p class="en">Bridges between clinic, business and technology — AI innovation that reaches the real patient.</p>
         </div>
       </div>
     </div>
@@ -632,16 +622,16 @@
           <span class="tl-dot"></span>
           <div class="tl-chapter pt">MARKETING &amp; NEGÓCIOS</div><div class="tl-chapter en">MARKETING &amp; BUSINESS</div>
           <h3 class="pt">Fazer o valor chegar longe</h3><h3 class="en">Making value travel far</h3>
-          <p class="pt">De franqueado da V4 Company a lançamentos digitais. Fiz um "6 em 7" — seis dígitos em sete dias — e fui entrevistado por Érico Rocha. Aprendi a escalar mensagens que transformam.</p>
-          <p class="en">From V4 Company franchisee to digital launches. I hit a "6 in 7" — six figures in seven days — and was interviewed by Érico Rocha. I learned to scale messages that transform.</p>
-          <span class="tl-chip pt">Entrevistado por Érico Rocha · 6 em 7</span><span class="tl-chip en">Interviewed by Érico Rocha · 6 in 7</span>
+          <p class="pt">De franqueado da V4 Company a lançamentos digitais. Aprendi a estruturar ofertas, escalar mensagens e transformar resultado em negócios de saúde.</p>
+          <p class="en">From V4 Company franchisee to digital launches. I learned to structure offers, scale messages and turn results into health businesses.</p>
+          <span class="tl-chip pt">Marketing, vendas e lançamentos digitais</span><span class="tl-chip en">Marketing, sales and digital launches</span>
         </div>
         <div class="tl-item jade reveal">
           <span class="tl-dot"></span>
           <div class="tl-chapter pt">O CAPÍTULO ATUAL</div><div class="tl-chapter en">THE CURRENT CHAPTER</div>
           <h3 class="pt">Biomedicina + Inteligência Artificial</h3><h3 class="en">Biomedicine + Artificial Intelligence</h3>
-          <p class="pt">Imerso no ecossistema do Vale do Silício, conectando biomedicina, saúde, neurociência e IA. Um capítulo em aberto — escrito em tempo real, para beneficiar milhões.</p>
-          <p class="en">Immersed in the Silicon Valley ecosystem, connecting biomedicine, health, neuroscience and AI. An open chapter — being written in real time, to benefit millions.</p>
+          <p class="pt">À frente da inovação em saúde com IA, conectando biomedicina, saúde, neurociência e tecnologia. Um capítulo em aberto — escrito em tempo real, para beneficiar milhões.</p>
+          <p class="en">Leading health innovation with AI, connecting biomedicine, health, neuroscience and technology. An open chapter — written in real time, to benefit millions.</p>
           <span class="tl-chip pt">Próxima meta: impactar milhões de vidas</span><span class="tl-chip en">Next goal: impact millions of lives</span>
         </div>
       </div>

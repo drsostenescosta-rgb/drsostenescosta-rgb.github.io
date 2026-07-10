@@ -366,6 +366,7 @@ DB.produtos  = DB.produtos  || [];
 DB.vendas    = DB.vendas    || [];
 DB.agenda    = DB.agenda    || [];
 DB.sinais    = DB.sinais    || [];
+DB.diagnostico = DB.diagnostico || null;
 if(DB.perfil.carimbo===undefined) DB.perfil.carimbo=true;
 persist();
 
@@ -578,6 +579,7 @@ const NAV = [
   {group:'Negócio', items:[
     {id:'financeiro', label:'Financeiro', ico:'💰'},
     {id:'produtos', label:'Produtos & Vendas', ico:'🛒'},
+    {id:'crescimento', label:'Diagnóstico & Crescimento', ico:'🚀'},
   ]},
   {group:'Documentos', items:[
     {id:'receitas', label:'Receitas', ico:'℞'},
@@ -1304,6 +1306,93 @@ PAGES.agenda = function(){
   ${anteriores.length?`<div class="card"><h3 style="font-size:1rem">Anteriores</h3><div class="list">${anteriores.slice(0,10).map(row).join('')}</div></div>`:''}`;
 };
 
+/* ============================ DIAGNÓSTICO & CRESCIMENTO ============================ */
+const PROTOCOLOS = {
+  'Emagrecimento':[
+    {nome:'Protocolo Emagrecimento 90 dias', promessa:'Perda de peso sustentável com acompanhamento próximo e método', entreg:['Consultas quinzenais','Plano alimentar e de atividade','Aplicação/medicação quando indicada','Reavaliação do Índice de Saúde mensal','Canal de suporte'], mult:10},
+    {nome:'Reset Metabólico 30 dias (entrada)', promessa:'Destravar o metabolismo e gerar o primeiro resultado', entreg:['Avaliação completa','Protocolo inicial','2 retornos'], mult:3},
+  ],
+  'Metabólico / Longevidade':[
+    {nome:'Programa Longevidade & Metabolismo', promessa:'Prevenção e vitalidade com base em dados clínicos', entreg:['Check-up e exames','Plano personalizado','Reavaliações trimestrais','Suplementação orientada'], mult:12},
+    {nome:'Check-up Inteligente', promessa:'Fotografia completa da saúde com plano de ação', entreg:['Avaliação + Índice de Saúde','Interpretação de exames','Plano de 90 dias'], mult:2.5},
+  ],
+  'Estética':[
+    {nome:'Protocolo Estético (pacote de sessões)', promessa:'Resultado estético com plano de sessões e manutenção', entreg:['Avaliação','Pacote de sessões','Manutenção trimestral'], mult:8},
+  ],
+  'Performance / Esporte':[
+    {nome:'Performance & Energia', promessa:'Mais energia, foco e recuperação', entreg:['Avaliação','Protocolo de suplementação','Acompanhamento mensal'], mult:6},
+  ],
+  'Saúde mental / Sono':[
+    {nome:'Equilíbrio Mental & Sono', promessa:'Reduzir ansiedade e recuperar o sono', entreg:['Avaliação de saúde mental','Plano terapêutico','Acompanhamento quinzenal'], mult:6},
+  ],
+  'Dor / Reabilitação':[
+    {nome:'Protocolo Dor & Movimento', promessa:'Sair da dor e recuperar função', entreg:['Avaliação funcional','Plano de reabilitação','Reavaliações'], mult:7},
+  ],
+  'Clínica geral':[
+    {nome:'Acompanhamento Premium', promessa:'Um médico de confiança sempre por perto', entreg:['Consultas periódicas','App do paciente','Canal direto'], mult:8},
+  ],
+};
+function growthPlan(i){
+  const ticket=+i.ticket||0, sem=+i.atendSemana||0;
+  const mensalAtual = ticket*sem*4;
+  const projTicket = Math.round(ticket*1.3);
+  const projMensal = Math.round(projTicket*sem*4*1.2);
+  // perfil
+  const matLabel = i.maturidade;
+  let perfil, foco;
+  if(i.gargalo==='Captação'){ perfil='Especialista sem fluxo de captação'; foco='construir uma máquina de aquisição previsível'; }
+  else if(i.gargalo==='Conversão'){ perfil='Boa captação, conversão abaixo do potencial'; foco='estruturar a consulta de avaliação e a oferta'; }
+  else if(i.gargalo==='Precificação'){ perfil='Entrega alto valor, cobra abaixo do mercado'; foco='reposicionar preço e empacotar em protocolos'; }
+  else if(i.gargalo==='Retenção'){ perfil='Atrai, mas perde o paciente cedo'; foco='criar recorrência e acompanhamento de longo prazo'; }
+  else { perfil='Sobrecarregado na operação'; foco='ganhar tempo com processos e tecnologia'; }
+  // roadmap
+  const roadmap=[
+    {fase:'Semana 1 — Fundação', acoes:['Definir posicionamento e nicho ('+ (i.nicho||'—') +')','Criar a oferta central (protocolo âncora)','Padronizar a consulta no MedEasy (modelo de anamnese + Índice de Saúde como diferencial)']},
+    {fase:'Semana 2 — Captação', acoes: i.maturidade==='Baixa'
+        ? ['Estruturar Instagram e Google Meu Negócio','Sistema de indicação com incentivo','Coletar provas sociais (antes/depois com consentimento)']
+        : i.maturidade==='Média'
+        ? ['Calendário de conteúdo semanal','Captação ativa por WhatsApp/lista','Campanha simples de tráfego para consulta de avaliação']
+        : ['Funil de captação com tráfego pago','Lançamentos/campanhas sazonais','CRM e qualificação de leads']},
+    {fase:'Semana 3 — Conversão', acoes:['Roteiro da consulta de avaliação (diagnóstico → plano → oferta)','Apresentar o Índice de Saúde e o plano visual ao paciente','Ancoragem de preço e apresentação de protocolos/planos']},
+    {fase:'Semana 4 — Retenção & LTV', acoes:['Planos de acompanhamento recorrente','Ativar o App do Paciente (lembretes, exames, documentos)','Rotina de recall e reavaliação do Índice de Saúde']},
+  ];
+  // protocolos por nicho
+  const base = PROTOCOLOS[i.nicho] || PROTOCOLOS['Clínica geral'];
+  const protocolos = base.map(pr=>({...pr, preco: Math.max(ticket*pr.mult, ticket||297)}));
+  // estratégias
+  const produto = {
+    'Mais pacientes':['Crie uma oferta de entrada acessível (consulta de avaliação ou reset 30 dias)','Use o protocolo âncora para subir o paciente de nível'],
+    'Aumentar ticket':['Empacote atendimentos avulsos em protocolos/planos premium','Adicione recorrência (assinatura de acompanhamento)'],
+    'Escalar / previsibilidade':['Padronize protocolos e delegue operação','Crie recorrência e metas de MRR (receita mensal recorrente)'],
+    'Autoridade / marca':['Nomeie seu método próprio','Documente resultados (Índice de Saúde antes/depois) como prova'],
+  }[i.objetivo] || [];
+  const mkt = i.maturidade==='Baixa'
+    ? ['Perfil profissional otimizado + provas sociais','Google Meu Negócio e avaliações','Indicações estruturadas de pacientes atuais']
+    : i.maturidade==='Média'
+    ? ['Conteúdo educativo semanal no nicho','Captação por WhatsApp com oferta de avaliação','CRM simples para não perder lead']
+    : ['Tráfego pago para funil de avaliação','Lançamentos e campanhas sazonais','Equipe de atendimento e qualificação'];
+  const vendas = {
+    'Captação':['Oferta de entrada irresistível (consulta de avaliação)','Presença ativa onde seu público está'],
+    'Conversão':['Consulta de avaliação com método claro','Use o Índice de Saúde para justificar o plano e o preço','Ofereça 2 opções de plano (ancoragem)'],
+    'Precificação':['Suba o ticket de forma gradual e justificada','Empacote em protocolos com resultado prometido','Elimine o "avulso barato"'],
+    'Retenção':['Planos de acompanhamento e reavaliação','App do Paciente ativo','Recall automático de retorno'],
+    'Tempo / operacional':['Use a transcrição e documentos do MedEasy para ganhar tempo','Padronize com modelos de anamnese','Delegue tarefas administrativas'],
+  }[i.gargalo] || [];
+  return { perfil, foco, mensalAtual, projTicket, projMensal, roadmap, protocolos, estrategias:{produto,mkt,vendas} };
+}
+
+PAGES.crescimento = function(){
+  const d=DB.diagnostico;
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">Diagnóstico & Crescimento</h2><div class="sub">Diagnóstico do seu perfil profissional + plano de vendas, protocolos de impacto e estratégias</div></div>
+    ${d?`<div class="head-actions"><button class="btn btn-ghost" onclick="App.newDiagnostico()">↻ Refazer diagnóstico</button><button class="btn btn-gold" onclick="App.printCrescimento()">🖨 Imprimir plano</button></div>`:''}
+  </div>
+  ${!d? `<div class="card"><h3 style="font-size:1rem">🚀 Comece pelo diagnóstico</h3><div class="card-sub">Responda 7 perguntas rápidas e o MedEasy monta seu plano de crescimento personalizado.</div><button class="btn btn-gold" onclick="App.newDiagnostico()">Iniciar diagnóstico</button></div>`
+    : App._renderPlano(d)}
+  <div class="disclaimer">🚀 O plano é um <strong>guia estratégico</strong> gerado a partir das suas respostas — um ponto de partida acionável para posicionamento, ofertas e vendas. Adapte à sua realidade e regulamentação profissional (publicidade médica/CFM).</div>`;
+};
+
 /* ============================ APP OBJECT (handlers) ============================ */
 const App = {
   go(r){ route=r; render(); },
@@ -1887,6 +1976,82 @@ const App = {
     App._print('Resumo da Consulta', p, `<div class="doc-body">${esc(partes.join('\n\n'))}</div>`, now());
   },
 
+  /* ---- DIAGNÓSTICO & CRESCIMENTO ---- */
+  newDiagnostico(){
+    const d=DB.diagnostico||{};
+    const sel=(id,label,opts,cur)=>`<div class="field"><label class="f">${label}</label><select id="${id}">${opts.map(o=>`<option ${cur===o?'selected':''}>${o}</option>`).join('')}</select></div>`;
+    openModal(`
+      <div class="modal-head"><h3>Diagnóstico do perfil profissional 🚀</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="card-sub" style="margin-top:-8px">7 perguntas rápidas para montar seu plano de crescimento.</div>
+      <div class="field"><label class="f">Sua área / especialidade</label><input id="dg_area" value="${esc(d.area||DB.perfil.especialidade||'')}" placeholder="Ex.: Emagrecimento e metabologia"></div>
+      ${sel('dg_nicho','Nicho / público principal',['Emagrecimento','Metabólico / Longevidade','Estética','Performance / Esporte','Saúde mental / Sono','Dor / Reabilitação','Clínica geral'],d.nicho)}
+      <div class="row c2">
+        <div class="field"><label class="f">Ticket médio (R$)</label><input type="number" id="dg_ticket" value="${esc(d.ticket||'')}" placeholder="Ex.: 300"></div>
+        <div class="field"><label class="f">Atendimentos/semana</label><input type="number" id="dg_sem" value="${esc(d.atendSemana||'')}" placeholder="Ex.: 20"></div>
+      </div>
+      ${sel('dg_mat','Maturidade digital (marketing)',['Baixa','Média','Alta'],d.maturidade)}
+      ${sel('dg_obj','Objetivo principal',['Mais pacientes','Aumentar ticket','Escalar / previsibilidade','Autoridade / marca'],d.objetivo)}
+      ${sel('dg_gar','Maior gargalo hoje',['Captação','Conversão','Precificação','Retenção','Tempo / operacional'],d.gargalo)}
+      <button class="btn btn-gold btn-block" onclick="App.saveDiagnostico()">Gerar meu plano de crescimento</button>`, true);
+  },
+  saveDiagnostico(){
+    DB.diagnostico={ area:val('dg_area'), nicho:val('dg_nicho'), ticket:parseFloat(val('dg_ticket'))||0, atendSemana:parseFloat(val('dg_sem'))||0, maturidade:val('dg_mat'), objetivo:val('dg_obj'), gargalo:val('dg_gar'), data:now() };
+    persist(); closeModal(); this.go('crescimento'); toast('Plano de crescimento gerado','jade');
+  },
+  _renderPlano(d){
+    const pl=growthPlan(d);
+    const money=n=>BRL(n).replace(',00','');
+    return `
+    <div class="grid-4" style="margin-bottom:16px">
+      <div class="stat"><div class="n" style="font-size:1.3rem;color:var(--gold-light)">${money(pl.mensalAtual)}</div><div class="l">Faturamento atual/mês</div></div>
+      <div class="stat jade"><div class="n" style="font-size:1.3rem;color:var(--jade-light)">${money(pl.projMensal)}</div><div class="l">Projeção com o plano</div></div>
+      <div class="stat"><div class="n" style="font-size:1.3rem">${money(pl.projTicket)}</div><div class="l">Ticket-alvo</div></div>
+      <div class="stat"><div class="n" style="font-size:1.05rem">${esc(d.nicho)}</div><div class="l">Nicho</div></div>
+    </div>
+    <div class="card"><h3 style="font-size:1rem">🧭 Diagnóstico</h3>
+      <p style="margin:6px 0"><b>Perfil:</b> ${esc(pl.perfil)}.</p>
+      <p class="muted" style="font-size:.9rem">Prioridade estratégica: <b style="color:var(--gold-light)">${esc(pl.foco)}</b>. Objetivo declarado: ${esc(d.objetivo)}.</p>
+    </div>
+    <div class="card"><h3 style="font-size:1rem">📈 Plano de implementação em vendas (4 semanas)</h3>
+      <div class="list">${pl.roadmap.map((r,ri)=>`<div class="list-item" style="align-items:flex-start"><div class="avatar">${ri+1}</div>
+        <div class="grow"><div class="li-title">${esc(r.fase)}</div><ul style="margin:6px 0 0 16px;font-size:.84rem;color:var(--text-muted)">${r.acoes.map(a=>`<li>${esc(a)}</li>`).join('')}</ul></div></div>`).join('')}</div>
+    </div>
+    <div class="card"><h3 style="font-size:1rem">🎯 Protocolos de impacto (montagem de ofertas)</h3><div class="card-sub">Ofertas prontas para o seu nicho — crie no catálogo em 1 clique</div>
+      <div class="list">${pl.protocolos.map((pr,idx)=>`<div class="list-item" style="align-items:flex-start">
+        <div class="avatar">🎯</div>
+        <div class="grow"><div class="li-title">${esc(pr.nome)} <span class="tag gold">${money(pr.preco)}</span></div>
+          <div class="li-sub" style="margin-bottom:4px">${esc(pr.promessa)}</div>
+          <div style="font-size:.78rem;color:var(--text-muted)">Entregáveis: ${pr.entreg.map(e=>esc(e)).join(' · ')}</div></div>
+        <button class="btn btn-jade btn-sm" onclick="App.criarProdutoProtocolo(${idx})">+ Criar produto</button></div>`).join('')}</div>
+    </div>
+    <div class="grid-3">
+      <div class="card"><h3 style="font-size:.95rem">📦 Produto</h3><ul style="margin:8px 0 0 16px;font-size:.84rem;color:var(--text-muted)">${pl.estrategias.produto.map(x=>`<li style="margin-bottom:6px">${esc(x)}</li>`).join('')}</ul></div>
+      <div class="card"><h3 style="font-size:.95rem">📣 Marketing</h3><ul style="margin:8px 0 0 16px;font-size:.84rem;color:var(--text-muted)">${pl.estrategias.mkt.map(x=>`<li style="margin-bottom:6px">${esc(x)}</li>`).join('')}</ul></div>
+      <div class="card"><h3 style="font-size:.95rem">💬 Vendas</h3><ul style="margin:8px 0 0 16px;font-size:.84rem;color:var(--text-muted)">${pl.estrategias.vendas.map(x=>`<li style="margin-bottom:6px">${esc(x)}</li>`).join('')}</ul></div>
+    </div>`;
+  },
+  criarProdutoProtocolo(idx){
+    const pl=growthPlan(DB.diagnostico); const pr=pl.protocolos[idx]; if(!pr) return;
+    seedProdutos();
+    DB.produtos.push({id:uid(), nome:pr.nome, tipo:'Protocolo', categoria:'Protocolo', preco:Math.round(pr.preco), tags:[ {'Emagrecimento':'emagrecimento','Metabólico / Longevidade':'metabolica','Saúde mental / Sono':'mental'}[DB.diagnostico.nicho]||'' ].filter(Boolean) });
+    persist(); toast('Protocolo adicionado aos Produtos','jade');
+  },
+  printCrescimento(){
+    const d=DB.diagnostico; if(!d) return; const pl=growthPlan(d); const money=n=>BRL(n).replace(',00','');
+    const body=`
+      <div style="margin-bottom:14px"><strong>Perfil:</strong> ${esc(pl.perfil)}.<br><strong>Prioridade:</strong> ${esc(pl.foco)}.<br><strong>Nicho:</strong> ${esc(d.nicho)} · <strong>Objetivo:</strong> ${esc(d.objetivo)}</div>
+      <div style="margin-bottom:14px"><strong>Faturamento atual/mês:</strong> ${money(pl.mensalAtual)} · <strong>Projeção:</strong> ${money(pl.projMensal)} · <strong>Ticket-alvo:</strong> ${money(pl.projTicket)}</div>
+      <div style="margin-bottom:8px"><strong>PLANO DE IMPLEMENTAÇÃO EM VENDAS</strong></div>
+      ${pl.roadmap.map(r=>`<div style="margin-bottom:8px"><b>${esc(r.fase)}</b><ul style="margin:4px 0 0 18px">${r.acoes.map(a=>`<li>${esc(a)}</li>`).join('')}</ul></div>`).join('')}
+      <div style="margin:14px 0 8px"><strong>PROTOCOLOS DE IMPACTO</strong></div>
+      ${pl.protocolos.map(pr=>`<div class="rx-item"><div class="rx-name">${esc(pr.nome)} — ${money(pr.preco)}</div><div class="rx-pos">${esc(pr.promessa)}. Entregáveis: ${pr.entreg.map(e=>esc(e)).join(', ')}.</div></div>`).join('')}
+      <div style="margin:14px 0 8px"><strong>ESTRATÉGIAS</strong></div>
+      <div><b>Produto:</b><ul style="margin:4px 0 8px 18px">${pl.estrategias.produto.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+      <b>Marketing:</b><ul style="margin:4px 0 8px 18px">${pl.estrategias.mkt.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+      <b>Vendas:</b><ul style="margin:4px 0 0 18px">${pl.estrategias.vendas.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`;
+    App._print('Plano de Crescimento', {nome:DB.perfil.nome||'Profissional'}, body, d.data);
+  },
+
   /* ---- AGENDA ---- */
   newAgenda(pacienteId){
     const opts=DB.pacientes.map(p=>`<option value="${p.id}" ${pacienteId===p.id?'selected':''}>${esc(p.nome)}</option>`).join('');
@@ -2102,7 +2267,7 @@ const App = {
     const inp=document.createElement('input'); inp.type='file'; inp.accept='.json,application/json';
     inp.onchange=()=>{ const f=inp.files[0]; if(!f)return; const r=new FileReader();
       r.onload=()=>{ try{ const data=JSON.parse(r.result); if(!confirm('Substituir todos os dados atuais pelo arquivo importado?'))return;
-        DB=Object.assign({perfil:seedPerfil,pacientes:[],consultas:[],receitas:[],laudos:[],atestados:[],exames:[],lembretes:[],suplementos:[],encaminhamentos:[],pedidos:[],avaliacoes:[],categorias:[],produtos:[],vendas:[],agenda:[],sinais:[]}, data);
+        DB=Object.assign({perfil:seedPerfil,pacientes:[],consultas:[],receitas:[],laudos:[],atestados:[],exames:[],lembretes:[],suplementos:[],encaminhamentos:[],pedidos:[],avaliacoes:[],categorias:[],produtos:[],vendas:[],agenda:[],sinais:[],diagnostico:null}, data);
         persist(); render(); toast('Dados importados','jade'); }catch(e){ toast('Arquivo inválido','red'); } };
       r.readAsText(f); };
     inp.click();
