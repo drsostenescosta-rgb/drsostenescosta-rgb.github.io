@@ -96,7 +96,9 @@
     setTimeout(()=>window.print(),80);
   };
 
-  const cons=data.consultas||[], rem=data.remedios||[], exa=data.exames||[], docs=data.docs||[];
+  const cons=data.consultas||[], rem=data.remedios||[], exa=data.exames||[], docs=data.docs||[], hab=data.habitos||[], mapa=data.mapa||[];
+  const STC={ok:'#45cf99',atencao:'#e2c464',alerta:'#f18b8b'};
+  const STL={ok:'Tudo certo',atencao:'Atenção',alerta:'Cuidar agora'};
   app.innerHTML=`
   <header><div class="wrap">
     <div class="mono-badge">M</div>
@@ -104,6 +106,14 @@
     <div class="doc-by">Acompanhamento com ${esc((data.medico||{}).nome||'seu profissional')}</div>
   </div></header>
   <div class="wrap">
+    ${mapa.length?`<div class="card">
+      <h2>🗺 Meu Mapa da Saúde</h2><div class="sub">Verde = tudo certo · Amarelo = atenção · Vermelho = cuidar agora</div>
+      ${mapa.map(m=>`<div class="item" style="border-left:3px solid ${STC[m.status]||'#888'}"><div class="grow"><div class="it-title">${esc(m.nome)}: ${esc(m.valor)} ${esc(m.unidade||'')}</div><div class="it-sub">${esc(m.exp||'')}</div></div><span style="color:${STC[m.status]||'#888'};font-size:.7rem;font-family:var(--mono)">${STL[m.status]||''}</span></div>`).join('')}
+    </div>`:''}
+    ${hab.length?`<div class="card">
+      <h2>🎯 Meus hábitos</h2><div class="sub">Metas combinadas com seu profissional</div>
+      ${hab.map(h=>`<div class="item"><div class="ic j">${h.ico||'🎯'}</div><div class="grow"><div class="it-title">${esc(h.nome)}</div><div class="it-sub">${esc(h.meta||'')}${h.freq?' · '+esc(h.freq):''}</div></div></div>`).join('')}
+    </div>`:''}
     <div class="card">
       <h2>🔔 Minhas consultas</h2><div class="sub">Retornos e agendamentos</div>
       ${cons.length? cons.map(c=>`<div class="item"><div class="ic">📅</div><div class="grow"><div class="it-title">${esc(c.titulo||'Consulta')}</div><div class="it-sub">${fmtDT(c.data)}</div></div></div>`).join('') : '<div class="empty"><div class="big">📅</div>Nenhuma consulta agendada.</div>'}
