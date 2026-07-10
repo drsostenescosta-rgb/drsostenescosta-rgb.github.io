@@ -298,6 +298,10 @@
   .redes-card span { color: var(--text-muted); font-size: 0.82rem; }
 
   @media (max-width: 700px) { .redes-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) {
+    .prova-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; }
+    .showcase-grid { grid-template-columns: 1fr !important; gap: 28px !important; }
+  }
 
   /* ---------- CONTATO ---------- */
   .contato-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; }
@@ -402,6 +406,55 @@
     <div class="frame frame-glow hero-photo kenburns tilt reveal">
       <img src="assets/hero.jpg" alt="Sóstenes Costa Paiva" loading="eager" />
       <span class="photo-chip"><span class="chip-dot"></span>Birthplace of Silicon Valley · Palo Alto</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROVA & AUTORIDADE -->
+<section class="section" style="border-top:1px solid var(--border); padding:60px 0;">
+  <div class="wrap reveal">
+    <div class="prova-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px; text-align:center;">
+      <div>
+        <div style="font-family:var(--serif); font-size:2.1rem; color:var(--gold-light);">+10.000</div>
+        <div class="pt" style="color:var(--text-muted); font-size:.84rem;">vidas transformadas</div>
+        <div class="en" style="color:var(--text-muted); font-size:.84rem;">lives transformed</div>
+      </div>
+      <div>
+        <div style="font-family:var(--serif); font-size:2.1rem; color:var(--gold-light);">+1.000</div>
+        <div class="pt" style="color:var(--text-muted); font-size:.84rem;">profissionais formados</div>
+        <div class="en" style="color:var(--text-muted); font-size:.84rem;">professionals trained</div>
+      </div>
+      <div>
+        <div style="font-family:var(--serif); font-size:2.1rem; color:var(--gold-light);">6&nbsp;em&nbsp;7</div>
+        <div class="pt" style="color:var(--text-muted); font-size:.84rem;">entrevistado por Érico Rocha</div>
+        <div class="en" style="color:var(--text-muted); font-size:.84rem;">interviewed by Érico Rocha</div>
+      </div>
+      <div>
+        <div style="font-family:var(--serif); font-size:2.1rem; color:var(--jade-light);">Vale do Silício</div>
+        <div class="pt" style="color:var(--text-muted); font-size:.84rem;">saúde + neurociência + IA</div>
+        <div class="en" style="color:var(--text-muted); font-size:.84rem;">health + neuroscience + AI</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE CHATGOSIPT -->
+<section class="section" style="border-top:1px solid var(--border);">
+  <div class="wrap showcase-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;">
+    <div class="reveal">
+      <span class="eyebrow pt">CIÊNCIA APLICADA</span><span class="eyebrow en">APPLIED SCIENCE</span>
+      <h2 style="font-family:var(--serif); font-size:2rem; margin:14px 0;">
+        <span class="pt">Não só falo de IA na saúde — <em>eu construo</em>.</span>
+        <span class="en">I don't just talk about AI in health — <em>I build it</em>.</span>
+      </h2>
+      <p class="pt" style="color:var(--text-muted);">Criei o <b>ChatGosipt</b>: transcrição e resumo por IA, <b>100% local e privado</b>. Prova concreta de ciência + tecnologia a serviço das pessoas.</p>
+      <p class="en" style="color:var(--text-muted);">I built <b>ChatGosipt</b>: AI transcription and summaries, <b>100% local and private</b>. Concrete proof of science + technology serving people.</p>
+      <a class="btn btn-gold" href="https://drsostenescosta-rgb.github.io/chatgosipt/" target="_blank" rel="noopener" style="margin-top:16px;">
+        <span class="pt">Conhecer o ChatGosipt</span><span class="en">Explore ChatGosipt</span>
+      </a>
+    </div>
+    <div class="frame frame-glow reveal" style="display:flex; align-items:center; justify-content:center; padding:44px; background:#0d1219; min-height:260px;">
+      <img src="assets/chatgosipt.png" alt="ChatGosipt" width="150" style="border-radius:26px; box-shadow:0 20px 50px rgba(0,0,0,.5);" />
     </div>
   </div>
 </section>
