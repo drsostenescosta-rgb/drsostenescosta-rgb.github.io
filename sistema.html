@@ -66,6 +66,21 @@
   #splash .s-bar i { display: block; height: 100%; width: 40%; border-radius: 3px; background: linear-gradient(90deg, var(--gold-light), var(--jade-light)); animation: load 1.1s ease-in-out infinite; }
   @keyframes pop { from{ transform: scale(0.6); opacity: 0; } to{ transform: scale(1); opacity: 1; } }
   @keyframes load { 0%{ transform: translateX(-120%);} 100%{ transform: translateX(320%);} }
+
+  /* ---------- AUTH GATE ---------- */
+  #authGate { position: fixed; inset: 0; z-index: 450; display: none; align-items: center; justify-content: center; padding: 24px;
+    background: radial-gradient(ellipse at 50% 0%, #0b0f16 0%, #05070a 70%); overflow-y: auto; }
+  #authGate.show { display: flex; }
+  .auth-card { width: 100%; max-width: 400px; background: var(--card-solid); border: 1px solid var(--border-strong); border-radius: 20px; padding: 30px 26px; box-shadow: 0 40px 100px rgba(0,0,0,0.6); }
+  .auth-logo { width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 14px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1.6rem; color: var(--gold-light); background: linear-gradient(145deg, rgba(201,162,39,0.18), rgba(201,162,39,0.02)); border: 1px solid rgba(201,162,39,0.5); box-shadow: 0 0 30px rgba(201,162,39,0.3); }
+  .auth-card h2 { font-size: 1.4rem; text-align: center; margin-bottom: 4px; }
+  .auth-card .sub { text-align: center; color: var(--text-muted); font-size: 0.86rem; margin-bottom: 20px; }
+  .auth-err { color: var(--red-light); font-size: 0.8rem; text-align: center; margin-top: 10px; min-height: 16px; }
+  .auth-foot { text-align: center; font-size: 0.76rem; color: var(--text-muted); margin-top: 16px; }
+  .auth-foot a { color: var(--gold-light); cursor: pointer; }
+  .plan-badge { font-family: var(--mono); font-size: 0.58rem; padding: 2px 8px; border-radius: 999px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600; }
+  .plan-free { background: rgba(234,232,225,0.08); color: var(--text-muted); border: 1px solid var(--border); }
+  .plan-pro { background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #14100a; }
   .bg-grid {
     position: fixed; inset: 0; z-index: -2; pointer-events: none;
     background-image:
@@ -311,8 +326,8 @@
       </div>
     </a>
     <div class="nav-right">
-      <span class="doctor-chip" id="doctorChip" onclick="App.openPerfil()">
-        <span>⚕</span><span id="doctorChipName">Configurar perfil</span>
+      <span class="doctor-chip" id="doctorChip" onclick="App.abrirConta()">
+        <span>⚕</span><span id="doctorChipName">Conta</span><span id="doctorChipPlan"></span>
       </span>
       <a class="btn btn-ghost btn-sm" href="index.html">← Site</a>
     </div>
@@ -330,6 +345,7 @@
 <div class="modal-back" id="modalBack"><div class="modal" id="modalBox"></div></div>
 <div class="toast-wrap" id="toastWrap"></div>
 <div id="printArea"></div>
+<div id="authGate"></div>
 
 <script>
 (function(){
@@ -369,8 +385,23 @@ DB.sinais    = DB.sinais    || [];
 DB.diagnostico = DB.diagnostico || null;
 DB.habitos   = DB.habitos   || [];
 DB.perfilSaude = DB.perfilSaude || {};
+DB.conta     = DB.conta     || null; // {nome,email,senhaHash,plano,criado}
 if(DB.perfil.carimbo===undefined) DB.perfil.carimbo=true;
 persist();
+
+/* ---- Autenticação local (trava de acesso do dispositivo) ---- */
+function hashPwd(s){ let h=5381; s='medeasy_v1::'+s; for(let i=0;i<s.length;i++){ h=(((h<<5)+h)^s.charCodeAt(i))>>>0; } return h.toString(16); }
+const PLAN_LIMITE = 8; // pacientes ativos no plano Free
+function isPro(){ return DB.conta && DB.conta.plano==='pro'; }
+function pacientesAtivos(){ return DB.pacientes.filter(p=>!p.arquivado); }
+let unlocked = sessionStorage.getItem('medeasy_unlocked')==='1';
+function validarLicenca(code){
+  code=(code||'').trim().toUpperCase().replace(/\s/g,'');
+  const m=code.match(/^MEDEASY-PRO-(\d{4})-([A-Z0-9]{4})$/);
+  if(!m) return false;
+  const n=parseInt(m[1],10); const chk=((n*4099+7919)%1679616).toString(36).toUpperCase().padStart(4,'0').slice(-4);
+  return m[2]===chk;
+}
 
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
 const now = () => new Date().toISOString();
@@ -708,7 +739,9 @@ function renderNav(){
   }));
   mob.innerHTML = m;
   // doctor chip
-  document.getElementById('doctorChipName').textContent = DB.perfil.nome ? ('Dr. '+DB.perfil.nome.split(' ')[0]) : 'Configurar perfil';
+  const cn=(DB.conta&&DB.conta.nome)||DB.perfil.nome||'';
+  document.getElementById('doctorChipName').textContent = cn ? cn.split(' ')[0] : 'Conta';
+  const pl=document.getElementById('doctorChipPlan'); if(pl) pl.innerHTML = ` <span class="plan-badge ${isPro()?'plan-pro':'plan-free'}">${isPro()?'PRO':'FREE'}</span>`;
 }
 
 const PAGES = {};
@@ -888,15 +921,22 @@ afterRender.consulta = function(){
 
 /* ============================ PÁGINA: PACIENTES ============================ */
 PAGES.pacientes = function(){
-  const list = [...DB.pacientes].sort((a,b)=>(a.nome||'').localeCompare(b.nome||''));
+  const arq = App._showArq;
+  const ativos = pacientesAtivos(); const arquivados = DB.pacientes.filter(p=>p.arquivado);
+  const list = [...(arq?arquivados:ativos)].sort((a,b)=>(a.nome||'').localeCompare(b.nome||''));
+  const limite = !isPro();
   return `
   <div class="page-head">
-    <div><h2 class="grad-text">Pacientes</h2><div class="sub">${DB.pacientes.length} paciente(s) cadastrado(s)</div></div>
-    <div class="head-actions"><button class="btn btn-gold" onclick="App.newPaciente()">+ Novo paciente</button></div>
+    <div><h2 class="grad-text">Pacientes</h2><div class="sub">${ativos.length} ativo(s)${limite?` · limite Free ${ativos.length}/${PLAN_LIMITE}`:' · Pro ilimitado'}${arquivados.length?` · ${arquivados.length} arquivado(s)`:''}</div></div>
+    <div class="head-actions">
+      ${arquivados.length?`<button class="btn btn-ghost" onclick="App.toggleArquivados()">${arq?'← Ativos':'🗄 Arquivados ('+arquivados.length+')'}</button>`:''}
+      <button class="btn btn-gold" onclick="App.newPaciente()">+ Novo paciente</button>
+    </div>
   </div>
+  ${limite && ativos.length>=PLAN_LIMITE && !arq?`<div class="disclaimer" style="border-color:rgba(201,162,39,0.4)">🚀 Você atingiu o limite do plano Free. <a onclick="App.ativarPro()" style="color:var(--gold-light);cursor:pointer">Ativar Pro</a> para pacientes ilimitados, ou arquive pacientes antigos.</div>`:''}
   <div class="field"><input type="text" id="pacSearch" placeholder="🔎 Buscar por nome, CPF ou telefone..." oninput="App.filterPacientes(this.value)"></div>
   <div class="list" id="pacList">
-    ${list.length? list.map(pacRow).join('') : '<div class="empty"><div class="big">👥</div>Nenhum paciente cadastrado.<br><button class="btn btn-gold btn-sm" style="margin-top:12px" onclick="App.newPaciente()">Cadastrar primeiro paciente</button></div>'}
+    ${list.length? list.map(pacRow).join('') : `<div class="empty"><div class="big">${arq?'🗄':'👥'}</div>${arq?'Nenhum paciente arquivado.':'Nenhum paciente cadastrado.<br><button class="btn btn-gold btn-sm" style="margin-top:12px" onclick="App.newPaciente()">Cadastrar primeiro paciente</button>'}</div>`}
   </div>`;
 };
 function pacRow(p){
@@ -1555,6 +1595,78 @@ PAGES.habitos = function(){
 const App = {
   go(r){ route=r; render(); },
 
+  /* ---- CONTA / ACESSO ---- */
+  criarConta(){
+    const nome=val('ac_nome').trim(), email=val('ac_email').trim(), s1=val('ac_senha'), s2=val('ac_senha2');
+    const err=document.getElementById('auth_err');
+    if(!nome){ err.textContent='Informe seu nome.'; return; }
+    if((s1||'').length<4){ err.textContent='A senha precisa de ao menos 4 caracteres.'; return; }
+    if(s1!==s2){ err.textContent='As senhas não conferem.'; return; }
+    DB.conta={ nome, email, senhaHash:hashPwd(s1), plano:'free', criado:now() };
+    if(!DB.perfil.nome || DB.perfil.nome==='Sóstenes Costa Paiva') DB.perfil.nome=nome;
+    persist(); unlocked=true; sessionStorage.setItem('medeasy_unlocked','1');
+    hideAuth(); render(); toast('Conta criada. Bem-vindo(a)!','jade');
+  },
+  entrar(){
+    const s=val('lg_senha'); const err=document.getElementById('auth_err');
+    if(hashPwd(s||'')!==DB.conta.senhaHash){ err.textContent='Senha incorreta.'; const c=document.querySelector('.auth-card'); if(c){c.style.animation='none'; setTimeout(()=>c.style.animation='pop .3s',10);} return; }
+    unlocked=true; sessionStorage.setItem('medeasy_unlocked','1'); hideAuth(); render();
+  },
+  bloquear(){ unlocked=false; sessionStorage.removeItem('medeasy_unlocked'); closeModal(); showAuth('lock'); },
+  esqueciSenha(){
+    if(!confirm('Como os dados ficam apenas neste aparelho (sem servidor), não é possível recuperar a senha por e-mail.\n\nVocê pode REDEFINIR a conta — mas isso APAGA todos os dados deste dispositivo. Se tiver um backup (JSON), poderá importá-lo depois.\n\nDeseja redefinir e apagar tudo?')) return;
+    if(!confirm('Tem certeza? Esta ação é irreversível.')) return;
+    localStorage.removeItem(KEY); sessionStorage.removeItem('medeasy_unlocked'); location.reload();
+  },
+  abrirConta(){
+    const c=DB.conta||{}; const pro=isPro(); const ativos=pacientesAtivos().length;
+    openModal(`
+      <div class="modal-head"><h3>Minha conta</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div class="auth-logo" style="width:46px;height:46px;font-size:1.2rem;margin:0">${esc(initials(c.nome||'M'))}</div>
+        <div><div style="font-family:var(--serif);font-size:1.1rem">${esc(c.nome||'—')}</div><div class="muted" style="font-size:.8rem">${esc(c.email||'')}</div></div>
+        <span class="plan-badge ${pro?'plan-pro':'plan-free'}" style="margin-left:auto">${pro?'PRO':'FREE'}</span>
+      </div>
+      ${!pro?`<div class="card" style="margin:0 0 14px;background:rgba(201,162,39,0.06);border-color:rgba(201,162,39,0.3)">
+        <div style="font-size:.86rem;margin-bottom:8px">Plano <b>Free</b> — ${ativos}/${PLAN_LIMITE} pacientes ativos. Faça upgrade para <b>pacientes ilimitados</b> e recursos avançados.</div>
+        <button class="btn btn-gold btn-sm" onclick="App.ativarPro()">🚀 Ativar Pro</button>
+      </div>`:`<div class="tag jade" style="margin-bottom:14px">✓ Plano Pro ativo — pacientes ilimitados</div>`}
+      <div style="display:grid;gap:8px">
+        <button class="btn btn-ghost btn-block" onclick="App.openPerfil()">⚕ Perfil profissional & assinatura</button>
+        <button class="btn btn-ghost btn-block" onclick="App.trocarSenha()">🔑 Trocar senha</button>
+        <button class="btn btn-ghost btn-block" onclick="App.exportData()">⬇ Exportar backup</button>
+        <button class="btn btn-ghost btn-block" onclick="App.bloquear()">🔒 Bloquear agora</button>
+      </div>`);
+  },
+  trocarSenha(){
+    openModal(`
+      <div class="modal-head"><h3>Trocar senha</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="field"><label class="f">Senha atual</label><input id="ts_atual" type="password"></div>
+      <div class="field"><label class="f">Nova senha</label><input id="ts_nova" type="password"></div>
+      <div class="field"><label class="f">Confirmar nova senha</label><input id="ts_conf" type="password"></div>
+      <button class="btn btn-gold btn-block" onclick="App.salvarSenha()">Salvar nova senha</button>`);
+  },
+  salvarSenha(){
+    if(hashPwd(val('ts_atual')||'')!==DB.conta.senhaHash){ toast('Senha atual incorreta','red'); return; }
+    const n=val('ts_nova'); if((n||'').length<4){ toast('Nova senha muito curta','red'); return; }
+    if(n!==val('ts_conf')){ toast('Confirmação não confere','red'); return; }
+    DB.conta.senhaHash=hashPwd(n); persist(); closeModal(); toast('Senha atualizada','jade');
+  },
+  ativarPro(){
+    openModal(`
+      <div class="modal-head"><h3>Ativar MedEasy Pro 🚀</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="card-sub" style="margin-top:-8px">Pacientes ilimitados e todos os recursos. Insira sua chave de ativação ou fale conosco para adquirir.</div>
+      <div class="field"><label class="f">Chave de ativação</label><input id="pro_key" placeholder="MEDEASY-PRO-0000-XXXX" style="font-family:var(--mono)"></div>
+      <button class="btn btn-gold btn-block" onclick="App.confirmarPro()">Ativar Pro</button>
+      <a class="btn btn-jade btn-block" style="margin-top:8px" href="https://wa.me/5584999869468?text=Quero%20ativar%20o%20MedEasy%20Pro" target="_blank" rel="noopener">📲 Comprar / falar no WhatsApp</a>`);
+  },
+  confirmarPro(){
+    if(!validarLicenca(val('pro_key'))){ toast('Chave inválida','red'); return; }
+    DB.conta.plano='pro'; persist(); closeModal(); renderNav(); render(); toast('🎉 MedEasy Pro ativado!','gold');
+  },
+
+
+
   /* ---- PERFIL ---- */
   openPerfil(){
     const p = DB.perfil;
@@ -1636,14 +1748,27 @@ const App = {
     const nome = val('pac_nome').trim();
     if(!nome){ toast('Informe o nome do paciente','red'); return; }
     const id = val('pac_id');
+    if(!id && !isPro() && pacientesAtivos().length>=PLAN_LIMITE){ closeModal(); App.limiteAtingido(); return; }
     const data = { nome, nascimento:val('pac_nasc'), sexo:val('pac_sexo'), cpf:val('pac_cpf'), telefone:val('pac_tel'), email:val('pac_email'), alergias:val('pac_alerg'), condicoes:val('pac_cond'), obs:val('pac_obs') };
     if(id){ Object.assign(patient(id), data); toast('Paciente atualizado','jade'); }
     else { data.id=uid(); data.criado=now(); DB.pacientes.push(data); toast('Paciente cadastrado','jade'); }
     persist(); closeModal(); render();
   },
+  limiteAtingido(){
+    openModal(`
+      <div class="modal-head"><h3>Limite do plano Free 🚀</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="card-sub" style="margin-top:-8px">Você atingiu ${PLAN_LIMITE} pacientes ativos no plano Free.</div>
+      <p style="font-size:.9rem;color:var(--text-muted);margin-bottom:14px">Faça upgrade para o <b>MedEasy Pro</b> e tenha <b>pacientes ilimitados</b>. Você também pode <b>arquivar</b> pacientes antigos para liberar espaço.</p>
+      <button class="btn btn-gold btn-block" onclick="App.ativarPro()">🚀 Ativar Pro</button>
+      <button class="btn btn-ghost btn-block" style="margin-top:8px" onclick="App.closeModal();App.go('pacientes')">Ver / arquivar pacientes</button>`);
+  },
+  arquivarPaciente(id){ const p=patient(id); if(!p)return; p.arquivado=true; persist(); closeModal(); render(); toast('Paciente arquivado','jade'); },
+  restaurarPaciente(id){ const p=patient(id); if(!p)return; if(!isPro() && pacientesAtivos().length>=PLAN_LIMITE){ App.limiteAtingido(); return; } p.arquivado=false; persist(); closeModal(); render(); toast('Paciente restaurado','jade'); },
+  toggleArquivados(){ App._showArq=!App._showArq; render(); },
   filterPacientes(q){
     q=q.toLowerCase();
-    const list = DB.pacientes.filter(p=>(p.nome+' '+(p.cpf||'')+' '+(p.telefone||'')).toLowerCase().includes(q)).sort((a,b)=>a.nome.localeCompare(b.nome));
+    const base = App._showArq? DB.pacientes.filter(p=>p.arquivado) : pacientesAtivos();
+    const list = base.filter(p=>(p.nome+' '+(p.cpf||'')+' '+(p.telefone||'')).toLowerCase().includes(q)).sort((a,b)=>a.nome.localeCompare(b.nome));
     document.getElementById('pacList').innerHTML = list.length? list.map(pacRow).join('') : '<div class="empty">Nenhum paciente encontrado.</div>';
   },
   viewPaciente(id){
@@ -1673,6 +1798,9 @@ const App = {
         <button class="btn btn-jade" onclick="App.startFor('${id}')">🎙 Nova consulta</button>
         <button class="btn btn-gold btn-sm" onclick="App.closeModal();App.newAgenda('${id}')">📆 Agendar</button>
         <button class="btn btn-ghost btn-sm" onclick="App.editPaciente('${id}');">✎ Editar</button>
+        ${p.arquivado
+          ? `<button class="btn btn-jade btn-sm" onclick="App.restaurarPaciente('${id}')">♻ Restaurar</button>`
+          : `<button class="btn btn-ghost btn-sm" onclick="App.arquivarPaciente('${id}')">🗄 Arquivar</button>`}
         <button class="btn btn-danger btn-sm" onclick="App.delPaciente('${id}')">Excluir</button>
       </div>`, true);
   },
@@ -2520,7 +2648,8 @@ const App = {
     const inp=document.createElement('input'); inp.type='file'; inp.accept='.json,application/json';
     inp.onchange=()=>{ const f=inp.files[0]; if(!f)return; const r=new FileReader();
       r.onload=()=>{ try{ const data=JSON.parse(r.result); if(!confirm('Substituir todos os dados atuais pelo arquivo importado?'))return;
-        DB=Object.assign({perfil:seedPerfil,pacientes:[],consultas:[],receitas:[],laudos:[],atestados:[],exames:[],lembretes:[],suplementos:[],encaminhamentos:[],pedidos:[],avaliacoes:[],categorias:[],produtos:[],vendas:[],agenda:[],sinais:[],diagnostico:null,habitos:[],perfilSaude:{}}, data);
+        DB=Object.assign({perfil:seedPerfil,conta:DB.conta,pacientes:[],consultas:[],receitas:[],laudos:[],atestados:[],exames:[],lembretes:[],suplementos:[],encaminhamentos:[],pedidos:[],avaliacoes:[],categorias:[],produtos:[],vendas:[],agenda:[],sinais:[],diagnostico:null,habitos:[],perfilSaude:{}}, data);
+        if(!DB.conta) DB.conta=null;
         persist(); render(); toast('Dados importados','jade'); }catch(e){ toast('Arquivo inválido','red'); } };
       r.readAsText(f); };
     inp.click();
@@ -2555,8 +2684,47 @@ function updateRecUI(){
 
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 
+/* ============================ AUTH GATE ============================ */
+const authGate=document.getElementById('authGate');
+function showAuth(mode){
+  let html;
+  if(mode==='create'){
+    html=`<div class="auth-card">
+      <div class="auth-logo">M</div>
+      <h2 class="grad-text">Bem-vindo ao MedEasy</h2>
+      <div class="sub">Crie sua conta profissional. Seus dados ficam protegidos neste dispositivo.</div>
+      <div class="field"><label class="f">Seu nome</label><input id="ac_nome" value="${esc(DB.perfil.nome||'')}" placeholder="Dr(a). Nome"></div>
+      <div class="field"><label class="f">E-mail</label><input id="ac_email" type="email" placeholder="voce@email.com"></div>
+      <div class="row c2"><div class="field"><label class="f">Senha</label><input id="ac_senha" type="password" placeholder="mín. 4"></div>
+      <div class="field"><label class="f">Confirmar</label><input id="ac_senha2" type="password" onkeydown="if(event.key==='Enter')App.criarConta()"></div></div>
+      <button class="btn btn-gold btn-block" onclick="App.criarConta()">Criar conta e entrar</button>
+      <div class="auth-err" id="auth_err"></div>
+      <div class="auth-foot">🔒 Trava de acesso local · dados só neste navegador (LGPD)</div>
+    </div>`;
+  } else {
+    const nome=(DB.conta.nome||'').split(' ')[0];
+    html=`<div class="auth-card">
+      <div class="auth-logo">M</div>
+      <h2>Olá, ${esc(nome)} 👋</h2>
+      <div class="sub">Digite sua senha para acessar o MedEasy.</div>
+      <div class="field"><input id="lg_senha" type="password" placeholder="Senha" autofocus onkeydown="if(event.key==='Enter')App.entrar()"></div>
+      <button class="btn btn-gold btn-block" onclick="App.entrar()">Entrar</button>
+      <div class="auth-err" id="auth_err"></div>
+      <div class="auth-foot"><a onclick="App.esqueciSenha()">Esqueci minha senha</a></div>
+    </div>`;
+  }
+  authGate.innerHTML=html; authGate.classList.add('show');
+  setTimeout(()=>{ const f=document.getElementById(mode==='create'?'ac_nome':'lg_senha'); if(f)f.focus(); },60);
+}
+function hideAuth(){ authGate.classList.remove('show'); authGate.innerHTML=''; }
+function boot(){
+  if(!DB.conta){ showAuth('create'); }
+  else if(!unlocked){ showAuth('lock'); }
+  else { hideAuth(); render(); }
+}
+
 /* ============================ INIT ============================ */
-render();
+boot();
 (function(){ const sp=document.getElementById('splash'); if(sp){ setTimeout(()=>sp.classList.add('hide'), 950); setTimeout(()=>sp.remove(), 1600); } })();
 })();
 </script>
