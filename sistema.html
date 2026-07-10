@@ -1,0 +1,1587 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MedEasy — Sistema Clínico de Escuta, Transcrição & Índice de Saúde</title>
+<meta name="description" content="MedEasy: escuta e transcrição de consultas, resumo e relatório, receitas, encaminhamentos, pedidos e interpretação de exames, dashboard com Índice de Saúde (A–F, 0–100) incluindo saúde mental e hábitos, lembretes e recomendações." />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05070a;
+    --bg-2: #080b11;
+    --card: rgba(18, 24, 33, 0.55);
+    --card-solid: #0d1219;
+    --gold: #c9a227;
+    --gold-light: #e2c464;
+    --jade: #2fae7d;
+    --jade-light: #45cf99;
+    --red: #e05a5a;
+    --red-light: #f18b8b;
+    --text: #eae8e1;
+    --text-muted: #99a2ad;
+    --border: rgba(234, 232, 225, 0.09);
+    --border-strong: rgba(234, 232, 225, 0.16);
+    --serif: 'Fraunces', serif;
+    --sans: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--text); font-family: var(--sans);
+    line-height: 1.55; min-height: 100vh; overflow-x: hidden;
+  }
+  /* background orbs */
+  .bg-orbs { position: fixed; inset: 0; z-index: -3; overflow: hidden; pointer-events: none; }
+  .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.4; }
+  .orb-gold { width: 560px; height: 560px; top: -14%; left: -10%;
+    background: radial-gradient(circle, rgba(201,162,39,0.35), transparent 70%); }
+  .orb-jade { width: 520px; height: 520px; bottom: -16%; right: -12%;
+    background: radial-gradient(circle, rgba(47,174,125,0.30), transparent 70%); }
+  .bg-grid {
+    position: fixed; inset: 0; z-index: -2; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(234,232,225,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(234,232,225,0.03) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 0%, transparent 85%);
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 0%, transparent 85%);
+  }
+  a { color: inherit; text-decoration: none; }
+  h1,h2,h3,h4 { font-family: var(--serif); font-weight: 500; line-height: 1.15; }
+  .mono { font-family: var(--mono); }
+  .muted { color: var(--text-muted); }
+  .grad-text {
+    background: linear-gradient(115deg, #fff 0%, #f3ead0 40%, var(--gold-light) 70%, var(--gold) 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  /* ---------- TOP NAV ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(18px) saturate(1.2);
+    background: rgba(5,7,10,0.72); border-bottom: 1px solid var(--border);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 12px 22px; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .monogram {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 0.9rem; color: var(--gold-light);
+    background: linear-gradient(145deg, rgba(201,162,39,0.15), rgba(201,162,39,0.02));
+    border: 1px solid rgba(201,162,39,0.4);
+    box-shadow: 0 0 18px rgba(201,162,39,0.18), inset 0 0 12px rgba(201,162,39,0.08);
+  }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.25; }
+  .brand-name { font-family: var(--serif); font-size: 0.96rem; }
+  .brand-sub { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.05em; color: var(--text-muted); text-transform: uppercase; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .doctor-chip {
+    display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono);
+    font-size: 0.68rem; color: var(--gold-light); border: 1px solid var(--border);
+    padding: 7px 12px; border-radius: 999px; cursor: pointer; background: rgba(255,255,255,0.02);
+  }
+  .doctor-chip:hover { border-color: var(--gold); }
+
+  /* ---------- BUTTONS ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 9px 16px; border-radius: 999px; font-weight: 600; font-size: 0.84rem;
+    cursor: pointer; border: 1px solid transparent; white-space: nowrap; font-family: var(--sans);
+    transition: transform 0.15s ease, box-shadow 0.25s ease, filter 0.2s ease, border-color 0.2s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-gold { background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #14100a; box-shadow: 0 4px 18px rgba(201,162,39,0.25); }
+  .btn-gold:hover { filter: brightness(1.06); box-shadow: 0 7px 26px rgba(201,162,39,0.42); }
+  .btn-jade { background: linear-gradient(135deg, var(--jade-light), var(--jade)); color: #06110c; box-shadow: 0 4px 18px rgba(47,174,125,0.22); }
+  .btn-jade:hover { filter: brightness(1.06); }
+  .btn-ghost { border-color: var(--border-strong); color: var(--text); background: rgba(255,255,255,0.02); }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold-light); }
+  .btn-danger { border-color: rgba(224,90,90,0.4); color: var(--red-light); background: rgba(224,90,90,0.06); }
+  .btn-danger:hover { border-color: var(--red); }
+  .btn-sm { padding: 6px 11px; font-size: 0.76rem; }
+  .btn-block { width: 100%; }
+  .icon-btn { background: transparent; border: 1px solid var(--border); color: var(--text-muted); border-radius: 8px; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.9rem; }
+  .icon-btn:hover { border-color: var(--gold); color: var(--gold-light); }
+
+  /* ---------- LAYOUT ---------- */
+  .app { display: grid; grid-template-columns: 230px 1fr; min-height: calc(100vh - 65px); }
+  .sidebar { border-right: 1px solid var(--border); padding: 18px 12px; position: sticky; top: 65px; height: calc(100vh - 65px); overflow-y: auto; }
+  .side-group-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin: 16px 10px 8px; }
+  .side-link {
+    display: flex; align-items: center; gap: 11px; padding: 9px 12px; border-radius: 10px;
+    cursor: pointer; color: var(--text-muted); font-size: 0.88rem; font-weight: 500;
+    transition: background 0.15s, color 0.15s; margin-bottom: 2px; position: relative;
+  }
+  .side-link .ico { width: 18px; text-align: center; font-size: 0.95rem; }
+  .side-link:hover { background: rgba(255,255,255,0.03); color: var(--text); }
+  .side-link.active { background: linear-gradient(135deg, rgba(201,162,39,0.16), rgba(201,162,39,0.04)); color: var(--gold-light); }
+  .side-link.active::before { content:''; position:absolute; left:0; top:20%; bottom:20%; width:3px; border-radius:3px; background: var(--gold); }
+  .side-badge { margin-left: auto; background: var(--red); color: #fff; font-family: var(--mono); font-size: 0.6rem; padding: 1px 6px; border-radius: 999px; font-weight: 600; }
+
+  .main { padding: 26px 30px 60px; max-width: 1100px; }
+  .page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; }
+  .page-head h2 { font-size: 1.7rem; }
+  .page-head .sub { color: var(--text-muted); font-size: 0.9rem; margin-top: 4px; }
+  .head-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* ---------- CARDS ---------- */
+  .card {
+    background: var(--card); backdrop-filter: blur(10px); border: 1px solid var(--border);
+    border-radius: 16px; padding: 20px; margin-bottom: 18px;
+  }
+  .card h3 { font-size: 1.05rem; margin-bottom: 4px; }
+  .card-sub { color: var(--text-muted); font-size: 0.82rem; margin-bottom: 14px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+  /* stat tiles */
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; }
+  .stat .n { font-family: var(--serif); font-size: 1.9rem; color: var(--gold-light); }
+  .stat .l { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+  .stat.jade .n { color: var(--jade-light); }
+
+  /* ---------- FORM ---------- */
+  label.f { display: block; font-size: 0.76rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; letter-spacing: 0.02em; }
+  input, select, textarea {
+    width: 100%; background: rgba(5,7,10,0.6); border: 1px solid var(--border-strong); color: var(--text);
+    padding: 10px 12px; border-radius: 10px; font-family: var(--sans); font-size: 0.88rem; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,162,39,0.12); }
+  textarea { resize: vertical; min-height: 90px; line-height: 1.55; }
+  select option { background: #0d1219; }
+  .field { margin-bottom: 14px; }
+  .row { display: grid; gap: 14px; }
+  .row.c2 { grid-template-columns: 1fr 1fr; }
+  .row.c3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  /* ---------- TABLE / LIST ---------- */
+  .list { display: flex; flex-direction: column; gap: 10px; }
+  .list-item {
+    display: flex; align-items: center; gap: 14px; padding: 13px 16px; border-radius: 12px;
+    background: rgba(255,255,255,0.02); border: 1px solid var(--border); transition: border-color 0.2s;
+  }
+  .list-item:hover { border-color: var(--border-strong); }
+  .list-item .avatar {
+    width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 0.9rem; color: var(--gold-light);
+    background: linear-gradient(145deg, rgba(201,162,39,0.16), rgba(201,162,39,0.02)); border: 1px solid rgba(201,162,39,0.3);
+  }
+  .list-item .grow { flex: 1; min-width: 0; }
+  .li-title { font-weight: 600; font-size: 0.92rem; }
+  .li-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+  .li-actions { display: flex; gap: 6px; }
+
+  .tag { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 0.66rem; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border-strong); color: var(--text-muted); }
+  .tag.gold { color: var(--gold-light); border-color: rgba(201,162,39,0.35); background: rgba(201,162,39,0.06); }
+  .tag.jade { color: var(--jade-light); border-color: rgba(47,174,125,0.35); background: rgba(47,174,125,0.06); }
+  .tag.red { color: var(--red-light); border-color: rgba(224,90,90,0.35); background: rgba(224,90,90,0.06); }
+
+  .empty { text-align: center; padding: 46px 20px; color: var(--text-muted); }
+  .empty .big { font-size: 2.4rem; margin-bottom: 10px; opacity: 0.6; }
+
+  /* ---------- TRANSCRIPTION ---------- */
+  .rec-panel { display: grid; grid-template-columns: 1.35fr 1fr; gap: 18px; }
+  .transcript-box {
+    min-height: 300px; max-height: 460px; overflow-y: auto; padding: 18px; border-radius: 14px;
+    background: rgba(5,7,10,0.55); border: 1px solid var(--border-strong); font-size: 0.95rem; line-height: 1.7;
+    white-space: pre-wrap;
+  }
+  .transcript-box .interim { color: var(--text-muted); font-style: italic; }
+  .rec-controls { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .rec-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--text-muted); }
+  .rec-dot.live { background: var(--red); box-shadow: 0 0 0 0 rgba(224,90,90,0.6); animation: pulseRec 1.4s infinite; }
+  @keyframes pulseRec { 0%{box-shadow:0 0 0 0 rgba(224,90,90,0.55)} 70%{box-shadow:0 0 0 10px rgba(224,90,90,0)} 100%{box-shadow:0 0 0 0 rgba(224,90,90,0)} }
+  .rec-timer { font-family: var(--mono); font-size: 1.05rem; color: var(--gold-light); }
+
+  /* ---------- MODAL ---------- */
+  .modal-back { position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; }
+  .modal-back.open { display: flex; }
+  .modal { background: var(--card-solid); border: 1px solid var(--border-strong); border-radius: 18px; width: 100%; max-width: 620px; padding: 24px; box-shadow: 0 40px 90px rgba(0,0,0,0.6); }
+  .modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .modal-head h3 { font-size: 1.2rem; }
+  .modal-lg { max-width: 820px; }
+
+  /* toast */
+  .toast-wrap { position: fixed; bottom: 22px; right: 22px; z-index: 400; display: flex; flex-direction: column; gap: 10px; }
+  .toast { background: var(--card-solid); border: 1px solid var(--border-strong); border-left: 3px solid var(--jade); padding: 12px 16px; border-radius: 10px; font-size: 0.85rem; box-shadow: 0 12px 30px rgba(0,0,0,0.5); animation: slideIn 0.3s ease; max-width: 320px; }
+  .toast.gold { border-left-color: var(--gold); }
+  .toast.red { border-left-color: var(--red); }
+  @keyframes slideIn { from { transform: translateX(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+  .disclaimer { font-size: 0.74rem; color: var(--text-muted); border: 1px dashed var(--border-strong); border-radius: 10px; padding: 10px 13px; margin-top: 8px; line-height: 1.5; }
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+  .flag-high { color: var(--red-light); font-weight: 600; }
+  .flag-ok { color: var(--jade-light); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip-add { cursor: pointer; }
+  .pill-select { display: inline-flex; gap: 6px; background: rgba(5,7,10,0.5); border: 1px solid var(--border); border-radius: 999px; padding: 3px; }
+  .pill-select button { background: transparent; border: none; color: var(--text-muted); padding: 6px 14px; border-radius: 999px; cursor: pointer; font-family: var(--sans); font-size: 0.8rem; font-weight: 600; }
+  .pill-select button.active { background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #14100a; }
+
+  .mobile-tabs { display: none; }
+
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .mobile-tabs { display: flex; gap: 8px; overflow-x: auto; padding: 12px 16px; border-bottom: 1px solid var(--border); position: sticky; top: 65px; background: rgba(5,7,10,0.85); backdrop-filter: blur(10px); z-index: 90; }
+    .mobile-tabs .side-link { white-space: nowrap; padding: 8px 12px; }
+    .mobile-tabs .side-link.active::before { display: none; }
+    .main { padding: 20px 16px 60px; }
+    .rec-panel { grid-template-columns: 1fr; }
+    .grid-2, .grid-3, .grid-4, .row.c2, .row.c3 { grid-template-columns: 1fr; }
+    .grid-4 { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ---------- PRINT ---------- */
+  #printArea { display: none; }
+  @media print {
+    body * { visibility: hidden; }
+    #printArea, #printArea * { visibility: visible; }
+    #printArea { display: block !important; position: absolute; inset: 0; color: #111; background: #fff; padding: 0; }
+    .bg-orbs, .bg-grid { display: none; }
+  }
+  .doc {
+    color: #14110b; font-family: 'Inter', sans-serif; max-width: 720px; margin: 0 auto; padding: 42px 46px; font-size: 14px; line-height: 1.6;
+  }
+  .doc-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #c9a227; padding-bottom: 14px; margin-bottom: 26px; }
+  .doc-header .dh-name { font-family: 'Fraunces', serif; font-size: 20px; color: #14110b; }
+  .doc-header .dh-meta { font-size: 12px; color: #555; margin-top: 3px; }
+  .doc-header .dh-right { text-align: right; font-size: 12px; color: #555; }
+  .doc h1.doc-title { font-family: 'Fraunces', serif; font-size: 22px; text-align: center; margin: 10px 0 24px; letter-spacing: 0.04em; text-transform: uppercase; color: #14110b; }
+  .doc .doc-patient { background: #f6f2e6; border-radius: 8px; padding: 12px 16px; margin-bottom: 22px; font-size: 13px; }
+  .doc .doc-body { min-height: 180px; white-space: pre-wrap; }
+  .doc .rx-item { padding: 10px 0; border-bottom: 1px dashed #d8cba0; }
+  .doc .rx-item .rx-name { font-weight: 700; }
+  .doc .rx-item .rx-pos { font-size: 13px; color: #444; }
+  .doc .doc-sign { margin-top: 70px; text-align: center; }
+  .doc .doc-sign .line { width: 300px; border-top: 1px solid #14110b; margin: 0 auto 6px; }
+  .doc .doc-foot { margin-top: 34px; font-size: 11px; color: #888; text-align: center; border-top: 1px solid #eee; padding-top: 10px; }
+</style>
+</head>
+<body>
+<div class="bg-orbs"><span class="orb orb-gold"></span><span class="orb orb-jade"></span></div>
+<div class="bg-grid"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html" title="Voltar ao site">
+      <div class="monogram">M</div>
+      <div class="brand-text">
+        <span class="brand-name">MedEasy</span>
+        <span class="brand-sub">Escuta · Transcrição · Índice de Saúde</span>
+      </div>
+    </a>
+    <div class="nav-right">
+      <span class="doctor-chip" id="doctorChip" onclick="App.openPerfil()">
+        <span>⚕</span><span id="doctorChipName">Configurar perfil</span>
+      </span>
+      <a class="btn btn-ghost btn-sm" href="index.html">← Site</a>
+    </div>
+  </div>
+</header>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div>
+    <nav class="mobile-tabs" id="mobileTabs"></nav>
+    <main class="main" id="main"></main>
+  </div>
+</div>
+
+<div class="modal-back" id="modalBack"><div class="modal" id="modalBox"></div></div>
+<div class="toast-wrap" id="toastWrap"></div>
+<div id="printArea"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================ STORE ============================ */
+const KEY = 'scp_clinic_v1';
+const seedPerfil = { nome:'Sóstenes Costa Paiva', crm:'', especialidade:'Biomedicina · Fisioterapia', clinica:'', endereco:'', telefone:'(84) 99986-9468', cidade:'' };
+
+function load(){
+  try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){ return {}; }
+}
+function persist(){ localStorage.setItem(KEY, JSON.stringify(DB)); }
+let DB = load();
+DB.perfil    = DB.perfil    || {...seedPerfil};
+DB.pacientes = DB.pacientes || [];
+DB.consultas = DB.consultas || [];
+DB.receitas  = DB.receitas  || [];
+DB.laudos    = DB.laudos    || [];
+DB.atestados = DB.atestados || [];
+DB.exames    = DB.exames    || [];
+DB.lembretes = DB.lembretes || [];
+DB.suplementos = DB.suplementos || [];
+DB.encaminhamentos = DB.encaminhamentos || [];
+DB.pedidos   = DB.pedidos   || [];
+DB.avaliacoes = DB.avaliacoes || [];
+persist();
+
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const now = () => new Date().toISOString();
+const todayISO = () => new Date().toISOString().slice(0,10);
+
+function fmtDate(iso){ if(!iso) return '—'; const d=new Date(iso); return d.toLocaleDateString('pt-BR'); }
+function fmtDateTime(iso){ if(!iso) return '—'; const d=new Date(iso); return d.toLocaleDateString('pt-BR')+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
+function fmtLongDate(iso){ const d=iso?new Date(iso):new Date(); return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'}); }
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function initials(name){ if(!name) return '?'; const p=name.trim().split(/\s+/); return ((p[0]||'')[0]||'' ).toUpperCase()+((p[1]||'')[0]||'').toUpperCase(); }
+function age(iso){ if(!iso) return null; const b=new Date(iso), n=new Date(); let a=n.getFullYear()-b.getFullYear(); const m=n.getMonth()-b.getMonth(); if(m<0||(m===0&&n.getDate()<b.getDate())) a--; return a; }
+function patient(id){ return DB.pacientes.find(p=>p.id===id); }
+function patientName(id){ const p=patient(id); return p?p.nome:'—'; }
+
+/* ============================ CATALOGS ============================ */
+const CAT_MEDS = [
+  {n:'Amoxicilina 500mg', p:'Cápsula', pos:'1 cápsula de 8/8h por 7 dias'},
+  {n:'Azitromicina 500mg', p:'Comprimido', pos:'1 comprimido 1x/dia por 5 dias'},
+  {n:'Dipirona 500mg', p:'Comprimido', pos:'1 comprimido de 6/6h se dor ou febre'},
+  {n:'Paracetamol 750mg', p:'Comprimido', pos:'1 comprimido de 8/8h se dor ou febre'},
+  {n:'Ibuprofeno 600mg', p:'Comprimido', pos:'1 comprimido de 8/8h após alimentação por 5 dias'},
+  {n:'Omeprazol 20mg', p:'Cápsula', pos:'1 cápsula em jejum pela manhã por 30 dias'},
+  {n:'Losartana 50mg', p:'Comprimido', pos:'1 comprimido 1x/dia'},
+  {n:'Metformina 850mg', p:'Comprimido', pos:'1 comprimido 2x/dia após as refeições'},
+  {n:'Sinvastatina 20mg', p:'Comprimido', pos:'1 comprimido à noite'},
+  {n:'Prednisona 20mg', p:'Comprimido', pos:'1 comprimido pela manhã por 5 dias'},
+  {n:'Loratadina 10mg', p:'Comprimido', pos:'1 comprimido 1x/dia por 7 dias'},
+  {n:'Ciclobenzaprina 5mg', p:'Comprimido', pos:'1 comprimido à noite por 10 dias'},
+  {n:'Nimesulida 100mg', p:'Comprimido', pos:'1 comprimido de 12/12h após alimentação por 5 dias'},
+  {n:'Diclofenaco gel', p:'Gel tópico', pos:'Aplicar na região dolorida 3x/dia'},
+];
+const CAT_SUP = [
+  {n:'Vitamina D3', d:'2.000 UI/dia', i:'Imunidade, saúde óssea e muscular'},
+  {n:'Ômega 3 (EPA/DHA)', d:'1g 2x/dia', i:'Anti-inflamatório, saúde cardiovascular e cognitiva'},
+  {n:'Magnésio Dimalato', d:'1 dose à noite', i:'Relaxamento muscular, sono e energia'},
+  {n:'Creatina monohidratada', d:'3-5g/dia', i:'Performance, massa muscular e cognição'},
+  {n:'Vitamina B12', d:'1 dose/dia', i:'Energia e função neurológica'},
+  {n:'Zinco quelato', d:'1 dose/dia', i:'Imunidade e cicatrização'},
+  {n:'Colágeno tipo II', d:'1 dose/dia', i:'Saúde articular e tecido conjuntivo'},
+  {n:'Whey Protein', d:'1 dose pós-treino', i:'Aporte proteico e recuperação'},
+  {n:'Coenzima Q10', d:'100mg/dia', i:'Energia mitocondrial e saúde cardiovascular'},
+  {n:'Probióticos', d:'1 dose/dia', i:'Saúde intestinal e imunidade'},
+];
+const CAT_ESPECIALIDADES = ['Cardiologia','Endocrinologia','Neurologia','Ortopedia','Psiquiatria','Psicologia','Nutrição','Fisioterapia','Dermatologia','Ginecologia','Urologia','Gastroenterologia','Pneumologia','Reumatologia','Oftalmologia','Otorrinolaringologia'];
+const CAT_PEDIDOS = ['Hemograma completo','Glicemia de jejum','Hemoglobina glicada (HbA1c)','Perfil lipídico','TSH e T4 livre','Vitamina D (25-OH)','Vitamina B12','Ferritina','Ureia e Creatinina','TGO/TGP','PCR','Urina tipo I (EAS)','Eletrocardiograma (ECG)','Ecocardiograma','Raio-X de tórax','Ultrassonografia abdominal','Ressonância magnética','Tomografia computadorizada'];
+const CAT_EXAMES = [
+  {n:'Hemoglobina', u:'g/dL', ref:[12,17.5]},
+  {n:'Glicemia de jejum', u:'mg/dL', ref:[70,99]},
+  {n:'Hemoglobina glicada (HbA1c)', u:'%', ref:[4,5.7]},
+  {n:'Colesterol total', u:'mg/dL', ref:[0,190]},
+  {n:'LDL', u:'mg/dL', ref:[0,130]},
+  {n:'HDL', u:'mg/dL', ref:[40,999]},
+  {n:'Triglicerídeos', u:'mg/dL', ref:[0,150]},
+  {n:'TSH', u:'µUI/mL', ref:[0.4,4.0]},
+  {n:'Vitamina D (25-OH)', u:'ng/mL', ref:[30,100]},
+  {n:'Vitamina B12', u:'pg/mL', ref:[200,900]},
+  {n:'Ferritina', u:'ng/mL', ref:[30,400]},
+  {n:'Creatinina', u:'mg/dL', ref:[0.6,1.3]},
+  {n:'TGO/AST', u:'U/L', ref:[0,40]},
+  {n:'TGP/ALT', u:'U/L', ref:[0,41]},
+  {n:'PCR (Proteína C Reativa)', u:'mg/L', ref:[0,5]},
+  {n:'Testosterona total', u:'ng/dL', ref:[250,1100]},
+];
+
+/* ============================ ÍNDICE DE SAÚDE ============================ */
+/* Avaliação multidimensional: Clínico + Saúde Mental + Hábitos → 0-100 e nota A-F */
+function clamp(n,a,b){ return Math.max(a,Math.min(b,n)); }
+function imcCalc(peso,altura){ peso=parseFloat(peso); altura=parseFloat(altura); if(!peso||!altura) return null; if(altura>3) altura=altura/100; return +(peso/(altura*altura)).toFixed(1); }
+
+function computeScore(a){
+  // a = avaliacao object with fields. Each sub 0-100.
+  // ---- HÁBITOS (0-100) ----
+  const atividade = clamp((+a.atividade||0)/5*100,0,100);        // dias de exercício/semana (5+ = 100)
+  const sono = (()=>{ const h=+a.sonoHoras||0; if(h>=7&&h<=9) return 100; if(h>=6&&h<10) return 75; if(h>=5) return 50; return 25; })();
+  const alimentacao = clamp((+a.alimentacao||0)*10,0,100);       // 0-10
+  const hidratacao = clamp((+a.hidratacao||0)*10,0,100);         // 0-10
+  const tabagismo = a.tabagismo==='Não'?100 : a.tabagismo==='Ex-fumante'?70 : a.tabagismo==='Sim'?20 : 60;
+  const alcool = a.alcool==='Nunca'?100 : a.alcool==='Social'?80 : a.alcool==='Frequente'?35 : 70;
+  const habitos = Math.round((atividade*0.25 + sono*0.2 + alimentacao*0.2 + hidratacao*0.1 + tabagismo*0.15 + alcool*0.1));
+  // ---- SAÚDE MENTAL (0-100) ----
+  const humor = clamp((+a.humor||0)*10,0,100);                   // 0-10 (melhor = maior)
+  const ansiedade = clamp(100-(+a.ansiedade||0)*10,0,100);       // 0-10 (maior = pior) invert
+  const estresse = clamp(100-(+a.estresse||0)*10,0,100);         // 0-10 invert
+  const energia = clamp((+a.energia||0)*10,0,100);               // 0-10
+  const sonoMental = clamp((+a.sonoQualidade||0)*10,0,100);      // 0-10
+  const mental = Math.round((humor*0.3 + ansiedade*0.2 + estresse*0.2 + energia*0.15 + sonoMental*0.15));
+  // ---- CLÍNICO (0-100) ----
+  const imc = imcCalc(a.peso,a.altura);
+  const imcScore = imc==null?70 : (imc>=18.5&&imc<25)?100 : (imc>=25&&imc<30)||(imc>=17&&imc<18.5)?70 : (imc>=30&&imc<35)?45 : 25;
+  const pa = a.pressao==='Normal'?100 : a.pressao==='Limítrofe'?65 : a.pressao==='Alterada'?30 : 75;
+  // penalização por exames alterados recentes
+  const exFlags = examFlagsForPatient(a.pacienteId);
+  const exScore = clamp(100 - exFlags*12, 30, 100);
+  const nCond = (a.comorbidades? a.comorbidades.split(',').filter(x=>x.trim()).length : 0);
+  const condScore = clamp(100 - nCond*15, 30, 100);
+  const clinico = Math.round((imcScore*0.3 + pa*0.25 + exScore*0.25 + condScore*0.2));
+  // ---- GERAL ----
+  const geral = Math.round(clinico*0.4 + habitos*0.3 + mental*0.3);
+  return { geral, clinico, habitos, mental, imc,
+    subs:{atividade,sono,alimentacao,hidratacao,tabagismo,alcool,humor,ansiedade,estresse,energia,sonoMental,imcScore,pa,exScore} };
+}
+function gradeOf(score){
+  if(score>=90) return {g:'A',cls:'jade',label:'Excelente'};
+  if(score>=80) return {g:'B',cls:'jade',label:'Muito bom'};
+  if(score>=70) return {g:'C',cls:'gold',label:'Bom'};
+  if(score>=60) return {g:'D',cls:'gold',label:'Atenção'};
+  if(score>=50) return {g:'E',cls:'red',label:'Risco'};
+  return {g:'F',cls:'red',label:'Risco elevado'};
+}
+function riskAlerts(a, sc){
+  const r=[];
+  if((+a.atividade||0)<2) r.push('Sedentarismo — menos de 2 dias de atividade física/semana');
+  if((+a.sonoHoras||0)>0 && (+a.sonoHoras)<6) r.push('Privação de sono (< 6h/noite)');
+  if(a.tabagismo==='Sim') r.push('Tabagismo ativo');
+  if(a.alcool==='Frequente') r.push('Consumo frequente de álcool');
+  if((+a.alimentacao||10)<5) r.push('Alimentação de baixa qualidade');
+  if((+a.hidratacao||10)<4) r.push('Baixa hidratação');
+  if((+a.humor||10)<4) r.push('Humor deprimido — avaliar rastreio de depressão');
+  if((+a.ansiedade||0)>6) r.push('Ansiedade elevada');
+  if((+a.estresse||0)>7) r.push('Estresse elevado');
+  if(sc.imc!=null && sc.imc>=30) r.push('Obesidade (IMC ≥ 30)');
+  if(sc.imc!=null && sc.imc<18.5) r.push('Baixo peso (IMC < 18.5)');
+  if(a.pressao==='Alterada') r.push('Pressão arterial alterada');
+  const ef=examFlagsForPatient(a.pacienteId); if(ef>0) r.push(ef+' exame(s) laboratorial(is) fora da referência');
+  return r;
+}
+function examFlagsForPatient(pid){
+  let n=0;
+  DB.exames.filter(e=>e.pacienteId===pid).forEach(e=>(e.itens||[]).forEach(it=>{ if(it.flag==='high'||it.flag==='low') n++; }));
+  return n;
+}
+function latestAvaliacao(pid){
+  return DB.avaliacoes.filter(a=>a.pacienteId===pid).sort((a,b)=>(b.data||'').localeCompare(a.data||''))[0];
+}
+function patientScore(pid){
+  const a=latestAvaliacao(pid); if(!a) return null; const sc=computeScore(a); return {a,sc,grade:gradeOf(sc.geral),risks:riskAlerts(a,sc)};
+}
+
+/* ============================ TOAST / MODAL ============================ */
+function toast(msg, type){
+  const w = document.getElementById('toastWrap');
+  const t = document.createElement('div');
+  t.className = 'toast ' + (type||'');
+  t.textContent = msg;
+  w.appendChild(t);
+  setTimeout(()=>{ t.style.transition='opacity .3s'; t.style.opacity='0'; setTimeout(()=>t.remove(),300); }, 3200);
+}
+const modalBack = document.getElementById('modalBack');
+const modalBox = document.getElementById('modalBox');
+function openModal(html, large){
+  modalBox.className = 'modal' + (large?' modal-lg':'');
+  modalBox.innerHTML = html;
+  modalBack.classList.add('open');
+}
+function closeModal(){ modalBack.classList.remove('open'); modalBox.innerHTML=''; }
+modalBack.addEventListener('click', e=>{ if(e.target===modalBack) closeModal(); });
+
+/* ============================ NAV / ROUTER ============================ */
+const NAV = [
+  {group:'Atendimento', items:[
+    {id:'painel', label:'Painel', ico:'▤'},
+    {id:'consulta', label:'Escuta & Transcrição', ico:'🎙'},
+    {id:'pacientes', label:'Pacientes', ico:'👥'},
+    {id:'saude', label:'Índice de Saúde', ico:'❤'},
+  ]},
+  {group:'Documentos', items:[
+    {id:'receitas', label:'Receitas', ico:'℞'},
+    {id:'pedidos', label:'Pedidos de Exame', ico:'📋'},
+    {id:'encaminhamentos', label:'Encaminhamentos', ico:'➦'},
+    {id:'laudos', label:'Laudos & Relatórios', ico:'📄'},
+    {id:'atestados', label:'Atestados', ico:'✎'},
+  ]},
+  {group:'Clínico', items:[
+    {id:'medicamentos', label:'Medicamentos', ico:'💊'},
+    {id:'exames', label:'Exames', ico:'🧪'},
+    {id:'suplementos', label:'Suplementos', ico:'🌿'},
+    {id:'lembretes', label:'Lembretes & Alertas', ico:'🔔'},
+  ]},
+];
+let route = 'painel';
+
+function dueReminders(){
+  return DB.lembretes.filter(l=>l.ativo!==false).filter(l=>{
+    if(l.tipo==='consulta') return l.data && l.data.slice(0,10) <= todayISO() && (l.data.slice(0,10) >= todayISO());
+    return true; // medication reminders are ongoing
+  });
+}
+function alertsCount(){
+  const consultasHoje = DB.lembretes.filter(l=>l.ativo!==false && l.tipo==='consulta' && l.data && l.data.slice(0,10)===todayISO()).length;
+  const remedios = DB.lembretes.filter(l=>l.ativo!==false && l.tipo==='remedio').length;
+  return consultasHoje + (remedios?1:0)*0 + consultasHoje*0 + DB.lembretes.filter(l=>l.ativo!==false && l.tipo==='consulta' && l.data && l.data.slice(0,10)===todayISO()).length*0 + consultasHoje*0;
+}
+function badgeFor(id){
+  if(id==='lembretes'){
+    const c = DB.lembretes.filter(l=>l.ativo!==false && l.tipo==='consulta' && l.data && l.data.slice(0,10)===todayISO()).length;
+    return c || '';
+  }
+  return '';
+}
+
+function renderNav(){
+  const side = document.getElementById('sidebar');
+  const mob = document.getElementById('mobileTabs');
+  let html = '';
+  NAV.forEach(g=>{
+    html += `<div class="side-group-label">${g.group}</div>`;
+    g.items.forEach(it=>{
+      const b = badgeFor(it.id);
+      html += `<div class="side-link ${route===it.id?'active':''}" onclick="App.go('${it.id}')">
+        <span class="ico">${it.ico}</span><span>${it.label}</span>${b?`<span class="side-badge">${b}</span>`:''}</div>`;
+    });
+  });
+  side.innerHTML = html;
+  let m = '';
+  NAV.forEach(g=> g.items.forEach(it=>{
+    m += `<div class="side-link ${route===it.id?'active':''}" onclick="App.go('${it.id}')"><span class="ico">${it.ico}</span><span>${it.label}</span></div>`;
+  }));
+  mob.innerHTML = m;
+  // doctor chip
+  document.getElementById('doctorChipName').textContent = DB.perfil.nome ? ('Dr. '+DB.perfil.nome.split(' ')[0]) : 'Configurar perfil';
+}
+
+const PAGES = {};
+function render(){
+  renderNav();
+  const el = document.getElementById('main');
+  el.innerHTML = (PAGES[route] || PAGES.painel)();
+  window.scrollTo({top:0});
+  if(afterRender[route]) afterRender[route]();
+}
+const afterRender = {};
+
+/* ============================ PÁGINA: PAINEL ============================ */
+PAGES.painel = function(){
+  const consultasHoje = DB.consultas.filter(c=>c.data && c.data.slice(0,10)===todayISO()).length;
+  const consultasAgendadas = DB.lembretes.filter(l=>l.ativo!==false && l.tipo==='consulta' && l.data && l.data.slice(0,10)>=todayISO())
+    .sort((a,b)=>(a.data||'').localeCompare(b.data||''));
+  const remedios = DB.lembretes.filter(l=>l.ativo!==false && l.tipo==='remedio');
+  const ultimasConsultas = [...DB.consultas].sort((a,b)=>(b.data||'').localeCompare(a.data||'')).slice(0,5);
+
+  let alertsHtml = '';
+  if(consultasAgendadas.length===0 && remedios.length===0){
+    alertsHtml = `<div class="empty" style="padding:24px"><div class="big">✓</div>Nenhum alerta pendente para hoje.</div>`;
+  } else {
+    alertsHtml = '<div class="list">';
+    consultasAgendadas.slice(0,6).forEach(l=>{
+      const hoje = l.data.slice(0,10)===todayISO();
+      alertsHtml += `<div class="list-item">
+        <div class="avatar">📅</div>
+        <div class="grow"><div class="li-title">${esc(l.titulo)} — ${esc(patientName(l.pacienteId))}</div>
+        <div class="li-sub">Consulta em ${fmtDateTime(l.data)}</div></div>
+        ${hoje?'<span class="tag red">Hoje</span>':'<span class="tag gold">Agendada</span>'}</div>`;
+    });
+    remedios.slice(0,6).forEach(l=>{
+      alertsHtml += `<div class="list-item">
+        <div class="avatar">💊</div>
+        <div class="grow"><div class="li-title">${esc(l.titulo)} — ${esc(patientName(l.pacienteId))}</div>
+        <div class="li-sub">${esc(l.horarios||'')} · ${esc(l.freq||'')}</div></div>
+        <span class="tag jade">Ativo</span></div>`;
+    });
+    alertsHtml += '</div>';
+  }
+
+  const scored = DB.pacientes.map(p=>({p,r:patientScore(p.id)})).filter(x=>x.r);
+  const mediaSaude = scored.length? Math.round(scored.reduce((s,x)=>s+x.r.sc.geral,0)/scored.length):0;
+  const gradeMedia = scored.length? gradeOf(mediaSaude):null;
+  const emRisco = scored.filter(x=>x.r.sc.geral<60).sort((a,b)=>a.r.sc.geral-b.r.sc.geral);
+
+  let recentHtml = ultimasConsultas.length ? '<div class="list">' + ultimasConsultas.map(c=>`
+    <div class="list-item">
+      <div class="avatar">${esc(initials(patientName(c.pacienteId)))}</div>
+      <div class="grow"><div class="li-title">${esc(patientName(c.pacienteId))}</div>
+      <div class="li-sub">${esc((c.queixa||'Consulta').slice(0,60))} · ${fmtDateTime(c.data)}</div></div>
+      <button class="btn btn-ghost btn-sm" onclick="App.viewConsulta('${c.id}')">Ver</button>
+    </div>`).join('') + '</div>'
+    : `<div class="empty" style="padding:24px"><div class="big">🎙</div>Nenhuma consulta registrada ainda.<br><button class="btn btn-gold btn-sm" style="margin-top:12px" onclick="App.go('consulta')">Iniciar consulta</button></div>`;
+
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">Painel</h2><div class="sub">Visão geral do dia · ${fmtLongDate()}</div></div>
+    <div class="head-actions">
+      <button class="btn btn-jade" onclick="App.go('consulta')">🎙 Nova consulta</button>
+      <button class="btn btn-gold" onclick="App.newPaciente()">+ Paciente</button>
+    </div>
+  </div>
+  <div class="grid-4" style="margin-bottom:18px">
+    <div class="stat"><div class="n">${DB.pacientes.length}</div><div class="l">Pacientes</div></div>
+    <div class="stat jade"><div class="n">${consultasHoje}</div><div class="l">Consultas hoje</div></div>
+    <div class="stat"><div class="n">${DB.receitas.length+DB.pedidos.length+DB.encaminhamentos.length+DB.laudos.length+DB.atestados.length}</div><div class="l">Documentos emitidos</div></div>
+    <div class="card" style="display:flex;align-items:center;gap:14px;margin:0;padding:12px 16px;cursor:${scored.length?'pointer':'default'}" ${scored.length?`onclick="App.go('saude')"`:''}>
+      ${scored.length?scoreRing(mediaSaude,72):'<div class="stat" style="border:none;padding:0"><div class="n">—</div></div>'}
+      <div><div class="l" style="font-size:.72rem">Índice médio de saúde</div><div style="font-family:var(--serif);font-size:1.05rem;color:var(--gold-light)">${gradeMedia?('Nota '+gradeMedia.g):'Sem dados'}</div></div>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="card"><h3>Alertas & Agenda</h3><div class="card-sub">Consultas do dia e lembretes de medicação</div>${alertsHtml}</div>
+    <div class="card"><h3>Consultas recentes</h3><div class="card-sub">Últimos atendimentos transcritos</div>${recentHtml}</div>
+  </div>
+  ${emRisco.length?`<div class="card"><h3>⚠ Pacientes em risco</h3><div class="card-sub">Índice de saúde abaixo de 60 — priorize acompanhamento</div>
+    <div class="list">${emRisco.slice(0,6).map(({p,r})=>`<div class="list-item" style="cursor:pointer" onclick="App.viewAvaliacao('${p.id}')">
+      <div class="avatar" style="color:var(--red-light);background:rgba(224,90,90,0.14);border-color:rgba(224,90,90,0.4)">${r.grade.g}</div>
+      <div class="grow"><div class="li-title">${esc(p.nome)} <span class="tag red">${r.sc.geral}/100</span></div><div class="li-sub">${esc(r.risks.slice(0,2).join(' · ')||'—')}</div></div>
+      <span class="muted">›</span></div>`).join('')}</div></div>`:''}
+  <div class="disclaimer">⚠️ <strong>Aviso:</strong> Este sistema é uma ferramenta de apoio à decisão clínica e à documentação. Não substitui o julgamento profissional. Todos os dados ficam armazenados <strong>localmente neste navegador</strong> (localStorage) — nada é enviado a servidores. Faça backups regulares em Painel → Exportar dados. Em conformidade com a LGPD, obtenha consentimento do paciente para gravação e transcrição.</div>
+  <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+    <button class="btn btn-ghost btn-sm" onclick="App.exportData()">⬇ Exportar dados (JSON)</button>
+    <button class="btn btn-ghost btn-sm" onclick="App.importData()">⬆ Importar dados</button>
+  </div>`;
+};
+
+/* ============================ PÁGINA: CONSULTA (ESCUTA & TRANSCRIÇÃO) ============================ */
+let rec = { recognition:null, running:false, finalText:'', interim:'', startTs:0, timer:null, pacienteId:'', consultaId:null };
+
+PAGES.consulta = function(){
+  const opts = DB.pacientes.map(p=>`<option value="${p.id}" ${rec.pacienteId===p.id?'selected':''}>${esc(p.nome)}</option>`).join('');
+  const supported = ('webkitSpeechRecognition' in window)||('SpeechRecognition' in window);
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">Escuta & Transcrição</h2><div class="sub">Transcrição de voz em tempo real (pt-BR) e registro estruturado da consulta</div></div>
+    <div class="head-actions">
+      <button class="btn btn-ghost" onclick="App.go('pacientes')">👥 Pacientes</button>
+    </div>
+  </div>
+  ${!supported?`<div class="card" style="border-color:rgba(224,90,90,0.35)"><h3 style="color:var(--red-light)">Transcrição por voz indisponível neste navegador</h3><div class="card-sub">O reconhecimento de fala requer <strong>Google Chrome</strong> ou <strong>Microsoft Edge</strong> (desktop ou Android). Você ainda pode digitar a transcrição e as notas manualmente abaixo.</div></div>`:''}
+  <div class="rec-panel">
+    <div class="card">
+      <div class="field">
+        <label class="f">Paciente</label>
+        <select id="recPaciente" onchange="App.setRecPaciente(this.value)">
+          <option value="">— Selecione o paciente —</option>${opts}
+        </select>
+      </div>
+      <div class="rec-controls">
+        <span class="rec-dot" id="recDot"></span>
+        <span class="rec-timer" id="recTimer">00:00</span>
+        <button class="btn btn-jade" id="recStart" onclick="App.recStart()" ${!supported?'disabled style="opacity:.5;cursor:not-allowed"':''}>● Iniciar escuta</button>
+        <button class="btn btn-danger" id="recStop" onclick="App.recStop()" style="display:none">■ Parar</button>
+        <button class="btn btn-ghost btn-sm" onclick="App.recClear()">Limpar</button>
+      </div>
+      <label class="f">Transcrição</label>
+      <div class="transcript-box" id="transcriptBox" contenteditable="true" oninput="App.transcriptEdited(this)" spellcheck="true"></div>
+      <div class="disclaimer">🔒 A transcrição por voz é processada pelo serviço de reconhecimento do navegador. Informe o paciente e obtenha consentimento (LGPD) antes de gravar.</div>
+    </div>
+    <div class="card">
+      <h3 style="font-size:1rem">Registro clínico (SOAP)</h3>
+      <div class="card-sub">Estruture a consulta a partir da escuta</div>
+      <div class="field"><label class="f">Queixa principal / Subjetivo</label><textarea id="cQueixa" style="min-height:60px"></textarea></div>
+      <div class="field"><label class="f">Exame / Objetivo</label><textarea id="cObjetivo" style="min-height:60px"></textarea></div>
+      <div class="field"><label class="f">Avaliação / Diagnóstico (CID)</label><textarea id="cDiagnostico" style="min-height:60px"></textarea></div>
+      <div class="field"><label class="f">Conduta / Plano</label><textarea id="cConduta" style="min-height:60px"></textarea></div>
+      <button class="btn btn-gold btn-block" onclick="App.saveConsulta()">💾 Salvar consulta</button>
+      <button class="btn btn-ghost btn-block btn-sm" style="margin-top:8px" onclick="App.gerarResumo()">📄 Gerar resumo / relatório imprimível</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:1rem">Consultas registradas</h3>
+    <div class="card-sub">Histórico de atendimentos</div>
+    ${DB.consultas.length? '<div class="list">'+[...DB.consultas].sort((a,b)=>(b.data||'').localeCompare(a.data||'')).map(c=>`
+      <div class="list-item">
+        <div class="avatar">${esc(initials(patientName(c.pacienteId)))}</div>
+        <div class="grow"><div class="li-title">${esc(patientName(c.pacienteId))}</div><div class="li-sub">${esc((c.queixa||'—').slice(0,70))} · ${fmtDateTime(c.data)}</div></div>
+        <div class="li-actions">
+          <button class="btn btn-ghost btn-sm" onclick="App.viewConsulta('${c.id}')">Ver</button>
+          <button class="btn btn-ghost btn-sm" onclick="App.consultaToDoc('${c.id}')">℞ Documento</button>
+          <button class="icon-btn" onclick="App.delConsulta('${c.id}')" title="Excluir">✕</button>
+        </div>
+      </div>`).join('')+'</div>' : '<div class="empty"><div class="big">📝</div>Nenhuma consulta registrada.</div>'}
+  </div>`;
+};
+afterRender.consulta = function(){
+  const box = document.getElementById('transcriptBox');
+  if(box) box.innerHTML = rec.finalText ? esc(rec.finalText) : '';
+  updateRecUI();
+};
+
+/* ============================ PÁGINA: PACIENTES ============================ */
+PAGES.pacientes = function(){
+  const list = [...DB.pacientes].sort((a,b)=>(a.nome||'').localeCompare(b.nome||''));
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">Pacientes</h2><div class="sub">${DB.pacientes.length} paciente(s) cadastrado(s)</div></div>
+    <div class="head-actions"><button class="btn btn-gold" onclick="App.newPaciente()">+ Novo paciente</button></div>
+  </div>
+  <div class="field"><input type="text" id="pacSearch" placeholder="🔎 Buscar por nome, CPF ou telefone..." oninput="App.filterPacientes(this.value)"></div>
+  <div class="list" id="pacList">
+    ${list.length? list.map(pacRow).join('') : '<div class="empty"><div class="big">👥</div>Nenhum paciente cadastrado.<br><button class="btn btn-gold btn-sm" style="margin-top:12px" onclick="App.newPaciente()">Cadastrar primeiro paciente</button></div>'}
+  </div>`;
+};
+function pacRow(p){
+  const a = age(p.nascimento);
+  const alerg = p.alergias ? `<span class="tag red">⚠ ${esc(p.alergias.slice(0,30))}</span>` : '';
+  const nCons = DB.consultas.filter(c=>c.pacienteId===p.id).length;
+  const r = patientScore(p.id);
+  const grade = r ? `<span class="tag ${r.grade.cls}">❤ ${r.sc.geral} · ${r.grade.g}</span>` : '';
+  return `<div class="list-item">
+    <div class="avatar">${esc(initials(p.nome))}</div>
+    <div class="grow">
+      <div class="li-title">${esc(p.nome)} ${grade} ${alerg}</div>
+      <div class="li-sub">${a!=null?a+' anos · ':''}${esc(p.sexo||'')} ${p.telefone?'· '+esc(p.telefone):''} · ${nCons} consulta(s)</div>
+    </div>
+    <div class="li-actions">
+      <button class="btn btn-ghost btn-sm" onclick="App.viewPaciente('${p.id}')">Prontuário</button>
+      <button class="btn btn-jade btn-sm" onclick="App.startFor('${p.id}')">🎙</button>
+      <button class="icon-btn" onclick="App.editPaciente('${p.id}')" title="Editar">✎</button>
+    </div>
+  </div>`;
+}
+
+/* ============================ PÁGINA: MEDICAMENTOS ============================ */
+PAGES.medicamentos = function(){
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">Medicamentos</h2><div class="sub">Bulário de referência e posologias · base para receitas</div></div>
+    <div class="head-actions"><button class="btn btn-gold" onclick="App.newReceita()">℞ Nova receita</button></div>
+  </div>
+  <div class="field"><input type="text" id="medSearch" placeholder="🔎 Buscar medicamento..." oninput="App.filterMeds(this.value)"></div>
+  <div class="list" id="medList">${CAT_MEDS.map(medRow).join('')}</div>
+  <div class="disclaimer">💊 Posologias apresentadas são <strong>modelos de referência</strong> e devem ser individualizadas conforme avaliação clínica, peso, função renal/hepática e interações. Verifique alergias do paciente antes de prescrever.</div>`;
+};
+function medRow(m){
+  return `<div class="list-item">
+    <div class="avatar">💊</div>
+    <div class="grow"><div class="li-title">${esc(m.n)}</div><div class="li-sub">${esc(m.p)} · ${esc(m.pos)}</div></div>
+    <button class="btn btn-ghost btn-sm" onclick="App.newReceita('${esc(m.n)}')">+ Receita</button>
+  </div>`;
+}
+
+/* ============================ PÁGINA: RECEITAS ============================ */
+PAGES.receitas = function(){
+  return docListPage('receitas','Receitas','Prescrições médicas emitidas','℞', DB.receitas, 'newReceita');
+};
+PAGES.laudos = function(){
+  return docListPage('laudos','Laudos & Relatórios','Laudos, relatórios e resumos de consulta','📄', DB.laudos, 'newLaudo');
+};
+PAGES.atestados = function(){
+  return docListPage('atestados','Atestados','Atestados e declarações','✎', DB.atestados, 'newAtestado');
+};
+PAGES.pedidos = function(){
+  return docListPage('pedidos','Pedidos de Exame','Solicitações de exames complementares','📋', DB.pedidos, 'newPedido');
+};
+PAGES.encaminhamentos = function(){
+  return docListPage('encaminhamentos','Encaminhamentos','Encaminhamentos para especialistas','➦', DB.encaminhamentos, 'newEncaminhamento');
+};
+function docListPage(key,title,sub,ico,coll,newFn){
+  const items = [...coll].sort((a,b)=>(b.data||'').localeCompare(a.data||''));
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">${title}</h2><div class="sub">${sub}</div></div>
+    <div class="head-actions"><button class="btn btn-gold" onclick="App.${newFn}()">+ Novo</button></div>
+  </div>
+  ${items.length? '<div class="list">'+items.map(d=>`
+    <div class="list-item">
+      <div class="avatar">${ico}</div>
+      <div class="grow"><div class="li-title">${esc(d.titulo||title)} — ${esc(patientName(d.pacienteId))}</div><div class="li-sub">${fmtDateTime(d.data)}</div></div>
+      <div class="li-actions">
+        <button class="btn btn-ghost btn-sm" onclick="App.printDoc('${key}','${d.id}')">🖨 Imprimir</button>
+        <button class="icon-btn" onclick="App.delDoc('${key}','${d.id}')" title="Excluir">✕</button>
+      </div>
+    </div>`).join('')+'</div>' : `<div class="empty"><div class="big">${ico}</div>Nenhum documento emitido.<br><button class="btn btn-gold btn-sm" style="margin-top:12px" onclick="App.${newFn}()">Emitir agora</button></div>`}`;
+}
+
+/* ============================ PÁGINA: EXAMES ============================ */
+PAGES.exames = function(){
+  const items = [...DB.exames].sort((a,b)=>(b.data||'').localeCompare(a.data||''));
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">Exames</h2><div class="sub">Solicitação, resultados, interpretação e recomendações</div></div>
+    <div class="head-actions"><button class="btn btn-gold" onclick="App.newExame()">+ Registrar exame</button></div>
+  </div>
+  ${items.length? '<div class="list">'+items.map(exRow).join('')+'</div>' : `<div class="empty"><div class="big">🧪</div>Nenhum exame registrado.<br><button class="btn btn-gold btn-sm" style="margin-top:12px" onclick="App.newExame()">Registrar exame</button></div>`}
+  <div class="disclaimer">🧪 A sinalização automática de valores fora da faixa usa <strong>faixas de referência genéricas</strong> e não considera contexto clínico, idade, sexo ou método laboratorial. A interpretação final é sempre do profissional.</div>`;
+};
+function exRow(e){
+  const flags = (e.itens||[]).filter(i=>i.flag==='high'||i.flag==='low').length;
+  return `<div class="list-item">
+    <div class="avatar">🧪</div>
+    <div class="grow"><div class="li-title">${esc(e.nome||'Painel de exames')} — ${esc(patientName(e.pacienteId))}
+      ${flags?`<span class="tag red">${flags} alterado(s)</span>`:'<span class="tag jade">Sem alterações</span>'}</div>
+      <div class="li-sub">${fmtDate(e.data)} · ${(e.itens||[]).length} parâmetro(s)</div></div>
+    <div class="li-actions">
+      <button class="btn btn-ghost btn-sm" onclick="App.viewExame('${e.id}')">Ver</button>
+      <button class="icon-btn" onclick="App.delExame('${e.id}')" title="Excluir">✕</button>
+    </div>
+  </div>`;
+}
+
+/* ============================ PÁGINA: SUPLEMENTOS ============================ */
+PAGES.suplementos = function(){
+  const items = [...DB.suplementos].sort((a,b)=>(b.data||'').localeCompare(a.data||''));
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">Suplementos & Recomendações</h2><div class="sub">Protocolos de suplementação por paciente</div></div>
+    <div class="head-actions"><button class="btn btn-gold" onclick="App.newSuplemento()">+ Nova recomendação</button></div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:1rem">Catálogo de referência</h3>
+    <div class="card-sub">Clique para incluir numa recomendação</div>
+    <div class="chips">${CAT_SUP.map(s=>`<span class="tag jade chip-add" onclick="App.newSuplemento('${esc(s.n)}')" title="${esc(s.i)}">🌿 ${esc(s.n)} · ${esc(s.d)}</span>`).join('')}</div>
+  </div>
+  ${items.length? '<div class="list">'+items.map(s=>`
+    <div class="list-item">
+      <div class="avatar">🌿</div>
+      <div class="grow"><div class="li-title">${esc(patientName(s.pacienteId))}</div><div class="li-sub">${esc((s.itens||[]).map(i=>i.nome).join(', ')||'—').slice(0,80)} · ${fmtDate(s.data)}</div></div>
+      <div class="li-actions">
+        <button class="btn btn-ghost btn-sm" onclick="App.printSuplemento('${s.id}')">🖨</button>
+        <button class="icon-btn" onclick="App.delSuplemento('${s.id}')" title="Excluir">✕</button>
+      </div>
+    </div>`).join('')+'</div>' : ''}
+  <div class="disclaimer">🌿 Recomendações de suplementação são de apoio e devem considerar dieta, exames e condições do paciente. Não substituem prescrição nutricional/médica individualizada.</div>`;
+};
+
+/* ============================ PÁGINA: ÍNDICE DE SAÚDE ============================ */
+function scoreRing(score, size){
+  size=size||110; const g=gradeOf(score); const r=(size-14)/2; const c=2*Math.PI*r; const off=c*(1-score/100);
+  const col = g.cls==='jade'?'#45cf99':g.cls==='gold'?'#e2c464':'#f18b8b';
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="flex-shrink:0">
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="rgba(234,232,225,0.08)" stroke-width="10"/>
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${col}" stroke-width="10" stroke-linecap="round"
+      stroke-dasharray="${c}" stroke-dashoffset="${off}" transform="rotate(-90 ${size/2} ${size/2})"/>
+    <text x="50%" y="46%" text-anchor="middle" fill="${col}" font-family="Fraunces,serif" font-size="${size*0.26}" font-weight="600">${score}</text>
+    <text x="50%" y="66%" text-anchor="middle" fill="#99a2ad" font-family="JetBrains Mono,monospace" font-size="${size*0.1}">/ 100 · ${g.g}</text>
+  </svg>`;
+}
+function bar(label, v, tone){
+  const col = v>=70?'#45cf99':v>=50?'#e2c464':'#f18b8b';
+  return `<div style="margin-bottom:9px"><div style="display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:3px"><span class="muted">${esc(label)}</span><span style="color:${col};font-weight:600">${Math.round(v)}</span></div>
+    <div style="height:7px;border-radius:6px;background:rgba(234,232,225,0.07);overflow:hidden"><div style="height:100%;width:${clamp(v,0,100)}%;background:${col};border-radius:6px"></div></div></div>`;
+}
+PAGES.saude = function(){
+  const scored = DB.pacientes.map(p=>({p, r:patientScore(p.id)})).filter(x=>x.r);
+  const semAval = DB.pacientes.filter(p=>!latestAvaliacao(p.id));
+  const media = scored.length? Math.round(scored.reduce((s,x)=>s+x.r.sc.geral,0)/scored.length) : 0;
+  const emRisco = scored.filter(x=>x.r.sc.geral<60).length;
+  const totalAlertas = scored.reduce((s,x)=>s+x.r.risks.length,0);
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">Índice de Saúde</h2><div class="sub">Avaliação 360°: clínico · saúde mental · hábitos — nota A–F e escala 0–100</div></div>
+    <div class="head-actions"><button class="btn btn-gold" onclick="App.newAvaliacao()">+ Nova avaliação</button></div>
+  </div>
+  <div class="grid-4" style="margin-bottom:18px">
+    <div class="card" style="display:flex;align-items:center;gap:16px;margin:0">${scored.length?scoreRing(media,96):'<div class="stat" style="border:none"><div class="n">—</div></div>'}<div><div class="muted" style="font-size:.78rem">Índice médio</div><div style="font-family:var(--serif);font-size:1.1rem">${scored.length?gradeOf(media).label:'Sem dados'}</div></div></div>
+    <div class="stat"><div class="n">${scored.length}</div><div class="l">Pacientes avaliados</div></div>
+    <div class="stat"><div class="n" style="color:${emRisco?'var(--red-light)':'var(--jade-light)'}">${emRisco}</div><div class="l">Em risco (&lt; 60)</div></div>
+    <div class="stat"><div class="n" style="color:var(--gold-light)">${totalAlertas}</div><div class="l">Alertas ativos</div></div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:1rem">Pacientes avaliados</h3><div class="card-sub">Clique para ver o detalhamento por dimensão e riscos</div>
+    ${scored.length? '<div class="list">'+scored.sort((a,b)=>a.r.sc.geral-b.r.sc.geral).map(({p,r})=>`
+      <div class="list-item" style="cursor:pointer" onclick="App.viewAvaliacao('${p.id}')">
+        <div class="avatar" style="background:${r.grade.cls==='jade'?'rgba(47,174,125,0.16)':r.grade.cls==='gold'?'rgba(201,162,39,0.16)':'rgba(224,90,90,0.16)'};border-color:${r.grade.cls==='jade'?'rgba(47,174,125,0.4)':r.grade.cls==='gold'?'rgba(201,162,39,0.4)':'rgba(224,90,90,0.4)'};color:${r.grade.cls==='jade'?'var(--jade-light)':r.grade.cls==='gold'?'var(--gold-light)':'var(--red-light)'};font-size:1.1rem">${r.grade.g}</div>
+        <div class="grow"><div class="li-title">${esc(p.nome)} <span class="tag ${r.grade.cls}">${r.sc.geral}/100 · ${r.grade.label}</span></div>
+        <div class="li-sub">Clínico ${r.sc.clinico} · Mental ${r.sc.mental} · Hábitos ${r.sc.habitos}${r.risks.length?` · <span class="flag-high">${r.risks.length} alerta(s)</span>`:''}</div></div>
+        <span class="muted">›</span>
+      </div>`).join('')+'</div>' : '<div class="empty"><div class="big">❤</div>Nenhuma avaliação ainda.<br><button class="btn btn-gold btn-sm" style="margin-top:12px" onclick="App.newAvaliacao()">Avaliar primeiro paciente</button></div>'}
+    ${semAval.length?`<div class="disclaimer" style="margin-top:14px">${semAval.length} paciente(s) sem avaliação: ${semAval.slice(0,5).map(p=>esc(p.nome)).join(', ')}${semAval.length>5?'…':''}</div>`:''}
+  </div>
+  <div class="disclaimer">❤ O Índice de Saúde é um <strong>instrumento de triagem e acompanhamento</strong> que combina dados clínicos, questionário de saúde mental e hábitos de vida informados. Não é diagnóstico. As notas (A–F / 0–100) apoiam a comunicação com o paciente e o monitoramento de evolução.</div>`;
+};
+
+/* ============================ PÁGINA: LEMBRETES ============================ */
+PAGES.lembretes = function(){
+  const remedios = DB.lembretes.filter(l=>l.tipo==='remedio');
+  const consultas = DB.lembretes.filter(l=>l.tipo==='consulta').sort((a,b)=>(a.data||'').localeCompare(b.data||''));
+  return `
+  <div class="page-head">
+    <div><h2 class="grad-text">Lembretes & Alertas</h2><div class="sub">Lembretes de medicação e alertas de consulta</div></div>
+    <div class="head-actions">
+      <button class="btn btn-jade" onclick="App.newLembrete('remedio')">💊 Lembrete de remédio</button>
+      <button class="btn btn-gold" onclick="App.newLembrete('consulta')">📅 Alerta de consulta</button>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h3 style="font-size:1rem">💊 Medicações</h3><div class="card-sub">Lembretes contínuos de uso</div>
+      ${remedios.length? '<div class="list">'+remedios.map(lembreteRow).join('')+'</div>' : '<div class="empty" style="padding:26px"><div class="big">💊</div>Sem lembretes de medicação.</div>'}
+    </div>
+    <div class="card">
+      <h3 style="font-size:1rem">📅 Consultas</h3><div class="card-sub">Retornos e agendamentos</div>
+      ${consultas.length? '<div class="list">'+consultas.map(lembreteRow).join('')+'</div>' : '<div class="empty" style="padding:26px"><div class="big">📅</div>Sem consultas agendadas.</div>'}
+    </div>
+  </div>`;
+};
+function lembreteRow(l){
+  const hoje = l.tipo==='consulta' && l.data && l.data.slice(0,10)===todayISO();
+  const passou = l.tipo==='consulta' && l.data && l.data.slice(0,10)<todayISO();
+  return `<div class="list-item">
+    <div class="avatar">${l.tipo==='remedio'?'💊':'📅'}</div>
+    <div class="grow"><div class="li-title">${esc(l.titulo)} <span class="li-sub">— ${esc(patientName(l.pacienteId))}</span></div>
+      <div class="li-sub">${l.tipo==='remedio'? esc((l.horarios||'')+' · '+(l.freq||'')) : fmtDateTime(l.data)}
+      ${hoje?' <span class="tag red">Hoje</span>':''}${passou?' <span class="tag">Passou</span>':''}${l.ativo===false?' <span class="tag">Inativo</span>':''}</div></div>
+    <div class="li-actions">
+      <button class="btn btn-ghost btn-sm" onclick="App.toggleLembrete('${l.id}')">${l.ativo===false?'Ativar':'Pausar'}</button>
+      <button class="icon-btn" onclick="App.delLembrete('${l.id}')" title="Excluir">✕</button>
+    </div>
+  </div>`;
+}
+
+/* ============================ APP OBJECT (handlers) ============================ */
+const App = {
+  go(r){ route=r; render(); },
+
+  /* ---- PERFIL ---- */
+  openPerfil(){
+    const p = DB.perfil;
+    openModal(`
+      <div class="modal-head"><h3>Perfil do profissional</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="card-sub" style="margin-top:-8px">Aparece no cabeçalho dos documentos impressos.</div>
+      <div class="row c2"><div class="field"><label class="f">Nome completo</label><input id="pf_nome" value="${esc(p.nome)}"></div>
+      <div class="field"><label class="f">CRM / Registro</label><input id="pf_crm" value="${esc(p.crm)}" placeholder="CRM-UF 00000"></div></div>
+      <div class="row c2"><div class="field"><label class="f">Especialidade</label><input id="pf_esp" value="${esc(p.especialidade)}"></div>
+      <div class="field"><label class="f">Telefone</label><input id="pf_tel" value="${esc(p.telefone)}"></div></div>
+      <div class="field"><label class="f">Clínica / Instituição</label><input id="pf_clin" value="${esc(p.clinica)}"></div>
+      <div class="row c2"><div class="field"><label class="f">Endereço</label><input id="pf_end" value="${esc(p.endereco)}"></div>
+      <div class="field"><label class="f">Cidade</label><input id="pf_cid" value="${esc(p.cidade)}"></div></div>
+      <button class="btn btn-gold btn-block" onclick="App.savePerfil()">Salvar perfil</button>`);
+  },
+  savePerfil(){
+    DB.perfil = { nome:val('pf_nome'), crm:val('pf_crm'), especialidade:val('pf_esp'), telefone:val('pf_tel'), clinica:val('pf_clin'), endereco:val('pf_end'), cidade:val('pf_cid') };
+    persist(); closeModal(); renderNav(); toast('Perfil salvo','jade');
+  },
+  closeModal,
+
+  /* ---- PACIENTES ---- */
+  newPaciente(){ this.editPaciente(null); },
+  editPaciente(id){
+    const p = id? patient(id) : {id:null,nome:'',nascimento:'',sexo:'',cpf:'',telefone:'',email:'',alergias:'',condicoes:'',obs:''};
+    openModal(`
+      <div class="modal-head"><h3>${id?'Editar':'Novo'} paciente</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <input type="hidden" id="pac_id" value="${esc(p.id||'')}">
+      <div class="field"><label class="f">Nome completo *</label><input id="pac_nome" value="${esc(p.nome)}"></div>
+      <div class="row c3">
+        <div class="field"><label class="f">Nascimento</label><input type="date" id="pac_nasc" value="${esc(p.nascimento)}"></div>
+        <div class="field"><label class="f">Sexo</label><select id="pac_sexo"><option value="">—</option><option ${p.sexo==='Feminino'?'selected':''}>Feminino</option><option ${p.sexo==='Masculino'?'selected':''}>Masculino</option><option ${p.sexo==='Outro'?'selected':''}>Outro</option></select></div>
+        <div class="field"><label class="f">Telefone</label><input id="pac_tel" value="${esc(p.telefone)}"></div>
+      </div>
+      <div class="row c2">
+        <div class="field"><label class="f">CPF</label><input id="pac_cpf" value="${esc(p.cpf)}"></div>
+        <div class="field"><label class="f">E-mail</label><input id="pac_email" value="${esc(p.email||'')}"></div>
+      </div>
+      <div class="field"><label class="f">Alergias</label><input id="pac_alerg" value="${esc(p.alergias)}" placeholder="Ex.: Penicilina, dipirona..."></div>
+      <div class="field"><label class="f">Condições / comorbidades</label><textarea id="pac_cond" style="min-height:60px">${esc(p.condicoes)}</textarea></div>
+      <div class="field"><label class="f">Observações</label><textarea id="pac_obs" style="min-height:50px">${esc(p.obs)}</textarea></div>
+      <button class="btn btn-gold btn-block" onclick="App.savePaciente()">Salvar paciente</button>`);
+  },
+  savePaciente(){
+    const nome = val('pac_nome').trim();
+    if(!nome){ toast('Informe o nome do paciente','red'); return; }
+    const id = val('pac_id');
+    const data = { nome, nascimento:val('pac_nasc'), sexo:val('pac_sexo'), cpf:val('pac_cpf'), telefone:val('pac_tel'), email:val('pac_email'), alergias:val('pac_alerg'), condicoes:val('pac_cond'), obs:val('pac_obs') };
+    if(id){ Object.assign(patient(id), data); toast('Paciente atualizado','jade'); }
+    else { data.id=uid(); data.criado=now(); DB.pacientes.push(data); toast('Paciente cadastrado','jade'); }
+    persist(); closeModal(); render();
+  },
+  filterPacientes(q){
+    q=q.toLowerCase();
+    const list = DB.pacientes.filter(p=>(p.nome+' '+(p.cpf||'')+' '+(p.telefone||'')).toLowerCase().includes(q)).sort((a,b)=>a.nome.localeCompare(b.nome));
+    document.getElementById('pacList').innerHTML = list.length? list.map(pacRow).join('') : '<div class="empty">Nenhum paciente encontrado.</div>';
+  },
+  viewPaciente(id){
+    const p = patient(id); if(!p) return;
+    const cons = DB.consultas.filter(c=>c.pacienteId===id).sort((a,b)=>(b.data||'').localeCompare(a.data||''));
+    const exs = DB.exames.filter(e=>e.pacienteId===id);
+    const docs = [...DB.receitas,...DB.laudos,...DB.atestados].filter(d=>d.pacienteId===id).length;
+    openModal(`
+      <div class="modal-head"><h3>${esc(p.nome)}</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="grid-4" style="margin-bottom:14px">
+        <div class="stat"><div class="n" style="font-size:1.3rem">${age(p.nascimento)!=null?age(p.nascimento):'—'}</div><div class="l">anos</div></div>
+        <div class="stat jade"><div class="n" style="font-size:1.3rem">${cons.length}</div><div class="l">consultas</div></div>
+        <div class="stat"><div class="n" style="font-size:1.3rem">${docs}</div><div class="l">documentos</div></div>
+        ${(()=>{const r=patientScore(id);return r?`<div class="stat" style="cursor:pointer" onclick="App.viewAvaliacao('${id}')"><div class="n" style="font-size:1.3rem;color:${r.grade.cls==='jade'?'var(--jade-light)':r.grade.cls==='gold'?'var(--gold-light)':'var(--red-light)'}">${r.grade.g}</div><div class="l">saúde ${r.sc.geral}/100</div></div>`:`<div class="stat" style="cursor:pointer" onclick="App.newAvaliacao('${id}')"><div class="n" style="font-size:1.3rem">＋</div><div class="l">avaliar saúde</div></div>`;})()}
+      </div>
+      ${(()=>{const r=patientScore(id);return r&&r.risks.length?`<div class="tag red" style="margin-bottom:10px">⚠ ${r.risks.length} alerta(s) de saúde — clique no índice acima</div>`:'';})()}
+      ${p.alergias?`<div class="tag red" style="margin-bottom:10px">⚠ Alergias: ${esc(p.alergias)}</div>`:''}
+      ${p.condicoes?`<div class="field"><label class="f">Condições</label><div>${esc(p.condicoes)}</div></div>`:''}
+      <div class="row c2" style="margin-bottom:12px"><div><label class="f">Telefone</label><div>${esc(p.telefone||'—')}</div></div><div><label class="f">CPF</label><div>${esc(p.cpf||'—')}</div></div></div>
+      <div class="divider"></div>
+      <label class="f">Histórico de consultas</label>
+      ${cons.length? '<div class="list" style="margin-top:8px">'+cons.slice(0,6).map(c=>`<div class="list-item"><div class="grow"><div class="li-title">${esc((c.queixa||'Consulta').slice(0,50))}</div><div class="li-sub">${fmtDateTime(c.data)}</div></div><button class="btn btn-ghost btn-sm" onclick="App.viewConsulta('${c.id}')">Ver</button></div>`).join('')+'</div>' : '<div class="muted" style="font-size:.85rem">Sem consultas.</div>'}
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+        <button class="btn btn-jade" onclick="App.startFor('${id}')">🎙 Nova consulta</button>
+        <button class="btn btn-ghost" onclick="App.editPaciente('${id}');">✎ Editar</button>
+        <button class="btn btn-danger btn-sm" onclick="App.delPaciente('${id}')">Excluir</button>
+      </div>`, true);
+  },
+  delPaciente(id){
+    if(!confirm('Excluir este paciente? As consultas e documentos vinculados permanecerão no histórico.')) return;
+    DB.pacientes = DB.pacientes.filter(p=>p.id!==id); persist(); closeModal(); render(); toast('Paciente excluído','red');
+  },
+  startFor(id){ rec.pacienteId=id; closeModal(); this.go('consulta'); },
+
+  /* ---- TRANSCRIÇÃO ---- */
+  setRecPaciente(v){ rec.pacienteId=v; },
+  recStart(){
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SR){ toast('Navegador sem suporte a reconhecimento de voz','red'); return; }
+    if(rec.running) return;
+    const r = new SR();
+    r.lang='pt-BR'; r.continuous=true; r.interimResults=true;
+    r.onresult = (ev)=>{
+      let interim='';
+      for(let i=ev.resultIndex;i<ev.results.length;i++){
+        const t = ev.results[i][0].transcript;
+        if(ev.results[i].isFinal){ rec.finalText += (rec.finalText && !/\s$/.test(rec.finalText)?' ':'') + t.trim() + ' '; }
+        else interim += t;
+      }
+      rec.interim = interim;
+      paintTranscript();
+    };
+    r.onerror = (e)=>{ if(e.error==='not-allowed'||e.error==='service-not-allowed'){ toast('Permissão de microfone negada','red'); App.recStop(); } else if(e.error==='no-speech'){/*ignore*/} };
+    r.onend = ()=>{ if(rec.running){ try{ r.start(); }catch(e){} } }; // auto-restart while running
+    rec.recognition=r; rec.running=true; rec.startTs=Date.now()-(rec.elapsed||0);
+    try{ r.start(); }catch(e){}
+    rec.timer = setInterval(updateTimer,500);
+    updateRecUI();
+    toast('Escuta iniciada — fale normalmente','jade');
+  },
+  recStop(){
+    rec.running=false;
+    if(rec.recognition){ try{ rec.recognition.stop(); }catch(e){} }
+    if(rec.timer){ clearInterval(rec.timer); rec.timer=null; }
+    rec.elapsed = Date.now()-rec.startTs;
+    rec.interim=''; paintTranscript(); updateRecUI();
+  },
+  recClear(){
+    if(rec.finalText && !confirm('Limpar a transcrição atual?')) return;
+    rec.finalText=''; rec.interim=''; rec.elapsed=0; paintTranscript();
+    const t=document.getElementById('recTimer'); if(t)t.textContent='00:00';
+  },
+  transcriptEdited(el){ rec.finalText = el.innerText; },
+  saveConsulta(){
+    if(!rec.pacienteId){ toast('Selecione o paciente','red'); return; }
+    const c = {
+      id:uid(), pacienteId:rec.pacienteId, data:now(),
+      transcricao: rec.finalText.trim(),
+      queixa: val('cQueixa'), objetivo: val('cObjetivo'), diagnostico: val('cDiagnostico'), conduta: val('cConduta')
+    };
+    DB.consultas.push(c); persist();
+    rec.finalText=''; rec.elapsed=0; rec.consultaId=c.id;
+    toast('Consulta salva','jade');
+    render();
+  },
+  viewConsulta(id){
+    const c = DB.consultas.find(x=>x.id===id); if(!c) return;
+    openModal(`
+      <div class="modal-head"><h3>Consulta — ${esc(patientName(c.pacienteId))}</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="muted" style="font-size:.8rem;margin-bottom:14px">${fmtDateTime(c.data)}</div>
+      ${c.queixa?field('Queixa / Subjetivo',c.queixa):''}
+      ${c.objetivo?field('Exame / Objetivo',c.objetivo):''}
+      ${c.diagnostico?field('Diagnóstico',c.diagnostico):''}
+      ${c.conduta?field('Conduta / Plano',c.conduta):''}
+      ${c.transcricao?`<div class="divider"></div><label class="f">Transcrição da escuta</label><div class="transcript-box" style="max-height:220px">${esc(c.transcricao)}</div>`:''}
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+        <button class="btn btn-gold" onclick="App.consultaToDoc('${c.id}')">℞ Gerar documento</button>
+        <button class="btn btn-danger btn-sm" onclick="App.delConsulta('${c.id}')">Excluir</button>
+      </div>`, true);
+  },
+  delConsulta(id){ if(!confirm('Excluir esta consulta?')) return; DB.consultas=DB.consultas.filter(c=>c.id!==id); persist(); closeModal(); render(); toast('Consulta excluída','red'); },
+  consultaToDoc(id){
+    const c = DB.consultas.find(x=>x.id===id);
+    closeModal();
+    openModal(`
+      <div class="modal-head"><h3>Gerar documento</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="card-sub" style="margin-top:-8px">Para ${esc(patientName(c.pacienteId))}</div>
+      <div style="display:grid;gap:10px;grid-template-columns:1fr 1fr">
+        <button class="btn btn-ghost btn-block" onclick="App.newReceita(null,'${c.pacienteId}')">℞ Receita</button>
+        <button class="btn btn-ghost btn-block" onclick="App.newPedido('${c.pacienteId}')">📋 Pedido de exame</button>
+        <button class="btn btn-ghost btn-block" onclick="App.newEncaminhamento('${c.pacienteId}')">➦ Encaminhamento</button>
+        <button class="btn btn-ghost btn-block" onclick="App.newLaudo('${c.pacienteId}','${esc((c.diagnostico||'').replace(/'/g,''))}')">📄 Laudo</button>
+        <button class="btn btn-ghost btn-block" onclick="App.newAtestado('${c.pacienteId}')">✎ Atestado</button>
+        <button class="btn btn-ghost btn-block" onclick="App.newAvaliacao('${c.pacienteId}')">❤ Índice de saúde</button>
+      </div>`);
+  },
+
+  filterMeds(q){ q=q.toLowerCase(); const l=CAT_MEDS.filter(m=>m.n.toLowerCase().includes(q)); document.getElementById('medList').innerHTML=l.length?l.map(medRow).join(''):'<div class="empty">Nada encontrado.</div>'; },
+
+  /* ---- RECEITA ---- */
+  _rxItems: [],
+  newReceita(prefillName, pacienteId){
+    App._rxItems = [];
+    if(prefillName){ const m=CAT_MEDS.find(x=>x.n===prefillName); if(m) App._rxItems.push({nome:m.n, pos:m.pos, qtd:'1'}); }
+    const opts = DB.pacientes.map(p=>`<option value="${p.id}" ${pacienteId===p.id?'selected':''}>${esc(p.nome)}</option>`).join('');
+    openModal(`
+      <div class="modal-head"><h3>Nova receita ℞</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="row c2">
+        <div class="field"><label class="f">Paciente *</label><select id="rx_pac"><option value="">—</option>${opts}</select></div>
+        <div class="field"><label class="f">Tipo</label><div class="pill-select" style="width:100%"><button class="active" id="rxt_c" onclick="App.rxType('comum')">Comum</button><button id="rxt_e" onclick="App.rxType('especial')">Controle especial</button></div><input type="hidden" id="rx_tipo" value="comum"></div>
+      </div>
+      <div class="divider"></div>
+      <label class="f">Medicamentos</label>
+      <div id="rxItems"></div>
+      <div class="row c2" style="align-items:end">
+        <div class="field" style="margin-bottom:8px"><label class="f">Adicionar do bulário</label>
+          <select id="rx_add" onchange="App.rxAddCat(this.value); this.value='';"><option value="">— selecionar —</option>${CAT_MEDS.map((m,i)=>`<option value="${i}">${esc(m.n)}</option>`).join('')}</select></div>
+        <div class="field" style="margin-bottom:8px"><button class="btn btn-ghost btn-block" onclick="App.rxAddBlank()">+ Item manual</button></div>
+      </div>
+      <div class="field"><label class="f">Orientações gerais</label><textarea id="rx_orient" style="min-height:50px" placeholder="Retorno, cuidados, sinais de alerta..."></textarea></div>
+      <button class="btn btn-gold btn-block" onclick="App.saveReceita()">Salvar & imprimir</button>`, true);
+    App._renderRxItems();
+  },
+  rxType(t){ setVal('rx_tipo',t); document.getElementById('rxt_c').classList.toggle('active',t==='comum'); document.getElementById('rxt_e').classList.toggle('active',t==='especial'); },
+  rxAddCat(i){ if(i==='')return; const m=CAT_MEDS[+i]; App._syncRx(); App._rxItems.push({nome:m.n,pos:m.pos,qtd:'1'}); App._renderRxItems(); },
+  rxAddBlank(){ App._syncRx(); App._rxItems.push({nome:'',pos:'',qtd:'1'}); App._renderRxItems(); },
+  rxDel(i){ App._syncRx(); App._rxItems.splice(i,1); App._renderRxItems(); },
+  _syncRx(){ App._rxItems.forEach((it,i)=>{ it.nome=val('rxn'+i)??it.nome; it.pos=val('rxp'+i)??it.pos; it.qtd=val('rxq'+i)??it.qtd; }); },
+  _renderRxItems(){
+    const el=document.getElementById('rxItems'); if(!el) return;
+    if(!App._rxItems.length){ el.innerHTML='<div class="muted" style="font-size:.82rem;margin-bottom:10px">Nenhum medicamento adicionado.</div>'; return; }
+    el.innerHTML = App._rxItems.map((it,i)=>`
+      <div class="card" style="padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.02)">
+        <div class="row c2" style="gap:10px"><div class="field" style="margin-bottom:8px"><label class="f">Medicamento</label><input id="rxn${i}" value="${esc(it.nome)}"></div>
+        <div class="field" style="margin-bottom:8px"><label class="f">Quantidade</label><input id="rxq${i}" value="${esc(it.qtd)}"></div></div>
+        <div class="field" style="margin-bottom:0"><label class="f">Posologia</label><textarea id="rxp${i}" style="min-height:44px">${esc(it.pos)}</textarea></div>
+        <button class="btn btn-danger btn-sm" style="margin-top:8px" onclick="App.rxDel(${i})">Remover</button>
+      </div>`).join('');
+  },
+  saveReceita(){
+    const pid=val('rx_pac'); if(!pid){ toast('Selecione o paciente','red'); return; }
+    App._syncRx();
+    const itens = App._rxItems.filter(i=>i.nome.trim());
+    if(!itens.length){ toast('Adicione ao menos um medicamento','red'); return; }
+    const d = { id:uid(), pacienteId:pid, data:now(), tipo:val('rx_tipo'), itens, orientacoes:val('rx_orient'), titulo: val('rx_tipo')==='especial'?'Receita de Controle Especial':'Receita' };
+    DB.receitas.push(d); persist(); closeModal(); render(); toast('Receita salva','jade');
+    App.printDoc('receitas', d.id);
+  },
+
+  /* ---- LAUDO ---- */
+  newLaudo(pacienteId, texto){
+    const opts=DB.pacientes.map(p=>`<option value="${p.id}" ${pacienteId===p.id?'selected':''}>${esc(p.nome)}</option>`).join('');
+    openModal(`
+      <div class="modal-head"><h3>Novo laudo 📄</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="field"><label class="f">Paciente *</label><select id="ld_pac"><option value="">—</option>${opts}</select></div>
+      <div class="field"><label class="f">Título</label><input id="ld_tit" value="Laudo clínico" placeholder="Ex.: Laudo de avaliação fisioterapêutica"></div>
+      <div class="field"><label class="f">Conteúdo do laudo</label><textarea id="ld_corpo" style="min-height:200px">${esc(texto||'')}</textarea></div>
+      <div class="field"><label class="f">Conclusão</label><textarea id="ld_concl" style="min-height:60px"></textarea></div>
+      <button class="btn btn-gold btn-block" onclick="App.saveLaudo()">Salvar & imprimir</button>`, true);
+  },
+  saveLaudo(){
+    const pid=val('ld_pac'); if(!pid){ toast('Selecione o paciente','red'); return; }
+    if(!val('ld_corpo').trim()){ toast('Preencha o conteúdo','red'); return; }
+    const d={ id:uid(), pacienteId:pid, data:now(), titulo:val('ld_tit')||'Laudo', corpo:val('ld_corpo'), conclusao:val('ld_concl') };
+    DB.laudos.push(d); persist(); closeModal(); render(); toast('Laudo salvo','jade'); App.printDoc('laudos', d.id);
+  },
+
+  /* ---- ATESTADO ---- */
+  newAtestado(pacienteId){
+    const opts=DB.pacientes.map(p=>`<option value="${p.id}" ${pacienteId===p.id?'selected':''}>${esc(p.nome)}</option>`).join('');
+    openModal(`
+      <div class="modal-head"><h3>Novo atestado ✎</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="field"><label class="f">Paciente *</label><select id="at_pac"><option value="">—</option>${opts}</select></div>
+      <div class="field"><label class="f">Modelo</label>
+        <select id="at_modelo" onchange="App.atModelo(this.value)">
+          <option value="afastamento">Atestado de afastamento</option>
+          <option value="comparecimento">Declaração de comparecimento</option>
+          <option value="aptidao">Atestado de aptidão física</option>
+          <option value="livre">Texto livre</option>
+        </select></div>
+      <div class="row c2">
+        <div class="field"><label class="f">Dias de afastamento</label><input type="number" id="at_dias" value="1" min="0"></div>
+        <div class="field"><label class="f">CID (opcional)</label><input id="at_cid" placeholder="Ex.: M54.5"></div>
+      </div>
+      <div class="field"><label class="f">Texto do atestado</label><textarea id="at_corpo" style="min-height:140px"></textarea></div>
+      <button class="btn btn-gold btn-block" onclick="App.saveAtestado()">Salvar & imprimir</button>`, true);
+    App.atModelo('afastamento');
+  },
+  atModelo(m){
+    const dias = val('at_dias')||'1';
+    const tpl = {
+      afastamento:`Atesto, para os devidos fins, que o(a) paciente acima identificado(a) esteve sob meus cuidados nesta data, necessitando de afastamento de suas atividades por ${dias} (${dias}) dia(s), a contar desta data, por motivo de saúde.`,
+      comparecimento:`Declaro, para os devidos fins, que o(a) paciente acima identificado(a) compareceu a esta consulta/atendimento nesta data, no período de ____ às ____ horas.`,
+      aptidao:`Atesto, para os devidos fins, que o(a) paciente acima identificado(a) encontra-se APTO(A) à prática de atividade física, após avaliação clínica nesta data, sem contraindicações identificadas.`,
+      livre:''
+    };
+    setVal('at_corpo', tpl[m]!==undefined?tpl[m]:'');
+  },
+  saveAtestado(){
+    const pid=val('at_pac'); if(!pid){ toast('Selecione o paciente','red'); return; }
+    if(!val('at_corpo').trim()){ toast('Preencha o texto','red'); return; }
+    const d={ id:uid(), pacienteId:pid, data:now(), titulo:'Atestado', modelo:val('at_modelo'), dias:val('at_dias'), cid:val('at_cid'), corpo:val('at_corpo') };
+    DB.atestados.push(d); persist(); closeModal(); render(); toast('Atestado salvo','jade'); App.printDoc('atestados', d.id);
+  },
+
+  /* ---- EXAMES ---- */
+  _exItems:[],
+  newExame(){
+    App._exItems = CAT_EXAMES.slice(0,6).map(e=>({nome:e.nome,u:e.u,ref:e.ref,valor:''}));
+    const opts=DB.pacientes.map(p=>`<option value="${p.id}">${esc(p.nome)}</option>`).join('');
+    openModal(`
+      <div class="modal-head"><h3>Registrar exame 🧪</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="row c2">
+        <div class="field"><label class="f">Paciente *</label><select id="ex_pac"><option value="">—</option>${opts}</select></div>
+        <div class="field"><label class="f">Data</label><input type="date" id="ex_data" value="${todayISO()}"></div>
+      </div>
+      <div class="field"><label class="f">Nome / painel</label><input id="ex_nome" value="Painel laboratorial" placeholder="Ex.: Hemograma, Perfil lipídico..."></div>
+      <div class="field"><label class="f">Parâmetros e resultados</label>
+        <select id="ex_add" onchange="App.exAdd(this.value); this.value='';"><option value="">+ adicionar parâmetro do catálogo</option>${CAT_EXAMES.map((e,i)=>`<option value="${i}">${esc(e.nome)}</option>`).join('')}</select>
+      </div>
+      <div id="exItems"></div>
+      <div class="field" style="margin-top:10px"><label class="f">Interpretação</label><textarea id="ex_interp" style="min-height:70px" placeholder="Análise dos achados..."></textarea></div>
+      <div class="field"><label class="f">Recomendações</label><textarea id="ex_rec" style="min-height:70px" placeholder="Condutas, novos exames, retorno..."></textarea></div>
+      <button class="btn btn-ghost btn-block btn-sm" style="margin-bottom:10px" onclick="App.exAutoInterp()">✨ Sugerir interpretação a partir dos valores</button>
+      <button class="btn btn-gold btn-block" onclick="App.saveExame()">Salvar exame</button>`, true);
+    App._renderExItems();
+  },
+  exAdd(i){ if(i==='')return; App._syncEx(); const e=CAT_EXAMES[+i]; App._exItems.push({nome:e.nome,u:e.u,ref:e.ref,valor:''}); App._renderExItems(); },
+  exDel(i){ App._syncEx(); App._exItems.splice(i,1); App._renderExItems(); },
+  _syncEx(){ App._exItems.forEach((it,i)=>{ const v=val('exv'+i); if(v!=null) it.valor=v; }); },
+  _flag(it){ const v=parseFloat(String(it.valor).replace(',','.')); if(isNaN(v)||!it.ref) return ''; if(v<it.ref[0]) return 'low'; if(v>it.ref[1]) return 'high'; return 'ok'; },
+  _renderExItems(){
+    const el=document.getElementById('exItems'); if(!el)return;
+    el.innerHTML = App._exItems.map((it,i)=>{
+      const f=App._flag(it);
+      const fl = f==='high'?'<span class="tag red">↑ Alto</span>':f==='low'?'<span class="tag red">↓ Baixo</span>':f==='ok'?'<span class="tag jade">Normal</span>':'';
+      return `<div style="display:grid;grid-template-columns:1.4fr 0.9fr auto auto;gap:8px;align-items:center;margin-bottom:8px">
+        <div style="font-size:.85rem">${esc(it.nome)} <span class="muted" style="font-size:.7rem">(${it.ref?it.ref[0]+'–'+it.ref[1]:''} ${esc(it.u||'')})</span></div>
+        <input id="exv${i}" value="${esc(it.valor)}" placeholder="valor" oninput="App._syncEx();App._renderExItems()" style="padding:7px 9px">
+        <span>${fl}</span>
+        <button class="icon-btn" onclick="App.exDel(${i})">✕</button>
+      </div>`;
+    }).join('');
+  },
+  exAutoInterp(){
+    App._syncEx();
+    const alt = App._exItems.filter(it=>{const f=App._flag(it);return f==='high'||f==='low';});
+    if(!alt.length){ setVal('ex_interp','Todos os parâmetros avaliados encontram-se dentro das faixas de referência.'); toast('Sem alterações detectadas','jade'); return; }
+    const txt = 'Achados alterados: ' + alt.map(it=>`${it.nome} = ${it.valor} ${it.u} (${App._flag(it)==='high'?'acima':'abaixo'} da referência ${it.ref[0]}–${it.ref[1]})`).join('; ') + '.';
+    setVal('ex_interp', txt);
+    toast(alt.length+' parâmetro(s) alterado(s)','gold');
+  },
+  saveExame(){
+    const pid=val('ex_pac'); if(!pid){ toast('Selecione o paciente','red'); return; }
+    App._syncEx();
+    App._exItems.forEach(it=>it.flag=App._flag(it));
+    const d={ id:uid(), pacienteId:pid, data:val('ex_data')||todayISO(), nome:val('ex_nome'), itens:App._exItems.filter(i=>i.valor!==''), interpretacao:val('ex_interp'), recomendacao:val('ex_rec') };
+    DB.exames.push(d); persist(); closeModal(); render(); toast('Exame registrado','jade');
+  },
+  viewExame(id){
+    const e=DB.exames.find(x=>x.id===id); if(!e)return;
+    const rows=(e.itens||[]).map(it=>{ const f=it.flag||App._flag(it); const cls=f==='high'||f==='low'?'flag-high':'flag-ok';
+      return `<tr><td style="padding:6px 10px">${esc(it.nome)}</td><td style="padding:6px 10px" class="${cls}">${esc(it.valor)} ${esc(it.u||'')}</td><td style="padding:6px 10px" class="muted">${it.ref?it.ref[0]+'–'+it.ref[1]:'—'}</td><td style="padding:6px 10px">${f==='high'?'<span class="tag red">Alto</span>':f==='low'?'<span class="tag red">Baixo</span>':'<span class="tag jade">Normal</span>'}</td></tr>`;}).join('');
+    openModal(`
+      <div class="modal-head"><h3>${esc(e.nome)} — ${esc(patientName(e.pacienteId))}</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="muted" style="font-size:.8rem;margin-bottom:12px">${fmtDate(e.data)}</div>
+      <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:.85rem"><thead><tr style="text-align:left;color:var(--text-muted);font-size:.72rem"><th style="padding:6px 10px">Parâmetro</th><th style="padding:6px 10px">Resultado</th><th style="padding:6px 10px">Referência</th><th style="padding:6px 10px">Status</th></tr></thead><tbody>${rows}</tbody></table></div>
+      ${e.interpretacao?field('Interpretação',e.interpretacao):''}
+      ${e.recomendacao?field('Recomendações',e.recomendacao):''}
+      <button class="btn btn-danger btn-sm" style="margin-top:14px" onclick="App.delExame('${e.id}')">Excluir</button>`, true);
+  },
+  delExame(id){ if(!confirm('Excluir este exame?'))return; DB.exames=DB.exames.filter(e=>e.id!==id); persist(); closeModal(); render(); toast('Exame excluído','red'); },
+
+  /* ---- SUPLEMENTOS ---- */
+  _supItems:[],
+  newSuplemento(prefill){
+    App._supItems = [];
+    if(prefill){ const s=CAT_SUP.find(x=>x.n===prefill); if(s) App._supItems.push({nome:s.n,dose:s.d,ind:s.i}); }
+    const opts=DB.pacientes.map(p=>`<option value="${p.id}">${esc(p.nome)}</option>`).join('');
+    openModal(`
+      <div class="modal-head"><h3>Recomendação de suplementos 🌿</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="field"><label class="f">Paciente *</label><select id="sp_pac"><option value="">—</option>${opts}</select></div>
+      <div class="field"><label class="f">Catálogo</label><select id="sp_add" onchange="App.supAdd(this.value); this.value='';"><option value="">+ adicionar do catálogo</option>${CAT_SUP.map((s,i)=>`<option value="${i}">${esc(s.n)}</option>`).join('')}</select></div>
+      <div id="spItems"></div>
+      <button class="btn btn-ghost btn-block btn-sm" style="margin:8px 0" onclick="App.supAddBlank()">+ Item manual</button>
+      <div class="field"><label class="f">Observações / objetivo</label><textarea id="sp_obs" style="min-height:60px" placeholder="Objetivo (imunidade, performance...), duração, reavaliação..."></textarea></div>
+      <button class="btn btn-gold btn-block" onclick="App.saveSuplemento()">Salvar & imprimir</button>`, true);
+    App._renderSupItems();
+  },
+  supAdd(i){ if(i==='')return; App._syncSup(); const s=CAT_SUP[+i]; App._supItems.push({nome:s.n,dose:s.d,ind:s.i}); App._renderSupItems(); },
+  supAddBlank(){ App._syncSup(); App._supItems.push({nome:'',dose:'',ind:''}); App._renderSupItems(); },
+  supDel(i){ App._syncSup(); App._supItems.splice(i,1); App._renderSupItems(); },
+  _syncSup(){ App._supItems.forEach((it,i)=>{ it.nome=val('spn'+i)??it.nome; it.dose=val('spd'+i)??it.dose; it.ind=val('spi'+i)??it.ind; }); },
+  _renderSupItems(){
+    const el=document.getElementById('spItems'); if(!el)return;
+    if(!App._supItems.length){ el.innerHTML='<div class="muted" style="font-size:.82rem">Nenhum suplemento adicionado.</div>'; return; }
+    el.innerHTML=App._supItems.map((it,i)=>`<div class="card" style="padding:12px;margin-bottom:8px;background:rgba(255,255,255,0.02)">
+      <div class="row c2" style="gap:10px"><div class="field" style="margin-bottom:8px"><label class="f">Suplemento</label><input id="spn${i}" value="${esc(it.nome)}"></div>
+      <div class="field" style="margin-bottom:8px"><label class="f">Dose</label><input id="spd${i}" value="${esc(it.dose)}"></div></div>
+      <div class="field" style="margin-bottom:0"><label class="f">Indicação</label><input id="spi${i}" value="${esc(it.ind)}"></div>
+      <button class="btn btn-danger btn-sm" style="margin-top:8px" onclick="App.supDel(${i})">Remover</button></div>`).join('');
+  },
+  saveSuplemento(){
+    const pid=val('sp_pac'); if(!pid){ toast('Selecione o paciente','red'); return; }
+    App._syncSup(); const itens=App._supItems.filter(i=>i.nome.trim());
+    if(!itens.length){ toast('Adicione ao menos um suplemento','red'); return; }
+    const d={ id:uid(), pacienteId:pid, data:now(), itens, obs:val('sp_obs'), titulo:'Recomendação de Suplementação' };
+    DB.suplementos.push(d); persist(); closeModal(); render(); toast('Recomendação salva','jade'); App.printSuplemento(d.id);
+  },
+  delSuplemento(id){ if(!confirm('Excluir esta recomendação?'))return; DB.suplementos=DB.suplementos.filter(s=>s.id!==id); persist(); render(); toast('Excluído','red'); },
+
+  /* ---- ÍNDICE DE SAÚDE ---- */
+  newAvaliacao(pacienteId){
+    const opts=DB.pacientes.map(p=>`<option value="${p.id}" ${pacienteId===p.id?'selected':''}>${esc(p.nome)}</option>`).join('');
+    const sl=(id,lab,hint)=>`<div class="field" style="margin-bottom:10px"><label class="f">${lab} <span class="muted" id="${id}_v">5</span></label><input type="range" id="${id}" min="0" max="10" value="5" oninput="document.getElementById('${id}_v').textContent=this.value"><div class="muted" style="font-size:.66rem">${hint}</div></div>`;
+    openModal(`
+      <div class="modal-head"><h3>Nova avaliação de saúde ❤</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="field"><label class="f">Paciente *</label><select id="av_pac"><option value="">—</option>${opts}</select></div>
+      <div class="pill-select" style="margin-bottom:14px"><button class="active" id="avt_1" onclick="App.avStep(1)">1 · Clínico</button><button id="avt_2" onclick="App.avStep(2)">2 · Mental</button><button id="avt_3" onclick="App.avStep(3)">3 · Hábitos</button></div>
+
+      <div id="av_s1">
+        <div class="row c3">
+          <div class="field"><label class="f">Peso (kg)</label><input type="number" id="av_peso" placeholder="70"></div>
+          <div class="field"><label class="f">Altura (cm)</label><input type="number" id="av_altura" placeholder="170"></div>
+          <div class="field"><label class="f">Pressão arterial</label><select id="av_pressao"><option>Normal</option><option>Limítrofe</option><option>Alterada</option></select></div>
+        </div>
+        <div class="field"><label class="f">Comorbidades (separadas por vírgula)</label><input id="av_comorb" placeholder="Ex.: Hipertensão, Diabetes"></div>
+        <div class="disclaimer">Exames laboratoriais fora da referência registrados para o paciente são considerados automaticamente no índice clínico.</div>
+      </div>
+
+      <div id="av_s2" style="display:none">
+        ${sl('av_humor','Humor / bem-estar (0 péssimo → 10 ótimo)','Como o paciente avalia seu humor recente')}
+        ${sl('av_ansiedade','Ansiedade (0 nenhuma → 10 intensa)','Nível de ansiedade percebido')}
+        ${sl('av_estresse','Estresse (0 nenhum → 10 intenso)','Nível de estresse percebido')}
+        ${sl('av_energia','Energia / disposição (0 → 10)','Disposição no dia a dia')}
+        ${sl('av_sonoQ','Qualidade do sono (0 → 10)','Percepção da qualidade do sono')}
+      </div>
+
+      <div id="av_s3" style="display:none">
+        ${sl('av_atividade','Atividade física (dias/semana, use 0–10)','Frequência de exercício')}
+        ${sl('av_alimentacao','Qualidade da alimentação (0 → 10)','Padrão alimentar')}
+        ${sl('av_hidratacao','Hidratação (0 → 10)','Ingestão de água')}
+        <div class="row c3">
+          <div class="field"><label class="f">Horas de sono</label><input type="number" id="av_sonoH" placeholder="7" step="0.5"></div>
+          <div class="field"><label class="f">Tabagismo</label><select id="av_tab"><option>Não</option><option>Ex-fumante</option><option>Sim</option></select></div>
+          <div class="field"><label class="f">Álcool</label><select id="av_alc"><option>Nunca</option><option>Social</option><option>Frequente</option></select></div>
+        </div>
+      </div>
+      <button class="btn btn-gold btn-block" style="margin-top:10px" onclick="App.saveAvaliacao()">Calcular índice & salvar</button>`, true);
+  },
+  avStep(n){ [1,2,3].forEach(i=>{ document.getElementById('av_s'+i).style.display=i===n?'':'none'; document.getElementById('avt_'+i).classList.toggle('active',i===n); }); },
+  saveAvaliacao(){
+    const pid=val('av_pac'); if(!pid){ toast('Selecione o paciente','red'); return; }
+    const a={ id:uid(), pacienteId:pid, data:now(),
+      peso:val('av_peso'), altura:val('av_altura'), pressao:val('av_pressao'), comorbidades:val('av_comorb'),
+      humor:rval('av_humor'), ansiedade:rval('av_ansiedade'), estresse:rval('av_estresse'), energia:rval('av_energia'), sonoQualidade:rval('av_sonoQ'),
+      atividade:rval('av_atividade'), alimentacao:rval('av_alimentacao'), hidratacao:rval('av_hidratacao'), sonoHoras:val('av_sonoH'), tabagismo:val('av_tab'), alcool:val('av_alc') };
+    DB.avaliacoes.push(a); persist(); closeModal();
+    const sc=computeScore(a), g=gradeOf(sc.geral);
+    toast('Índice de saúde: '+sc.geral+'/100 (nota '+g.g+')', g.cls);
+    this.go('saude');
+    setTimeout(()=>App.viewAvaliacao(pid),150);
+  },
+  viewAvaliacao(pid){
+    const r=patientScore(pid); if(!r) return; const {a,sc,grade,risks}=r;
+    const col = grade.cls==='jade'?'var(--jade-light)':grade.cls==='gold'?'var(--gold-light)':'var(--red-light)';
+    openModal(`
+      <div class="modal-head"><h3>${esc(patientName(pid))}</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-bottom:16px">
+        ${scoreRing(sc.geral,120)}
+        <div style="flex:1;min-width:200px">
+          <div style="font-family:var(--serif);font-size:1.4rem;color:${col}">Nota ${grade.g} · ${grade.label}</div>
+          <div class="muted" style="font-size:.8rem;margin-bottom:12px">Avaliado em ${fmtDate(a.data)}${sc.imc?' · IMC '+sc.imc:''}</div>
+          ${bar('Clínico',sc.clinico)}${bar('Saúde mental',sc.mental)}${bar('Hábitos de vida',sc.habitos)}
+        </div>
+      </div>
+      <div class="divider"></div>
+      <label class="f">Riscos & alertas</label>
+      ${risks.length? '<div class="list" style="margin-top:6px">'+risks.map(x=>`<div class="list-item" style="padding:9px 13px"><span style="color:var(--red-light)">⚠</span><div class="grow li-title" style="font-weight:500;font-size:.85rem">${esc(x)}</div></div>`).join('')+'</div>' : '<div class="tag jade" style="margin-top:6px">✓ Nenhum fator de risco relevante identificado</div>'}
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+        <button class="btn btn-gold" onclick="App.printAvaliacao('${pid}')">🖨 Relatório de saúde</button>
+        <button class="btn btn-ghost" onclick="App.newAvaliacao('${pid}')">↻ Reavaliar</button>
+      </div>`, true);
+  },
+  printAvaliacao(pid){
+    const r=patientScore(pid); if(!r)return; const {a,sc,grade,risks}=r; const p=patient(pid);
+    const body=`
+      <div style="text-align:center;margin-bottom:20px"><div style="font-family:'Fraunces',serif;font-size:46px;color:#c9a227">${grade.g}</div><div style="font-size:16px">Índice de Saúde: <strong>${sc.geral}/100</strong> — ${grade.label}</div></div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px">
+        <tr><td style="padding:6px 0;border-bottom:1px solid #eee">Saúde clínica</td><td style="text-align:right;border-bottom:1px solid #eee"><strong>${sc.clinico}/100</strong>${sc.imc?' · IMC '+sc.imc:''}</td></tr>
+        <tr><td style="padding:6px 0;border-bottom:1px solid #eee">Saúde mental</td><td style="text-align:right;border-bottom:1px solid #eee"><strong>${sc.mental}/100</strong></td></tr>
+        <tr><td style="padding:6px 0;border-bottom:1px solid #eee">Hábitos de vida</td><td style="text-align:right;border-bottom:1px solid #eee"><strong>${sc.habitos}/100</strong></td></tr>
+      </table>
+      <div><strong>Riscos e alertas:</strong>${risks.length?'<ul style="margin:8px 0 0 18px">'+risks.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<div>Nenhum fator de risco relevante identificado.</div>'}</div>`;
+    App._print('Relatório de Índice de Saúde', p, body, a.data);
+  },
+
+  /* ---- ENCAMINHAMENTO ---- */
+  newEncaminhamento(pacienteId){
+    const opts=DB.pacientes.map(p=>`<option value="${p.id}" ${pacienteId===p.id?'selected':''}>${esc(p.nome)}</option>`).join('');
+    const esp=CAT_ESPECIALIDADES.map(e=>`<option>${e}</option>`).join('');
+    openModal(`
+      <div class="modal-head"><h3>Novo encaminhamento ➦</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="row c2"><div class="field"><label class="f">Paciente *</label><select id="en_pac"><option value="">—</option>${opts}</select></div>
+      <div class="field"><label class="f">Especialidade *</label><select id="en_esp">${esp}</select></div></div>
+      <div class="field"><label class="f">Motivo / hipótese diagnóstica</label><textarea id="en_motivo" style="min-height:90px" placeholder="Descreva o quadro e o motivo do encaminhamento..."></textarea></div>
+      <div class="field"><label class="f">Prioridade</label><select id="en_prio"><option>Eletiva</option><option>Prioritária</option><option>Urgente</option></select></div>
+      <button class="btn btn-gold btn-block" onclick="App.saveEncaminhamento()">Salvar & imprimir</button>`);
+  },
+  saveEncaminhamento(){
+    const pid=val('en_pac'); if(!pid){ toast('Selecione o paciente','red'); return; }
+    const d={ id:uid(), pacienteId:pid, data:now(), especialidade:val('en_esp'), motivo:val('en_motivo'), prioridade:val('en_prio'), titulo:'Encaminhamento — '+val('en_esp') };
+    DB.encaminhamentos.push(d); persist(); closeModal(); render(); toast('Encaminhamento salvo','jade'); App.printDoc('encaminhamentos', d.id);
+  },
+
+  /* ---- PEDIDO DE EXAMES ---- */
+  _pedItems:[],
+  newPedido(pacienteId){
+    App._pedItems=[];
+    const opts=DB.pacientes.map(p=>`<option value="${p.id}" ${pacienteId===p.id?'selected':''}>${esc(p.nome)}</option>`).join('');
+    openModal(`
+      <div class="modal-head"><h3>Pedido de exames 📋</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="field"><label class="f">Paciente *</label><select id="pd_pac"><option value="">—</option>${opts}</select></div>
+      <label class="f">Exames solicitados</label>
+      <div class="chips" style="margin-bottom:12px">${CAT_PEDIDOS.map(e=>`<span class="tag chip-add" onclick="App.pedToggle('${esc(e)}',this)">+ ${esc(e)}</span>`).join('')}</div>
+      <div class="field"><label class="f">Outros / observações</label><textarea id="pd_obs" style="min-height:50px" placeholder="Exames adicionais, indicação clínica, jejum..."></textarea></div>
+      <div class="field"><label class="f">Indicação clínica</label><input id="pd_ind" placeholder="Ex.: Rastreio / investigação de..."></div>
+      <button class="btn btn-gold btn-block" onclick="App.savePedido()">Salvar & imprimir</button>`);
+  },
+  pedToggle(nome, el){
+    const i=App._pedItems.indexOf(nome);
+    if(i>=0){ App._pedItems.splice(i,1); el.classList.remove('gold'); }
+    else { App._pedItems.push(nome); el.classList.add('gold'); }
+  },
+  savePedido(){
+    const pid=val('pd_pac'); if(!pid){ toast('Selecione o paciente','red'); return; }
+    const obs=val('pd_obs');
+    if(!App._pedItems.length && !obs.trim()){ toast('Selecione ao menos um exame','red'); return; }
+    const d={ id:uid(), pacienteId:pid, data:now(), itens:[...App._pedItems], obs, indicacao:val('pd_ind'), titulo:'Pedido de Exames' };
+    DB.pedidos.push(d); persist(); closeModal(); render(); toast('Pedido salvo','jade'); App.printDoc('pedidos', d.id);
+  },
+
+  /* ---- RESUMO DA CONSULTA ---- */
+  gerarResumo(){
+    if(!rec.pacienteId){ toast('Selecione o paciente','red'); return; }
+    const partes=[];
+    if(val('cQueixa')) partes.push('QUEIXA PRINCIPAL / SUBJETIVO:\n'+val('cQueixa'));
+    if(val('cObjetivo')) partes.push('EXAME / OBJETIVO:\n'+val('cObjetivo'));
+    if(val('cDiagnostico')) partes.push('AVALIAÇÃO / DIAGNÓSTICO:\n'+val('cDiagnostico'));
+    if(val('cConduta')) partes.push('CONDUTA / PLANO:\n'+val('cConduta'));
+    if(rec.finalText && rec.finalText.trim()) partes.push('TRANSCRIÇÃO DA CONSULTA:\n'+rec.finalText.trim());
+    if(!partes.length){ toast('Preencha o registro ou faça a transcrição','red'); return; }
+    const p=patient(rec.pacienteId);
+    App._print('Resumo da Consulta', p, `<div class="doc-body">${esc(partes.join('\n\n'))}</div>`, now());
+  },
+
+  /* ---- LEMBRETES ---- */
+  newLembrete(tipo){
+    const opts=DB.pacientes.map(p=>`<option value="${p.id}">${esc(p.nome)}</option>`).join('');
+    openModal(`
+      <div class="modal-head"><h3>${tipo==='remedio'?'💊 Lembrete de remédio':'📅 Alerta de consulta'}</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="field"><label class="f">Paciente *</label><select id="lb_pac"><option value="">—</option>${opts}</select></div>
+      <div class="field"><label class="f">${tipo==='remedio'?'Medicação':'Motivo / título'} *</label><input id="lb_tit" placeholder="${tipo==='remedio'?'Ex.: Losartana 50mg':'Ex.: Retorno / reavaliação'}"></div>
+      ${tipo==='remedio'?`
+        <div class="row c2"><div class="field"><label class="f">Horários</label><input id="lb_hor" placeholder="Ex.: 08:00 e 20:00"></div>
+        <div class="field"><label class="f">Frequência</label><input id="lb_freq" placeholder="Ex.: 12/12h por 7 dias"></div></div>`
+        :`<div class="field"><label class="f">Data e hora *</label><input type="datetime-local" id="lb_data"></div>`}
+      <div class="field"><label class="f">Notas</label><textarea id="lb_notas" style="min-height:50px"></textarea></div>
+      <input type="hidden" id="lb_tipo" value="${tipo}">
+      <button class="btn btn-gold btn-block" onclick="App.saveLembrete()">Salvar lembrete</button>`);
+  },
+  saveLembrete(){
+    const pid=val('lb_pac'); if(!pid){ toast('Selecione o paciente','red'); return; }
+    if(!val('lb_tit').trim()){ toast('Informe o título','red'); return; }
+    const tipo=val('lb_tipo');
+    const d={ id:uid(), tipo, pacienteId:pid, titulo:val('lb_tit'), notas:val('lb_notas'), ativo:true, criado:now() };
+    if(tipo==='remedio'){ d.horarios=val('lb_hor'); d.freq=val('lb_freq'); }
+    else { const dt=val('lb_data'); if(!dt){ toast('Informe data e hora','red'); return; } d.data=new Date(dt).toISOString(); }
+    DB.lembretes.push(d); persist(); closeModal(); render(); toast('Lembrete criado','jade');
+  },
+  toggleLembrete(id){ const l=DB.lembretes.find(x=>x.id===id); if(l){ l.ativo=l.ativo===false; persist(); render(); } },
+  delLembrete(id){ if(!confirm('Excluir lembrete?'))return; DB.lembretes=DB.lembretes.filter(l=>l.id!==id); persist(); render(); toast('Excluído','red'); },
+
+  delDoc(key,id){ if(!confirm('Excluir documento?'))return; DB[key]=DB[key].filter(d=>d.id!==id); persist(); render(); toast('Excluído','red'); },
+
+  /* ---- IMPRESSÃO ---- */
+  printDoc(key,id){
+    const d=DB[key].find(x=>x.id===id); if(!d) return;
+    const p=patient(d.pacienteId);
+    let title='', body='';
+    if(key==='receitas'){
+      title = d.tipo==='especial'?'Receituário de Controle Especial':'Receituário';
+      body = d.itens.map(it=>`<div class="rx-item"><div class="rx-name">${esc(it.nome)} ${it.qtd?'— '+esc(it.qtd):''}</div><div class="rx-pos">${esc(it.pos)}</div></div>`).join('');
+      if(d.orientacoes) body += `<div style="margin-top:18px"><strong>Orientações:</strong><br>${esc(d.orientacoes)}</div>`;
+    } else if(key==='laudos'){
+      title = esc(d.titulo||'Laudo');
+      body = `<div class="doc-body">${esc(d.corpo)}</div>${d.conclusao?`<div style="margin-top:20px"><strong>Conclusão:</strong><br>${esc(d.conclusao)}</div>`:''}`;
+    } else if(key==='atestados'){
+      title = 'Atestado Médico';
+      body = `<div class="doc-body" style="text-align:justify">${esc(d.corpo)}</div>${d.cid?`<div style="margin-top:16px">CID: <strong>${esc(d.cid)}</strong></div>`:''}`;
+    } else if(key==='encaminhamentos'){
+      title = 'Encaminhamento';
+      body = `<div style="margin-bottom:14px">Encaminho o(a) paciente acima identificado(a) para avaliação em <strong>${esc(d.especialidade)}</strong>${d.prioridade&&d.prioridade!=='Eletiva'?` <span style="color:#b23">(${esc(d.prioridade)})</span>`:''}.</div><div class="doc-body"><strong>Motivo / hipótese diagnóstica:</strong><br>${esc(d.motivo||'—')}</div>`;
+    } else if(key==='pedidos'){
+      title = 'Solicitação de Exames';
+      body = (d.itens&&d.itens.length? d.itens.map(it=>`<div class="rx-item"><div class="rx-name">☐ ${esc(it)}</div></div>`).join('') : '') + (d.obs?`<div style="margin-top:14px"><strong>Observações:</strong><br>${esc(d.obs)}</div>`:'') + (d.indicacao?`<div style="margin-top:14px"><strong>Indicação clínica:</strong> ${esc(d.indicacao)}</div>`:'');
+    }
+    App._print(title, p, body, d.data);
+  },
+  printSuplemento(id){
+    const d=DB.suplementos.find(x=>x.id===id); if(!d)return; const p=patient(d.pacienteId);
+    const body = d.itens.map(it=>`<div class="rx-item"><div class="rx-name">${esc(it.nome)} ${it.dose?'— '+esc(it.dose):''}</div><div class="rx-pos">${esc(it.ind)}</div></div>`).join('') + (d.obs?`<div style="margin-top:18px"><strong>Observações:</strong><br>${esc(d.obs)}</div>`:'');
+    App._print('Recomendação de Suplementação', p, body, d.data);
+  },
+  _print(title, p, bodyHtml, dataIso){
+    const pf=DB.perfil;
+    const idade = p&&age(p.nascimento)!=null? age(p.nascimento)+' anos':'';
+    const area=document.getElementById('printArea');
+    area.innerHTML = `<div class="doc">
+      <div class="doc-header">
+        <div><div class="dh-name">${esc(pf.nome||'—')}</div><div class="dh-meta">${esc(pf.especialidade||'')}${pf.crm?' · '+esc(pf.crm):''}</div>${pf.clinica?`<div class="dh-meta">${esc(pf.clinica)}</div>`:''}</div>
+        <div class="dh-right">${pf.endereco?esc(pf.endereco)+'<br>':''}${pf.cidade?esc(pf.cidade)+'<br>':''}${pf.telefone?esc(pf.telefone):''}</div>
+      </div>
+      <h1 class="doc-title">${title}</h1>
+      <div class="doc-patient"><strong>Paciente:</strong> ${esc(p?p.nome:'—')} ${idade?'· '+idade:''} ${p&&p.cpf?'· CPF: '+esc(p.cpf):''}</div>
+      ${bodyHtml}
+      <div class="doc-sign"><div class="line"></div>${esc(pf.nome||'')}${pf.crm?'<br>'+esc(pf.crm):''}</div>
+      <div class="doc-foot">${esc(pf.cidade||'')}, ${fmtLongDate(dataIso)} — Documento emitido pelo Sistema Clínico</div>
+    </div>`;
+    setTimeout(()=>window.print(), 60);
+  },
+
+  /* ---- DADOS ---- */
+  exportData(){
+    const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download='sistema-clinico-backup-'+todayISO()+'.json'; a.click();
+    toast('Backup exportado','jade');
+  },
+  importData(){
+    const inp=document.createElement('input'); inp.type='file'; inp.accept='.json,application/json';
+    inp.onchange=()=>{ const f=inp.files[0]; if(!f)return; const r=new FileReader();
+      r.onload=()=>{ try{ const data=JSON.parse(r.result); if(!confirm('Substituir todos os dados atuais pelo arquivo importado?'))return;
+        DB=Object.assign({perfil:seedPerfil,pacientes:[],consultas:[],receitas:[],laudos:[],atestados:[],exames:[],lembretes:[],suplementos:[]}, data);
+        persist(); render(); toast('Dados importados','jade'); }catch(e){ toast('Arquivo inválido','red'); } };
+      r.readAsText(f); };
+    inp.click();
+  },
+};
+window.App = App;
+
+/* ============================ HELPERS UI ============================ */
+function val(id){ const e=document.getElementById(id); return e?e.value:null; }
+function rval(id){ const e=document.getElementById(id); return e?+e.value:5; }
+function setVal(id,v){ const e=document.getElementById(id); if(e)e.value=v; }
+function field(label, content){ return `<div class="field"><label class="f">${esc(label)}</label><div style="white-space:pre-wrap">${esc(content)}</div></div>`; }
+
+function paintTranscript(){
+  const box=document.getElementById('transcriptBox'); if(!box) return;
+  const atEnd = true;
+  box.innerHTML = esc(rec.finalText) + (rec.interim?`<span class="interim">${esc(rec.interim)}</span>`:'');
+  box.scrollTop = box.scrollHeight;
+}
+function updateTimer(){
+  const t=document.getElementById('recTimer'); if(!t) return;
+  const ms = rec.running? Date.now()-rec.startTs : (rec.elapsed||0);
+  const s=Math.floor(ms/1000); t.textContent = String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+}
+function updateRecUI(){
+  const dot=document.getElementById('recDot'), start=document.getElementById('recStart'), stop=document.getElementById('recStop');
+  if(dot) dot.className='rec-dot'+(rec.running?' live':'');
+  if(start) start.style.display=rec.running?'none':'';
+  if(stop) stop.style.display=rec.running?'':'none';
+  updateTimer();
+}
+
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+/* ============================ INIT ============================ */
+render();
+})();
+</script>
+</body>
+</html>
