@@ -385,6 +385,7 @@ DB.sinais    = DB.sinais    || [];
 DB.diagnostico = DB.diagnostico || null;
 DB.habitos   = DB.habitos   || [];
 DB.perfilSaude = DB.perfilSaude || {};
+DB.wearables = DB.wearables || {}; // { [pid]: {marca, dispositivo, conectadoEm, leituras:[]} }
 DB.conta     = DB.conta     || null; // {nome,email,senhaHash,plano,criado}
 if(DB.perfil.carimbo===undefined) DB.perfil.carimbo=true;
 persist();
@@ -458,57 +459,150 @@ const CAT_CID = [
 /* Perfil de Saúde gamificado (inspirado em anamnese por categorias) */
 const PERFIL_CATS = [
   {id:'quem', nome:'Quem é você', ico:'🧑', qs:[
-    {id:'prof', t:'Profissão', tipo:'text'},
-    {id:'estado', t:'Estado civil', tipo:'select', op:['Solteiro(a)','Casado(a)','Divorciado(a)','Viúvo(a)']},
-    {id:'filhos', t:'Tem filhos?', tipo:'select', op:['Não','Sim']},
+    {id:'prof', t:'Profissão / ocupação', tipo:'text'},
+    {id:'estado', t:'Estado civil', tipo:'select', op:['Solteiro(a)','Casado(a)/União','Divorciado(a)','Viúvo(a)']},
+    {id:'filhos', t:'Tem filhos? Quantos?', tipo:'text'},
+    {id:'escolar', t:'Escolaridade', tipo:'select', op:['Fundamental','Médio','Superior','Pós-graduação']},
+    {id:'moradia', t:'Com quem mora', tipo:'text'},
+    {id:'trabalho', t:'Rotina de trabalho', tipo:'select', op:['Diurno','Noturno','Turnos alternados','Home office','Autônomo']},
+    {id:'motivo', t:'Motivo principal da consulta', tipo:'area'},
   ]},
   {id:'medico', nome:'Histórico médico', ico:'🏥', qs:[
-    {id:'doencas', t:'Doenças diagnosticadas', tipo:'text'},
-    {id:'cirurgias', t:'Cirurgias anteriores', tipo:'text'},
-    {id:'alergias', t:'Alergias', tipo:'text'},
+    {id:'doencas', t:'Doenças diagnosticadas', tipo:'area'},
+    {id:'cronicas', t:'Doença crônica (HAS, DM, tireoide...)', tipo:'text'},
+    {id:'cirurgias', t:'Cirurgias e internações', tipo:'area'},
+    {id:'alergias', t:'Alergias (medicamentos/alimentos)', tipo:'text'},
+    {id:'transf', t:'Já recebeu transfusão?', tipo:'select', op:['Não','Sim']},
+    {id:'vacinas', t:'Vacinação em dia?', tipo:'select', op:['Sim','Não','Parcial']},
+    {id:'ultimaav', t:'Última avaliação médica (quando)', tipo:'text'},
   ]},
   {id:'familiar', nome:'Histórico familiar', ico:'🧬', qs:[
-    {id:'famcardio', t:'Doença cardíaca na família?', tipo:'select', op:['Não','Sim','Não sei']},
+    {id:'famcardio', t:'Doença cardíaca / infarto na família?', tipo:'select', op:['Não','Sim','Não sei']},
     {id:'famdiab', t:'Diabetes na família?', tipo:'select', op:['Não','Sim','Não sei']},
+    {id:'famhas', t:'Hipertensão na família?', tipo:'select', op:['Não','Sim','Não sei']},
+    {id:'famcancer', t:'Câncer na família (qual)?', tipo:'text'},
+    {id:'famavc', t:'AVC na família?', tipo:'select', op:['Não','Sim','Não sei']},
+    {id:'fammental', t:'Doença psiquiátrica na família?', tipo:'select', op:['Não','Sim','Não sei']},
   ]},
   {id:'meds', nome:'Medicamentos & suplementos', ico:'💊', qs:[
-    {id:'medsuso', t:'Medicamentos em uso', tipo:'text'},
-    {id:'supuso', t:'Suplementos em uso', tipo:'text'},
+    {id:'medsuso', t:'Medicamentos em uso (nome e dose)', tipo:'area'},
+    {id:'continuo', t:'Uso contínuo?', tipo:'select', op:['Não','Sim']},
+    {id:'supuso', t:'Suplementos em uso', tipo:'area'},
+    {id:'hormonio', t:'Anticoncepcional / hormônios', tipo:'text'},
+    {id:'automedica', t:'Costuma se automedicar?', tipo:'select', op:['Não','Às vezes','Sim']},
   ]},
   {id:'alim', nome:'Alimentação', ico:'🥗', qs:[
     {id:'refeicoes', t:'Refeições por dia', tipo:'number'},
-    {id:'agua', t:'Copos de água/dia', tipo:'number'},
+    {id:'agua', t:'Litros de água/dia', tipo:'number'},
     {id:'ultraproc', t:'Ultraprocessados', tipo:'select', op:['Raramente','Às vezes','Diariamente']},
+    {id:'fruteveg', t:'Frutas e verduras (porções/dia)', tipo:'number'},
+    {id:'acucar', t:'Açúcar / doces', tipo:'select', op:['Raramente','Moderado','Muito']},
+    {id:'cafeina', t:'Cafeína (xícaras/dia)', tipo:'number'},
+    {id:'dieta', t:'Restrições / dieta atual', tipo:'text'},
+    {id:'fomeemo', t:'Come por ansiedade/emoção?', tipo:'select', op:['Não','Às vezes','Sim']},
   ]},
   {id:'energia', nome:'Energia & stress', ico:'⚡', qs:[
     {id:'energia', t:'Nível de energia (0-10)', tipo:'number'},
     {id:'stress', t:'Nível de stress (0-10)', tipo:'number'},
+    {id:'acordar', t:'Acorda cansado(a)?', tipo:'select', op:['Não','Às vezes','Sim']},
+    {id:'queda', t:'Tem quedas de energia no dia?', tipo:'select', op:['Não','Sim, à tarde','Sim, o dia todo']},
+    {id:'fontestress', t:'Principais fontes de stress', tipo:'text'},
   ]},
   {id:'sono', nome:'Sono', ico:'🌙', qs:[
     {id:'horas', t:'Horas de sono/noite', tipo:'number'},
     {id:'qual', t:'Qualidade do sono (0-10)', tipo:'number'},
+    {id:'dormir', t:'Horário que costuma dormir', tipo:'text'},
+    {id:'demora', t:'Demora para pegar no sono?', tipo:'select', op:['Não','Às vezes','Sempre']},
+    {id:'acordanoite', t:'Acorda durante a noite?', tipo:'select', op:['Não','Às vezes','Sempre']},
+    {id:'ronco', t:'Ronco / apneia?', tipo:'select', op:['Não','Ronco','Apneia diagnosticada','Não sei']},
+    {id:'tela', t:'Usa telas antes de dormir?', tipo:'select', op:['Não','Às vezes','Sempre']},
   ]},
   {id:'exerc', nome:'Exercício físico', ico:'💪', qs:[
     {id:'freq', t:'Dias de exercício/semana', tipo:'number'},
     {id:'tipo', t:'Tipo de atividade', tipo:'text'},
+    {id:'duracao', t:'Duração média (min)', tipo:'number'},
+    {id:'intensidade', t:'Intensidade', tipo:'select', op:['Leve','Moderada','Intensa']},
+    {id:'sentado', t:'Horas sentado/dia', tipo:'number'},
+    {id:'passos', t:'Passos por dia (aprox.)', tipo:'number'},
+    {id:'dorexerc', t:'Dor ou limitação para exercício', tipo:'text'},
   ]},
   {id:'intestino', nome:'Intestino & digestão', ico:'🫁', qs:[
-    {id:'evac', t:'Evacuações/dia', tipo:'number'},
-    {id:'digest', t:'Queixas digestivas', tipo:'text'},
+    {id:'evac', t:'Evacuações por dia/semana', tipo:'text'},
+    {id:'consist', t:'Consistência das fezes', tipo:'select', op:['Normal','Ressecada','Amolecida','Alternada']},
+    {id:'inchaco', t:'Inchaço / gases', tipo:'select', op:['Não','Às vezes','Frequente']},
+    {id:'refluxo', t:'Azia / refluxo', tipo:'select', op:['Não','Às vezes','Frequente']},
+    {id:'intoler', t:'Intolerâncias alimentares', tipo:'text'},
+  ]},
+  {id:'memoria', nome:'Memória & cognição', ico:'🧠', qs:[
+    {id:'memoria', t:'Memória (0-10)', tipo:'number'},
+    {id:'concentra', t:'Concentração / foco (0-10)', tipo:'number'},
+    {id:'nevoa', t:'Sensação de "névoa mental"?', tipo:'select', op:['Não','Às vezes','Frequente']},
+    {id:'esquec', t:'Esquecimentos no dia a dia?', tipo:'select', op:['Não','Às vezes','Frequente']},
+  ]},
+  {id:'sistemas', nome:'Sistemas do corpo', ico:'🔬', qs:[
+    {id:'cardio', t:'Palpitações / falta de ar', tipo:'select', op:['Não','Às vezes','Frequente']},
+    {id:'resp', t:'Tosse / falta de ar / alergias resp.', tipo:'text'},
+    {id:'pele', t:'Pele, cabelo e unhas', tipo:'text'},
+    {id:'articular', t:'Dores articulares / musculares', tipo:'text'},
+    {id:'urinario', t:'Sintomas urinários', tipo:'text'},
+    {id:'visao', t:'Visão / audição', tipo:'text'},
+  ]},
+  {id:'hormonal', nome:'Saúde hormonal & sexual', ico:'⚧', qs:[
+    {id:'libido', t:'Libido (0-10)', tipo:'number'},
+    {id:'ciclo', t:'Ciclo menstrual (regular?) / menopausa', tipo:'text'},
+    {id:'tpm', t:'TPM / sintomas hormonais', tipo:'text'},
+    {id:'sexual', t:'Queixas sexuais (ereção, secura...)', tipo:'text'},
+    {id:'gestacoes', t:'Gestações / fertilidade', tipo:'text'},
   ]},
   {id:'mental', nome:'Saúde mental & emocional', ico:'🧘', qs:[
     {id:'humor', t:'Humor geral (0-10)', tipo:'number'},
     {id:'ansiedade', t:'Ansiedade (0-10)', tipo:'number'},
+    {id:'diagpsi', t:'Já teve depressão/ansiedade diagnosticada?', tipo:'select', op:['Não','Sim','Em tratamento']},
+    {id:'terapia', t:'Faz terapia / psiquiatra?', tipo:'select', op:['Não','Já fiz','Faço atualmente']},
+    {id:'panico', t:'Crises de pânico?', tipo:'select', op:['Não','Já tive','Frequente']},
+    {id:'motivacao', t:'Motivação / disposição (0-10)', tipo:'number'},
+    {id:'apoio', t:'Tem rede de apoio (família/amigos)?', tipo:'select', op:['Sim','Pouca','Não']},
   ]},
   {id:'lifestyle', nome:'Hábitos & lifestyle', ico:'🎯', qs:[
     {id:'fuma', t:'Tabagismo', tipo:'select', op:['Não','Ex-fumante','Sim']},
     {id:'alcool', t:'Álcool', tipo:'select', op:['Nunca','Social','Frequente']},
+    {id:'substancias', t:'Outras substâncias', tipo:'text'},
+    {id:'tempotela', t:'Tempo de tela/dia (horas)', tipo:'number'},
+    {id:'sol', t:'Exposição solar (min/dia)', tipo:'number'},
+    {id:'lazer', t:'Tempo de lazer / hobbies', tipo:'text'},
   ]},
   {id:'objetivos', nome:'Objetivos', ico:'🚀', qs:[
-    {id:'obj', t:'Principal objetivo de saúde', tipo:'text'},
+    {id:'obj', t:'Principal objetivo de saúde', tipo:'area'},
+    {id:'prazo', t:'Prazo desejado', tipo:'text'},
+    {id:'porque', t:'Por que isso é importante para você?', tipo:'area'},
+    {id:'tentou', t:'Já tentou antes? O que faltou?', tipo:'text'},
+    {id:'comprometimento', t:'Nível de comprometimento (0-10)', tipo:'number'},
   ]},
 ];
 const PERFIL_TOTAL = PERFIL_CATS.reduce((s,c)=>s+c.qs.length,0);
+/* Relógios / monitores de saúde (wearables) */
+const WEARABLES = [
+  {id:'apple', nome:'Apple Watch', ico:'⌚', fonte:'Apple Saúde'},
+  {id:'fitbit', nome:'Fitbit', ico:'⌚', fonte:'Fitbit'},
+  {id:'garmin', nome:'Garmin', ico:'⌚', fonte:'Garmin Connect'},
+  {id:'samsung', nome:'Galaxy Watch', ico:'⌚', fonte:'Samsung Health'},
+  {id:'xiaomi', nome:'Xiaomi / Mi Band', ico:'⌚', fonte:'Mi Fitness'},
+  {id:'amazfit', nome:'Amazfit', ico:'⌚', fonte:'Zepp'},
+  {id:'oura', nome:'Oura Ring', ico:'💍', fonte:'Oura'},
+  {id:'whoop', nome:'Whoop', ico:'🎽', fonte:'Whoop'},
+  {id:'polar', nome:'Polar', ico:'⌚', fonte:'Polar Flow'},
+  {id:'googlefit', nome:'Google Fit', ico:'📱', fonte:'Google Fit'},
+];
+const WEAR_METRICAS = [
+  {id:'passos', t:'Passos/dia', u:''},
+  {id:'fcRep', t:'FC de repouso', u:'bpm'},
+  {id:'fcMax', t:'FC máxima', u:'bpm'},
+  {id:'sono', t:'Sono', u:'h'},
+  {id:'spo2', t:'SpO₂', u:'%'},
+  {id:'hrv', t:'HRV (VFC)', u:'ms'},
+  {id:'calorias', t:'Calorias', u:'kcal'},
+  {id:'vo2', t:'VO₂ máx', u:''},
+];
 /* Hábitos prescritíveis (inspirado em prescrição de hábitos + gamificação) */
 const HABITOS_CAT = [
   {nome:'Beber água', meta:'2 L', ico:'💧'},
@@ -1536,6 +1630,13 @@ function mapaSaude(pid){
   if(imc){ const st= imc>=30?'alerta':(imc>=25||imc<18.5)?'atencao':'ok'; markers.push({nome:'IMC', valor:imc, unidade:'', status:st, exp:'Relação peso/altura. Acima de 25 é sobrepeso; acima de 30, obesidade.'}); }
   if(sinal&&sinal.pa){ markers.push({nome:'Pressão arterial', valor:sinal.pa, unidade:'mmHg', status:'ok', exp:'Pressão do sangue nas artérias. O ideal é em torno de 120/80.'}); }
   Object.values(latestExamItems(pid)).forEach(it=>{ const f=it.flag||''; const st=(f==='high'||f==='low')?'alerta':'ok'; markers.push({nome:it.nome, valor:it.valor, unidade:it.u||'', status:st, exp:EXAM_EXPLAIN[it.nome]||'Marcador laboratorial.'}); });
+  const w=DB.wearables[pid]; const wl=w&&(w.leituras||[])[0];
+  if(wl){
+    if(wl.passos){ const v=+wl.passos; markers.push({nome:'Passos/dia', valor:v, unidade:'', status:v>=8000?'ok':v>=5000?'atencao':'alerta', exp:'Nível de atividade diária medido pelo relógio.'}); }
+    if(wl.fcRep){ const v=+wl.fcRep; markers.push({nome:'FC de repouso', valor:v, unidade:'bpm', status:v<=70?'ok':v<=85?'atencao':'alerta', exp:'Frequência cardíaca em repouso — quanto menor, melhor o condicionamento.'}); }
+    if(wl.sono){ const v=+wl.sono; markers.push({nome:'Sono (relógio)', valor:v, unidade:'h', status:(v>=7&&v<=9)?'ok':(v>=6)?'atencao':'alerta', exp:'Horas de sono medidas pelo dispositivo.'}); }
+    if(wl.spo2){ const v=+wl.spo2; markers.push({nome:'SpO₂ (relógio)', valor:v, unidade:'%', status:v>=95?'ok':v>=92?'atencao':'alerta', exp:'Saturação de oxigênio no sangue.'}); }
+  }
   if(av){ const sc=computeScore(av);
     markers.push({nome:'Saúde mental', valor:sc.mental, unidade:'/100', status:sc.mental>=70?'ok':sc.mental>=50?'atencao':'alerta', exp:'Humor, ansiedade, stress, energia e sono.'});
     markers.push({nome:'Hábitos de vida', valor:sc.habitos, unidade:'/100', status:sc.habitos>=70?'ok':sc.habitos>=50?'atencao':'alerta', exp:'Atividade física, alimentação, sono, tabagismo e álcool.'});
@@ -2375,6 +2476,7 @@ const App = {
         ${scoreRing(pr.pct,96)}
         <div><h3 style="font-size:1.1rem">${pr.pct}% completo</h3><div class="card-sub" style="margin:0">${pr.a} de ${pr.t} perguntas respondidas${pr.pct===100?' · <span class="tag jade">🏆 Perfil completo!</span>':''}</div></div>
       </div>
+      ${App._wearableCard(pid)}
       <div class="grid-2">${PERFIL_CATS.map(c=>{const pc=pr.perCat[c.id];const done=pc.a===pc.t;return `<div class="list-item" style="cursor:pointer" onclick="App.editPerfilCat('${pid}','${c.id}')">
         <div class="avatar">${c.ico}</div>
         <div class="grow"><div class="li-title">${esc(c.nome)} ${done?'<span class="tag jade">✓</span>':''}</div>
@@ -2388,9 +2490,51 @@ const App = {
       <div class="card-sub" style="margin-top:-8px">${esc(patientName(pid))}</div>
       ${cat.qs.map(q=>{const v=data[q.id]!=null?data[q.id]:'';
         if(q.tipo==='select') return `<div class="field"><label class="f">${esc(q.t)}</label><select id="pq_${q.id}"><option value="">—</option>${q.op.map(o=>`<option ${v===o?'selected':''}>${o}</option>`).join('')}</select></div>`;
+        if(q.tipo==='area') return `<div class="field"><label class="f">${esc(q.t)}</label><textarea id="pq_${q.id}" style="min-height:56px">${esc(v)}</textarea></div>`;
         return `<div class="field"><label class="f">${esc(q.t)}</label><input ${q.tipo==='number'?'type="number"':''} id="pq_${q.id}" value="${esc(v)}"></div>`;
       }).join('')}
       <button class="btn btn-gold btn-block" onclick="App.savePerfilCat('${pid}','${catId}')">Salvar</button>`, true);
+  },
+  _wearableCard(pid){
+    const w=DB.wearables[pid];
+    if(!w || !w.marca){
+      return `<div class="card"><h3 style="font-size:1rem">⌚ Conectar relógio / monitor</h3><div class="card-sub">Traga passos, sono, frequência cardíaca, SpO₂ e HRV do dispositivo do paciente</div>
+        <div class="chips">${WEARABLES.map(b=>`<span class="tag chip-add" onclick="App.conectarWearable('${pid}','${b.id}')">${b.ico} ${esc(b.nome)}</span>`).join('')}</div>
+        <div class="disclaimer" style="margin-top:10px">Sincronização manual disponível agora. A sincronização automática via API das marcas (Apple Saúde, Fitbit, Garmin…) é um recurso de nuvem (Pro/backend).</div></div>`;
+    }
+    const marca=WEARABLES.find(b=>b.id===w.marca)||{nome:w.marca,ico:'⌚'};
+    const last=(w.leituras||[])[0];
+    return `<div class="card" style="border-color:rgba(47,174,125,0.3)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <h3 style="font-size:1rem">${marca.ico} ${esc(marca.nome)} <span class="tag jade">conectado</span></h3>
+        <div class="li-actions"><button class="btn btn-jade btn-sm" onclick="App.syncWearable('${pid}')">↻ Sincronizar</button><button class="icon-btn" onclick="App.desconectarWearable('${pid}')" title="Desconectar">✕</button></div>
+      </div>
+      ${last? `<div class="card-sub" style="margin-bottom:8px">Última sincronização: ${fmtDate(last.data)}</div>
+        <div class="grid-4">${WEAR_METRICAS.filter(m=>last[m.id]).map(m=>`<div class="stat" style="padding:10px 12px"><div class="n" style="font-size:1.2rem;color:var(--jade-light)">${esc(String(last[m.id]))}</div><div class="l">${esc(m.t)} ${esc(m.u)}</div></div>`).join('')||'<div class="muted" style="font-size:.85rem">Sem leituras. Clique em Sincronizar.</div>'}</div>`
+        : '<div class="muted" style="font-size:.85rem">Nenhuma leitura ainda. Clique em <b>Sincronizar</b> para registrar os dados do dispositivo.</div>'}</div>`;
+  },
+  conectarWearable(pid, brandId){
+    DB.wearables[pid]={ marca:brandId, conectadoEm:now(), leituras:[] }; persist();
+    const b=WEARABLES.find(x=>x.id===brandId);
+    toast((b?b.nome:'Dispositivo')+' conectado','jade'); this.renderPerfil(pid);
+    this.syncWearable(pid);
+  },
+  desconectarWearable(pid){ if(!confirm('Desconectar o dispositivo? As leituras serão mantidas no histórico.'))return; if(DB.wearables[pid])DB.wearables[pid].marca=null; persist(); this.renderPerfil(pid); },
+  syncWearable(pid){
+    const w=DB.wearables[pid]||{}; const marca=WEARABLES.find(b=>b.id===w.marca)||{nome:'Dispositivo'};
+    openModal(`
+      <div class="modal-head"><h3>↻ Sincronizar ${esc(marca.nome)}</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="card-sub" style="margin-top:-8px">Informe os dados exibidos no app/relógio (${esc(marca.fonte||'')}).</div>
+      <div class="row c2"><div class="field"><label class="f">Data</label><input type="date" id="wr_data" value="${todayISO()}"></div><div></div></div>
+      <div class="grid-2">${WEAR_METRICAS.map(m=>`<div class="field"><label class="f">${esc(m.t)} ${m.u?'('+esc(m.u)+')':''}</label><input type="number" step="any" id="wr_${m.id}"></div>`).join('')}</div>
+      <button class="btn btn-gold btn-block" onclick="App.salvarWearable('${pid}')">Salvar leitura</button>`, true);
+  },
+  salvarWearable(pid){
+    const r={ data:new Date(val('wr_data')||todayISO()).toISOString() };
+    let algum=false; WEAR_METRICAS.forEach(m=>{ const v=val('wr_'+m.id); if(v!==''&&v!=null){ r[m.id]=v; algum=true; } });
+    if(!algum){ toast('Informe ao menos uma métrica','red'); return; }
+    DB.wearables[pid]=DB.wearables[pid]||{marca:null,leituras:[]}; DB.wearables[pid].leituras=DB.wearables[pid].leituras||[];
+    DB.wearables[pid].leituras.unshift(r); persist(); closeModal(); this.renderPerfil(pid); toast('Leitura sincronizada','jade');
   },
   savePerfilCat(pid, catId){
     const cat=PERFIL_CATS.find(c=>c.id===catId);
@@ -2648,7 +2792,7 @@ const App = {
     const inp=document.createElement('input'); inp.type='file'; inp.accept='.json,application/json';
     inp.onchange=()=>{ const f=inp.files[0]; if(!f)return; const r=new FileReader();
       r.onload=()=>{ try{ const data=JSON.parse(r.result); if(!confirm('Substituir todos os dados atuais pelo arquivo importado?'))return;
-        DB=Object.assign({perfil:seedPerfil,conta:DB.conta,pacientes:[],consultas:[],receitas:[],laudos:[],atestados:[],exames:[],lembretes:[],suplementos:[],encaminhamentos:[],pedidos:[],avaliacoes:[],categorias:[],produtos:[],vendas:[],agenda:[],sinais:[],diagnostico:null,habitos:[],perfilSaude:{}}, data);
+        DB=Object.assign({perfil:seedPerfil,conta:DB.conta,pacientes:[],consultas:[],receitas:[],laudos:[],atestados:[],exames:[],lembretes:[],suplementos:[],encaminhamentos:[],pedidos:[],avaliacoes:[],categorias:[],produtos:[],vendas:[],agenda:[],sinais:[],diagnostico:null,habitos:[],perfilSaude:{},wearables:{}}, data);
         if(!DB.conta) DB.conta=null;
         persist(); render(); toast('Dados importados','jade'); }catch(e){ toast('Arquivo inválido','red'); } };
       r.readAsText(f); };
