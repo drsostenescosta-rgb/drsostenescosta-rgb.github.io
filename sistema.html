@@ -603,6 +603,24 @@ const WEAR_METRICAS = [
   {id:'calorias', t:'Calorias', u:'kcal'},
   {id:'vo2', t:'VO₂ máx', u:''},
 ];
+/* Rastreios clínicos VALIDADOS (com pontuação e faixas) */
+const FREQ4=[['Nenhuma vez',0],['Vários dias',1],['Mais da metade dos dias',2],['Quase todos os dias',3]];
+const SCREENINGS=[
+  {id:'phq9', nome:'PHQ-9 — Depressão', ico:'🧠', pre:'Nas últimas 2 semanas, com que frequência você foi incomodado por…', op:FREQ4,
+    qs:['Pouco interesse ou prazer em fazer as coisas','Sentir-se para baixo, deprimido ou sem esperança','Dificuldade para dormir ou dormir demais','Sentir-se cansado(a) ou com pouca energia','Falta de apetite ou comer demais','Sentir-se mal consigo mesmo(a) — um fracasso','Dificuldade de concentração','Lentidão ou agitação percebida por outros','Pensamentos de que seria melhor estar morto(a) ou de se ferir'],
+    bands:[[4,'Mínimo','jade'],[9,'Leve','gold'],[14,'Moderado','gold'],[19,'Moderadamente grave','red'],[27,'Grave','red']]},
+  {id:'gad7', nome:'GAD-7 — Ansiedade', ico:'😰', pre:'Nas últimas 2 semanas, com que frequência você foi incomodado por…', op:FREQ4,
+    qs:['Sentir-se nervoso(a), ansioso(a) ou tenso(a)','Não conseguir parar ou controlar as preocupações','Preocupar-se demais com diversas coisas','Dificuldade para relaxar','Ficar tão agitado(a) que é difícil ficar parado(a)','Ficar facilmente aborrecido(a) ou irritado(a)','Sentir medo como se algo terrível fosse acontecer'],
+    bands:[[4,'Mínima','jade'],[9,'Leve','gold'],[14,'Moderada','gold'],[21,'Grave','red']]},
+  {id:'auditc', nome:'AUDIT-C — Álcool', ico:'🍷', pre:'Sobre o consumo de bebidas alcoólicas:',
+    qsFull:[{t:'Com que frequência você toma bebidas alcoólicas?',op:[['Nunca',0],['Mensal ou menos',1],['2 a 4x por mês',2],['2 a 3x por semana',3],['4+ por semana',4]]},{t:'Quantas doses num dia típico em que bebe?',op:[['1–2',0],['3–4',1],['5–6',2],['7–9',3],['10 ou mais',4]]},{t:'Com que frequência toma 6+ doses numa ocasião?',op:[['Nunca',0],['Menos que mensal',1],['Mensal',2],['Semanal',3],['Diário',4]]}],
+    bands:[[2,'Baixo risco','jade'],[12,'Uso de risco','red']]},
+  {id:'stopbang', nome:'STOP-BANG — Apneia do sono', ico:'🌙', pre:'Responda Sim ou Não:', op:[['Não',0],['Sim',1]],
+    qs:['Ronca alto (mais alto que a fala)?','Sente cansaço/sonolência durante o dia?','Alguém observou você parar de respirar durante o sono?','Tem ou faz tratamento para pressão alta?','IMC maior que 35?','Idade acima de 50 anos?','Circunferência do pescoço maior que 40 cm?','Sexo masculino?'],
+    bands:[[2,'Baixo risco','jade'],[4,'Risco intermediário','gold'],[8,'Alto risco','red']]},
+];
+function screenById(id){ return SCREENINGS.find(s=>s.id===id); }
+function screeningBand(s,score){ for(const b of s.bands){ if(score<=b[0]) return {label:b[1],cls:b[2]}; } const l=s.bands[s.bands.length-1]; return {label:l[1],cls:l[2]}; }
 /* Hábitos prescritíveis (inspirado em prescrição de hábitos + gamificação) */
 const HABITOS_CAT = [
   {nome:'Beber água', meta:'2 L', ico:'💧'},
@@ -2477,6 +2495,7 @@ const App = {
         <div><h3 style="font-size:1.1rem">${pr.pct}% completo</h3><div class="card-sub" style="margin:0">${pr.a} de ${pr.t} perguntas respondidas${pr.pct===100?' · <span class="tag jade">🏆 Perfil completo!</span>':''}</div></div>
       </div>
       ${App._wearableCard(pid)}
+      ${App._rastreiosCard(pid)}
       <div class="grid-2">${PERFIL_CATS.map(c=>{const pc=pr.perCat[c.id];const done=pc.a===pc.t;return `<div class="list-item" style="cursor:pointer" onclick="App.editPerfilCat('${pid}','${c.id}')">
         <div class="avatar">${c.ico}</div>
         <div class="grow"><div class="li-title">${esc(c.nome)} ${done?'<span class="tag jade">✓</span>':''}</div>
@@ -2494,6 +2513,34 @@ const App = {
         return `<div class="field"><label class="f">${esc(q.t)}</label><input ${q.tipo==='number'?'type="number"':''} id="pq_${q.id}" value="${esc(v)}"></div>`;
       }).join('')}
       <button class="btn btn-gold btn-block" onclick="App.savePerfilCat('${pid}','${catId}')">Salvar</button>`, true);
+  },
+  _rastreiosCard(pid){
+    const r0=((DB.perfilSaude[pid]||{}).rastreios)||{};
+    return `<div class="card"><h3 style="font-size:1rem">🔬 Rastreios clínicos validados</h3><div class="card-sub">Instrumentos padronizados com pontuação automática (PHQ-9, GAD-7, AUDIT-C, STOP-BANG)</div>
+      <div class="list">${SCREENINGS.map(s=>{ const r=r0[s.id]; const band=r?screeningBand(s,r.score):null; return `<div class="list-item">
+        <div class="avatar">${s.ico}</div>
+        <div class="grow"><div class="li-title">${esc(s.nome)}</div><div class="li-sub">${r?('Pontuação '+r.score+' · '+fmtDate(r.data)):'Não respondido'}</div></div>
+        ${r?`<span class="tag ${band.cls}">${esc(band.label)}</span>`:''}
+        <button class="btn btn-ghost btn-sm" onclick="App.abrirRastreio('${pid}','${s.id}')">${r?'Refazer':'Responder'}</button></div>`; }).join('')}</div>
+      <div class="disclaimer" style="margin-top:10px">Rastreios são apoio à triagem — não substituem avaliação diagnóstica. No PHQ-9, resposta positiva no item 9 (pensamentos de morte/autolesão) exige avaliação imediata.</div></div>`;
+  },
+  abrirRastreio(pid, id){
+    const s=screenById(id); const prev=(((DB.perfilSaude[pid]||{}).rastreios)||{})[id];
+    const items = s.qsFull ? s.qsFull : s.qs.map(t=>({t, op:s.op}));
+    openModal(`
+      <div class="modal-head"><h3>${s.ico} ${esc(s.nome)}</h3><button class="icon-btn" onclick="App.closeModal()">✕</button></div>
+      <div class="card-sub" style="margin-top:-8px">${esc(s.pre)} — ${esc(patientName(pid))}</div>
+      ${items.map((q,i)=>`<div class="field"><label class="f">${i+1}. ${esc(q.t)}</label><select id="sc_${i}">${q.op.map(o=>`<option value="${o[1]}" ${prev&&prev.respostas&&prev.respostas[i]===o[1]?'selected':''}>${esc(o[0])}</option>`).join('')}</select></div>`).join('')}
+      <button class="btn btn-gold btn-block" onclick="App.salvarRastreio('${pid}','${id}',${items.length})">Calcular pontuação</button>`, true);
+  },
+  salvarRastreio(pid, id, n){
+    let score=0; const resp=[]; for(let i=0;i<n;i++){ const v=+val('sc_'+i)||0; score+=v; resp.push(v); }
+    DB.perfilSaude[pid]=DB.perfilSaude[pid]||{}; DB.perfilSaude[pid].rastreios=DB.perfilSaude[pid].rastreios||{};
+    DB.perfilSaude[pid].rastreios[id]={ score, respostas:resp, data:now() };
+    persist(); closeModal(); this.renderPerfil(pid);
+    const s=screenById(id); const band=screeningBand(s,score);
+    toast(s.nome.split(' — ')[0]+': '+score+' — '+band.label, band.cls);
+    if(id==='phq9' && resp[8]>0){ setTimeout(()=>alert('⚠️ ATENÇÃO: resposta positiva no item 9 do PHQ-9 (pensamentos de morte ou de se ferir). Recomenda-se avaliação de risco IMEDIATA e protocolo de segurança.'),150); }
   },
   _wearableCard(pid){
     const w=DB.wearables[pid];
