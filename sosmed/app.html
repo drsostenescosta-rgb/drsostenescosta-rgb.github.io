@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Console SosMed — seu consultório em um lugar</title>
+<meta name="theme-color" content="#0C6B5C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ccircle%20cx='50'%20cy='50'%20r='44'%20fill='none'%20stroke='%23083F36'%20stroke-width='8'/%3E%3Cpath%20d='M14%2050%20L36%2050%20L43%2032%20L52%2066%20L59%2042%20L64%2050%20L86%2050'%20fill='none'%20stroke='%23083F36'%20stroke-width='8'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='7'%20fill='%23C97F16'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF9F6; --surface:#FFFFFF; --ink:#132420; --muted:#5B6B65;
+    --line:#E7E4DC; --line-soft:#EFEDE6; --line-strong:#D8D4C8;
+    --teal:#0C6B5C; --teal-deep:#083F36; --teal-tint:#EBF3F0; --teal-ghost:#F3F8F6;
+    --amber:#C97F16; --amber-bright:#E89A2B; --amber-tint:#FBF1E0; --amber-ink:#9A5B00;
+    --danger:#B3402A; --danger-tint:#FBEAE5; --ok:#2E9E77;
+    --shadow-sm:0 1px 2px rgba(19,36,32,.05);
+    --shadow-md:0 1px 2px rgba(19,36,32,.04), 0 12px 32px -12px rgba(19,36,32,.12);
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;font-size:15px;-webkit-font-smoothing:antialiased}
+  .display{font-family:'Fraunces',Georgia,serif}
+  button{font-family:inherit;cursor:pointer}
+  input,select,textarea{font-family:inherit;font-size:14.5px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;transition:border-color .15s var(--ease), box-shadow .15s var(--ease)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(12,107,92,.12)}
+  label{font-size:12.5px;font-weight:600;color:var(--muted);display:block;margin:12px 0 5px}
+  ::selection{background:var(--amber-tint)}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--teal);color:#fff;border:none;padding:10px 18px;border-radius:999px;font-weight:600;font-size:13.5px;transition:background .15s var(--ease), transform .15s var(--ease);box-shadow:var(--shadow-sm)}
+  .btn:hover{background:var(--teal-deep);transform:translateY(-1px)}
+  .btn:focus-visible{outline:3px solid rgba(12,107,92,.35);outline-offset:2px}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-strong);box-shadow:none;font-weight:500}
+  .btn.ghost:hover{background:var(--surface);border-color:var(--muted)}
+  .btn.amber{background:#A66508}.btn.amber:hover{background:#8A5303}
+  .btn.danger{background:var(--danger)}.btn.danger:hover{background:#8F3018}
+  .btn.mini{padding:6px 12px;font-size:12px}
+
+  /* Layout */
+  .shell{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+  aside{background:linear-gradient(180deg,#0A4A3F,var(--teal-deep));color:#E6F0EC;padding:18px 12px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',Georgia,serif;font-size:20px;font-weight:700;color:#fff;padding:4px 10px 16px;text-decoration:none}
+  .logo small{font-family:'Inter';font-size:9px;color:#9FBDB6;letter-spacing:.18em;display:block;line-height:1.2;font-weight:600}
+  aside .tab{display:flex;gap:10px;align-items:center;padding:11px 13px;background:none;border:none;color:#B9CFC8;font-size:13.5px;font-weight:500;border-radius:10px;text-align:left;width:100%;transition:background .15s, color .15s}
+  aside .tab:hover{color:#fff;background:rgba(255,255,255,.07)}
+  aside .tab.active{color:#fff;background:rgba(255,255,255,.12);font-weight:600}
+  aside .tab .badge{margin-left:auto;background:var(--amber-bright);color:#3A2604;font-size:10.5px;font-weight:700;border-radius:99px;padding:1px 7px}
+  .aside-foot{margin-top:auto;font-size:11px;color:#7FA096;padding:10px 12px;line-height:1.5}
+  .aside-foot a{color:#B9CFC8}
+  main{padding:26px 30px 60px;max-width:1080px}
+  .page{display:none}
+  .page.active{display:block;animation:fadeIn .3s var(--ease)}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+  h1{font-family:'Fraunces',Georgia,serif;font-size:27px;font-weight:600;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:13.5px;margin-top:3px;max-width:640px}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow-sm)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .metric{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .metric b{font-family:'Fraunces',Georgia,serif;font-size:24px;display:block;font-variant-numeric:tabular-nums}
+  .metric span{font-size:11.5px;color:var(--muted)}
+  .rgp{background:linear-gradient(135deg,var(--teal-tint),#F6FBF9);border:1px solid rgba(12,107,92,.28);border-radius:14px;padding:18px 20px;margin-bottom:14px}
+  .rgp b{font-family:'Fraunces',Georgia,serif;font-size:36px;color:var(--teal-deep);display:block;font-variant-numeric:tabular-nums}
+  .rgp span{color:var(--muted);font-size:12.5px}
+  h3.sec{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  td,th{padding:9px 8px;border-bottom:1px solid var(--line-soft);text-align:left;vertical-align:middle}
+  th{color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em}
+  tr:last-child td{border-bottom:none}
+  .amt{color:var(--teal-deep);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .pill{display:inline-block;font-size:11px;font-weight:600;border-radius:99px;padding:2px 10px}
+  .pill.agendada{background:var(--teal-tint);color:var(--teal-deep)}
+  .pill.realizada{background:#E9F7EF;color:#1D7A4F}
+  .pill.cancelada,.pill.faltou{background:var(--danger-tint);color:var(--danger)}
+  .pill.lia{background:var(--amber-tint);color:var(--amber-ink)}
+  .pill.plano{background:var(--amber-tint);color:var(--amber-ink)}
+  .empty{color:var(--muted);font-size:13.5px;padding:22px;text-align:center;border:1px dashed var(--line);border-radius:12px;line-height:1.6}
+  .aviso{background:var(--amber-tint);border:1px solid rgba(201,127,22,.35);border-radius:12px;padding:12px 15px;font-size:12.5px;line-height:1.55;margin-bottom:16px}
+  .aviso b{color:var(--amber-ink)}
+
+  /* Lia inbox */
+  .inbox{display:grid;grid-template-columns:280px 1fr;gap:16px;min-height:480px}
+  .convlist{display:flex;flex-direction:column;gap:8px;max-height:560px;overflow-y:auto}
+  .convitem{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;transition:border-color .15s}
+  .convitem:hover{border-color:var(--teal)}
+  .convitem.sel{border-color:var(--teal);box-shadow:0 0 0 2px rgba(12,107,92,.14)}
+  .convitem b{font-size:13.5px;display:block}
+  .convitem span{font-size:11.5px;color:var(--muted)}
+  .chatpane{display:flex;flex-direction:column;background:#F1EDE5;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .chatmsgs{flex:1;padding:16px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;max-height:440px}
+  .m{max-width:78%;padding:8px 12px;border-radius:11px;font-size:13px;line-height:1.45;box-shadow:var(--shadow-sm);white-space:pre-wrap}
+  .m.lead{background:#fff;align-self:flex-start;border-top-left-radius:4px}
+  .m.lia{background:#D9F5E1;align-self:flex-end;border-top-right-radius:4px;color:#10341F}
+  .m.sys{background:var(--amber-tint);align-self:center;font-size:11.5px;color:var(--amber-ink);box-shadow:none}
+  .m .mt{display:block;font-size:9.5px;opacity:.55;text-align:right;margin-top:2px}
+  .chatinput{display:flex;gap:8px;padding:10px;background:var(--surface);border-top:1px solid var(--line)}
+  .chatinput input{flex:1}
+
+  /* Consulta */
+  .rec-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--danger);animation:pulse 1.2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .transcript{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;min-height:180px;max-height:300px;overflow-y:auto;font-size:13.5px;line-height:1.7;white-space:pre-wrap}
+  .transcript .interim{color:var(--muted);font-style:italic}
+  .soapbox{background:var(--teal-ghost);border:1px solid var(--line);border-radius:12px;padding:14px;font-size:13.5px;white-space:pre-wrap;min-height:180px;line-height:1.65}
+
+  /* Modal */
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(8,63,54,.45);z-index:100;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+  .modal-bg.open{display:flex}
+  .modal{background:var(--surface);border-radius:18px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;box-shadow:var(--shadow-md)}
+  .modal h3{font-family:'Fraunces',Georgia,serif;font-size:21px;margin-bottom:2px}
+  .modal .msub{color:var(--muted);font-size:12.5px;margin-bottom:8px}
+  .modal .row{display:flex;gap:10px}
+  .modal .row>div{flex:1}
+  .modal .actions{display:flex;gap:10px;margin-top:20px}
+  .modal .actions .btn{flex:1}
+
+  .toast{position:fixed;bottom:22px;right:22px;background:var(--teal-deep);color:#fff;padding:12px 18px;border-radius:12px;font-size:13.5px;box-shadow:var(--shadow-md);opacity:0;transform:translateY(10px);transition:.3s var(--ease);z-index:200;max-width:340px}
+  .toast.show{opacity:1;transform:none}
+
+  @media(max-width:860px){
+    .shell{grid-template-columns:1fr}
+    aside{position:static;height:auto;flex-direction:row;overflow-x:auto;align-items:center;padding:10px}
+    .logo{padding:4px 10px}
+    aside .tab{white-space:nowrap;width:auto}
+    .aside-foot{display:none}
+    main{padding:18px 16px 50px}
+    .grid2,.grid3,.inbox{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <aside>
+    <a class="logo" href="index.html" title="Voltar à página inicial">
+      <svg width="30" height="30" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="none" stroke="#F2EDE4" stroke-width="6"/><path d="M14 50 L36 50 L43 32 L52 66 L59 42 L64 50 L86 50" fill="none" stroke="#F2EDE4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6" fill="#E89A2B"/></svg>
+      <div>sosmed<small>CONSOLE</small></div>
+    </a>
+    <button class="tab active" data-page="painel">📊 Painel</button>
+    <button class="tab" data-page="lia">💬 Lia — vendas <span class="badge" id="badgeLia" hidden>0</span></button>
+    <button class="tab" data-page="agenda">📅 Agenda</button>
+    <button class="tab" data-page="pacientes">👥 Pacientes</button>
+    <button class="tab" data-page="consulta">🩺 Consulta</button>
+    <button class="tab" data-page="marketing">📣 Marketing</button>
+    <button class="tab" data-page="planos">💳 Planos</button>
+    <button class="tab" data-page="documentos">📄 Documentos</button>
+    <button class="tab" data-page="crescer">🎓 Crescer</button>
+    <button class="tab" data-page="config">⚙️ Configurações</button>
+    <a class="tab" href="buscar.html" style="text-decoration:none">🔎 Marketplace →</a>
+    <a class="tab" href="medeasy.html" style="text-decoration:none">⚕️ MedEasy clínico →</a>
+    <div class="aside-foot">MVP local — seus dados ficam neste navegador.<br><a href="privacidade.html">Privacidade</a> · <a href="index.html">Página de vendas</a></div>
+  </aside>
+
+  <main>
+    <!-- ============ PAINEL ============ -->
+    <section class="page active" id="page-painel">
+      <div class="page-head">
+        <div><h1 id="saudacao">Painel do negócio</h1><p class="sub">Números calculados dos seus dados reais neste console — nada simulado aqui.</p></div>
+        <button class="btn ghost" id="btnSeed">Carregar dados de exemplo</button>
+      </div>
+      <div class="rgp"><span>Receita do mês (consultas realizadas + planos ativos)</span><b id="mRGP">R$ 0</b><span id="mRGPdet">—</span></div>
+      <div class="grid3" style="margin-bottom:16px">
+        <div class="metric"><b id="mConsultas">0</b><span>consultas agendadas este mês</span></div>
+        <div class="metric"><b id="mLia">0</b><span>agendadas pela Lia</span></div>
+        <div class="metric"><b id="mComparecimento">—</b><span>comparecimento</span></div>
+        <div class="metric"><b id="mReceber">R$ 0</b><span>a receber (realizadas não pagas)</span></div>
+      </div>
+      <div class="grid2">
+        <div class="card"><h3 class="sec">Próximas consultas</h3><div id="proximas"></div></div>
+        <div class="card"><h3 class="sec">Receita por fonte (mês)</h3><table id="tFontes"></table></div>
+      </div>
+    </section>
+
+    <!-- ============ LIA ============ -->
+    <section class="page" id="page-lia">
+      <div class="page-head">
+        <div><h1>Lia — central de vendas</h1><p class="sub">Simulador funcional: escreva como se fosse o paciente e a Lia qualifica, oferece horários reais da sua agenda e agenda de verdade. Temas clínicos são transferidos para você. <b>A conexão com o WhatsApp oficial entra na fase 2.</b></p></div>
+        <button class="btn" id="btnNovaConversa">+ Nova conversa (simular lead)</button>
+      </div>
+      <div class="inbox">
+        <div class="convlist" id="convList"></div>
+        <div class="chatpane">
+          <div class="chatmsgs" id="chatMsgs"><div class="empty" style="border:none">Selecione ou crie uma conversa para ver a Lia trabalhar.</div></div>
+          <div class="chatinput">
+            <input id="chatText" placeholder="Escreva como o paciente escreveria…" aria-label="Mensagem do paciente (simulação)">
+            <button class="btn" id="chatSend">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ AGENDA ============ -->
+    <section class="page" id="page-agenda">
+      <div class="page-head">
+        <div><h1>Agenda</h1><p class="sub">Consultas dos próximos dias. As que a Lia agenda aparecem aqui na hora.</p></div>
+        <button class="btn" id="btnNovaConsulta">+ Agendar consulta</button>
+      </div>
+      <div class="card"><div id="agendaList"></div></div>
+      <div class="card" style="margin-top:16px">
+        <h3 class="sec">🔔 Lembretes (consultas & medicações)</h3>
+        <div class="grid2">
+          <div>
+            <label for="lemPaciente">Paciente</label><select id="lemPaciente"></select>
+            <label for="lemTitulo">Lembrete</label><input id="lemTitulo" placeholder="Ex.: Losartana 50mg — 8h e 20h · ou retorno em 30 dias">
+            <button class="btn mini" id="btnAddLembrete" style="margin-top:12px">+ Criar lembrete</button>
+          </div>
+          <div id="lembretesLista"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PACIENTES ============ -->
+    <section class="page" id="page-pacientes">
+      <div class="page-head">
+        <div><h1>Pacientes</h1><p class="sub">Cadastro central. A Lia cria pacientes novos automaticamente ao agendar.</p></div>
+        <button class="btn" id="btnNovoPaciente">+ Cadastrar paciente</button>
+      </div>
+      <div class="card">
+        <input id="buscaPaciente" placeholder="Buscar por nome ou telefone…" style="margin-bottom:14px">
+        <table id="tPacientes"></table>
+        <div class="empty" id="pacVazio" hidden>Nenhum paciente ainda. Cadastre o primeiro ou deixe a Lia agendar um.</div>
+      </div>
+    </section>
+
+    <!-- ============ CONSULTA ============ -->
+    <section class="page" id="page-consulta">
+      <div class="page-head">
+        <div><h1>Consulta com IA</h1><p class="sub">Escolha a consulta, inicie a escuta (microfone real do navegador) ou digite, e gere o rascunho SOAP — você revisa e salva no prontuário do paciente.</p></div>
+      </div>
+      <div class="aviso"><b>Guarda-corpo:</b> o rascunho é gerado localmente por heurística — é um organizador de texto, não um parecer clínico. A decisão é sempre sua; revise antes de salvar. Na fase 2, um modelo de IA médica assume esta geração (com a mesma regra: você assina).</div>
+      <div class="grid2">
+        <div class="card">
+          <h3 class="sec">1 · Consulta e escuta</h3>
+          <label for="selConsulta">Consulta agendada</label>
+          <select id="selConsulta"></select>
+          <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+            <button class="btn" id="btnEscuta">🎙️ Iniciar escuta</button>
+            <button class="btn ghost" id="btnExemploTrans">Usar transcrição de exemplo</button>
+          </div>
+          <p id="escutaStatus" style="font-size:12px;color:var(--muted);margin-top:8px"></p>
+          <label for="transcript" style="margin-top:14px">Transcrição (editável)</label>
+          <div class="transcript" id="transcript" contenteditable="true" aria-label="Transcrição da consulta"></div>
+        </div>
+        <div class="card">
+          <h3 class="sec">2 · Prontuário SOAP</h3>
+          <button class="btn amber" id="btnSOAP">✦ Gerar rascunho SOAP</button>
+          <div class="soapbox" id="soapBox" style="margin-top:12px">Aguardando transcrição…</div>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn" id="btnSalvarProntuario">Salvar no prontuário</button>
+            <button class="btn ghost" id="btnMarcarRealizada">Marcar consulta como realizada</button>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px;border-left:3px solid var(--amber-bright)">
+        <h3 class="sec">🤝 Copiloto da consulta — em tempo real</h3>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Enquanto a escuta roda, o copiloto organiza o raciocínio: temas, perguntas de anamnese, sinais de alerta e hipóteses a considerar. <b>Apoio organizacional — o diagnóstico e a conduta são seus</b> (Lei 12.842/2013).</p>
+        <div class="grid3">
+          <div><h3 class="sec" style="margin-bottom:8px">Retrato do paciente</h3><div id="cpRetrato" style="font-size:12.5px;color:var(--muted)">—</div></div>
+          <div><h3 class="sec" style="margin-bottom:8px">Perguntas sugeridas</h3><div id="cpPerguntas" style="font-size:12.5px">—</div></div>
+          <div><h3 class="sec" style="margin-bottom:8px">⚠️ Sinais de alerta</h3><div id="cpAlertas" style="font-size:12.5px">—</div></div>
+        </div>
+        <div style="margin-top:12px"><h3 class="sec" style="margin-bottom:8px">Hipóteses a considerar (você decide)</h3><div id="cpHipoteses" style="font-size:12.5px;color:var(--muted)">Aguardando a conversa…</div></div>
+        <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+          <button class="btn mini amber" id="btnRoteiro">🤝 Gerar roteiro de oferta presencial</button>
+          <button class="btn mini ghost" id="btnImportRetrato">⬆️ Importar retrato de saúde do paciente</button>
+          <input type="file" id="fileRetrato" accept=".json" hidden>
+        </div>
+        <div id="roteiroBox" class="bubble" style="margin-top:12px;display:none;white-space:pre-wrap;font-size:12.5px"></div>
+      </div>
+      <div class="card" style="margin-top:16px"><h3 class="sec">Prontuários do paciente selecionado</h3><div id="historicoProntuarios"></div></div>
+    </section>
+
+    <!-- ============ MARKETING ============ -->
+    <section class="page" id="page-marketing">
+      <div class="page-head">
+        <div><h1>Marketing · Reativação</h1><p class="sub">Pacientes sem consulta há mais de 6 meses (ou sem nenhuma). Gere a mensagem personalizada, copie e envie — o registro fica aqui. Envio automático via WhatsApp oficial: fase 2.</p></div>
+      </div>
+      <div class="card">
+        <label for="msgModelo">Modelo da mensagem (use {nome})</label>
+        <textarea id="msgModelo" rows="3">Oi, {nome}! Aqui é do consultório. Faz um tempinho desde sua última visita — reservamos alguns horários esta semana para retornos. Quer que eu veja um para você?</textarea>
+        <table id="tReativacao" style="margin-top:14px"></table>
+        <div class="empty" id="reatVazio" hidden>Ninguém para reativar agora — sua base está em dia. 🎉</div>
+      </div>
+    </section>
+
+    <!-- ============ PLANOS ============ -->
+    <section class="page" id="page-planos">
+      <div class="page-head">
+        <div><h1>Planos recorrentes</h1><p class="sub">Transforme consulta avulsa em acompanhamento contínuo. A receita entra no painel automaticamente.</p></div>
+      </div>
+      <div class="grid3" style="margin-bottom:16px">
+        <div class="metric"><b id="mPlanosAtivos">0</b><span>planos ativos</span></div>
+        <div class="metric"><b id="mMRR">R$ 0</b><span>receita recorrente mensal</span></div>
+        <div class="metric"><b id="mTicketPlano">R$ 0</b><span>valor médio por plano</span></div>
+      </div>
+      <div class="card"><table id="tPlanos"></table><div class="empty" id="planosVazio" hidden>Nenhum paciente ainda. Os planos são ativados na ficha de cada paciente.</div></div>
+    </section>
+
+    <!-- ============ DOCUMENTOS (módulo vindo do MedEasy) ============ -->
+    <section class="page" id="page-documentos">
+      <div class="page-head">
+        <div><h1>Documentos</h1><p class="sub">Receitas, atestados, encaminhamentos, pedidos de exame e laudos — gerados com seu cabeçalho profissional, prontos para imprimir ou salvar em PDF.</p></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3 class="sec">Emitir documento</h3>
+          <label for="docPaciente">Paciente</label><select id="docPaciente"></select>
+          <label for="docTipo">Tipo</label>
+          <select id="docTipo">
+            <option value="Receita">℞ Receita (comum)</option>
+            <option value="Receita — Controle Especial">℞ Receita — controle especial (2 vias)</option>
+            <option value="Atestado">✎ Atestado</option>
+            <option value="Encaminhamento">➦ Encaminhamento</option>
+            <option value="Pedido de Exames">📋 Pedido de exames</option>
+            <option value="Laudo / Relatório">📄 Laudo / relatório</option>
+          </select>
+          <label for="docCorpo">Conteúdo</label>
+          <textarea id="docCorpo" rows="7" placeholder="Ex.:&#10;1) Medicamento X 500mg — 1 comprimido de 12/12h por 7 dias&#10;2) …"></textarea>
+          <button class="btn" id="btnEmitirDoc" style="margin-top:14px">🖨️ Gerar e imprimir</button>
+          <p style="font-size:11.5px;color:var(--muted);margin-top:8px">O documento abre pronto para impressão (ou "Salvar como PDF"). Validade legal plena exige assinatura — física ou digital ICP-Brasil (fase 2).</p>
+        </div>
+        <div class="card">
+          <h3 class="sec">Documentos emitidos</h3>
+          <div id="docsLista"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <h3 class="sec">🧪 Exames registrados</h3>
+        <div class="grid2">
+          <div>
+            <label for="exPaciente">Paciente</label><select id="exPaciente"></select>
+            <label for="exNome">Exame</label><input id="exNome" placeholder="Ex.: Hemograma completo">
+            <label for="exResultado">Resultado / observação</label><input id="exResultado" placeholder="Ex.: Hb 13,2 · sem alterações">
+            <button class="btn mini" id="btnAddExame" style="margin-top:12px">+ Registrar exame</button>
+          </div>
+          <div id="examesLista"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CRESCER ============ -->
+    <section class="page" id="page-crescer">
+      <div class="page-head">
+        <div><h1>Centro de Crescimento</h1><p class="sub">Você tem o conhecimento. Aqui está o mapa para vendê-lo com dignidade: playbooks de marketing e programas de acompanhamento prontos para você usar e prosperar — sem depender de plantão nem de patrão.</p></div>
+      </div>
+
+      <div class="card" style="margin-bottom:18px">
+        <h3 class="sec">🎓 Academia de vendas &amp; marketing — 6 playbooks</h3>
+        <div id="academiaList"></div>
+      </div>
+
+      <div class="card">
+        <h3 class="sec">🧭 Centro de programas de acompanhamento — direcionamentos por especialidade</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Estruturas de negócio prontas: você adapta a conduta clínica (que é sua), nós entregamos a jornada, a oferta e o preço sugerido. Ative uma e a Lia passa a oferecê-la depois das consultas.</p>
+        <div id="programasList" class="grid2" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr))"></div>
+      </div>
+    </section>
+
+    <!-- ============ CONFIG ============ -->
+    <section class="page" id="page-config">
+      <div class="page-head"><div><h1>Configurações</h1><p class="sub">Seu cadastro profissional e o controle total dos seus dados (LGPD).</p></div></div>
+      <div class="grid2">
+        <div class="card">
+          <h3 class="sec">Cadastro profissional</h3>
+          <label for="cfgNome">Nome</label><input id="cfgNome">
+          <label for="cfgEspecialidade">Especialidade</label><input id="cfgEspecialidade">
+          <label for="cfgRegistro">Registro (CRM/CRN/CRP)</label><input id="cfgRegistro">
+          <div class="row" style="display:flex;gap:10px">
+            <div style="flex:1"><label for="cfgValor">Valor da consulta (R$)</label><input id="cfgValor" type="number" min="0"></div>
+            <div style="flex:1"><label for="cfgPlano">Valor do plano mensal (R$)</label><input id="cfgPlano" type="number" min="0"></div>
+          </div>
+          <button class="btn" id="btnSalvarCfg" style="margin-top:16px">Salvar</button>
+        </div>
+        <div class="card">
+          <h3 class="sec">Perfil público no marketplace</h3>
+          <p style="font-size:13px;color:var(--muted);line-height:1.6">Apareça na busca "<a href="buscar.html">Encontre seu profissional</a>" (estilo Doctoralia): pacientes veem seu perfil, seus horários livres reais e agendam direto na sua Agenda.</p>
+          <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
+            <img id="mkFotoPrev" alt="" style="width:56px;height:56px;border-radius:50%;object-fit:cover;border:1px solid var(--line);display:none">
+            <div style="flex:1"><label for="mkFoto" style="margin-top:0">Sua foto (aparece na busca)</label><input type="file" id="mkFoto" accept="image/*" style="padding:8px"></div>
+          </div>
+          <label for="mkCidade">Cidade</label><input id="mkCidade" placeholder="Ex.: São Paulo">
+          <label for="mkBio">Mini-bio (sem promessas de resultado)</label><textarea id="mkBio" rows="2" placeholder="Ex.: 10 anos de consultório, foco em…"></textarea>
+          <label for="mkAbordagem">Como você trabalha (sua abordagem de cuidado)</label><textarea id="mkAbordagem" rows="2" placeholder="Ex.: consulta sem pressa, plano por escrito, canal aberto entre consultas…"></textarea>
+          <label style="display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px"><input type="checkbox" id="mkOnline" style="width:auto" checked> Atendo consultas online</label>
+          <div style="display:flex;gap:8px;margin-top:14px">
+            <button class="btn" id="btnPublicar">Publicar no marketplace</button>
+            <button class="btn ghost" id="btnDespublicar" hidden>Despublicar</button>
+          </div>
+          <p id="mkStatus" style="font-size:12px;color:var(--muted);margin-top:8px"></p>
+        </div>
+        <div class="card">
+          <h3 class="sec">Seus dados</h3>
+          <p style="font-size:13px;color:var(--muted);line-height:1.6">Tudo fica no armazenamento local <em>deste</em> navegador. Exporte um backup em JSON, importe em outra máquina, ou apague tudo.</p>
+          <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+            <button class="btn ghost" id="btnExportar">⬇️ Exportar dados</button>
+            <button class="btn ghost" id="btnImportar">⬆️ Importar</button>
+            <input type="file" id="fileImport" accept=".json" hidden>
+            <button class="btn danger" id="btnApagar">Apagar tudo</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ============ ONBOARDING / CADASTRO ============ -->
+<div class="modal-bg" id="mOnboard" role="dialog" aria-modal="true" aria-labelledby="obTitle">
+  <div class="modal">
+    <h3 id="obTitle">Bem-vindo(a) ao Console SosMed</h3>
+    <p class="msub">Cadastre-se em 30 segundos — é o que a Lia usa para falar em seu nome.</p>
+    <form id="formOnboard">
+      <label for="obNome">Seu nome (como o paciente conhece)</label>
+      <input id="obNome" required placeholder="Ex.: Dra. Marina Souza">
+      <label for="obEspecialidade">Especialidade</label>
+      <input id="obEspecialidade" required placeholder="Ex.: dermatologia">
+      <label for="obRegistro">Registro profissional</label>
+      <input id="obRegistro" placeholder="Ex.: CRM 123456/SP">
+      <div class="row">
+        <div><label for="obValor">Valor da consulta (R$)</label><input id="obValor" type="number" min="0" value="300" required></div>
+        <div><label for="obPlano">Plano mensal (R$)</label><input id="obPlano" type="number" min="0" value="250" required></div>
+      </div>
+      <div class="actions"><button type="submit" class="btn">Entrar no meu console</button></div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MODAL PACIENTE ============ -->
+<div class="modal-bg" id="mPaciente" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h3 id="mPacTitle">Cadastrar paciente</h3>
+    <form id="formPaciente">
+      <input type="hidden" id="pacId">
+      <label for="pacNome">Nome completo</label><input id="pacNome" required>
+      <div class="row">
+        <div><label for="pacTel">Telefone/WhatsApp</label><input id="pacTel" placeholder="(11) 9…"></div>
+        <div><label for="pacNasc">Nascimento</label><input id="pacNasc" type="date"></div>
+      </div>
+      <label for="pacEmail">E-mail</label><input id="pacEmail" type="email">
+      <label for="pacNotas">Notas (alergias, contexto — nunca publique)</label><textarea id="pacNotas" rows="2"></textarea>
+      <div class="actions">
+        <button type="button" class="btn ghost" data-close>Cancelar</button>
+        <button type="submit" class="btn">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MODAL CONSULTA ============ -->
+<div class="modal-bg" id="mConsulta" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h3>Agendar consulta</h3>
+    <form id="formConsulta">
+      <label for="conPaciente">Paciente</label><select id="conPaciente" required></select>
+      <div class="row">
+        <div><label for="conData">Data</label><input id="conData" type="date" required></div>
+        <div><label for="conHora">Hora</label><input id="conHora" type="time" required value="09:00"></div>
+      </div>
+      <div class="row">
+        <div><label for="conTipo">Tipo</label><select id="conTipo"><option>presencial</option><option>online</option></select></div>
+        <div><label for="conValor">Valor (R$)</label><input id="conValor" type="number" min="0"></div>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn ghost" data-close>Cancelar</button>
+        <button type="submit" class="btn">Agendar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MODAL NOVA CONVERSA ============ -->
+<div class="modal-bg" id="mConversa" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h3>Simular novo lead</h3>
+    <p class="msub">Crie o "paciente" que vai escrever no WhatsApp — depois converse como ele e veja a Lia trabalhar.</p>
+    <form id="formConversa">
+      <label for="convNome">Nome do lead</label><input id="convNome" required placeholder="Ex.: Júlia Ferreira">
+      <label for="convTel">Telefone</label><input id="convTel" placeholder="(11) 9…">
+      <div class="actions">
+        <button type="button" class="btn ghost" data-close>Cancelar</button>
+        <button type="submit" class="btn">Abrir conversa</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MODAL ÍNDICE DE SAÚDE (módulo vindo do MedEasy) ============ -->
+<div class="modal-bg" id="mIndice" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h3>❤ Índice de Saúde — <span id="idxNome"></span></h3>
+    <p class="msub">Avalie com o paciente cada domínio de 0 (crítico) a 10 (excelente). Gera nota 0–100 e conceito A–F na ficha.</p>
+    <div id="idxSliders"></div>
+    <div class="actions">
+      <button type="button" class="btn ghost" data-close>Cancelar</button>
+      <button type="button" class="btn" id="btnSalvarIndice">Calcular e salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ============================================================
+   ESTADO — tudo em localStorage ('farolApp_v1')
+============================================================ */
+var KEY = 'farolApp_v1';
+var state = load();
+
+function load(){
+  try{
+    var raw = localStorage.getItem(KEY);
+    if (raw) return JSON.parse(raw);
+  }catch(_){}
+  return { prof:null, pacientes:[], consultas:[], conversas:[], reativados:[] };
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(_){} }
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function fmtBRL(v){ return 'R$ ' + Math.round(v).toLocaleString('pt-BR'); }
+function fmtDia(d){ return d.toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'2-digit'}); }
+function fmtHora(d){ return d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._tm); t._tm = setTimeout(function(){ t.classList.remove('show'); }, 3200);
+}
+function pacById(id){ return state.pacientes.find(function(p){ return p.id === id; }); }
+
+/* ============================================================
+   NAVEGAÇÃO
+============================================================ */
+var tabs = document.querySelectorAll('aside .tab');
+tabs.forEach(function(t){
+  t.addEventListener('click', function(){ go(t.dataset.page); });
+});
+function go(page){
+  tabs.forEach(function(x){ x.classList.toggle('active', x.dataset.page === page); });
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.toggle('active', p.id === 'page-'+page); });
+  renderAll();
+}
+
+/* ============================================================
+   MODAIS genéricos
+============================================================ */
+function openModal(id){ document.getElementById(id).classList.add('open'); var f = document.getElementById(id).querySelector('input,select'); if (f) setTimeout(function(){ f.focus(); }, 60); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-bg').forEach(function(m){
+  m.addEventListener('click', function(e){ if (e.target === m && m.id !== 'mOnboard') m.classList.remove('open'); });
+  m.querySelectorAll('[data-close]').forEach(function(b){ b.addEventListener('click', function(){ m.classList.remove('open'); }); });
+});
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') document.querySelectorAll('.modal-bg.open').forEach(function(m){ if (m.id !== 'mOnboard') m.classList.remove('open'); });
+});
+
+/* ============================================================
+   ONBOARDING (cadastro do profissional)
+============================================================ */
+if (!state.prof) openModal('mOnboard');
+document.getElementById('formOnboard').addEventListener('submit', function(e){
+  e.preventDefault();
+  state.prof = {
+    nome: document.getElementById('obNome').value.trim(),
+    especialidade: document.getElementById('obEspecialidade').value.trim(),
+    registro: document.getElementById('obRegistro').value.trim(),
+    valorConsulta: +document.getElementById('obValor').value || 300,
+    valorPlano: +document.getElementById('obPlano').value || 250,
+    criadoEm: new Date().toISOString()
+  };
+  save(); closeModal('mOnboard'); renderAll();
+  toast('Cadastro criado! Este é o seu console. 💛');
+});
+
+/* ============================================================
+   PACIENTES
+============================================================ */
+document.getElementById('btnNovoPaciente').addEventListener('click', function(){
+  document.getElementById('mPacTitle').textContent = 'Cadastrar paciente';
+  document.getElementById('formPaciente').reset();
+  document.getElementById('pacId').value = '';
+  openModal('mPaciente');
+});
+document.getElementById('formPaciente').addEventListener('submit', function(e){
+  e.preventDefault();
+  var id = document.getElementById('pacId').value;
+  var dados = {
+    nome: document.getElementById('pacNome').value.trim(),
+    tel: document.getElementById('pacTel').value.trim(),
+    nasc: document.getElementById('pacNasc').value,
+    email: document.getElementById('pacEmail').value.trim(),
+    notas: document.getElementById('pacNotas').value.trim()
+  };
+  if (id){
+    Object.assign(pacById(id), dados);
+    toast('Paciente atualizado.');
+  } else {
+    state.pacientes.push(Object.assign({ id: uid(), criadoEm: new Date().toISOString(), plano: null, prontuarios: [] }, dados));
+    toast('Paciente cadastrado.');
+  }
+  save(); closeModal('mPaciente'); renderAll();
+});
+function editarPaciente(id){
+  var p = pacById(id); if (!p) return;
+  document.getElementById('mPacTitle').textContent = 'Editar paciente';
+  document.getElementById('pacId').value = p.id;
+  document.getElementById('pacNome').value = p.nome;
+  document.getElementById('pacTel').value = p.tel || '';
+  document.getElementById('pacNasc').value = p.nasc || '';
+  document.getElementById('pacEmail').value = p.email || '';
+  document.getElementById('pacNotas').value = p.notas || '';
+  openModal('mPaciente');
+}
+function togglePlano(id){
+  var p = pacById(id); if (!p) return;
+  if (p.plano){ p.plano = null; toast('Plano encerrado.'); }
+  else { p.plano = { nome: 'Acompanhamento mensal', valor: state.prof.valorPlano, inicio: new Date().toISOString() }; toast('Plano ativado para ' + p.nome + '.'); }
+  save(); renderAll();
+}
+document.getElementById('buscaPaciente').addEventListener('input', renderPacientes);
+
+function ultimaConsultaDe(pid){
+  var feitas = state.consultas.filter(function(c){ return c.pacienteId === pid && c.status !== 'cancelada'; })
+    .sort(function(a,b){ return new Date(b.inicio) - new Date(a.inicio); });
+  return feitas[0] ? new Date(feitas[0].inicio) : null;
+}
+
+function renderPacientes(){
+  var busca = (document.getElementById('buscaPaciente').value || '').toLowerCase();
+  var lista = state.pacientes.filter(function(p){
+    return !busca || p.nome.toLowerCase().indexOf(busca) >= 0 || (p.tel||'').indexOf(busca) >= 0;
+  });
+  var t = document.getElementById('tPacientes');
+  document.getElementById('pacVazio').hidden = state.pacientes.length > 0;
+  if (!lista.length){ t.innerHTML = ''; return; }
+  var html = '<tr><th>Nome</th><th>Telefone</th><th>Última consulta</th><th>Índice</th><th>Plano</th><th></th></tr>';
+  lista.forEach(function(p){
+    var ult = ultimaConsultaDe(p.id);
+    var idx = p.indice ? '<span class="pill ' + (p.indice.geral>=70?'realizada':p.indice.geral>=55?'plano':'faltou') + '">' + p.indice.geral + ' · ' + p.indice.conceito + '</span>' : '—';
+    html += '<tr><td><b>' + esc(p.nome) + '</b></td><td>' + esc(p.tel||'—') + '</td><td>' + (ult ? fmtDia(ult) : '—') + '</td>' +
+      '<td>' + idx + '</td>' +
+      '<td>' + (p.plano ? '<span class="pill plano">' + fmtBRL(p.plano.valor) + '/mês</span>' : '—') + '</td>' +
+      '<td style="white-space:nowrap"><button class="btn mini ghost" data-editar="' + p.id + '">Editar</button> ' +
+      '<button class="btn mini ghost" data-indice="' + p.id + '">❤ Índice</button> ' +
+      '<button class="btn mini ghost" data-plano="' + p.id + '">' + (p.plano ? 'Encerrar plano' : 'Ativar plano') + '</button></td></tr>';
+  });
+  t.innerHTML = html;
+}
+document.getElementById('tPacientes').addEventListener('click', function(e){
+  var ed = e.target.closest('[data-editar]'); if (ed) return editarPaciente(ed.dataset.editar);
+  var ix = e.target.closest('[data-indice]'); if (ix) return abrirIndice(ix.dataset.indice);
+  var pl = e.target.closest('[data-plano]'); if (pl) return togglePlano(pl.dataset.plano);
+});
+
+/* ============================================================
+   AGENDA
+============================================================ */
+document.getElementById('btnNovaConsulta').addEventListener('click', function(){
+  if (!state.pacientes.length){ toast('Cadastre um paciente primeiro (ou deixe a Lia criar um).'); return go('pacientes'); }
+  var sel = document.getElementById('conPaciente');
+  sel.innerHTML = state.pacientes.map(function(p){ return '<option value="' + p.id + '">' + esc(p.nome) + '</option>'; }).join('');
+  document.getElementById('conData').value = new Date().toISOString().slice(0,10);
+  document.getElementById('conValor').value = state.prof.valorConsulta;
+  openModal('mConsulta');
+});
+document.getElementById('formConsulta').addEventListener('submit', function(e){
+  e.preventDefault();
+  var inicio = new Date(document.getElementById('conData').value + 'T' + document.getElementById('conHora').value);
+  state.consultas.push({
+    id: uid(), pacienteId: document.getElementById('conPaciente').value,
+    inicio: inicio.toISOString(), tipo: document.getElementById('conTipo').value,
+    valor: +document.getElementById('conValor').value || state.prof.valorConsulta,
+    status: 'agendada', origem: 'manual', prontuario: null
+  });
+  save(); closeModal('mConsulta'); renderAll();
+  toast('Consulta agendada para ' + fmtDia(inicio) + ' às ' + fmtHora(inicio) + '.');
+});
+function setStatus(id, status){
+  var c = state.consultas.find(function(x){ return x.id === id; }); if (!c) return;
+  c.status = status; save(); renderAll();
+}
+function renderAgenda(){
+  var el = document.getElementById('agendaList');
+  var futuras = state.consultas.slice().sort(function(a,b){ return new Date(a.inicio) - new Date(b.inicio); });
+  if (!futuras.length){ el.innerHTML = '<div class="empty">Agenda vazia. Agende manualmente ou converse com a Lia na aba dela.</div>'; return; }
+  var html = '<table><tr><th>Quando</th><th>Paciente</th><th>Tipo</th><th>Valor</th><th>Origem</th><th>Status</th><th></th></tr>';
+  futuras.forEach(function(c){
+    var d = new Date(c.inicio); var p = pacById(c.pacienteId);
+    html += '<tr><td><b>' + fmtDia(d) + '</b> ' + fmtHora(d) + '</td><td>' + esc(p ? p.nome : '?') + '</td><td>' + c.tipo + '</td>' +
+      '<td class="amt">' + fmtBRL(c.valor) + '</td>' +
+      '<td>' + (c.origem === 'lia' ? '<span class="pill lia">Lia</span>' : c.origem === 'marketplace' ? '<span class="pill agendada">marketplace</span>' : 'manual') + '</td>' +
+      '<td><span class="pill ' + c.status + '">' + c.status + '</span>' +
+        (c.status === 'realizada' ? ' <button class="btn mini ghost" data-pg="' + c.id + '" style="padding:3px 10px">' + (c.pagamento === 'pago' ? '💰 pago' : '⏳ a receber') + '</button>' : '') + '</td>' +
+      '<td style="white-space:nowrap">' + (c.status === 'agendada' ?
+        '<button class="btn mini ghost" data-st="realizada" data-id="' + c.id + '">✓ Realizada</button> ' +
+        '<button class="btn mini ghost" data-st="faltou" data-id="' + c.id + '">Faltou</button> ' +
+        '<button class="btn mini ghost" data-st="cancelada" data-id="' + c.id + '">Cancelar</button>' : '') + '</td></tr>';
+  });
+  el.innerHTML = html + '</table>';
+}
+document.getElementById('agendaList').addEventListener('click', function(e){
+  var b = e.target.closest('[data-st]'); if (b) return setStatus(b.dataset.id, b.dataset.st);
+  var pg = e.target.closest('[data-pg]');
+  if (pg){
+    var c = state.consultas.find(function(x){ return x.id === pg.dataset.pg; });
+    if (c){ c.pagamento = c.pagamento === 'pago' ? 'pendente' : 'pago'; save(); renderAll(); }
+  }
+});
+
+/* ---- Lembretes (módulo vindo do MedEasy) ---- */
+function renderLembretes(){
+  state.lembretes = state.lembretes || [];
+  var sel = document.getElementById('lemPaciente');
+  sel.innerHTML = state.pacientes.length
+    ? state.pacientes.map(function(p){ return '<option value="' + p.id + '">' + esc(p.nome) + '</option>'; }).join('')
+    : '<option value="">— cadastre um paciente —</option>';
+  var el = document.getElementById('lembretesLista');
+  el.innerHTML = state.lembretes.length
+    ? '<table>' + state.lembretes.map(function(l){
+        var p = pacById(l.pacienteId);
+        return '<tr' + (l.ativo === false ? ' style="opacity:.45"' : '') + '><td>🔔 <b>' + esc(l.titulo) + '</b><br><span style="font-size:11.5px;color:var(--muted)">' + esc(p ? p.nome : '?') + '</span></td>' +
+          '<td style="text-align:right;white-space:nowrap"><button class="btn mini ghost" data-lem-t="' + l.id + '">' + (l.ativo === false ? 'Ativar' : 'Pausar') + '</button> <button class="btn mini ghost" data-lem-x="' + l.id + '">✕</button></td></tr>';
+      }).join('') + '</table>'
+    : '<div class="empty">Nenhum lembrete. Crie ao lado — a Lia usará esses lembretes para avisar o paciente (fase 2).</div>';
+}
+document.getElementById('btnAddLembrete').addEventListener('click', function(){
+  var pid = document.getElementById('lemPaciente').value;
+  var titulo = document.getElementById('lemTitulo').value.trim();
+  if (!pid) return toast('Cadastre/escolha um paciente.');
+  if (!titulo) return toast('Descreva o lembrete.');
+  state.lembretes = state.lembretes || [];
+  state.lembretes.push({ id: uid(), pacienteId: pid, titulo: titulo, ativo: true, em: new Date().toISOString() });
+  document.getElementById('lemTitulo').value = '';
+  save(); renderLembretes(); toast('Lembrete criado.');
+});
+document.getElementById('lembretesLista').addEventListener('click', function(e){
+  var t = e.target.closest('[data-lem-t]');
+  if (t){ var l = state.lembretes.find(function(x){ return x.id === t.dataset.lemT; }); if (l){ l.ativo = l.ativo === false; save(); renderLembretes(); } return; }
+  var x = e.target.closest('[data-lem-x]');
+  if (x){ state.lembretes = state.lembretes.filter(function(l){ return l.id !== x.dataset.lemX; }); save(); renderLembretes(); }
+});
+
+/* ---- Exames (módulo vindo do MedEasy) ---- */
+function renderExames(){
+  state.exames = state.exames || [];
+  var sel = document.getElementById('exPaciente');
+  sel.innerHTML = state.pacientes.length
+    ? state.pacientes.map(function(p){ return '<option value="' + p.id + '">' + esc(p.nome) + '</option>'; }).join('')
+    : '<option value="">— cadastre um paciente —</option>';
+  var el = document.getElementById('examesLista');
+  el.innerHTML = state.exames.length
+    ? '<table>' + state.exames.slice().reverse().map(function(x){
+        var p = pacById(x.pacienteId);
+        return '<tr><td>🧪 <b>' + esc(x.nome) + '</b> — ' + esc(x.resultado || 'sem resultado') + '<br><span style="font-size:11.5px;color:var(--muted)">' + esc(p ? p.nome : '?') + ' · ' + fmtDia(new Date(x.em)) + '</span></td>' +
+          '<td style="text-align:right"><button class="btn mini ghost" data-ex-x="' + x.id + '">✕</button></td></tr>';
+      }).join('') + '</table>'
+    : '<div class="empty">Nenhum exame registrado.</div>';
+}
+document.getElementById('btnAddExame').addEventListener('click', function(){
+  var pid = document.getElementById('exPaciente').value;
+  var nome = document.getElementById('exNome').value.trim();
+  if (!pid) return toast('Cadastre/escolha um paciente.');
+  if (!nome) return toast('Informe o nome do exame.');
+  state.exames = state.exames || [];
+  state.exames.push({ id: uid(), pacienteId: pid, nome: nome, resultado: document.getElementById('exResultado').value.trim(), em: new Date().toISOString() });
+  document.getElementById('exNome').value = ''; document.getElementById('exResultado').value = '';
+  save(); renderExames(); toast('Exame registrado na ficha.');
+});
+document.getElementById('examesLista').addEventListener('click', function(e){
+  var x = e.target.closest('[data-ex-x]');
+  if (x){ state.exames = state.exames.filter(function(l){ return l.id !== x.dataset.exX; }); save(); renderExames(); }
+});
+
+/* ============================================================
+   LIA — chatbot de vendas funcional (regras locais)
+============================================================ */
+var convSel = null;
+var CLINICO = /\b(dor|dói|doendo|sintoma|febre|sangr|tont|remédio|medicament|receita|desmai|falta de ar|press[aã]o|mancha|coceira|infec|urgen|emerg[êe]n|piorou|vomit|enj[oô]o)\w*/i;
+
+document.getElementById('btnNovaConversa').addEventListener('click', function(){
+  document.getElementById('formConversa').reset();
+  openModal('mConversa');
+});
+document.getElementById('formConversa').addEventListener('submit', function(e){
+  e.preventDefault();
+  var c = { id: uid(), nome: document.getElementById('convNome').value.trim(),
+    tel: document.getElementById('convTel').value.trim(),
+    msgs: [], stage: 'novo', ofertas: null, status: 'aberta', criadaEm: new Date().toISOString() };
+  state.conversas.unshift(c);
+  convSel = c.id;
+  save(); closeModal('mConversa'); renderAll();
+  toast('Conversa aberta — escreva como se fosse ' + c.nome + '.');
+});
+
+function slotsLivres(n){
+  var slots = [], d = new Date();
+  d.setMinutes(0,0,0); d.setHours(d.getHours() + 2);
+  var guard = 0;
+  while (slots.length < n && guard++ < 24*14){
+    var h = d.getHours(), dia = d.getDay();
+    var ocupado = state.consultas.some(function(c){
+      return c.status === 'agendada' && new Date(c.inicio).getTime() === d.getTime();
+    });
+    if (dia !== 0 && h >= 8 && h < 18 && !ocupado) slots.push(new Date(d));
+    d.setHours(d.getHours() + 1);
+  }
+  return slots;
+}
+function descSlot(d){ return fmtDia(d) + ' às ' + fmtHora(d); }
+
+function liaResponde(conv, textoLead){
+  // Guarda-corpo clínico — sempre primeiro
+  if (CLINICO.test(textoLead)){
+    conv.status = 'transferida';
+    return { lia: 'Entendo, ' + conv.nome.split(' ')[0] + ' 💛 Sobre questões de saúde eu não oriento — vou passar você agora para ' + state.prof.nome + ', com o resumo da nossa conversa. Se for algo urgente, procure atendimento presencial ou o serviço de emergência imediatamente.',
+      sys: '🛡️ Guarda-corpo: tema clínico detectado → conversa transferida para você com resumo.' };
+  }
+  var t = textoLead.toLowerCase();
+
+  // Treinamento de vendas: objeções (nunca desconto — clareza de valor)
+  var escolheuSlot = conv.stage === 'oferecendo' && (t.indexOf('1') >= 0 || t.indexOf('2') >= 0);
+  if (!escolheuSlot){
+    if (/\b(caro|car[íi]ssim\w*|salgado|muito alto|n[ãa]o tenho dinheiro|fora do or[çc]amento|barat)/.test(t)){
+      return { lia: 'Entendo perfeitamente — investimento em saúde merece essa reflexão 💛 Só para você decidir com tudo na mesa: a consulta com ' + state.prof.nome + ' é completa (sem tempo de prateleira), você sai com plano claro do próximo passo, e o sinal de agendamento desconta integralmente do valor. E se preferir diluir o cuidado ao longo do tempo, existe o acompanhamento mensal, que sai mais leve por encontro. Quer que eu te mostre os horários mesmo assim, sem compromisso?' };
+    }
+    if (/\b(vou pensar|preciso pensar|te aviso|depois eu (vejo|falo)|mais pra frente|talvez|deixa eu ver)\b/.test(t)){
+      return { lia: 'Claro, sem pressa nenhuma — decisão de saúde se toma com calma 😊 Só uma coisa que posso fazer por você: seguro um horário por 24h, sem compromisso e sem custo. Se não fizer sentido, ele volta para a agenda sozinho. Quer que eu reserve?' };
+    }
+    if (/\b(plano|acompanhamento|pacote|mensal(idade)?)\b/.test(t) && conv.stage !== 'novo'){
+      return { lia: (state.prof.programaAtivo
+        ? 'Ótima pergunta! ' + state.prof.nome + ' oferece o "' + state.prof.programaAtivo + '" — um acompanhamento contínuo por ' + fmtBRL(state.prof.valorPlano) + '/mês, com prioridade de agenda. O primeiro passo é a consulta inicial; nela vocês desenham juntos o formato. Quer ver os horários?'
+        : 'Sim! Além da consulta avulsa, existe acompanhamento mensal por ' + fmtBRL(state.prof.valorPlano) + ' — o formato exato vocês definem na primeira consulta. Quer ver os horários?') };
+    }
+  }
+
+  if (conv.stage === 'novo'){
+    conv.stage = 'qualificando';
+    return { lia: 'Olá! Aqui é a Lia, assistente digital de ' + state.prof.nome + ' (' + state.prof.especialidade + ') 💛 A consulta é ' + fmtBRL(state.prof.valorConsulta) + ', presencial ou online. É sua primeira vez com a gente?' };
+  }
+  if (conv.stage === 'qualificando'){
+    var slots = slotsLivres(2);
+    if (!slots.length) return { lia: 'Nossa agenda está cheia nos próximos dias — posso te avisar assim que abrir um horário?' };
+    conv.ofertas = slots.map(function(s){ return s.toISOString(); });
+    conv.stage = 'oferecendo';
+    return { lia: 'Perfeito! Tenho estes horários livres:\n1️⃣ ' + descSlot(slots[0]) + '\n2️⃣ ' + descSlot(slots[1] || slots[0]) + '\nQual prefere? (responda 1 ou 2)' };
+  }
+  if (conv.stage === 'oferecendo'){
+    var idx = t.indexOf('2') >= 0 ? 1 : (t.indexOf('1') >= 0 ? 0 : -1);
+    if (idx < 0 || !conv.ofertas || !conv.ofertas[idx]){
+      return { lia: 'Só para eu confirmar certinho: responda 1 para a primeira opção ou 2 para a segunda 😊' };
+    }
+    var quando = new Date(conv.ofertas[idx]);
+    // cria (ou encontra) o paciente
+    var pac = state.pacientes.find(function(p){ return p.nome.toLowerCase() === conv.nome.toLowerCase(); });
+    if (!pac){
+      pac = { id: uid(), nome: conv.nome, tel: conv.tel || '', criadoEm: new Date().toISOString(), plano: null, prontuarios: [], notas: 'Origem: Lia (lead do WhatsApp simulado)' };
+      state.pacientes.push(pac);
+    }
+    state.consultas.push({ id: uid(), pacienteId: pac.id, inicio: quando.toISOString(), tipo: 'presencial',
+      valor: state.prof.valorConsulta, status: 'agendada', origem: 'lia', prontuario: null });
+    conv.stage = 'agendado'; conv.status = 'agendada'; conv.pacienteId = pac.id;
+    return { lia: 'Reservado, ' + conv.nome.split(' ')[0] + '! ✨ ' + descSlot(quando) + ' com ' + state.prof.nome + '. Vou te enviar 3 perguntinhas rápidas de pré-consulta para chegarmos preparados.' + (state.prof.programaAtivo ? ' Ah — e na consulta pergunte sobre o "' + state.prof.programaAtivo + '", muita gente prefere esse formato de cuidado contínuo. 😉' : '') + ' Até lá!',
+      sys: '✅ Consulta criada na sua Agenda (' + descSlot(quando) + ') e paciente ' + (conv.tel ? 'com telefone ' + conv.tel + ' ' : '') + 'cadastrado automaticamente.' };
+  }
+  return { lia: 'Estamos confirmados! Qualquer coisa antes da consulta, é só me chamar por aqui 💛' };
+}
+
+function enviarComoLead(){
+  var input = document.getElementById('chatText');
+  var texto = input.value.trim();
+  if (!texto || !convSel) return;
+  var conv = state.conversas.find(function(c){ return c.id === convSel; });
+  if (!conv) return;
+  conv.msgs.push({ de: 'lead', texto: texto, ts: new Date().toISOString() });
+  input.value = '';
+  save(); renderLia();
+  if (conv.status === 'transferida') return;
+  setTimeout(function(){
+    var resp = liaResponde(conv, texto);
+    conv.msgs.push({ de: 'lia', texto: resp.lia, ts: new Date().toISOString() });
+    if (resp.sys) conv.msgs.push({ de: 'sys', texto: resp.sys, ts: new Date().toISOString() });
+    save(); renderAll();
+  }, 650);
+}
+document.getElementById('chatSend').addEventListener('click', enviarComoLead);
+document.getElementById('chatText').addEventListener('keydown', function(e){ if (e.key === 'Enter') enviarComoLead(); });
+
+function renderLia(){
+  var list = document.getElementById('convList');
+  if (!state.conversas.length){
+    list.innerHTML = '<div class="empty">Nenhuma conversa. Clique em “+ Nova conversa”.</div>';
+  } else {
+    list.innerHTML = state.conversas.map(function(c){
+      var st = c.status === 'agendada' ? '✅ agendada' : c.status === 'transferida' ? '🛡️ com você' : '💬 em andamento';
+      return '<div class="convitem' + (c.id === convSel ? ' sel' : '') + '" data-conv="' + c.id + '"><b>' + esc(c.nome) + '</b><span>' + st + ' · ' + c.msgs.length + ' msgs</span></div>';
+    }).join('');
+  }
+  var pane = document.getElementById('chatMsgs');
+  var conv = state.conversas.find(function(c){ return c.id === convSel; });
+  if (!conv){ pane.innerHTML = '<div class="empty" style="border:none">Selecione ou crie uma conversa para ver a Lia trabalhar.</div>'; return; }
+  pane.innerHTML = conv.msgs.map(function(m){
+    var cls = m.de === 'lead' ? 'lead' : m.de === 'lia' ? 'lia' : 'sys';
+    return '<div class="m ' + cls + '">' + esc(m.texto) + (m.de !== 'sys' ? '<span class="mt">' + fmtHora(new Date(m.ts)) + '</span>' : '') + '</div>';
+  }).join('') || '<div class="m sys">Escreva a primeira mensagem como o paciente escreveria (ex.: "oi, quanto custa a consulta?")</div>';
+  pane.scrollTop = pane.scrollHeight;
+  var abertas = state.conversas.filter(function(c){ return c.status === 'aberta'; }).length;
+  var badge = document.getElementById('badgeLia');
+  badge.hidden = !abertas; badge.textContent = abertas;
+}
+document.getElementById('convList').addEventListener('click', function(e){
+  var item = e.target.closest('[data-conv]');
+  if (item){ convSel = item.dataset.conv; renderLia(); }
+});
+
+/* ============================================================
+   CONSULTA — escuta (Web Speech) + SOAP heurístico
+============================================================ */
+var rec = null, gravando = false;
+var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+document.getElementById('btnEscuta').addEventListener('click', function(){
+  var btn = this, status = document.getElementById('escutaStatus');
+  if (gravando){ rec.stop(); return; }
+  if (!SR){ status.textContent = 'Este navegador não suporta escuta por voz (use Chrome/Edge) — digite ou use o exemplo.'; return; }
+  rec = new SR();
+  rec.lang = 'pt-BR'; rec.continuous = true; rec.interimResults = true;
+  var tEl = document.getElementById('transcript');
+  rec.onresult = function(ev){
+    var finais = '', interim = '';
+    for (var i = ev.resultIndex; i < ev.results.length; i++){
+      if (ev.results[i].isFinal) finais += ev.results[i][0].transcript + ' ';
+      else interim += ev.results[i][0].transcript;
+    }
+    if (finais) tEl.textContent = (tEl.textContent + ' ' + finais).trim();
+    tEl.dataset.interim = interim;
+  };
+  rec.onstart = function(){ gravando = true; btn.innerHTML = '⏹️ Parar escuta'; status.innerHTML = '<span class="rec-dot"></span> Ouvindo em pt-BR… fale normalmente.'; };
+  rec.onend = function(){ gravando = false; btn.innerHTML = '🎙️ Iniciar escuta'; status.textContent = 'Escuta pausada. O texto é editável.'; };
+  rec.onerror = function(e){ gravando = false; btn.innerHTML = '🎙️ Iniciar escuta'; status.textContent = 'Não consegui usar o microfone (' + e.error + '). Verifique a permissão ou digite manualmente.'; };
+  rec.start();
+});
+
+document.getElementById('btnExemploTrans').addEventListener('click', function(){
+  document.getElementById('transcript').textContent =
+    'Paciente: Sinto palpitações quando corro mais de dez quilômetros. Meu pai infartou aos cinquenta e dois. ' +
+    'Profissional: Alguma dor no peito? Como está o sono? ' +
+    'Paciente: Sem dor. O relógio mostra cinco horas e meia de sono e a frequência de repouso subiu de cinquenta e dois para sessenta e um. ' +
+    'Profissional: Vamos pedir um eletro e um teste ergométrico, reduzir o treino por duas semanas e cuidar da higiene do sono. Retorno em três semanas.';
+  toast('Transcrição de exemplo carregada.');
+});
+
+function gerarSOAP(texto){
+  if (!texto.trim()) return null;
+  var frases = texto.replace(/\s+/g,' ').split(/(?<=[.!?])\s+/).filter(Boolean);
+  var S = [], O = [], A = [], P = [];
+  frases.forEach(function(f){
+    var fl = f.toLowerCase();
+    if (/\b(vamos|pedir|solicito|recomendo|retorno|reduzir|iniciar|prescrev|orient|encaminh|agendar|cuidar)\b/.test(fl)) P.push(f);
+    else if (/\b(provável|suspeita|hipótese|compatível|sugere|avaliar|investigar)\b/.test(fl)) A.push(f);
+    else if (/\d/.test(fl) && /\b(press[ãa]o|frequ[êe]ncia|sono|peso|altura|exame|batimento|hor[aá]|repouso|subiu|caiu)\b/.test(fl)) O.push(f);
+    else if (/\b(sinto|dor|queixa|relata|refere|palpita|cansa|desde|piora|melhora)\b/.test(fl)) S.push(f);
+    else S.push(f);
+  });
+  function bloco(arr, vazio){ return arr.length ? arr.join(' ') : vazio; }
+  return 'S — ' + bloco(S, 'Sem queixas registradas na transcrição.') +
+       '\nO — ' + bloco(O, 'Sem dados objetivos registrados.') +
+       '\nA — ' + bloco(A, 'Avaliação a preencher pelo profissional.') +
+       '\nP — ' + bloco(P, 'Plano a preencher pelo profissional.') +
+       '\n\n[Rascunho heurístico local — revisado e assinado por ' + state.prof.nome + (state.prof.registro ? ', ' + state.prof.registro : '') + ']';
+}
+document.getElementById('btnSOAP').addEventListener('click', function(){
+  var texto = document.getElementById('transcript').textContent;
+  var soap = gerarSOAP(texto);
+  document.getElementById('soapBox').textContent = soap || 'A transcrição está vazia — grave, cole ou use o exemplo.';
+});
+document.getElementById('btnSalvarProntuario').addEventListener('click', function(){
+  var cid = document.getElementById('selConsulta').value;
+  var c = state.consultas.find(function(x){ return x.id === cid; });
+  var soap = document.getElementById('soapBox').textContent;
+  if (!c) return toast('Escolha uma consulta agendada primeiro.');
+  if (!soap || soap.indexOf('S — ') !== 0) return toast('Gere o rascunho SOAP antes de salvar.');
+  var p = pacById(c.pacienteId);
+  p.prontuarios = p.prontuarios || [];
+  p.prontuarios.push({ id: uid(), consultaId: c.id, soap: soap, transcricao: document.getElementById('transcript').textContent, em: new Date().toISOString() });
+  c.prontuario = soap;
+  save(); renderAll();
+  toast('Prontuário salvo na ficha de ' + p.nome + '.');
+});
+document.getElementById('btnMarcarRealizada').addEventListener('click', function(){
+  var cid = document.getElementById('selConsulta').value;
+  if (!cid) return toast('Escolha uma consulta.');
+  setStatus(cid, 'realizada');
+  toast('Consulta marcada como realizada — receita atualizada no painel.');
+});
+document.getElementById('selConsulta').addEventListener('change', renderProntuarios);
+
+function renderConsultaTab(){
+  var sel = document.getElementById('selConsulta');
+  var ags = state.consultas.filter(function(c){ return c.status === 'agendada'; })
+    .sort(function(a,b){ return new Date(a.inicio) - new Date(b.inicio); });
+  sel.innerHTML = ags.length
+    ? ags.map(function(c){ var p = pacById(c.pacienteId); return '<option value="' + c.id + '">' + esc(p ? p.nome : '?') + ' — ' + descSlot(new Date(c.inicio)) + '</option>'; }).join('')
+    : '<option value="">— nenhuma consulta agendada —</option>';
+  renderProntuarios();
+  if (typeof renderRetrato === 'function') renderRetrato();
+}
+function renderProntuarios(){
+  var el = document.getElementById('historicoProntuarios');
+  var cid = document.getElementById('selConsulta').value;
+  var c = state.consultas.find(function(x){ return x.id === cid; });
+  var p = c ? pacById(c.pacienteId) : null;
+  if (!p || !p.prontuarios || !p.prontuarios.length){
+    el.innerHTML = '<div class="empty">Nenhum prontuário salvo para este paciente ainda.</div>'; return;
+  }
+  el.innerHTML = p.prontuarios.slice().reverse().map(function(pr){
+    return '<div class="card" style="margin-bottom:10px"><h3 class="sec">' + fmtDia(new Date(pr.em)) + ' · ' + fmtHora(new Date(pr.em)) + '</h3><div style="white-space:pre-wrap;font-size:13px">' + esc(pr.soap) + '</div></div>';
+  }).join('');
+}
+
+/* ============================================================
+   COPILOTO DE CONSULTA — tempo real (regras locais; IA real: fase 2)
+============================================================ */
+var COPILOTO = [
+  { re:/palpita|cora[çc][ãa]o (acelerado|disparado)|taquicard/i, tema:'Palpitações',
+    perguntas:['Quando começam e quanto duram? Relação com esforço, café, álcool ou ansiedade?','Já teve desmaio ou quase-desmaio junto?','Histórico familiar de morte súbita ou infarto precoce?'],
+    alerta:null, hipoteses:['Arritmia a investigar (ECG/Holter)','Relacionada a ansiedade','Overtraining / estimulantes'] },
+  { re:/dor no peito|aperto no peito|dor tor[áa]cica/i, tema:'Dor torácica',
+    perguntas:['OPQRST: início, o que piora/alivia, qualidade, irradiação, intensidade, duração?','Sudorese, náusea ou falta de ar junto?'],
+    alerta:'Dor torácica em curso + sudorese/dispneia/irradiação = considerar avaliação de urgência AGORA.',
+    hipoteses:['Causa cardiovascular a excluir primeiro','Musculoesquelética','Refluxo'] },
+  { re:/ins[ôo]nia|n[ãa]o durmo|acordo cansad|sono ruim|m[áa] noite/i, tema:'Sono',
+    perguntas:['Horários de dormir/acordar são regulares? Telas na cama?','Ronco alto ou pausas na respiração relatadas por alguém? (apneia)','Cafeína depois das 15h? Álcool para dormir?'],
+    alerta:null, hipoteses:['Higiene do sono inadequada','Apneia do sono (investigar se ronco + sonolência diurna)','Insônia associada a ansiedade/depressão'] },
+  { re:/cansa[çc]o|fadiga|sem energia|esgotad/i, tema:'Fadiga',
+    perguntas:['Piora com esforço ou está presente ao acordar?','Como estão sono, humor e apetite?','Última dosagem de hemograma, TSH e glicemia?'],
+    alerta:null, hipoteses:['Privação de sono','Anemia / hipotireoidismo a dosar','Depressão com apresentação somática'] },
+  { re:/ansios|ansiedade|nervos|p[âa]nico|preocupa[çc][ãa]o constante/i, tema:'Ansiedade',
+    perguntas:['GAD-2: nas últimas 2 semanas, nervosismo frequente? Dificuldade de parar de se preocupar?','Impacta trabalho, sono ou relações?','Uso de estimulantes (café, energético, termogênico)?'],
+    alerta:null, hipoteses:['Transtorno de ansiedade a avaliar (encaminhar/tratar conforme sua área)','Ansiedade situacional'] },
+  { re:/triste|deprimid|desanimad|sem vontade|chorand/i, tema:'Humor',
+    perguntas:['PHQ-2: interesse/prazer diminuídos? Humor deprimido na maior parte dos dias?','Sono e apetite mudaram?','Pensamentos de se machucar? (pergunte com naturalidade — perguntar protege)'],
+    alerta:'Se houver ideação de autoagressão: acionar protocolo de risco e rede de apoio HOJE (CVV 188).',
+    hipoteses:['Episódio depressivo a avaliar','Luto/situacional','Burnout'] },
+  { re:/dor de cabe[çc]a|cefaleia|enxaqueca/i, tema:'Cefaleia',
+    perguntas:['É "a pior da vida"? Início súbito (thunderclap)?','Padrão mudou recentemente? Acorda o paciente à noite?','Aura, náusea, foto/fonofobia?'],
+    alerta:'Pior cefaleia da vida, início súbito, déficit neurológico ou febre+rigidez = urgência.',
+    hipoteses:['Migrânea','Cefaleia tensional','Secundária (excluir red flags)'] },
+  { re:/perd(i|a) (de )?peso|emagreci sem|ganho de peso r[áa]pido/i, tema:'Variação de peso',
+    perguntas:['Quantos kg em quanto tempo? Intencional?','Apetite, hábito intestinal e sono mudaram?','Glicemia e TSH recentes?'],
+    alerta:'Perda de peso involuntária significativa (>5% em 6 meses) pede investigação estruturada.',
+    hipoteses:['Endócrina (tireoide/diabetes)','Nutricional/comportamental','Investigar causas orgânicas se involuntária'] },
+  { re:/azia|refluxo|queima[çc][ãa]o no est[ôo]mago|m[áa] digest/i, tema:'Digestivo',
+    perguntas:['Relação com refeições, café, álcool, deitar após comer?','Sinais de alarme: disfagia, vômito com sangue, fezes escuras, perda de peso?'],
+    alerta:'Sinais de alarme digestivos presentes = endoscopia/avaliação, não tratamento empírico.',
+    hipoteses:['DRGE / hábitos alimentares','Gastrite','Excluir alarme antes de tratar'] },
+  { re:/press[ãa]o alta|hipertens/i, tema:'Pressão arterial',
+    perguntas:['Medidas em casa (MRPA)? Valores e horários?','Sal, álcool, sono e atividade física como estão?','Medicação em uso e adesão real?'],
+    alerta:null, hipoteses:['HAS não controlada — revisar adesão e estilo de vida','Hipertensão do avental branco (confirmar com MRPA/MAPA)'] }
+];
+
+var ultimoTranscrito = '';
+function analisarTranscricao(){
+  var texto = document.getElementById('transcript').textContent || '';
+  if (texto === ultimoTranscrito) return;
+  ultimoTranscrito = texto;
+  if (!texto.trim()){
+    document.getElementById('cpPerguntas').textContent = '—';
+    document.getElementById('cpAlertas').textContent = '—';
+    document.getElementById('cpHipoteses').textContent = 'Aguardando a conversa…';
+    return;
+  }
+  var hits = COPILOTO.filter(function(r){ return r.re.test(texto); });
+  var perguntas = [], alertas = [], hipoteses = [];
+  hits.forEach(function(h){
+    perguntas.push('<b style="color:var(--teal-deep)">' + h.tema + ':</b><ul style="padding-left:16px;margin:2px 0 8px">' + h.perguntas.map(function(p){ return '<li style="margin:3px 0">' + p + '</li>'; }).join('') + '</ul>');
+    if (h.alerta) alertas.push(h.alerta);
+    hipoteses = hipoteses.concat(h.hipoteses.map(function(x){ return h.tema + ' → ' + x; }));
+  });
+  document.getElementById('cpPerguntas').innerHTML = hits.length ? perguntas.join('') : 'Nenhum tema mapeado ainda — siga sua anamnese.';
+  document.getElementById('cpAlertas').innerHTML = alertas.length
+    ? alertas.map(function(a){ return '<div class="bubble" style="background:var(--danger-tint);border-color:rgba(179,64,42,.4);color:var(--danger);margin-bottom:6px">⚠️ ' + a + '</div>'; }).join('')
+    : '<span style="color:var(--ok)">Nenhum sinal de alerta mapeado.</span>';
+  document.getElementById('cpHipoteses').innerHTML = hipoteses.length
+    ? '<ul style="padding-left:16px">' + hipoteses.map(function(x){ return '<li style="margin:3px 0">' + x + '</li>'; }).join('') + '</ul><span style="font-size:11px;color:var(--muted)">Lista de lembrete gerada por regras — não é diagnóstico. A avaliação é sua.</span>'
+    : 'Aguardando temas da conversa…';
+}
+document.getElementById('transcript').addEventListener('input', analisarTranscricao);
+setInterval(analisarTranscricao, 2500);
+
+/* Retrato do paciente (conexão com saude.html + importação) */
+function pacienteDaConsulta(){
+  var cid = document.getElementById('selConsulta').value;
+  var c = state.consultas.find(function(x){ return x.id === cid; });
+  return c ? pacById(c.pacienteId) : null;
+}
+function renderRetrato(){
+  var el = document.getElementById('cpRetrato');
+  var p = pacienteDaConsulta();
+  var retrato = (p && (p.retrato || p.indice)) || null;
+  if (retrato && p && p.indice && !p.retrato) retrato._origem = 'Índice aplicado por você';
+  if (!retrato){
+    try{ retrato = JSON.parse(localStorage.getItem('farolSaude_v1')); }catch(_){}
+    if (retrato) retrato._origem = 'avaliação feita neste navegador';
+  }
+  if (!retrato){ el.innerHTML = 'Sem retrato de saúde. Peça ao paciente para fazer a <a href="saude.html" target="_blank">Avaliação SosMed</a> ou importe o arquivo dele.'; return; }
+  var piores = retrato.dominios.slice().sort(function(a,b){ return a.pct - b.pct; }).slice(0,3);
+  el.innerHTML = '<b style="color:var(--teal-deep);font-size:16px">' + retrato.geral + '/100 · ' + retrato.conceito + '</b> <span style="font-size:11px">(' + (retrato._origem || 'importado na ficha') + ')</span><br>' +
+    'Prioridades do paciente: ' + piores.map(function(d){ return '<span class="pill ' + (d.c<='B'?'realizada':'faltou') + '" style="margin:2px 2px 0 0">' + d.nome + ' ' + d.c + '</span>'; }).join('');
+}
+document.getElementById('selConsulta').addEventListener('change', renderRetrato);
+document.getElementById('btnImportRetrato').addEventListener('click', function(){
+  if (!pacienteDaConsulta()) return toast('Escolha uma consulta primeiro.');
+  document.getElementById('fileRetrato').click();
+});
+document.getElementById('fileRetrato').addEventListener('change', function(e){
+  var file = e.target.files[0]; if (!file) return;
+  var r = new FileReader();
+  r.onload = function(){
+    try{
+      var d = JSON.parse(r.result);
+      if (!d.dominios || d.geral == null) throw new Error('formato');
+      var p = pacienteDaConsulta();
+      p.retrato = d; save(); renderRetrato();
+      toast('Retrato importado para a ficha de ' + p.nome + '.');
+    }catch(_){ toast('Arquivo inválido — use o JSON baixado na Avaliação de Saúde SosMed.'); }
+  };
+  r.readAsText(file);
+});
+
+/* Roteiro de venda presencial (consultório) */
+document.getElementById('btnRoteiro').addEventListener('click', function(){
+  var p = pacienteDaConsulta();
+  var nome = p ? p.nome.split(' ')[0] : 'o paciente';
+  var prog = state.prof.programaAtivo || 'seu plano de acompanhamento';
+  var valor = fmtBRL(state.prof.valorPlano);
+  var retrato = (p && p.retrato) || (function(){ try{ return JSON.parse(localStorage.getItem('farolSaude_v1')); }catch(_){ return null; } })();
+  var gancho = retrato
+    ? 'No retrato de saúde que você preencheu, ' + retrato.dominios.slice().sort(function(a,b){ return a.pct-b.pct; })[0].nome.toLowerCase() + ' apareceu como sua maior prioridade — e é exatamente o tipo de coisa que a gente só resolve com constância, não com consulta avulsa.'
+    : 'Pelo que conversamos hoje, o que você precisa se constrói com constância — não numa consulta avulsa.';
+  document.getElementById('roteiroBox').style.display = 'block';
+  document.getElementById('roteiroBox').textContent =
+'ROTEIRO DE OFERTA PRESENCIAL — use com suas palavras, no fim da consulta\n\n' +
+'1 · FECHE O CUIDADO PRIMEIRO (nunca venda antes de concluir a conduta):\n"' + nome + ', recapitulando: [resumo do plano de hoje em 1 frase]."\n\n' +
+'2 · TRANSIÇÃO PELO INTERESSE DO PACIENTE (não pelo seu):\n"' + gancho + '"\n\n' +
+'3 · OFERTA EM DOIS CAMINHOS (dar escolha, não pressão):\n"Existem dois jeitos de seguirmos: você volta quando sentir necessidade — funciona, mas depende da sua agenda lembrar de você. Ou entramos no ' + prog + ': [jornada em 1 frase], com prioridade na minha agenda e canal direto comigo entre encontros."\n\n' +
+'4 · PREÇO COM ÂNCORA HONESTA (valor mensal vs. avulsas somadas):\n"Fica em ' + valor + '/mês — menos do que as consultas avulsas somadas, e com acompanhamento de verdade no meio."\n\n' +
+'5 · OBJEÇÕES (responda com clareza, jamais com desconto):\n· "Vou pensar" → "Claro. Deixo uma vaga reservada até amanhã à noite, sem compromisso — a Lia te manda os detalhes por WhatsApp."\n· "Está caro" → "Entendo. Compare com o custo de continuar como está: [consequência prática discutida na consulta]. E o formato mensal existe justamente para diluir."\n· "Preciso falar com alguém" → "Faz todo sentido. Quer que a Lia envie um resumo do programa para você mostrar em casa?"\n\n' +
+'6 · FECHO SEM PRESSÃO:\n"Qualquer um dos caminhos, eu sigo seu médico/profissional. Qual faz mais sentido para você?"\n\n' +
+'[Compliance: a oferta descreve formato e preço — nunca prometa resultado clínico.]';
+});
+
+/* ============================================================
+   MARKETING — reativação
+============================================================ */
+function renderMarketing(){
+  var seisMeses = Date.now() - 1000*60*60*24*182;
+  var alvo = state.pacientes.filter(function(p){
+    var ult = ultimaConsultaDe(p.id);
+    return !ult || ult.getTime() < seisMeses;
+  });
+  var t = document.getElementById('tReativacao');
+  document.getElementById('reatVazio').hidden = !(state.pacientes.length && !alvo.length);
+  if (!alvo.length){ t.innerHTML = state.pacientes.length ? '' : '<tr><td class="empty" style="border:none">Cadastre pacientes para ver a reativação funcionar.</td></tr>'; return; }
+  var modelo = document.getElementById('msgModelo').value;
+  var html = '<tr><th>Paciente</th><th>Última consulta</th><th>Mensagem</th><th></th></tr>';
+  alvo.forEach(function(p){
+    var ult = ultimaConsultaDe(p.id);
+    var msg = modelo.replace(/\{nome\}/g, p.nome.split(' ')[0]);
+    var enviado = state.reativados.indexOf(p.id) >= 0;
+    html += '<tr><td><b>' + esc(p.nome) + '</b></td><td>' + (ult ? fmtDia(ult) : 'nunca') + '</td>' +
+      '<td style="font-size:12.5px;color:var(--muted);max-width:340px">' + esc(msg) + '</td>' +
+      '<td style="white-space:nowrap">' + (enviado ? '<span class="pill realizada">enviado ✓</span>' :
+        '<button class="btn mini ghost" data-copiar="' + p.id + '">Copiar</button> <button class="btn mini" data-enviado="' + p.id + '">Marcar enviado</button>') + '</td></tr>';
+  });
+  t.innerHTML = html;
+}
+document.getElementById('msgModelo').addEventListener('input', renderMarketing);
+document.getElementById('tReativacao').addEventListener('click', function(e){
+  var cp = e.target.closest('[data-copiar]');
+  if (cp){
+    var p = pacById(cp.dataset.copiar);
+    var msg = document.getElementById('msgModelo').value.replace(/\{nome\}/g, p.nome.split(' ')[0]);
+    (navigator.clipboard ? navigator.clipboard.writeText(msg) : Promise.reject()).then(
+      function(){ toast('Mensagem copiada — cole no WhatsApp de ' + p.nome + '.'); },
+      function(){ toast('Não consegui copiar automaticamente — selecione o texto.'); });
+    return;
+  }
+  var ev = e.target.closest('[data-enviado]');
+  if (ev){ state.reativados.push(ev.dataset.enviado); save(); renderMarketing(); toast('Registrado como enviado.'); }
+});
+
+/* ============================================================
+   PLANOS
+============================================================ */
+function renderPlanos(){
+  var comPlano = state.pacientes.filter(function(p){ return p.plano; });
+  var mrr = comPlano.reduce(function(s,p){ return s + p.plano.valor; }, 0);
+  document.getElementById('mPlanosAtivos').textContent = comPlano.length;
+  document.getElementById('mMRR').textContent = fmtBRL(mrr);
+  document.getElementById('mTicketPlano').textContent = comPlano.length ? fmtBRL(mrr/comPlano.length) : 'R$ 0';
+  var t = document.getElementById('tPlanos');
+  document.getElementById('planosVazio').hidden = state.pacientes.length > 0;
+  if (!state.pacientes.length){ t.innerHTML = ''; return; }
+  var html = '<tr><th>Paciente</th><th>Plano</th><th>Valor/mês</th><th>Desde</th><th></th></tr>';
+  state.pacientes.forEach(function(p){
+    html += '<tr><td><b>' + esc(p.nome) + '</b></td>' +
+      (p.plano
+        ? '<td>' + esc(p.plano.nome) + '</td><td class="amt">' + fmtBRL(p.plano.valor) + '</td><td>' + fmtDia(new Date(p.plano.inicio)) + '</td><td><button class="btn mini ghost" data-plano="' + p.id + '">Encerrar</button></td>'
+        : '<td colspan="3" style="color:var(--muted)">sem plano</td><td><button class="btn mini" data-plano="' + p.id + '">Ativar plano</button></td>') + '</tr>';
+  });
+  t.innerHTML = html;
+}
+document.getElementById('tPlanos').addEventListener('click', function(e){
+  var b = e.target.closest('[data-plano]'); if (b) togglePlano(b.dataset.plano);
+});
+
+/* ============================================================
+   PAINEL
+============================================================ */
+function renderPainel(){
+  if (state.prof) document.getElementById('saudacao').textContent = 'Olá, ' + state.prof.nome.split(' ')[0] + ' 👋';
+  var agora = new Date(), mes = agora.getMonth(), ano = agora.getFullYear();
+  var doMes = state.consultas.filter(function(c){ var d = new Date(c.inicio); return d.getMonth() === mes && d.getFullYear() === ano; });
+  var realizadas = doMes.filter(function(c){ return c.status === 'realizada'; });
+  var receitaConsultas = realizadas.reduce(function(s,c){ return s + c.valor; }, 0);
+  var comPlano = state.pacientes.filter(function(p){ return p.plano; });
+  var receitaPlanos = comPlano.reduce(function(s,p){ return s + p.plano.valor; }, 0);
+  document.getElementById('mRGP').textContent = fmtBRL(receitaConsultas + receitaPlanos);
+  document.getElementById('mRGPdet').textContent = realizadas.length + ' consultas realizadas + ' + comPlano.length + ' planos ativos';
+  document.getElementById('mConsultas').textContent = doMes.length;
+  document.getElementById('mLia').textContent = doMes.filter(function(c){ return c.origem === 'lia'; }).length;
+  var aReceber = state.consultas.filter(function(c){ return c.status === 'realizada' && c.pagamento !== 'pago'; })
+    .reduce(function(s,c){ return s + c.valor; }, 0);
+  document.getElementById('mReceber').textContent = fmtBRL(aReceber);
+  var passadas = doMes.filter(function(c){ return c.status === 'realizada' || c.status === 'faltou'; });
+  document.getElementById('mComparecimento').textContent = passadas.length
+    ? Math.round(100 * passadas.filter(function(c){ return c.status === 'realizada'; }).length / passadas.length) + '%' : '—';
+
+  var prox = state.consultas.filter(function(c){ return c.status === 'agendada' && new Date(c.inicio) >= new Date(Date.now() - 3600e3); })
+    .sort(function(a,b){ return new Date(a.inicio) - new Date(b.inicio); }).slice(0,5);
+  document.getElementById('proximas').innerHTML = prox.length
+    ? '<table>' + prox.map(function(c){ var p = pacById(c.pacienteId); var d = new Date(c.inicio);
+        return '<tr><td><b>' + fmtDia(d) + '</b> ' + fmtHora(d) + '</td><td>' + esc(p ? p.nome : '?') + '</td><td>' + (c.origem === 'lia' ? '<span class="pill lia">Lia</span>' : '') + '</td></tr>'; }).join('') + '</table>'
+    : '<div class="empty">Nada agendado. Converse com a Lia ou use a Agenda.</div>';
+
+  document.getElementById('tFontes').innerHTML =
+    '<tr><td>Consultas realizadas (' + realizadas.length + ')</td><td class="amt">' + fmtBRL(receitaConsultas) + '</td></tr>' +
+    '<tr><td>Planos recorrentes (' + comPlano.length + ')</td><td class="amt">' + fmtBRL(receitaPlanos) + '</td></tr>';
+}
+
+/* ============================================================
+   DOCUMENTOS — módulo vindo do MedEasy (receita, atestado, etc.)
+============================================================ */
+function renderDocumentos(){
+  state.documentos = state.documentos || [];
+  var sel = document.getElementById('docPaciente');
+  sel.innerHTML = state.pacientes.length
+    ? state.pacientes.map(function(p){ return '<option value="' + p.id + '">' + esc0(p.nome) + '</option>'; }).join('')
+    : '<option value="">— cadastre um paciente —</option>';
+  var lista = document.getElementById('docsLista');
+  lista.innerHTML = state.documentos.length
+    ? '<table>' + state.documentos.slice().reverse().map(function(d){
+        var p = pacById(d.pacienteId);
+        return '<tr><td><b>' + d.tipo + '</b><br><span style="font-size:11.5px;color:var(--muted)">' + esc0(p ? p.nome : '?') + ' · ' + fmtDia(new Date(d.em)) + '</span></td>' +
+          '<td style="text-align:right"><button class="btn mini ghost" data-reimprimir="' + d.id + '">🖨️ Reimprimir</button></td></tr>';
+      }).join('') + '</table>'
+    : '<div class="empty">Nenhum documento emitido ainda.</div>';
+}
+function esc0(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function imprimirDoc(d){
+  var p = pacById(d.pacienteId) || { nome: '—' };
+  var controle = /Controle Especial/.test(d.tipo);
+  var bloco = function(via){
+    return '<div class="folha">' +
+      '<header><h2>' + esc0(state.prof.nome) + '</h2><p>' + esc0(state.prof.especialidade) + (state.prof.registro ? ' · ' + esc0(state.prof.registro) : '') + '</p></header>' +
+      '<h1>' + esc0(d.tipo) + (via ? ' — ' + via : '') + '</h1>' +
+      '<p class="pac"><b>Paciente:</b> ' + esc0(p.nome) + '</p>' +
+      '<div class="corpo">' + esc0(d.corpo).replace(/\n/g,'<br>') + '</div>' +
+      '<div class="assin"><p>' + new Date(d.em).toLocaleDateString('pt-BR') + '</p><div class="linha"></div><p>' + esc0(state.prof.nome) + (state.prof.registro ? '<br>' + esc0(state.prof.registro) : '') + '</p></div>' +
+      '</div>';
+  };
+  var w = window.open('', '_blank');
+  w.document.write('<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>' + esc0(d.tipo) + '</title><style>' +
+    'body{font-family:Georgia,serif;color:#1a1a1a;margin:0}.folha{max-width:720px;margin:0 auto;padding:48px 56px;page-break-after:always}' +
+    'header{border-bottom:2px solid #0C6B5C;padding-bottom:10px;margin-bottom:26px}header h2{margin:0;font-size:20px;color:#083F36}header p{margin:2px 0 0;font-size:12px;color:#555}' +
+    'h1{font-size:17px;letter-spacing:.06em;text-transform:uppercase;color:#083F36}.pac{font-size:14px}.corpo{margin:22px 0 60px;font-size:14.5px;line-height:1.8;white-space:pre-wrap}' +
+    '.assin{text-align:center;margin-top:70px;font-size:13px}.linha{border-top:1px solid #333;width:280px;margin:34px auto 6px}' +
+    '</style></head><body>' + bloco(controle ? '1ª via' : '') + (controle ? bloco('2ª via') : '') +
+    '<script>window.onload=function(){window.print()}<\/script></body></html>');
+  w.document.close();
+}
+document.getElementById('btnEmitirDoc').addEventListener('click', function(){
+  var pid = document.getElementById('docPaciente').value;
+  var corpo = document.getElementById('docCorpo').value.trim();
+  if (!pid) return toast('Cadastre/escolha um paciente primeiro.');
+  if (!corpo) return toast('Escreva o conteúdo do documento.');
+  var d = { id: uid(), pacienteId: pid, tipo: document.getElementById('docTipo').value, corpo: corpo, em: new Date().toISOString() };
+  state.documentos = state.documentos || [];
+  state.documentos.push(d);
+  save(); renderDocumentos(); imprimirDoc(d);
+  toast('Documento emitido e registrado.');
+});
+document.getElementById('docsLista').addEventListener('click', function(e){
+  var b = e.target.closest('[data-reimprimir]');
+  if (!b) return;
+  var d = (state.documentos||[]).find(function(x){ return x.id === b.dataset.reimprimir; });
+  if (d) imprimirDoc(d);
+});
+
+/* ============================================================
+   ÍNDICE DE SAÚDE por paciente — módulo vindo do MedEasy
+============================================================ */
+var IDX_DOMINIOS = ['🧠 Saúde mental','💛 Emocional','🌡️ Estresse','😴 Sono','🏃 Atividade física','🥗 Alimentação','⚖️ Metabólica','💊 Medicações & acompanhamento','🚭 Hábitos de risco'];
+var idxPacAtual = null;
+function abrirIndice(pid){
+  var p = pacById(pid); if (!p) return;
+  idxPacAtual = pid;
+  document.getElementById('idxNome').textContent = p.nome;
+  var vals = (p.indice && p.indice.valores) || IDX_DOMINIOS.map(function(){ return 5; });
+  document.getElementById('idxSliders').innerHTML = IDX_DOMINIOS.map(function(d, i){
+    return '<label style="margin-top:12px">' + d + ' — <b id="idxV' + i + '">' + vals[i] + '</b>/10</label>' +
+      '<input type="range" min="0" max="10" value="' + vals[i] + '" data-idx="' + i + '" style="width:100%;accent-color:var(--teal)">';
+  }).join('');
+  openModal('mIndice');
+}
+document.getElementById('idxSliders').addEventListener('input', function(e){
+  var r = e.target.closest('[data-idx]');
+  if (r) document.getElementById('idxV' + r.dataset.idx).textContent = r.value;
+});
+document.getElementById('btnSalvarIndice').addEventListener('click', function(){
+  var p = pacById(idxPacAtual); if (!p) return;
+  var valores = [].map.call(document.querySelectorAll('#idxSliders [data-idx]'), function(r){ return +r.value; });
+  var geral = Math.round(valores.reduce(function(s,v){ return s + v; }, 0) / valores.length * 10);
+  var c = geral>=85?'A':geral>=70?'B':geral>=55?'C':geral>=40?'D':geral>=25?'E':'F';
+  p.indice = { geral: geral, conceito: c, valores: valores,
+    dominios: IDX_DOMINIOS.map(function(d,i){ var pct = valores[i]*10; return { nome: d.replace(/^\S+ /,''), pct: pct, c: pct>=85?'A':pct>=70?'B':pct>=55?'C':pct>=40?'D':pct>=25?'E':'F' }; }),
+    em: new Date().toISOString() };
+  save(); closeModal('mIndice'); renderAll();
+  toast('Índice de Saúde salvo: ' + geral + '/100 · conceito ' + c + '.');
+});
+
+/* ============================================================
+   CRESCER — academia de vendas + centro de programas
+============================================================ */
+var ACADEMIA = [
+  { t: '1 · Posicionamento: escolha por quem você quer ser encontrado',
+    p: 'Quem fala com todo mundo não é lembrado por ninguém. Nicho não limita — concentra.',
+    c: ['Complete: "Eu ajudo [quem] a [resultado de vida, não clínico] sem [dor que ele odeia]". Ex.: "Ajudo corredores amadores a treinarem com segurança sem abrir mão da performance."','Coloque essa frase na sua bio do marketplace e no primeiro áudio da Lia.','Proibido: prometer cura, resultado clínico ou prazo. Permitido: dizer para quem é e como você trabalha.'],
+    a: 'Ação de hoje: reescreva sua mini-bio em Configurações usando a fórmula acima.' },
+  { t: '2 · Oferta: da consulta avulsa ao programa (a virada de renda)',
+    p: 'Consulta avulsa é troca de hora por dinheiro. Programa de acompanhamento é renda previsível e cuidado melhor — todo mundo ganha.',
+    c: ['Monte a escada: consulta (porta de entrada) → programa 3 meses (transformação) → manutenção (recorrência).','Nomeie o programa pelo destino, não pelo método: "Programa Pele em Equilíbrio", não "6 retornos".','Use o Centro de Programas abaixo como molde e ajuste a conduta clínica à sua prática.'],
+    a: 'Ação de hoje: ative um programa abaixo e defina o preço do seu plano em Configurações.' },
+  { t: '3 · Conteúdo que atrai sem ferir o CFM',
+    p: 'Conteúdo educativo constrói autoridade; autopromoção sensacionalista constrói processo.',
+    c: ['Regra dos 3 E: Eduque (como funciona), Empatize (a dor real do paciente), Encaminhe (chame para conversar — nunca "garanta").','1 post educativo por semana vale mais que 7 genéricos. Responda as 5 perguntas que você mais ouve no consultório.','Nunca: antes/depois clínico, promessa de resultado, "o melhor da cidade". Sempre: CRM/CRN/CRP visível.'],
+    a: 'Ação de hoje: escreva a resposta à pergunta que você mais ouve e publique.' },
+  { t: '4 · Conversão no WhatsApp: os 5 minutos que decidem tudo',
+    p: 'Mais da metade dos contatos chega fora do horário — e quem responde primeiro leva. É exatamente o trabalho da Lia.',
+    c: ['Estrutura da conversa que converte: responder rápido → acolher pelo nome → informar preço sem rodeio → oferecer 2 horários concretos → sinal para compromisso.','Objeção de preço não se rebate com desconto, e sim com clareza de valor: o que está incluído, como funciona, por que é assim.','Revise semanalmente as conversas transferidas pela Lia: cada uma ensina uma objeção nova.'],
+    a: 'Ação de hoje: simule 3 conversas na aba Lia — inclusive uma dizendo "tá caro" — e veja as respostas.' },
+  { t: '5 · Precificação: pare de cobrar pela hora, cobre pela transformação',
+    p: 'Preço baixo não gera confiança em saúde — gera dúvida. E agenda lotada com preço errado é plantão disfarçado.',
+    c: ['Preço da consulta = seu posicionamento. Preço do programa = valor da transformação ÷ meses.','Suba o preço quando a agenda passar de 80% de ocupação por 4 semanas seguidas (o Painel te mostra).','Sinal de agendamento reduz falta e filtra curiosos — o comparecimento com sinal fica acima de 90%.'],
+    a: 'Ação de hoje: calcule sua ocupação no Painel e decida se o preço atual te serve.' },
+  { t: '6 · Retenção: o paciente que volta vale 5x o que chega',
+    p: 'Captar é caro; cuidar de quem já confia em você é a receita mais barata e mais ética que existe.',
+    c: ['Todo paciente sai da consulta com o próximo passo marcado (retorno, programa ou check-in da Lia em 30 dias).','Use a aba Marketing: a reativação de sumidos é literalmente dinheiro parado na sua base.','Peça avaliação no marketplace 24-48h após a consulta — é quando a gratidão é máxima (e é permitido pedir).'],
+    a: 'Ação de hoje: rode a campanha de reativação da aba Marketing.' },
+  { t: '7 · Venda em consultório: a oferta cara a cara (sem virar vendedor)',
+    p: 'O momento de maior confiança do paciente é o fim de uma consulta bem feita. É ali — e só ali — que a oferta presencial é ética e eficaz.',
+    c: ['Ordem inegociável: primeiro fecha a conduta clínica, depois oferece o caminho de acompanhamento. Nunca misture.','Transicione pelo interesse do paciente ("isso se resolve com constância"), ofereça DOIS caminhos (avulso vs. programa) e deixe a escolha com ele.','Use o botão "Gerar roteiro de oferta presencial" na aba Consulta: ele monta o script com o programa ativo e as prioridades do retrato de saúde do paciente.'],
+    a: 'Ação de hoje: gere o roteiro na aba Consulta e ensaie a transição em voz alta 3 vezes.' }
+];
+var PROGRAMAS = [
+  { esp: 'Nutrição', nome: 'Programa 90 Dias de Consistência', mult: 1.0,
+    jornada: 'Consulta completa → plano alimentar → 6 check-ins quinzenais (15min) → reavaliação final com métricas',
+    entrega: 'Plano revisado 3x · canal direto com a Lia filtrando dúvidas · relatório de evolução',
+    lia: 'Depois da consulta, a Lia oferece: "A Dra. montou um acompanhamento de 90 dias para consolidar seu plano — quer que eu te mostre como funciona?"' },
+  { esp: 'Psicologia', nome: 'Ciclo de 12 Sessões com Revisão', mult: 3.2,
+    jornada: 'Sessão inicial → contrato terapêutico → 12 sessões semanais → revisão de ciclo com objetivos',
+    entrega: 'Horário fixo garantido · remarcação facilitada · resumo de ciclo (sem conteúdo clínico exposto)',
+    lia: 'A Lia protege o horário fixo, confirma presença 24h antes e reduz falta — a maior sangria da terapia.' },
+  { esp: 'Dermatologia', nome: 'Pele em Equilíbrio — 6 meses', mult: 1.4,
+    jornada: 'Consulta + mapeamento → protocolo personalizado → retornos em 30/90/180 dias → ajustes contínuos',
+    entrega: 'Prioridade na agenda · fotos de acompanhamento no prontuário · ajuste de rotina por mensagem triada',
+    lia: 'A Lia agenda os retornos do protocolo automaticamente e avisa você se o paciente sumir.' },
+  { esp: 'Clínica geral / Cardio', nome: 'Ano de Cuidado Contínuo', mult: 1.2,
+    jornada: 'Checkup completo → plano anual de metas → consultas trimestrais → revisão anual com comparativo',
+    entrega: 'Visão longitudinal no Prontuário 360 · exames organizados · canal de dúvidas triado pela Lia',
+    lia: 'A Lia usa o SosMed Score do paciente (avaliação de saúde) como gancho: "que tal transformar esse retrato em um plano com o Dr.?"' },
+  { esp: 'Odontologia', nome: 'Sorriso Preventivo Semestral', mult: 0.8,
+    jornada: 'Avaliação + profilaxia → plano preventivo → 2 visitas/ano garantidas + urgências prioritárias',
+    entrega: 'Agenda semestral automática · desconto em procedimentos eletivos · lembretes da Lia',
+    lia: 'A Lia reativa a cada 6 meses sozinha: previsibilidade para você, constância para o paciente.' },
+  { esp: 'Estética / Fisio', nome: 'Protocolo Mensal de Manutenção', mult: 1.0,
+    jornada: 'Avaliação → protocolo inicial (4 sessões) → manutenção mensal contínua',
+    entrega: 'Sessão mensal garantida · prioridade de horário · reavaliação trimestral',
+    lia: 'A Lia gerencia a cadência mensal e oferece upgrade de protocolo na reavaliação.' }
+];
+function renderCrescer(){
+  document.getElementById('academiaList').innerHTML = ACADEMIA.map(function(pb, i){
+    return '<div class="card" style="margin-bottom:10px;border-left:3px solid var(--amber-bright)">' +
+      '<b style="font-size:14.5px">' + pb.t + '</b>' +
+      '<p style="font-size:13px;color:var(--muted);margin:6px 0 8px;font-style:italic">' + pb.p + '</p>' +
+      '<ul style="font-size:13px;color:var(--ink);padding-left:18px;line-height:1.6">' + pb.c.map(function(x){ return '<li style="margin:4px 0">' + x + '</li>'; }).join('') + '</ul>' +
+      '<p style="font-size:12.5px;color:var(--teal-deep);font-weight:600;margin-top:8px">⚡ ' + pb.a + '</p></div>';
+  }).join('');
+  var progAtivo = state.prof && state.prof.programaAtivo;
+  document.getElementById('programasList').innerHTML = PROGRAMAS.map(function(pg){
+    var preco = state.prof ? Math.round(state.prof.valorPlano * pg.mult) : 0;
+    var ativo = progAtivo === pg.nome;
+    return '<div class="card" style="border:1px solid ' + (ativo ? 'var(--teal)' : 'var(--line)') + '">' +
+      '<span class="pill plano">' + pg.esp + '</span>' +
+      '<b style="display:block;font-size:15px;margin:8px 0 4px">' + pg.nome + '</b>' +
+      '<p style="font-size:12.5px;color:var(--muted)"><b>Jornada:</b> ' + pg.jornada + '</p>' +
+      '<p style="font-size:12.5px;color:var(--muted);margin-top:4px"><b>Entregáveis:</b> ' + pg.entrega + '</p>' +
+      '<p style="font-size:12.5px;color:var(--muted);margin-top:4px"><b>Como a Lia vende:</b> ' + pg.lia + '</p>' +
+      '<p style="font-size:14px;margin-top:8px"><b>Preço sugerido:</b> <span class="amt">' + fmtBRL(preco) + '/mês</span></p>' +
+      '<button class="btn mini' + (ativo ? '' : ' ghost') + '" data-programa="' + pg.nome.replace(/"/g,'') + '" style="margin-top:8px">' + (ativo ? '✓ Programa ativo' : 'Ativar este programa') + '</button>' +
+      '</div>';
+  }).join('') +
+  '<p style="font-size:11.5px;color:var(--muted);grid-column:1/-1">A conduta clínica de cada programa é definida por você, dentro das normas do seu conselho. O SosMed estrutura a jornada comercial — nunca o tratamento.</p>';
+}
+document.getElementById('programasList').addEventListener('click', function(e){
+  var b = e.target.closest('[data-programa]');
+  if (!b || !state.prof) return;
+  var pg = PROGRAMAS.find(function(x){ return x.nome === b.dataset.programa; });
+  state.prof.programaAtivo = pg.nome;
+  if (!state.prof.valorPlanoBase) state.prof.valorPlanoBase = state.prof.valorPlano;
+  state.prof.valorPlano = Math.round(state.prof.valorPlanoBase * pg.mult);
+  save(); renderAll();
+  toast('Programa "' + pg.nome + '" ativo — a Lia passa a oferecê-lo e o preço do plano foi ajustado.');
+});
+
+/* ============================================================
+   MARKETPLACE — perfil público (integra com buscar.html)
+============================================================ */
+var MKEY = 'farolMarket_v1';
+function loadMarket(){
+  try{ var raw = localStorage.getItem(MKEY); if (raw) return JSON.parse(raw); }catch(_){}
+  return { profissionais: [], agendamentos: [] };
+}
+function saveMarket(m){ try{ localStorage.setItem(MKEY, JSON.stringify(m)); }catch(_){} }
+function meuPerfilPublico(m){ return m.profissionais.find(function(p){ return p.proprio; }); }
+
+function renderMarketplaceCfg(){
+  var m = loadMarket();
+  var meu = meuPerfilPublico(m);
+  document.getElementById('btnDespublicar').hidden = !meu;
+  document.getElementById('btnPublicar').textContent = meu ? 'Atualizar perfil' : 'Publicar no marketplace';
+  document.getElementById('mkStatus').textContent = meu
+    ? '✅ Publicado como "' + meu.nome + '" (' + meu.especialidade + ' · ' + meu.cidade + '). Seus horários livres reais aparecem na busca.'
+    : 'Ainda não publicado.';
+  if (meu){
+    document.getElementById('mkCidade').value = meu.cidade || '';
+    document.getElementById('mkBio').value = meu.bio || '';
+    document.getElementById('mkAbordagem').value = meu.abordagem || '';
+    document.getElementById('mkOnline').checked = meu.online !== false;
+  }
+  var prev = document.getElementById('mkFotoPrev');
+  var foto = (meu && meu.foto) || fotoPendente;
+  if (foto){ prev.src = foto; prev.style.display = 'block'; } else prev.style.display = 'none';
+}
+var fotoPendente = null;
+document.getElementById('mkFoto').addEventListener('change', function(e){
+  var file = e.target.files[0]; if (!file) return;
+  var img = new Image();
+  img.onload = function(){
+    var cv = document.createElement('canvas');
+    var lado = 240, min = Math.min(img.width, img.height);
+    cv.width = lado; cv.height = lado;
+    cv.getContext('2d').drawImage(img, (img.width-min)/2, (img.height-min)/2, min, min, 0, 0, lado, lado);
+    fotoPendente = cv.toDataURL('image/jpeg', .82);
+    URL.revokeObjectURL(img.src);
+    renderMarketplaceCfg();
+    toast('Foto pronta — clique em Publicar/Atualizar para salvar.');
+  };
+  img.src = URL.createObjectURL(file);
+});
+document.getElementById('btnPublicar').addEventListener('click', function(){
+  if (!state.prof) return;
+  var cidade = document.getElementById('mkCidade').value.trim();
+  if (!cidade) return toast('Informe a cidade para aparecer na busca.');
+  var m = loadMarket();
+  var meu = meuPerfilPublico(m);
+  var dados = {
+    proprio: true, nome: state.prof.nome,
+    especialidade: state.prof.especialidade.charAt(0).toUpperCase() + state.prof.especialidade.slice(1),
+    cidade: cidade, bio: document.getElementById('mkBio').value.trim(),
+    abordagem: document.getElementById('mkAbordagem').value.trim(),
+    preco: state.prof.valorConsulta, online: document.getElementById('mkOnline').checked, presencial: true
+  };
+  if (fotoPendente) dados.foto = fotoPendente;
+  else if (meu && meu.foto) dados.foto = meu.foto;
+  if (meu) Object.assign(meu, dados);
+  else m.profissionais.unshift(Object.assign({ id: 'prof-' + uid(), avaliacoes: [] }, dados));
+  saveMarket(m); renderMarketplaceCfg();
+  toast(meu ? 'Perfil atualizado no marketplace.' : 'Publicado! Você já aparece na busca. 🎉');
+});
+document.getElementById('btnDespublicar').addEventListener('click', function(){
+  var m = loadMarket();
+  m.profissionais = m.profissionais.filter(function(p){ return !p.proprio; });
+  saveMarket(m); renderMarketplaceCfg();
+  toast('Perfil removido do marketplace.');
+});
+
+/* ============================================================
+   CONFIG + export/import + seed
+============================================================ */
+function renderConfig(){
+  if (!state.prof) return;
+  document.getElementById('cfgNome').value = state.prof.nome;
+  document.getElementById('cfgEspecialidade').value = state.prof.especialidade;
+  document.getElementById('cfgRegistro').value = state.prof.registro || '';
+  document.getElementById('cfgValor').value = state.prof.valorConsulta;
+  document.getElementById('cfgPlano').value = state.prof.valorPlano;
+}
+document.getElementById('btnSalvarCfg').addEventListener('click', function(){
+  state.prof.nome = document.getElementById('cfgNome').value.trim();
+  state.prof.especialidade = document.getElementById('cfgEspecialidade').value.trim();
+  state.prof.registro = document.getElementById('cfgRegistro').value.trim();
+  state.prof.valorConsulta = +document.getElementById('cfgValor').value || state.prof.valorConsulta;
+  state.prof.valorPlano = +document.getElementById('cfgPlano').value || state.prof.valorPlano;
+  save(); renderAll(); toast('Configurações salvas.');
+});
+document.getElementById('btnExportar').addEventListener('click', function(){
+  var blob = new Blob([JSON.stringify(state, null, 2)], {type: 'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'farol-backup-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click(); URL.revokeObjectURL(a.href);
+  toast('Backup exportado.');
+});
+document.getElementById('btnImportar').addEventListener('click', function(){ document.getElementById('fileImport').click(); });
+document.getElementById('fileImport').addEventListener('change', function(e){
+  var file = e.target.files[0]; if (!file) return;
+  var r = new FileReader();
+  r.onload = function(){
+    try{
+      var dados = JSON.parse(r.result);
+      if (!dados || typeof dados !== 'object' || !('pacientes' in dados)) throw new Error('formato');
+      state = dados; save(); renderAll();
+      toast('Dados importados com sucesso.');
+    }catch(_){ toast('Arquivo inválido — use um backup exportado pelo SosMed.'); }
+  };
+  r.readAsText(file);
+});
+document.getElementById('btnApagar').addEventListener('click', function(){
+  if (!confirm('Apagar TODOS os dados deste console (pacientes, agenda, conversas)? Não dá para desfazer.')) return;
+  localStorage.removeItem(KEY);
+  state = load(); convSel = null;
+  renderAll(); openModal('mOnboard');
+  toast('Tudo apagado. Console zerado.');
+});
+
+document.getElementById('btnSeed').addEventListener('click', function(){
+  if (state.pacientes.length && !confirm('Adicionar dados de exemplo aos seus dados atuais?')) return;
+  var hoje = new Date(); hoje.setMinutes(0,0,0);
+  function em(dias, hora){ var d = new Date(hoje); d.setDate(d.getDate() + dias); d.setHours(hora); return d.toISOString(); }
+  var ana = { id: uid(), nome: 'Ana Ribeiro', tel: '(11) 98888-1234', criadoEm: em(-200, 10), plano: { nome: 'Acompanhamento mensal', valor: state.prof.valorPlano, inicio: em(-60, 9) }, prontuarios: [], notas: '' };
+  var carlos = { id: uid(), nome: 'Carlos Mendes', tel: '(11) 97777-4321', criadoEm: em(-300, 10), plano: null, prontuarios: [], notas: '' };
+  var julia = { id: uid(), nome: 'Júlia Ferreira', tel: '(11) 96666-9876', criadoEm: em(-2, 10), plano: null, prontuarios: [], notas: 'Origem: Lia' };
+  state.pacientes.push(ana, carlos, julia);
+  state.consultas.push(
+    { id: uid(), pacienteId: ana.id, inicio: em(-7, 9), tipo: 'presencial', valor: state.prof.valorConsulta, status: 'realizada', origem: 'manual', prontuario: null },
+    { id: uid(), pacienteId: julia.id, inicio: em(-1, 15), tipo: 'online', valor: state.prof.valorConsulta, status: 'realizada', origem: 'lia', prontuario: null },
+    { id: uid(), pacienteId: ana.id, inicio: em(2, 9), tipo: 'presencial', valor: state.prof.valorConsulta, status: 'agendada', origem: 'manual', prontuario: null },
+    { id: uid(), pacienteId: julia.id, inicio: em(3, 14), tipo: 'presencial', valor: state.prof.valorConsulta, status: 'agendada', origem: 'lia', prontuario: null }
+  );
+  save(); renderAll();
+  toast('Dados de exemplo carregados — explore as abas!');
+});
+
+/* ============================================================
+   RENDER GERAL
+============================================================ */
+function renderAll(){
+  renderPainel(); renderLia(); renderAgenda(); renderPacientes();
+  renderConsultaTab(); renderMarketing(); renderPlanos(); renderConfig(); renderMarketplaceCfg(); renderCrescer(); renderDocumentos();
+  renderLembretes(); renderExames();
+}
+renderAll();
+})();
+</script>
+</body>
+</html>

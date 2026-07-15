@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avaliação de Saúde SosMed — seu retrato de 0 a 100</title>
+<meta name="description" content="9 domínios da sua saúde em 5 minutos: mental, física, emocional, metabólica, sono, alimentação, estresse e mais. Gratuito, privado, sem diagnóstico.">
+<meta name="theme-color" content="#0C6B5C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ccircle%20cx='50'%20cy='50'%20r='44'%20fill='none'%20stroke='%23083F36'%20stroke-width='8'/%3E%3Cpath%20d='M14%2050%20L36%2050%20L43%2032%20L52%2066%20L59%2042%20L64%2050%20L86%2050'%20fill='none'%20stroke='%23083F36'%20stroke-width='8'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='7'%20fill='%23C97F16'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF9F6; --surface:#FFFFFF; --ink:#132420; --muted:#5B6B65;
+    --line:#E7E4DC; --line-soft:#EFEDE6;
+    --teal:#0C6B5C; --teal-deep:#083F36; --teal-tint:#EBF3F0; --teal-ghost:#F3F8F6;
+    --amber:#C97F16; --amber-tint:#FBF1E0; --amber-ink:#9A5B00;
+    --danger:#B3402A; --danger-tint:#FBEAE5;
+    --shadow-sm:0 1px 2px rgba(19,36,32,.05);
+    --shadow-md:0 1px 2px rgba(19,36,32,.04), 0 12px 32px -12px rgba(19,36,32,.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15.5px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 22px}
+  button{font-family:inherit;cursor:pointer}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--teal);color:#fff;border:none;padding:12px 26px;border-radius:999px;font-weight:600;font-size:14.5px;transition:background .15s,transform .15s;box-shadow:var(--shadow-sm)}
+  .btn:hover{background:var(--teal-deep);transform:translateY(-1px)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none;font-weight:500}
+  header.top{background:rgba(250,249,246,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line-soft);position:sticky;top:0;z-index:40}
+  header.top nav{display:flex;justify-content:space-between;align-items:center;padding:13px 0}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',Georgia,serif;font-size:21px;font-weight:700;color:var(--teal-deep);text-decoration:none}
+  .logo small{font-family:'Inter';font-size:9.5px;color:var(--muted);letter-spacing:.18em;display:block;line-height:1.2;font-weight:600}
+  .hero{padding:46px 0 8px;text-align:center}
+  h1{font-family:'Fraunces',Georgia,serif;font-size:clamp(27px,4.4vw,40px);font-weight:600;letter-spacing:-.015em;line-height:1.15}
+  .hero p{color:var(--muted);margin:12px auto 0;max-width:600px}
+  .aviso{background:var(--amber-tint);border:1px solid rgba(201,127,22,.3);border-radius:12px;padding:12px 16px;font-size:12.5px;line-height:1.6;margin:20px 0}
+  .aviso b{color:var(--amber-ink)}
+  .dom{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:14px;box-shadow:var(--shadow-sm)}
+  .dom h2{font-family:'Fraunces',Georgia,serif;font-size:19px;font-weight:600;display:flex;align-items:center;gap:9px}
+  .dom .prog{margin-left:auto;font-size:11.5px;color:var(--muted);font-weight:500}
+  .q{margin-top:16px}
+  .q p{font-size:14.5px;font-weight:500;margin-bottom:8px}
+  .opts{display:flex;gap:6px;flex-wrap:wrap}
+  .opt{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:7px 14px;font-size:12.5px;color:var(--muted);transition:all .15s}
+  .opt:hover{border-color:var(--teal)}
+  .opt.sel{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:600}
+  .rodape-form{text-align:center;padding:24px 0 60px}
+  .falta{color:var(--danger);font-size:13px;margin-top:10px;display:none}
+
+  /* Resultado */
+  #resultado{display:none;padding-bottom:70px}
+  .score-hero{text-align:center;padding:36px 0 10px}
+  .anel{width:170px;height:170px;border-radius:50%;margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+  .anel svg{position:absolute;inset:0;transform:rotate(-90deg)}
+  .anel b{font-family:'Fraunces',Georgia,serif;font-size:46px;line-height:1;color:var(--teal-deep)}
+  .anel span{font-size:12px;color:var(--muted)}
+  .conceito{font-family:'Fraunces',Georgia,serif;font-size:22px;margin-top:12px}
+  .doms-res{margin-top:26px;display:flex;flex-direction:column;gap:10px}
+  .dr{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .dr .top{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+  .dr .letra{margin-left:auto;font-family:'Fraunces',Georgia,serif;font-size:18px;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff}
+  .barra{height:8px;background:var(--line-soft);border-radius:99px;margin-top:10px;overflow:hidden}
+  .barra i{display:block;height:100%;border-radius:99px;transition:width .8s cubic-bezier(.22,.61,.36,1)}
+  .dr .msg{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.55}
+  .prioridades{background:var(--teal-ghost);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:24px}
+  .prioridades h3{font-family:'Fraunces',Georgia,serif;font-size:18px;margin-bottom:10px}
+  .prioridades li{font-size:13.5px;margin:8px 0 8px 18px;line-height:1.55}
+  .acoes{display:flex;gap:10px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+  footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:12px;text-align:center;line-height:1.7}
+  footer a{color:var(--teal)}
+  @media(max-width:560px){ .opts{flex-direction:column} .opt{text-align:center} }
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap"><nav>
+  <a class="logo" href="buscar.html"><svg width="30" height="30" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="none" stroke="#083F36" stroke-width="5"/><path d="M14 50 L36 50 L43 32 L52 66 L59 42 L64 50 L86 50" fill="none" stroke="#083F36" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="5" fill="#C97F16"/></svg><div>sosmed<small>AVALIAÇÃO DE SAÚDE</small></div></a>
+  <a href="buscar.html" style="font-size:13.5px;color:var(--muted);text-decoration:none">← Encontrar profissional</a>
+</nav></div></header>
+
+<div class="wrap" id="formulario">
+  <section class="hero">
+    <h1>Como está a sua saúde, de verdade?</h1>
+    <p>9 domínios · 27 perguntas · 5 minutos. Você recebe um retrato de 0 a 100 com conceito de A a F em cada área — e sabe exatamente por onde começar.</p>
+  </section>
+  <div class="aviso"><b>Antes de começar, com transparência:</b> isto é uma ferramenta de <b>autoconhecimento e bem-estar</b>, inspirada em instrumentos validados (OMS/WHO-5, PHQ-2, GAD-2, PSS, IPAQ) — <b>não é diagnóstico nem substitui avaliação profissional</b>. Suas respostas ficam <b>somente neste navegador</b> (nada é enviado a servidor — LGPD, dados sensíveis, art. 11). Se estiver passando por sofrimento intenso, procure ajuda: <b>CVV 188</b> (24h, gratuito).</div>
+  <div id="dominios"></div>
+  <div class="rodape-form">
+    <button class="btn" id="btnCalcular" style="font-size:16px;padding:15px 36px">Ver meu retrato de saúde</button>
+    <p class="falta" id="falta">Faltam algumas respostas — os domínios incompletos estão marcados acima.</p>
+  </div>
+</div>
+
+<div class="wrap" id="resultado">
+  <section class="score-hero">
+    <h1 style="font-size:26px">Seu retrato de saúde</h1>
+    <div class="anel" id="anel">
+      <svg width="170" height="170" viewBox="0 0 170 170"><circle cx="85" cy="85" r="76" fill="none" stroke="#EFEDE6" stroke-width="12"/><circle id="anelArco" cx="85" cy="85" r="76" fill="none" stroke="#0C6B5C" stroke-width="12" stroke-linecap="round" stroke-dasharray="477.5" stroke-dashoffset="477.5"/></svg>
+      <b id="scoreGeral">–</b><span>de 100</span>
+    </div>
+    <div class="conceito" id="conceitoGeral"></div>
+    <p style="color:var(--muted);font-size:13.5px;max-width:520px;margin:8px auto 0" id="msgGeral"></p>
+  </section>
+  <div class="doms-res" id="domsRes"></div>
+  <div class="prioridades" id="prioridades"></div>
+  <div class="acoes">
+    <a class="btn" href="buscar.html">Encontrar um profissional para o meu momento</a>
+    <button class="btn ghost" id="btnBaixar">⬇️ Baixar meu retrato</button>
+    <button class="btn ghost" id="btnRefazer">Refazer avaliação</button>
+  </div>
+  <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:18px">Dica: leve este retrato para a sua próxima consulta — no SosMed, o profissional usa esses domínios para desenhar seu plano de cuidado.</p>
+</div>
+
+<footer><div class="wrap">Ferramenta de bem-estar e autoconhecimento — não realiza diagnóstico. Emergências: SAMU 192 · CVV 188.<br><a href="index.html">Sobre o SosMed</a> · <a href="privacidade.html">Privacidade</a> · <a href="buscar.html">Encontrar profissional</a></div></footer>
+
+<script>
+(function(){
+'use strict';
+/* Escalas (todas pontuam 0-4; maior = melhor) */
+var POS = [['Sempre',4],['Quase sempre',3],['Às vezes',2],['Raramente',1],['Nunca',0]];
+var NEG = [['Nunca',4],['Raramente',3],['Às vezes',2],['Quase sempre',1],['Sempre',0]];
+
+var DOMINIOS = [
+  { id:'mental', nome:'Saúde mental', ic:'🧠', ref:'WHO-5 · PHQ-2', qs:[
+    { t:'Nas últimas 2 semanas, me senti alegre e de bom humor.', o:POS },
+    { t:'Tenho tido interesse e prazer nas coisas do meu dia a dia.', o:POS },
+    { t:'Me senti para baixo, desanimado(a) ou sem perspectiva.', o:NEG } ]},
+  { id:'emocional', nome:'Equilíbrio emocional', ic:'💛', ref:'GAD-2 · suporte social', qs:[
+    { t:'Me senti nervoso(a), ansioso(a) ou no limite.', o:NEG },
+    { t:'Consigo lidar com minhas emoções sem ser dominado(a) por elas.', o:POS },
+    { t:'Tenho pessoas com quem posso contar de verdade quando preciso.', o:POS } ]},
+  { id:'estresse', nome:'Nível de estresse', ic:'🌡️', ref:'PSS-4', qs:[
+    { t:'Senti que as coisas estavam fora do meu controle.', o:NEG },
+    { t:'Me senti sobrecarregado(a) com tudo o que tenho para dar conta.', o:NEG },
+    { t:'Consegui momentos reais de descanso e desconexão na semana.', o:POS } ]},
+  { id:'sono', nome:'Sono', ic:'😴', ref:'higiene do sono', qs:[
+    { t:'Quantas horas você dorme por noite, em média?', o:[['7 a 9h',4],['6 a 7h',3],['5 a 6h',2],['9h+ ou irregular',1],['Menos de 5h',0]] },
+    { t:'Acordo me sentindo descansado(a).', o:POS },
+    { t:'Tenho dificuldade para pegar no sono ou acordo no meio da noite.', o:NEG } ]},
+  { id:'fisica', nome:'Atividade física', ic:'🏃', ref:'IPAQ · OMS 150min', qs:[
+    { t:'Quanto exercício você faz por semana (caminhada rápida conta)?', o:[['150min+ (meta OMS)',4],['100–150min',3],['30–100min',2],['Menos de 30min',1],['Nada',0]] },
+    { t:'Faço fortalecimento muscular (musculação, pilates, funcional).', o:[['2x+/semana',4],['1x/semana',3],['Às vezes',2],['Raramente',1],['Nunca',0]] },
+    { t:'Passo a maior parte do dia sentado(a), sem pausas.', o:NEG } ]},
+  { id:'alimentacao', nome:'Alimentação', ic:'🥗', ref:'padrão alimentar', qs:[
+    { t:'Como frutas, verduras e legumes todos os dias.', o:POS },
+    { t:'Consumo ultraprocessados (fast-food, refri, salgadinho, embutidos).', o:[['Quase nunca',4],['1x/semana',3],['2–3x/semana',2],['4–6x/semana',1],['Todo dia',0]] },
+    { t:'Bebo água suficiente ao longo do dia (não conto café/refri).', o:POS } ]},
+  { id:'metabolica', nome:'Saúde metabólica', ic:'⚖️', ref:'FINDRISC simplificado', qs:[
+    { t:'Como está seu peso em relação ao que você considera saudável para você?', o:[['No ponto',4],['Um pouco acima/abaixo',3],['Moderadamente fora',2],['Bem fora',1],['Muito fora / não sei',0]] },
+    { t:'Quando mediu pressão, glicose e colesterol pela última vez?', o:[['No último ano, tudo ok',4],['No último ano, algo alterado',2],['Há 1–3 anos',1],['Nunca / não lembro',0],['Sei que estão alterados',0]] },
+    { t:'Há diabetes, hipertensão ou infarto precoce na sua família próxima?', o:[['Não',4],['Um caso distante',3],['Um caso próximo',2],['Vários casos',1],['Vários + eu já tenho alteração',0]] } ]},
+  { id:'cuidados', nome:'Medicações & acompanhamento', ic:'💊', ref:'adesão e vínculo', qs:[
+    { t:'Se uso medicação contínua, tomo direitinho (se não uso, marque "Sempre").', o:POS },
+    { t:'Tenho um profissional de saúde que me acompanha de verdade.', o:[['Sim, com retornos regulares',4],['Sim, mas vou raramente',2],['Só quando adoeço',1],['Não tenho',0]] },
+    { t:'Tenho sintomas ou problemas de saúde que venho adiando investigar.', o:NEG } ]},
+  { id:'habitos', nome:'Hábitos de risco', ic:'🚭', ref:'AUDIT-C · tabaco · telas', qs:[
+    { t:'Fumo (cigarro, vape, narguilé).', o:[['Nunca fumei',4],['Parei há 1+ ano',3],['Parei há pouco',2],['Socialmente',1],['Diariamente',0]] },
+    { t:'Quando bebo, tomo 4+ doses na mesma ocasião.', o:NEG },
+    { t:'Uso telas até tarde da noite, atrapalhando meu descanso.', o:NEG } ]}
+];
+
+var respostas = {};
+function conceito(p){ return p>=85?'A':p>=70?'B':p>=55?'C':p>=40?'D':p>=25?'E':'F'; }
+function corConceito(c){ return {A:'#0C6B5C',B:'#2E9E77',C:'#C97F16',D:'#B3402A',E:'#B3402A',F:'#8F3018'}[c]; }
+function msgDom(nome, c){
+  if (c==='A'||c==='B') return nome + ' é um ponto forte seu — mantenha o que está funcionando.';
+  if (c==='C') return 'Zona de atenção: pequenos ajustes aqui têm retorno rápido.';
+  return 'Prioridade: este domínio está pedindo cuidado — vale conversar com um profissional.';
+}
+
+/* Render do formulário */
+document.getElementById('dominios').innerHTML = DOMINIOS.map(function(d, di){
+  return '<div class="dom" id="dom-' + d.id + '"><h2>' + d.ic + ' ' + d.nome + '<span class="prog" id="prog-' + d.id + '">0/3 · inspirado em ' + d.ref + '</span></h2>' +
+    d.qs.map(function(q, qi){
+      return '<div class="q"><p>' + (qi+1) + '. ' + q.t + '</p><div class="opts">' +
+        q.o.map(function(o, oi){
+          return '<button type="button" class="opt" data-d="' + di + '" data-q="' + qi + '" data-v="' + o[1] + '">' + o[0] + '</button>';
+        }).join('') + '</div></div>';
+    }).join('') + '</div>';
+}).join('');
+
+document.getElementById('dominios').addEventListener('click', function(e){
+  var b = e.target.closest('.opt'); if (!b) return;
+  var d = +b.dataset.d, q = +b.dataset.q;
+  respostas[d] = respostas[d] || {};
+  respostas[d][q] = +b.dataset.v;
+  b.parentElement.querySelectorAll('.opt').forEach(function(x){ x.classList.remove('sel'); });
+  b.classList.add('sel');
+  var n = Object.keys(respostas[d]).length;
+  document.getElementById('prog-' + DOMINIOS[d].id).textContent = n + '/3';
+});
+
+document.getElementById('btnCalcular').addEventListener('click', function(){
+  var incompleto = false;
+  DOMINIOS.forEach(function(d, di){
+    var ok = respostas[di] && Object.keys(respostas[di]).length === d.qs.length;
+    document.getElementById('dom-' + d.id).style.borderColor = ok ? 'var(--line)' : 'var(--danger)';
+    if (!ok) incompleto = true;
+  });
+  document.getElementById('falta').style.display = incompleto ? 'block' : 'none';
+  if (incompleto){ return; }
+  calcular();
+});
+
+function calcular(){
+  var res = DOMINIOS.map(function(d, di){
+    var soma = 0;
+    d.qs.forEach(function(_, qi){ soma += respostas[di][qi]; });
+    var pct = Math.round(100 * soma / (d.qs.length * 4));
+    return { id: d.id, nome: d.nome, ic: d.ic, pct: pct, c: conceito(pct) };
+  });
+  var geral = Math.round(res.reduce(function(s,r){ return s + r.pct; }, 0) / res.length);
+  var cg = conceito(geral);
+
+  document.getElementById('formulario').style.display = 'none';
+  document.getElementById('resultado').style.display = 'block';
+  window.scrollTo({top:0});
+
+  document.getElementById('scoreGeral').textContent = geral;
+  var arco = document.getElementById('anelArco');
+  arco.style.stroke = corConceito(cg);
+  setTimeout(function(){ arco.style.transition = 'stroke-dashoffset 1s cubic-bezier(.22,.61,.36,1)'; arco.style.strokeDashoffset = 477.5 * (1 - geral/100); }, 60);
+  document.getElementById('conceitoGeral').innerHTML = 'Conceito geral: <span style="color:' + corConceito(cg) + '">' + cg + '</span>';
+  document.getElementById('msgGeral').textContent =
+    cg==='A' ? 'Excelente base — seu desafio agora é consistência e prevenção de longo prazo.' :
+    cg==='B' ? 'Você está bem em boa parte dos domínios; ajustes pontuais levam você ao próximo nível.' :
+    cg==='C' ? 'Retrato mediano com pontos claros de melhoria — a boa notícia: são os que mais respondem a mudanças.' :
+    'Seu corpo e sua mente estão pedindo atenção em várias frentes. Não encare tudo de uma vez: comece pelas prioridades abaixo, de preferência com acompanhamento.';
+
+  document.getElementById('domsRes').innerHTML = res.map(function(r){
+    return '<div class="dr"><div class="top">' + r.ic + ' ' + r.nome + '<span style="color:var(--muted);font-weight:500;font-size:12px;margin-left:6px">' + r.pct + '/100</span><span class="letra" style="background:' + corConceito(r.c) + '">' + r.c + '</span></div>' +
+      '<div class="barra"><i style="width:0;background:' + corConceito(r.c) + '" data-w="' + r.pct + '"></i></div>' +
+      '<div class="msg">' + msgDom(r.nome, r.c) + '</div></div>';
+  }).join('');
+  setTimeout(function(){
+    document.querySelectorAll('.barra i').forEach(function(i){ i.style.width = i.dataset.w + '%'; });
+  }, 80);
+
+  var piores = res.slice().sort(function(a,b){ return a.pct - b.pct; }).slice(0,3);
+  document.getElementById('prioridades').innerHTML = '<h3>Por onde começar (suas 3 prioridades)</h3><ol>' +
+    piores.map(function(r){
+      var dica = {
+        mental:'Comece pequeno: 10 minutos diários de algo que te dá prazer genuíno, e considere conversar com um(a) psicólogo(a).',
+        emocional:'Nomeie o que sente uma vez por dia (escrever ajuda) e acione sua rede — ou construa uma com ajuda profissional.',
+        estresse:'Bloqueie na agenda 2 pausas reais por dia. Estresse crônico não se resolve com força de vontade, e sim com estrutura.',
+        sono:'Horário fixo para dormir, quarto escuro, telas fora da cama 1h antes. Se não melhorar em 3 semanas, investigue com profissional.',
+        fisica:'Meta mínima viável: 20 minutos de caminhada rápida 5x/semana já muda seus marcadores.',
+        alimentacao:'Uma troca por vez: água no lugar do refri esta semana. Um(a) nutricionista transforma isso em plano que cabe na sua vida.',
+        metabolica:'Agende o check-up: pressão, glicemia e colesterol são silenciosos — e é exatamente por isso que se mede.',
+        cuidados:'Escolha um profissional de referência e marque a consulta que você vem adiando. É a prioridade das prioridades.',
+        habitos:'Reduzir dano funciona melhor que radicalismo: escolha UM hábito e um substituto concreto para ele.'
+      }[r.id];
+      return '<li><b>' + r.nome + ' (' + r.c + ')</b> — ' + dica + '</li>';
+    }).join('') + '</ol>';
+
+  try{ localStorage.setItem('farolSaude_v1', JSON.stringify({ em: new Date().toISOString(), geral: geral, conceito: cg, dominios: res })); }catch(_){}
+}
+
+document.getElementById('btnBaixar').addEventListener('click', function(){
+  var dados = localStorage.getItem('farolSaude_v1');
+  if (!dados) return;
+  var blob = new Blob([dados], {type:'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'meu-retrato-de-saude-farol.json';
+  a.click(); URL.revokeObjectURL(a.href);
+});
+document.getElementById('btnRefazer').addEventListener('click', function(){ location.reload(); });
+})();
+</script>
+</body>
+</html>

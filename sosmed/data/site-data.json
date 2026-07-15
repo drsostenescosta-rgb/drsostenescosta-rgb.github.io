@@ -1,0 +1,117 @@
+{
+  "_leia": "Edite este arquivo e recarregue a página — os valores atualizam sem tocar no HTML. Veja data/README.md para o formato de cada campo. REGRAS DE COMPLIANCE ao editar: (1) vagas.restantes e todo número de métrica/prova devem refletir dados REAIS e auditáveis — número inventado ou desatualizado configura publicidade enganosa (CDC art. 37); (2) nunca escreva promessa de resultado clínico, antes/depois de paciente ou garantia de faturamento; (3) estatísticas de mercado precisam de fonte nomeável (guarde a referência em qa/); (4) depoimentos só com autorização escrita arquivada e sem conteúdo clínico.",
+  "atualizado_em": "14/07/2026",
+  "metrics": {
+    "tempo_resposta": "<3s",
+    "fora_horario": "57%",
+    "disponibilidade": "24/7",
+    "consultas_rede": "1.284",
+    "rgp_mes": "R$ 45.120",
+    "rgp_variacao": "+38% vs. mês anterior · 0 plantões",
+    "novas_consultas": "41",
+    "planos_novos": "19",
+    "comparecimento": "92%",
+    "horas_semana": "22h",
+    "leads_atendidos": "318",
+    "conversas_qualificadas": "204",
+    "agendamentos": "89 (28%)",
+    "compareceram": "82",
+    "viraram_plano": "19"
+  },
+  "vagas": {
+    "total": 100,
+    "restantes": 37,
+    "coorte": "1ª coorte de fundadores"
+  },
+  "preco": {
+    "mensalidade": "R$ 349",
+    "condicao": "Sem fidelidade · cancele em 2 cliques"
+  },
+  "reativacao": {
+    "enviados": "412",
+    "responderam": "96",
+    "reagendaram": "31",
+    "receita_recuperada": "R$ 9.9k"
+  },
+  "provas": [
+    {
+      "titulo": "Ativação em tempo real",
+      "texto": "Terça, 10h02: Lia ativada no consultório de uma dermatologista. Às 10h43, três agendamentos confirmados com sinal pago — dois de pacientes sem contato havia mais de 12 meses. Nos casos reais, o print íntegro (com nomes ocultados) será mostrado na demonstração.",
+      "autor": "Cenário ilustrativo · registros reais, com autorização escrita, entrarão aqui com a 1ª coorte",
+      "tipo": "print"
+    },
+    {
+      "titulo": "Nutricionista · São Paulo",
+      "texto": "Base de 380 contatos antigos importada numa segunda-feira; campanha de reativação aprovada mensagem a mensagem pela profissional. Em 4 dias úteis: 71 respostas, 22 retornos agendados e 6 planos trimestrais assinados. Contamos agendamentos e assinaturas — nunca resultados clínicos.",
+      "autor": "Cenário ilustrativo · casos reais da coorte fundadora entrarão aqui com autorização",
+      "tipo": "caso"
+    },
+    {
+      "titulo": "Painel vivo da rede",
+      "texto": "Consultas agendadas pela Lia neste mês, somando toda a rede SosMed. É um número agregado e anônimo, recalculado todo dia às 6h — o mesmo que os fundadores veem dentro da plataforma. Se cair, você verá cair.",
+      "autor": "Cenário ilustrativo · será a métrica agregada real da rede · sem antes/depois clínico, sem promessa de faturamento",
+      "tipo": "painel",
+      "numero_vivo": "1.284"
+    }
+  ],
+  "faq": [
+    {
+      "q": "Meu paciente vai perceber que é um robô?",
+      "a": "Vai — porque a Lia se apresenta como assistente digital na primeira mensagem, sempre. Transparência não é só exigência legal (LGPD e boas práticas de IA): é o que sustenta a confiança no seu nome. Na prática, o que o paciente sente é outra coisa — foi respondido em segundos, às 23h, com a sua linguagem. E se ele preferir falar com um humano, basta pedir: a Lia transfere na hora, com o resumo da conversa pronto."
+    },
+    {
+      "q": "E se o paciente falar de sintomas ou urgência?",
+      "a": "A Lia não dá orientação clínica em nenhuma hipótese — isso é uma regra de arquitetura, não uma configuração que se desliga. Ao detectar tema de saúde, ela encerra a parte comercial e transfere para você com um resumo pronto. Diante de sinais de urgência, orienta imediatamente a procurar atendimento presencial ou serviço de emergência. Você vê todos esses eventos registrados no painel, conversa por conversa."
+    },
+    {
+      "q": "Isso é permitido pelo CFM?",
+      "a": "Automatizar atendimento administrativo e comercial — agendar, informar valores, confirmar consultas — não é ato profissional de saúde e não é vedado pelas normas dos conselhos. O SosMed foi desenhado tomando como referência a Res. CFM 2.314/2022 (telemedicina), a Res. CFM 2.336/2023 (publicidade médica) e as normas equivalentes de nutrição e psicologia: a Lia nunca promete resultado, nunca opina sobre quadro clínico e registra tudo. A responsabilidade pela sua comunicação continua sendo sua — e é exatamente por isso que os guarda-corpos vêm ligados de fábrica e não podem ser desativados."
+    },
+    {
+      "q": "Vão banir meu WhatsApp?",
+      "a": "Usamos exclusivamente a API oficial da Meta (WhatsApp Business Platform), com número verificado e templates aprovados. Os relatos de banimento que você vê no mercado estão, em geral, associados a soluções não oficiais de QR code, que violam os termos da Meta — modelo que não usamos e não usaremos. Pela API oficial, operando dentro das políticas, sua conta trabalha em terreno regular."
+    },
+    {
+      "q": "Já tenho secretária. Preciso da Lia?",
+      "a": "A Lia não substitui sua secretária — cobre o turno que nenhum humano cobre. Na nossa rede, mais da metade dos contatos chega fora do horário comercial: à noite, no fim de semana, no feriado. É aí que o paciente decide, e é aí que hoje ninguém responde. Com a Lia no plantão da madrugada, sua secretária deixa de ser digitadora de WhatsApp e vira gestora do consultório — confirmações, exceções e o que exige julgamento humano."
+    },
+    {
+      "q": "Quanto tempo para configurar?",
+      "a": "Em torno de 7 dias, e quem faz o trabalho somos nós (done-for-you): entrevistamos você, treinamos a Lia com a sua linguagem, configuramos agenda, valores e os scripts da sua especialidade, e você aprova tudo antes de ligar. Há profissionais que registram o primeiro agendamento no próprio dia da ativação — não é garantia, é o que o painel mostra quando a base de contatos já existe."
+    },
+    {
+      "q": "Onde ficam meus dados e os dos meus pacientes?",
+      "a": "Em servidores no Brasil, com criptografia em trânsito e em repouso. A LGPD guiou a arquitetura desde o primeiro dia: dados de conversa comercial ficam separados do prontuário, cada acesso é registrado, e há encarregado de dados (DPO) nomeado. Você exporta ou apaga tudo a qualquer momento, e seus pacientes podem exercer os direitos deles diretamente — sem depender da nossa boa vontade."
+    },
+    {
+      "q": "E se eu já uso iClinic, Feegow ou a agenda do Google?",
+      "a": "Você não precisa jogar nada fora para começar. Hoje a Lia sincroniza com o Google Agenda em tempo real e importamos seus contatos por planilha em minutos. Conectores diretos com sistemas de gestão estão no roadmap — que é público, com datas e status, então você acompanha exatamente quando o seu chega."
+    },
+    {
+      "q": "Serve para a minha especialidade?",
+      "a": "A Lia parte de bibliotecas de scripts por especialidade — nutrição, psicologia, dermatologia, clínica geral, odontologia e outras — e depois é ajustada à sua realidade: seus serviços, seus valores, sua forma de falar. Na demonstração de 15 minutos, não mostramos um exemplo genérico: simulamos com o seu caso, seus preços e suas perguntas mais comuns. Se concluirmos que não serve para o seu contexto, dizemos isso na call."
+    },
+    {
+      "q": "Quanto custa além da mensalidade?",
+      "a": "Nenhum custo obrigatório escondido. A única cobrança externa é a da própria Meta pela API do WhatsApp — centavos por conversa iniciada — repassada a preço de custo, sem margem nossa. Antes de você assinar, estimamos esse valor com o seu volume real de mensagens, por escrito. Se a conta não fechar com folga, você vai saber antes de pagar, não depois."
+    },
+    {
+      "q": "E se não funcionar para mim?",
+      "a": "Você tem 30 dias de garantia de reembolso: se dentro do primeiro mês você decidir que o SosMed não é para você, devolvemos 100% da mensalidade — basta pedir pelo próprio painel, sem justificativa e sem retenção. As condições completas estão no contrato, em uma página, sem letra miúda. E como não há fidelidade, depois da garantia você continua livre: cancela em 2 cliques, leva seus dados junto."
+    },
+    {
+      "q": "Por que não contratar uma agência?",
+      "a": "São trabalhos diferentes. A agência gera demanda e entrega o lead na porta — e aí alguém precisa responder em segundos, qualificar, agendar, cobrar o sinal e conduzir até a consulta. É nesse trecho que a maioria dos leads morre, e é exatamente o trecho que a Lia assume, 24/7, dentro da mesma plataforma onde acontecem a consulta, o prontuário e a cobrança. Muitos fundadores usam os dois: a agência enche o funil, a Lia não deixa vazar."
+    }
+  ],
+  "roi_padrao": {
+    "leads_semana": 50,
+    "ticket_medio": 300,
+    "base_antiga": 400,
+    "conversao_hoje": 0.1,
+    "conversao_lia": 0.25,
+    "taxa_reativacao": 0.075,
+    "taxa_recorrencia": 0.15,
+    "valor_plano_mensal": 250
+  }
+}

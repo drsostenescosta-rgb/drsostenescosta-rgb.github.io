@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Sala de teleconsulta — SosMed</title>
+<meta name="theme-color" content="#083F36">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ccircle%20cx='50'%20cy='50'%20r='44'%20fill='none'%20stroke='%23083F36'%20stroke-width='8'/%3E%3Cpath%20d='M14%2050%20L36%2050%20L43%2032%20L52%2066%20L59%2042%20L64%2050%20L86%2050'%20fill='none'%20stroke='%23083F36'%20stroke-width='8'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='7'%20fill='%23C97F16'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --teal:#0C6B5C; --teal-deep:#083F36; --amber:#E89A2B; --paper:#F2EDE4; --line:rgba(255,255,255,.14); }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',Helvetica,Arial,sans-serif;background:#07211C;color:var(--paper);min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;border-bottom:1px solid var(--line)}
+  .logo{display:flex;align-items:center;gap:9px;font-family:'Fraunces',Georgia,serif;font-size:19px;font-weight:600;color:#fff;text-decoration:none}
+  .demo-tag{background:rgba(232,154,43,.18);border:1px solid rgba(232,154,43,.5);color:var(--amber);font-size:11.5px;font-weight:600;border-radius:99px;padding:4px 12px}
+  main{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:16px 22px;max-width:1100px;margin:0 auto;width:100%}
+  .tile{position:relative;background:#0B2E27;border:1px solid var(--line);border-radius:18px;overflow:hidden;min-height:320px;display:flex;align-items:center;justify-content:center}
+  .tile video{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+  .tile .nome{position:absolute;left:12px;bottom:12px;background:rgba(0,0,0,.45);border-radius:99px;padding:5px 14px;font-size:12.5px;font-weight:600;z-index:2}
+  .tile .placeholder{text-align:center;color:#9FBDB6;font-size:14px;padding:26px;line-height:1.7;z-index:1}
+  .placeholder .avatar{width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,var(--amber),#C97F16);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',Georgia,serif;font-size:29px;color:#fff;margin:0 auto 12px}
+  .pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber);animation:pu 1.3s infinite;margin-right:6px}
+  @keyframes pu{0%,100%{opacity:1}50%{opacity:.25}}
+  footer{display:flex;justify-content:center;gap:12px;padding:18px;border-top:1px solid var(--line);align-items:center}
+  .ctl{width:52px;height:52px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.08);color:#fff;font-size:20px;cursor:pointer;transition:background .15s}
+  .ctl:hover{background:rgba(255,255,255,.16)}
+  .ctl.off{background:#B3402A;border-color:#B3402A}
+  .ctl.end{background:#B3402A;border-color:#B3402A;width:auto;border-radius:99px;padding:0 26px;font-size:14px;font-weight:600;font-family:inherit}
+  .timer{font-variant-numeric:tabular-nums;font-size:13.5px;color:#9FBDB6;min-width:56px}
+  .aviso{max-width:1100px;margin:0 auto;width:100%;padding:0 22px 14px;font-size:12px;color:#9FBDB6;line-height:1.6}
+  .aviso b{color:var(--amber)}
+  @media(max-width:760px){ main{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="buscar.html"><svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="none" stroke="#F2EDE4" stroke-width="6"/><path d="M14 50 L36 50 L43 32 L52 66 L59 42 L64 50 L86 50" fill="none" stroke="#F2EDE4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6" fill="#E89A2B"/></svg> sosmed · teleconsulta</a>
+  <span class="demo-tag">SALA DEMO — sem conexão remota</span>
+</header>
+
+<main>
+  <div class="tile">
+    <div class="placeholder" id="phProf">
+      <div class="avatar" id="avProf">?</div>
+      <span class="pulse"></span><span id="nomeProfWait">Aguardando o profissional entrar…</span><br>
+      <span style="font-size:12px">Nesta demo, o outro lado da chamada é ilustrativo. A conexão real (WebRTC) entra na fase 2.</span>
+    </div>
+    <span class="nome" id="nomeProf">Profissional</span>
+  </div>
+  <div class="tile">
+    <video id="meuVideo" autoplay muted playsinline></video>
+    <div class="placeholder" id="phVoce">Clique em "Ativar câmera" para se ver aqui —<br>o vídeo fica só no seu aparelho.</div>
+    <span class="nome">Você</span>
+  </div>
+</main>
+
+<footer>
+  <span class="timer" id="timer">00:00</span>
+  <button class="ctl" id="btnMic" title="Microfone">🎙️</button>
+  <button class="ctl" id="btnCam" title="Câmera">🎥</button>
+  <button class="ctl end" id="btnEnd">Encerrar</button>
+</footer>
+<p class="aviso"><b>Demo honesta:</b> esta sala liga apenas a sua câmera/microfone locais para você sentir o fluxo — nenhum vídeo é transmitido ou gravado. A videochamada real entre paciente e profissional (criptografada, dentro da Res. CFM 2.314/2022) faz parte da fase 2.</p>
+
+<script>
+(function(){
+'use strict';
+var q = new URLSearchParams(location.search);
+var prof = q.get('prof') || 'Profissional';
+document.getElementById('nomeProf').textContent = prof;
+document.getElementById('avProf').textContent = prof.replace(/^(Dra?\.\s*)/i,'').charAt(0).toUpperCase() || '?';
+if (q.get('h')) document.getElementById('nomeProfWait').textContent = 'Consulta marcada para ' + q.get('h') + ' — aguardando o profissional…';
+
+var stream = null, micOn = true, camOn = false;
+var video = document.getElementById('meuVideo');
+
+function atualizarBotoes(){
+  document.getElementById('btnMic').classList.toggle('off', !micOn);
+  document.getElementById('btnCam').classList.toggle('off', !camOn);
+  document.getElementById('phVoce').style.display = camOn ? 'none' : 'block';
+}
+function ligarCamera(){
+  navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(function(s){
+    stream = s; video.srcObject = s; camOn = true; micOn = true; atualizarBotoes();
+  }).catch(function(){
+    document.getElementById('phVoce').innerHTML = 'Sem permissão de câmera/microfone.<br>Você pode permitir no navegador e tentar de novo.';
+  });
+}
+document.getElementById('btnCam').addEventListener('click', function(){
+  if (!stream) return ligarCamera();
+  camOn = !camOn;
+  stream.getVideoTracks().forEach(function(t){ t.enabled = camOn; });
+  atualizarBotoes();
+});
+document.getElementById('btnMic').addEventListener('click', function(){
+  if (!stream) return ligarCamera();
+  micOn = !micOn;
+  stream.getAudioTracks().forEach(function(t){ t.enabled = micOn; });
+  atualizarBotoes();
+});
+document.getElementById('btnEnd').addEventListener('click', function(){
+  if (stream) stream.getTracks().forEach(function(t){ t.stop(); });
+  location.href = 'buscar.html';
+});
+document.getElementById('phVoce').textContent = 'Clique em 🎥 para ativar sua câmera — o vídeo fica só no seu aparelho.';
+
+var t0 = Date.now();
+setInterval(function(){
+  var s = Math.floor((Date.now() - t0)/1000);
+  document.getElementById('timer').textContent = String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
+}, 1000);
+})();
+</script>
+</body>
+</html>

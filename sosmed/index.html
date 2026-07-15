@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A Lia atende seu WhatsApp 24/7, converte leads em consultas pagas e transforma consulta avulsa em plano recorrente — numa plataforma que entrega também a consulta, o prontuário e a cobrança — tudo no mesmo lugar.">
+<title>SosMed Health — Enquanto você atende, a Lia vende.</title>
+<meta name="theme-color" content="#0C6B5C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ccircle%20cx='50'%20cy='50'%20r='44'%20fill='none'%20stroke='%23083F36'%20stroke-width='8'/%3E%3Cpath%20d='M14%2050%20L36%2050%20L43%2032%20L52%2066%20L59%2042%20L64%2050%20L86%2050'%20fill='none'%20stroke='%23083F36'%20stroke-width='8'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='7'%20fill='%23C97F16'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF9F6; --surface:#FFFFFF; --ink:#132420; --muted:#5B6B65;
+    --line:#E7E4DC; --line-soft:#EFEDE6; --line-strong:#D8D4C8;
+    --teal:#0C6B5C; --teal-deep:#083F36; --teal-tint:#EBF3F0; --teal-ghost:#F3F8F6;
+    --amber:#C97F16; --amber-bright:#E89A2B; --amber-tint:#FBF1E0;
+    --amber-ink:#9A5B00; --amber-btn:#A66508; --amber-btn-hover:#8A5303;
+    --whats:#1FA855; --ok:#2E9E77;
+    --shadow-sm:0 1px 2px rgba(19,36,32,.05);
+    --shadow-md:0 1px 2px rgba(19,36,32,.04), 0 6px 16px -6px rgba(19,36,32,.07), 0 16px 40px -16px rgba(19,36,32,.12);
+    --shadow-lg:0 1px 2px rgba(19,36,32,.05), 0 10px 24px -10px rgba(19,36,32,.09), 0 32px 72px -20px rgba(19,36,32,.17);
+    --ring:0 0 0 3px rgba(12,107,92,.14);
+    --ease:cubic-bezier(.22,.61,.36,1);
+    --radius:16px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',Helvetica,Arial,sans-serif;color:var(--ink);line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-tap-highlight-color:transparent;
+    background:
+      radial-gradient(1200px 640px at 82% -160px, rgba(12,107,92,.06), transparent 62%),
+      radial-gradient(820px 480px at -6% 4%, rgba(201,127,22,.04), transparent 58%),
+      var(--bg);
+    background-repeat:no-repeat}
+  .display{font-family:'Fraunces',Georgia,serif}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+  .kicker{color:var(--teal);letter-spacing:.18em;font-size:11.5px;font-weight:700;text-transform:uppercase}
+  a{color:var(--teal)}
+  ::selection{background:var(--amber-tint)}
+  :focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+  section[id]{scroll-margin-top:84px}
+
+  /* ---------- Buttons ---------- */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(180deg,#0E7767 0%,var(--teal) 100%);color:#fff;border:none;padding:13px 26px;border-radius:999px;font-weight:600;cursor:pointer;font-size:14.5px;font-family:inherit;letter-spacing:.005em;transition:transform .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease);box-shadow:0 1px 2px rgba(8,63,54,.20), inset 0 1px 0 rgba(255,255,255,.14)}
+  .btn:hover{background:var(--teal-deep);transform:translateY(-1px);box-shadow:0 2px 4px rgba(8,63,54,.14), 0 10px 24px -8px rgba(8,63,54,.28), inset 0 1px 0 rgba(255,255,255,.10)}
+  .btn:active{transform:translateY(0);box-shadow:0 1px 2px rgba(8,63,54,.18)}
+  .btn:focus-visible{outline:3px solid rgba(12,107,92,.35);outline-offset:2px}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-strong);box-shadow:none;font-weight:500}
+  .btn.ghost:hover{background:var(--surface);border-color:var(--muted);box-shadow:var(--shadow-sm)}
+  .btn.amber{background:var(--amber-btn);color:#fff}
+  .btn.amber:hover{background:var(--amber-btn-hover)}
+
+  /* ---------- Nav ---------- */
+  .navbar{position:sticky;top:0;z-index:50;background:rgba(250,249,246,.86);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border-bottom:1px solid var(--line-soft);transition:box-shadow .25s var(--ease)}
+  .navbar.scrolled{box-shadow:0 6px 24px -14px rgba(19,36,32,.14)}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:14px 0}
+  .logo{display:flex;align-items:center;gap:11px;font-family:'Fraunces',Georgia,serif;font-size:23px;font-weight:700;color:var(--teal-deep)}
+  .logo small{font-family:'Inter';font-size:10px;color:var(--muted);letter-spacing:.2em;display:block;line-height:1.2;margin-top:2px;font-weight:600}
+  .nav-links{display:flex;gap:26px;align-items:center}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;padding:4px 2px;transition:color .15s var(--ease)}
+  .nav-links a:hover{color:var(--teal-deep)}
+  .nav-links a:focus-visible{outline:2px solid var(--teal);outline-offset:4px;border-radius:2px}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:84px 0 60px;display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
+  h1{font-family:'Fraunces',Georgia,serif;font-size:clamp(37px,5.4vw,60px);line-height:1.05;font-weight:600;letter-spacing:-.018em;text-wrap:balance}
+  h1 em{font-style:italic;color:var(--teal);font-weight:700}
+  .hero-sub{color:var(--muted);margin:22px 0 32px;font-size:17px;line-height:1.7;max-width:530px}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+  .proofbar{display:flex;gap:20px 40px;margin-top:44px;padding-top:28px;border-top:1px solid var(--line);flex-wrap:wrap}
+  .proofbar b{font-family:'Fraunces',Georgia,serif;font-size:28px;color:var(--teal-deep);display:block;line-height:1.15;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+  .proofbar span{color:var(--muted);font-size:12.5px}
+
+  /* ---------- Phone mock ---------- */
+  .phone-scene{position:relative}
+  .phone-scene::before{content:'';position:absolute;inset:-8% -12%;background:radial-gradient(ellipse at 60% 40%, var(--teal-tint), transparent 68%);z-index:0;border-radius:50%}
+  .phone{position:relative;z-index:1;background:var(--surface);border:1px solid var(--line);border-radius:38px;padding:14px;max-width:344px;margin:0 auto;box-shadow:var(--shadow-lg)}
+  .ph-head{display:flex;align-items:center;gap:10px;padding:10px 12px;background:linear-gradient(180deg,#0A4A3F,var(--teal-deep));border-radius:24px 24px 0 0;color:#fff}
+  .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--amber-bright),var(--amber));display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px;flex-shrink:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+  .ph-head b{font-size:13.5px;display:block;line-height:1.3}
+  .ph-head span{font-size:11px;color:#9FE8C9}
+  .chat{padding:16px 10px 14px;min-height:330px;display:flex;flex-direction:column;gap:9px;background:linear-gradient(180deg,#F2EEE6,#EFEAE0);border-radius:0 0 24px 24px}
+  .msg{max-width:84%;padding:9px 12px;border-radius:12px;font-size:13.2px;opacity:0;transform:translateY(8px);transition:opacity .4s var(--ease), transform .4s var(--ease);line-height:1.45}
+  .msg.show{opacity:1;transform:none}
+  .msg.in{background:#fff;border-top-left-radius:4px;align-self:flex-start;box-shadow:var(--shadow-sm)}
+  .msg.out{background:#D9F5E1;border-top-right-radius:4px;align-self:flex-end;color:#10341F;box-shadow:var(--shadow-sm)}
+  .msg .time{display:block;font-size:10px;opacity:.55;text-align:right;margin-top:3px}
+  .paybtn{display:inline-block;background:#fff;border:1px solid var(--ok);color:var(--teal-deep);font-size:12px;border-radius:8px;padding:6px 10px;margin-top:6px;font-weight:600;box-shadow:var(--shadow-sm)}
+  .lia-typing{align-self:flex-start;display:inline-flex;gap:5px;align-items:center;background:#fff;border-radius:12px;border-top-left-radius:4px;padding:12px 14px;max-height:40px;box-shadow:var(--shadow-sm);transition:opacity .35s var(--ease), visibility .35s var(--ease), max-height .35s var(--ease), padding .35s var(--ease)}
+  .lia-typing i{width:6px;height:6px;border-radius:50%;background:#8FA79F;animation:liaDot 1.15s infinite var(--ease)}
+  .lia-typing i:nth-child(2){animation-delay:.14s}
+  .lia-typing i:nth-child(3){animation-delay:.28s}
+  @keyframes liaDot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-3px);opacity:1}}
+  .msg.show + .lia-typing{opacity:0;visibility:hidden;max-height:0;padding-top:0;padding-bottom:0}
+
+  /* ---------- Sections ---------- */
+  section{padding:76px 0}
+  .section-title{font-family:'Fraunces',Georgia,serif;font-size:clamp(28px,3.8vw,40px);margin:12px 0 10px;font-weight:600;letter-spacing:-.015em;text-wrap:balance}
+  .section-sub{color:var(--muted);margin-bottom:38px;max-width:640px;font-size:16px;line-height:1.7}
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease), transform .6s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- Problema ---------- */
+  .problema{background:linear-gradient(180deg,var(--surface),#FDFCF9);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+  .problema blockquote{font-family:'Fraunces',Georgia,serif;font-size:clamp(20px,2.6vw,26px);line-height:1.5;font-weight:500;max-width:820px;color:var(--ink);letter-spacing:-.005em}
+  .problema blockquote strong{color:var(--teal);font-weight:700}
+  .problema .apoio{margin-top:24px;color:var(--muted);max-width:700px;font-size:16px;line-height:1.75}
+
+  /* ---------- Movimentos ---------- */
+  .movs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .mov{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px 26px;box-shadow:var(--shadow-sm);transition:box-shadow .25s var(--ease), transform .25s var(--ease), border-color .25s var(--ease)}
+  .mov:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:var(--line-strong)}
+  .mov .num{display:flex;align-items:center;gap:12px;font-family:'Fraunces',Georgia,serif;font-size:14px;color:var(--amber-ink);font-weight:700;letter-spacing:.12em;font-variant-numeric:tabular-nums}
+  .mov .num::after{content:'';flex:1;height:1px;background:var(--line)}
+  .mov h3{font-family:'Fraunces',Georgia,serif;font-size:22px;margin:12px 0 8px;font-weight:600;letter-spacing:-.01em}
+  .mov p{color:var(--muted);font-size:14.5px;line-height:1.65}
+
+  /* ---------- Console ---------- */
+  .console{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:236px 1fr;min-height:540px;box-shadow:var(--shadow-lg)}
+  .side{border-right:1px solid var(--line-soft);padding:14px 10px;display:flex;flex-direction:column;gap:4px;background:linear-gradient(180deg,#F7F5F0,#F4F1EB);scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+  .side::-webkit-scrollbar{height:6px;width:6px}
+  .side::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
+  .side::-webkit-scrollbar-track{background:transparent}
+  .side .tab{position:relative;display:flex;gap:10px;align-items:center;padding:12px 14px;background:none;border:none;color:var(--muted);font-size:14px;font-weight:500;cursor:pointer;border-radius:10px;text-align:left;width:100%;font-family:inherit;transition:background .18s var(--ease), color .18s var(--ease), box-shadow .18s var(--ease)}
+  .side .tab:hover{color:var(--ink);background:rgba(19,36,32,.045)}
+  .side .tab:focus-visible{outline:2px solid var(--teal);outline-offset:-2px}
+  .side .tab.active{color:var(--teal-deep);background:var(--surface);font-weight:600;box-shadow:var(--shadow-sm), inset 0 0 0 1px var(--line-soft)}
+  .side .tab.active::after{content:'';position:absolute;left:2px;top:12px;bottom:12px;width:3px;border-radius:99px;background:var(--amber-bright)}
+  .panel{display:none;padding:28px}
+  .panel.active{display:block;animation:fadeIn .35s var(--ease)}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .box{background:var(--surface);border-radius:14px;padding:20px;border:1px solid var(--line);transition:border-color .2s var(--ease)}
+  .box:hover{border-color:var(--line-strong)}
+  .box h4{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:700}
+  .metric-row{display:flex;gap:12px;flex-wrap:wrap}
+  .metric{background:var(--surface);border-radius:12px;padding:14px 16px;flex:1;min-width:118px;border:1px solid var(--line);transition:border-color .2s var(--ease), box-shadow .2s var(--ease)}
+  .metric:hover{border-color:var(--line-strong);box-shadow:var(--shadow-sm)}
+  .metric b{font-family:'Fraunces',Georgia,serif;font-size:24px;display:block;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+  .metric span{font-size:11.5px;color:var(--muted)}
+  .metric .up{color:var(--teal)}
+  .rgp{background:linear-gradient(135deg,var(--teal-tint),#F6FBF9);border:1px solid rgba(12,107,92,.28);border-radius:16px;padding:22px;margin-bottom:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+  .rgp b{font-family:'Fraunces',Georgia,serif;font-size:42px;color:var(--teal-deep);display:block;line-height:1.2;letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+  .rgp span{color:var(--muted);font-size:13px;display:block}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  td,th{padding:9px 8px;border-bottom:1px solid var(--line-soft);text-align:left;transition:background .15s var(--ease)}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:rgba(12,107,92,.03)}
+  th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+  .amt{color:var(--teal-deep);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .bubble{background:var(--teal-ghost);border:1px solid var(--line-soft);border-radius:10px;padding:10px 13px;margin-bottom:9px;font-size:13.5px;line-height:1.55}
+  .bubble b{color:var(--teal-deep)}
+  .soap{font-size:13.2px;white-space:pre-wrap;min-height:190px;color:var(--ink);line-height:1.6}
+  .gen-btn{margin-top:12px;background:var(--teal);color:#fff;border:none;padding:10px 20px;border-radius:999px;font-weight:600;cursor:pointer;font-size:13px;font-family:inherit;transition:background .18s var(--ease), transform .18s var(--ease), box-shadow .18s var(--ease);box-shadow:0 1px 2px rgba(8,63,54,.18)}
+  .gen-btn:hover{background:var(--teal-deep);transform:translateY(-1px);box-shadow:0 6px 16px -6px rgba(8,63,54,.30)}
+  .gen-btn:active{transform:translateY(0)}
+  .gen-btn:focus-visible{outline:3px solid rgba(12,107,92,.35);outline-offset:2px}
+  .timeline{position:relative;padding-left:24px}
+  .timeline:before{content:'';position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--line)}
+  .tl-item{position:relative;margin-bottom:16px;font-size:13.5px}
+  .tl-item:before{content:'';position:absolute;left:-22px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--amber-bright);border:2px solid #fff;box-shadow:0 0 0 1px var(--line)}
+  .tl-item b{display:block;color:var(--teal-deep)}
+  .tl-item span{color:var(--muted);font-size:11.5px}
+  .alert{background:var(--amber-tint);border:1px solid rgba(201,127,22,.35);border-radius:12px;padding:14px 16px;margin-top:14px;font-size:13.5px;line-height:1.6}
+  .support{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .support .box p{font-size:13.5px;color:var(--muted);line-height:1.6}
+
+  /* ---------- Módulos strip ---------- */
+  .modstrip{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+  .modchip{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 18px;font-size:13.5px;font-weight:500;color:var(--ink);box-shadow:var(--shadow-sm);transition:transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease)}
+  .modchip:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:rgba(12,107,92,.35)}
+  .modchip b{color:var(--teal)}
+
+  /* ---------- ROI ---------- */
+  .roi{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+  .roi label{font-size:13px;color:var(--muted);font-weight:500}
+  .roi input{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:12px 14px;font-size:15px;margin:6px 0 16px;font-family:inherit;font-variant-numeric:tabular-nums;transition:border-color .18s var(--ease), box-shadow .18s var(--ease)}
+  .roi input:hover{border-color:var(--line-strong)}
+  .roi input:focus{outline:none;border-color:var(--teal);box-shadow:var(--ring)}
+  .roi-out div{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:14px 4px;border-bottom:1px dashed var(--line);font-size:14.5px;color:var(--muted)}
+  .roi-out div:last-of-type{border-bottom:none}
+  .roi-out b{font-family:'Fraunces',Georgia,serif;color:var(--teal-deep);font-size:20px;white-space:nowrap;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+  .roi-out .destaque{background:var(--amber-tint);border-radius:10px;padding:14px 12px;margin-top:4px}
+  .roi-out .destaque b{color:var(--amber-ink)}
+  .roi-note{font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.6}
+
+  /* ---------- Fundadores ---------- */
+  .founder{position:relative;overflow:hidden;background:
+      radial-gradient(720px 400px at 90% -80px, rgba(232,154,43,.16), transparent 62%),
+      radial-gradient(560px 360px at -60px 110%, rgba(31,168,85,.10), transparent 60%),
+      linear-gradient(150deg,#0B5346 0%,var(--teal-deep) 55%,#05251F 100%);
+    color:#F2F7F5;border-radius:22px;padding:48px;display:grid;grid-template-columns:1.2fr .8fr;gap:36px;box-shadow:var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.08)}
+  .founder .kicker{color:var(--amber-bright)}
+  .founder h2{color:#fff}
+  .founder ul{list-style:none;margin-top:16px}
+  .founder li{display:flex;gap:10px;padding:10px 0;border-bottom:1px dashed rgba(255,255,255,.14);font-size:14.5px;color:#C9DAD4;line-height:1.55}
+  .founder li:before{content:'✦';color:var(--amber-bright);flex-shrink:0}
+  .price-big{font-family:'Fraunces',Georgia,serif;font-size:54px;color:#fff;line-height:1.1;letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+  .price-big small{font-size:16px;color:#9FBDB6;font-family:'Inter'}
+  .guarantee{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:16px;font-size:13px;color:#D8E6E1;margin-top:18px;line-height:1.6}
+  .vagas-note{color:var(--amber-bright);font-size:13px;margin-top:12px;font-weight:600}
+  .founder .btn{background:var(--amber-btn);width:100%;justify-content:center;font-size:15px;padding:15px 26px;box-shadow:0 2px 6px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.18)}
+  .founder .btn:hover{background:var(--amber-btn-hover);box-shadow:0 6px 18px -4px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.14)}
+  .founder .btn:focus-visible{outline:3px solid rgba(232,154,43,.55);outline-offset:2px}
+
+  /* ---------- Provas ---------- */
+  .provas{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .prova{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:10px;transition:box-shadow .25s var(--ease), transform .25s var(--ease), border-color .25s var(--ease)}
+  .prova:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:var(--line-strong)}
+  .prova .ptipo{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber-ink);font-weight:700}
+  .prova h3{font-family:'Fraunces',Georgia,serif;font-size:19px;font-weight:600;letter-spacing:-.01em}
+  .prova p{color:var(--muted);font-size:14px;flex:1;line-height:1.65}
+  .prova .pnum{font-family:'Fraunces',Georgia,serif;font-size:36px;color:var(--teal-deep);letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+  .prova footer{font-size:11.5px;color:var(--muted);border-top:1px solid var(--line-soft);padding-top:10px;border-bottom:none;display:block}
+
+  /* ---------- Quem somos ---------- */
+  .quem{background:linear-gradient(180deg,var(--surface),#FDFCF9);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+  .quem blockquote{font-family:'Fraunces',Georgia,serif;font-size:clamp(19px,2.4vw,24px);line-height:1.55;max-width:800px;font-weight:500;letter-spacing:-.005em}
+  .quem .assin{margin-top:18px;color:var(--muted);font-size:14px}
+
+  /* ---------- FAQ ---------- */
+  #faqList{border-top:1px solid var(--line)}
+  .faq-item{border-bottom:1px solid var(--line)}
+  .faq-q{width:100%;background:none;border:none;color:var(--ink);font-size:15.5px;font-weight:600;text-align:left;padding:20px 6px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:inherit;line-height:1.45;transition:color .15s var(--ease)}
+  .faq-q:hover{color:var(--teal)}
+  .faq-q:focus-visible{outline:2px solid var(--teal);outline-offset:-2px;border-radius:8px}
+  .faq-q span{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--teal);font-size:16px;font-weight:500;line-height:1;flex-shrink:0;transition:transform .25s var(--ease), background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease)}
+  .faq-q:hover span{border-color:var(--teal)}
+  .faq-item.open .faq-q span{transform:rotate(45deg);background:var(--teal);border-color:var(--teal);color:#fff}
+  .faq-a{display:none;color:var(--muted);font-size:14.5px;line-height:1.7;padding:0 6px 22px;max-width:760px}
+  .faq-item.open .faq-a{display:block;animation:fadeIn .25s var(--ease)}
+
+  /* ---------- CTA final ---------- */
+  .cta-final{text-align:center;padding:92px 0}
+  .cta-final h2{font-family:'Fraunces',Georgia,serif;font-size:clamp(26px,3.6vw,38px);max-width:780px;margin:0 auto 14px;font-weight:600;letter-spacing:-.015em;line-height:1.25;text-wrap:balance}
+  .cta-final p{color:var(--muted);max-width:620px;margin:0 auto 32px}
+  .ps{font-size:13.5px;color:var(--muted);max-width:560px;margin:28px auto 0;background:var(--amber-tint);border:1px solid rgba(201,127,22,.25);border-radius:12px;padding:14px 18px;line-height:1.6}
+
+  /* ---------- Modal demo ---------- */
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(8,63,54,.45);z-index:100;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+  .modal-bg.open{display:flex;animation:overlayIn .25s var(--ease)}
+  @keyframes overlayIn{from{opacity:0}to{opacity:1}}
+  .modal{background:var(--surface);border-radius:20px;max-width:520px;width:100%;max-height:88vh;overflow-y:auto;padding:32px;box-shadow:var(--shadow-lg);scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+  .modal::-webkit-scrollbar{width:6px}
+  .modal::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
+  .modal-bg.open .modal{animation:modalIn .32s var(--ease)}
+  @keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+  .modal h3{font-family:'Fraunces',Georgia,serif;font-size:24px;margin-bottom:4px;letter-spacing:-.01em}
+  .modal .msub{color:var(--muted);font-size:13.5px;margin-bottom:20px;line-height:1.6}
+  .modal label{font-size:13px;font-weight:600;display:block;margin-top:14px}
+  .modal input,.modal select{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:14.5px;margin-top:5px;font-family:inherit;background:var(--bg);color:var(--ink);transition:border-color .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease)}
+  .modal input:hover,.modal select:hover{border-color:var(--line-strong)}
+  .modal input:focus,.modal select:focus{outline:none;border-color:var(--teal);box-shadow:var(--ring);background:var(--surface)}
+  .modal .btn{width:100%;justify-content:center;margin-top:22px}
+  .modal .fechar{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;width:100%;margin-top:12px;padding:8px;border-radius:8px;font-family:inherit;transition:color .15s var(--ease), background .15s var(--ease)}
+  .modal .fechar:hover{color:var(--ink);background:rgba(19,36,32,.04)}
+  .modal .fechar:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+  .diag{background:var(--teal-ghost);border:1px solid rgba(12,107,92,.22);border-radius:12px;padding:16px;font-size:13.5px;margin-top:18px;display:none;line-height:1.65}
+  .diag.show{display:block;animation:fadeIn .3s var(--ease)}
+  .diag b{color:var(--teal-deep)}
+
+  footer.site{border-top:1px solid var(--line);padding:36px 0 40px;color:var(--muted);font-size:12.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  @media(max-width:900px){
+    .hero,.split,.roi,.founder{grid-template-columns:1fr}
+    .hero{padding-top:44px;gap:44px}
+    .console{grid-template-columns:1fr;min-height:0}
+    .side{flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--line-soft);padding:10px;-webkit-overflow-scrolling:touch}
+    .side .tab{white-space:nowrap;width:auto;flex-shrink:0}
+    .side .tab.active::after{left:14px;right:14px;top:auto;bottom:3px;width:auto;height:3px}
+    .support,.movs,.provas{grid-template-columns:1fr}
+    .nav-links{display:none}
+    section{padding:56px 0}
+    section[id]{scroll-margin-top:72px}
+    .panel{padding:22px 18px}
+    .founder{padding:36px 28px}
+    .price-big{font-size:46px}
+    .proofbar{gap:18px 30px;margin-top:34px}
+    .cta-final{padding:72px 0}
+  }
+  @media(max-width:480px){
+    .wrap{padding:0 18px}
+    section{padding:48px 0}
+    .hero{padding:32px 0 44px;gap:36px}
+    h1{font-size:35px}
+    .hero-ctas .btn{width:100%}
+    .proofbar{margin-top:30px;padding-top:22px}
+    .proofbar b{font-size:24px}
+    nav .btn{padding:10px 16px;font-size:13px}
+    .logo{font-size:20px;gap:9px}
+    .logo svg{width:30px;height:30px}
+    .logo small{letter-spacing:.14em}
+    .panel{padding:18px 14px}
+    .box{padding:16px 14px}
+    .rgp{padding:18px}
+    .rgp b{font-size:34px}
+    table{font-size:12.5px}
+    .founder{padding:30px 20px;border-radius:18px}
+    .price-big{font-size:42px}
+    .modstrip{gap:8px}
+    .modchip{padding:8px 14px;font-size:12.5px}
+    .modal{padding:26px 20px}
+    .cta-final{padding:60px 0}
+    footer.site{flex-direction:column;gap:6px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *{transition:none!important;animation:none!important}
+    .msg,.reveal{opacity:1;transform:none}
+    .lia-typing{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="wrap">
+    <nav>
+      <div class="logo">
+        <svg width="34" height="34" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="none" stroke="#083F36" stroke-width="5"/><path d="M14 50 L36 50 L43 32 L52 66 L59 42 L64 50 L86 50" fill="none" stroke="#083F36" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="5" fill="#C97F16"/></svg>
+        <div>sosmed<small>HEALTH · POWERED BY LIA</small></div>
+      </div>
+      <div class="nav-links">
+        <a href="#console">Plataforma</a>
+        <a href="#roi">Simulador</a>
+        <a href="#fundadores">Fundadores</a>
+        <a href="#faq">Perguntas</a>
+        <a href="buscar.html">Sou paciente: encontrar profissional</a>
+        <a href="app.html" style="color:var(--teal);font-weight:600">Entrar no sistema →</a>
+      </div>
+      <button class="btn" data-demo>Ver demonstração</button>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div>
+      <div class="kicker">Para médicos, nutricionistas e psicólogos</div>
+      <h1 style="margin-top:16px" id="headline">Enquanto você atende, a <em>Lia</em> vende.</h1>
+      <p class="hero-sub">A Lia responde seu WhatsApp em segundos, 24/7: converte leads em consultas pagas, reativa sua base antiga e transforma consulta avulsa em plano recorrente — dentro de uma plataforma que também entrega a consulta, o prontuário e a cobrança, tudo no mesmo lugar.</p>
+      <div class="hero-ctas">
+        <button class="btn" data-demo>Ver a Lia atender o meu consultório — 15 min</button>
+        <a class="btn ghost" href="#roi">Simular minha agenda</a>
+      </div>
+      <div class="proofbar">
+        <div><b data-bind="metrics.tempo_resposta">&lt;3s</b><span>tempo de resposta da Lia</span></div>
+        <div><b data-bind="metrics.fora_horario">57%</b><span>dos contatos na rede SosMed chegam fora do horário*</span></div>
+        <div><b data-bind="metrics.disponibilidade">24/7</b><span>sem 13º, sem férias</span></div>
+        <div><b data-bind="metrics.consultas_rede">1.284</b><span>consultas agendadas pela Lia este mês (rede)*</span></div>
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin-top:10px">*Números simulados para este protótipo; no lançamento, substituídos pelos dados reais e vivos da rede.</p>
+    </div>
+
+    <div class="phone-scene">
+      <div class="phone" role="img" aria-label="Simulação de conversa da Lia no WhatsApp agendando uma consulta às 22h47">
+        <div class="ph-head">
+          <div class="avatar">L</div>
+          <div><b>Lia · Consultório Dra. Marina</b><span>online agora</span></div>
+          <button id="chatReplay" title="Rever a conversa" aria-label="Rever a conversa" style="margin-left:auto;background:rgba(255,255,255,.12);border:none;color:#fff;border-radius:99px;width:30px;height:30px;font-size:15px;cursor:pointer">↺</button>
+        </div>
+        <div class="chat" id="liaChat">
+          <div class="msg in">oi, vcs atendem particular? quanto tá a consulta?<span class="time">22:47</span></div>
+          <div class="msg out">Olá! Aqui é a Lia, assistente digital da Dra. Marina 💛 Atendemos sim! A consulta é R$ 320, presencial ou online. É sua primeira vez com a Dra.?<span class="time">22:47</span></div>
+          <div class="msg in">é sim. queria essa semana se der<span class="time">22:48</span></div>
+          <div class="msg out">Perfeito! Tenho quinta às 9h ou sexta às 14h30. Qual prefere?<span class="time">22:48</span></div>
+          <div class="msg in">quinta 9h<span class="time">22:49</span></div>
+          <div class="msg out">Reservado! Para confirmar, é só o sinal de R$ 50 (desconta do valor; remarcando até 24h antes, ele vai com você):<span class="paybtn">🔒 Pagar sinal via Pix</span><span class="time">22:49</span></div>
+          <div class="msg in">pago ✅<span class="time">22:51</span></div>
+          <div class="msg out">Confirmado, Júlia! Quinta, 9h. Vou te enviar 3 perguntinhas rápidas de pré-consulta, para a Dra. já te receber com tudo em mãos. Até lá! ✨<span class="time">22:51</span></div>
+          <div class="lia-typing" aria-hidden="true"><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<!-- ============ PROBLEMA ============ -->
+<section class="problema">
+  <div class="wrap reveal">
+    <div class="kicker">A cena que se repete todo dia</div>
+    <blockquote style="margin-top:14px">
+      Você sai da consulta e encontra <strong>14 mensagens</strong> no WhatsApp. Três eram pacientes prontos para agendar — duas horas atrás. <strong>Um já marcou com outro profissional.</strong>
+    </blockquote>
+    <p class="apoio">Você estudou uma década para cuidar de pessoas — não para ser secretário do próprio consultório às 23h. E os números confirmam o que você sente: mais da metade dos contatos chega fora do horário comercial, e quem responde nos primeiros minutos tende a converter muito mais. O problema não é você. É que agenda não se enche no horário em que você está livre.</p>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <!-- ============ MOVIMENTOS ============ -->
+  <section>
+    <div class="reveal">
+      <div class="kicker">Conheça a Lia</div>
+      <h2 class="section-title">Três movimentos. Uma agenda cheia.</h2>
+      <p class="section-sub">Às 22h47 um paciente pergunta o preço. Três segundos depois, a Lia responde, qualifica, agenda e envia o link do sinal. Você fica sabendo no café da manhã — com a pré-consulta já preenchida.</p>
+    </div>
+    <div class="movs">
+      <div class="mov reveal"><div class="num">01 · ATRAI</div><h3>Cada lead, em segundos</h3><p>A Lia responde 24/7 com a sua linguagem, qualifica o paciente e agenda com sinal pago — o comparecimento sobe junto.</p></div>
+      <div class="mov reveal"><div class="num">02 · RECUPERA</div><h3>Sua base antiga vira receita</h3><p>Ela reativa pacientes que sumiram há meses com mensagens pessoais. É a receita mais rápida que existe: sem tráfego pago, no dia 1.</p></div>
+      <div class="mov reveal"><div class="num">03 · MULTIPLICA</div><h3>De avulso a recorrente</h3><p>Depois da consulta, a Lia oferece seu plano de acompanhamento e transforma paciente pontual em renda previsível todo mês.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ BENEFÍCIOS: HOJE vs COM O SOSMED ============ -->
+  <section>
+    <div class="reveal">
+      <div class="kicker">O que muda na prática</div>
+      <h2 class="section-title">Seu dia hoje — e com o SosMed trabalhando junto</h2>
+      <p class="section-sub">Benefício não é recurso: é o que sobra para você no fim do mês — em agenda, em renda e em horas de vida.</p>
+    </div>
+    <div class="box reveal" style="padding:6px 22px;overflow-x:auto">
+      <table>
+        <tr><th style="width:46%">Hoje, sozinho(a)</th><th>Com o SosMed</th></tr>
+        <tr><td>Mensagens respondidas só quando você sai da consulta — o paciente já marcou com outro</td><td class="amt">Lia responde em &lt;3s, 24/7, e agenda com sinal pago</td></tr>
+        <tr><td>Agenda com buracos e faltas que ninguém avisa</td><td class="amt">Sinal antecipado: comparecimento na casa dos 90%*</td></tr>
+        <tr><td>Renda presa às horas trabalhadas — plantão para fechar a conta</td><td class="amt">Planos recorrentes: receita previsível todo mês</td></tr>
+        <tr><td>Receita, atestado e laudo tomando tempo de consulta</td><td class="amt">Documentos com seu cabeçalho em 1 clique (inclusive controle especial em 2 vias)</td></tr>
+        <tr><td>Paciente some depois da consulta e você não percebe</td><td class="amt">Reativação automática da base + lembretes de retorno e medicação</td></tr>
+        <tr><td>Marketing no achismo, com medo do CFM</td><td class="amt">Playbooks e scripts prontos, desenhados dentro das normas</td></tr>
+        <tr><td>Raciocínio clínico sozinho, no cansaço da 9ª consulta do dia</td><td class="amt">Copiloto em tempo real: perguntas de anamnese, sinais de alerta — você decide, sempre</td></tr>
+      </table>
+      <p style="font-size:11px;color:var(--muted);padding:10px 0 14px">*Número simulado do protótipo; será substituído pela métrica real da rede. Nenhuma linha desta tabela é promessa de resultado clínico ou financeiro.</p>
+    </div>
+  </section>
+
+  <!-- ============ TEST-DRIVE ============ -->
+  <section style="padding-top:0">
+    <div class="reveal">
+      <div class="kicker">Não acredite — teste</div>
+      <h2 class="section-title">O sistema está aberto. Entre agora, sem cadastro de cartão.</h2>
+      <p class="section-sub">Enquanto o mercado mostra vídeo de demonstração, a gente entrega o volante. Tudo roda no seu navegador, com dados de exemplo.</p>
+    </div>
+    <div class="movs reveal">
+      <a class="mov" href="app.html" style="text-decoration:none;color:inherit"><div class="num">TESTE 01</div><h3>🖥️ O console completo</h3><p>Crie seu consultório em 30 segundos: converse com a Lia, agende, emita uma receita, aplique o Índice de Saúde.</p><p style="color:var(--teal);font-weight:600;margin-top:10px">Entrar no console →</p></a>
+      <a class="mov" href="buscar.html" style="text-decoration:none;color:inherit"><div class="num">TESTE 02</div><h3>🔎 O marketplace</h3><p>Veja como seu perfil aparece para pacientes: busca por especialidade, horários reais e agendamento direto.</p><p style="color:var(--teal);font-weight:600;margin-top:10px">Ver a busca de pacientes →</p></a>
+      <a class="mov" href="saude.html" style="text-decoration:none;color:inherit"><div class="num">TESTE 03</div><h3>📋 A avaliação de saúde</h3><p>O retrato 0–100 que seus pacientes farão — e que chega na sua tela de consulta como ponto de partida.</p><p style="color:var(--teal);font-weight:600;margin-top:10px">Fazer minha avaliação →</p></a>
+    </div>
+  </section>
+
+  <!-- ============ CONSOLE ============ -->
+  <section id="console">
+    <div class="reveal">
+      <div class="kicker">O console do profissional</div>
+      <h2 class="section-title">Um negócio inteiro em seis abas</h2>
+      <p class="section-sub">Chatbot que agenda, o mercado tem. O SosMed é onde a Lia entrega o paciente dentro da sua sala de consulta digital — vídeo, prontuário com IA, prescrição, cobrança recorrente e a jornada completa. Demonstração com dados fictícios; navegue pelos módulos.</p>
+    </div>
+
+    <div class="console reveal">
+      <div class="side" role="tablist" aria-label="Módulos da plataforma">
+        <button class="tab active" role="tab" aria-selected="true" aria-controls="pDash" data-p="pDash">📊 Painel do negócio</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="pLia" data-p="pLia">💬 Lia — vendas</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="pCons" data-p="pCons">🩺 Consulta com IA</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="pJor" data-p="pJor">🧭 Jornada 360°</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="pPred" data-p="pPred">📡 SosMed Preditivo</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="pSup" data-p="pSup">🛟 Suporte</button>
+      </div>
+      <div>
+        <!-- PAINEL -->
+        <div class="panel active" role="tabpanel" id="pDash">
+          <div class="rgp"><span>Receita gerada pelo SosMed este mês (RGP)</span><b data-bind="metrics.rgp_mes">R$ 45.120</b><span data-bind="metrics.rgp_variacao">+38% vs. mês anterior · 0 plantões</span></div>
+          <div class="metric-row">
+            <div class="metric"><b data-bind="metrics.novas_consultas">41</b><span>novas consultas (Lia)</span></div>
+            <div class="metric"><b data-bind="metrics.planos_novos">19</b><span>planos recorrentes novos</span></div>
+            <div class="metric"><b class="up" data-bind="metrics.comparecimento">92%</b><span>comparecimento (com sinal)</span></div>
+            <div class="metric"><b data-bind="metrics.horas_semana">22h</b><span>semana de trabalho</span></div>
+          </div>
+          <div class="split" style="margin-top:16px">
+            <div class="box">
+              <h4>Receita por fonte</h4>
+              <table>
+                <tr><td>Assinaturas de acompanhamento (63)</td><td class="amt">R$ 18.900</td></tr>
+                <tr><td>Consultas avulsas (41)</td><td class="amt">R$ 11.480</td></tr>
+                <tr><td>Checkups premium (3)</td><td class="amt">R$ 13.500</td></tr>
+                <tr><td>Loja &amp; manipulados</td><td class="amt">R$ 1.240</td></tr>
+              </table>
+            </div>
+            <div class="box">
+              <h4>Funil da Lia · 30 dias</h4>
+              <table>
+                <tr><td>Leads atendidos</td><td class="amt" data-bind="metrics.leads_atendidos">318</td></tr>
+                <tr><td>→ Conversas qualificadas</td><td class="amt" data-bind="metrics.conversas_qualificadas">204</td></tr>
+                <tr><td>→ Agendamentos</td><td class="amt" data-bind="metrics.agendamentos">89 (28%)</td></tr>
+                <tr><td>→ Compareceram</td><td class="amt" data-bind="metrics.compareceram">82</td></tr>
+                <tr><td>→ Viraram plano recorrente</td><td class="amt" data-bind="metrics.viraram_plano">19</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- LIA -->
+        <div class="panel" role="tabpanel" id="pLia">
+          <div class="split">
+            <div class="box">
+              <h4>Reativação da base · campanha ativa</h4>
+              <div class="bubble"><b>Lia → <span data-bind="reativacao.enviados">412</span> pacientes antigos:</b> "Oi, Carlos! Faz 14 meses desde seu último checkup com a Dra. Marina. Ela reservou horários esta semana para retornos — quer que eu veja um pra você?"</div>
+              <div class="metric-row">
+                <div class="metric"><b data-bind="reativacao.responderam">96</b><span>responderam</span></div>
+                <div class="metric"><b data-bind="reativacao.reagendaram">31</b><span>reagendaram</span></div>
+                <div class="metric"><b class="up" data-bind="reativacao.receita_recuperada">R$ 9.9k</b><span>receita recuperada</span></div>
+              </div>
+            </div>
+            <div class="box">
+              <h4>Guarda-corpos ativos</h4>
+              <div class="bubble">🛡️ Tema clínico detectado → transferido para a Dra. com resumo (7x esta semana)</div>
+              <div class="bubble">🚨 Sinal de urgência → orientação imediata de buscar atendimento (1x)</div>
+              <div class="bubble">📈 Dado de ajuste: variação B do script de sinal converteu +11% → promovida após sua aprovação</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONSULTA -->
+        <div class="panel" role="tabpanel" id="pCons">
+          <div class="split">
+            <div class="box">
+              <h4>Transcrição ambiente · ao vivo</h4>
+              <div class="bubble"><b>Paciente:</b> Sinto palpitações quando corro acima de 10 km. Meu pai infartou aos 52.</div>
+              <div class="bubble"><b>Médica:</b> Dor no peito? Como está o sono?</div>
+              <div class="bubble"><b>Paciente:</b> Sem dor. O relógio mostra 5h30 de sono e FC de repouso subiu de 52 para 61.</div>
+              <button class="gen-btn" id="genBtn">✦ Gerar prontuário</button>
+            </div>
+            <div class="box">
+              <h4>SOAP gerado · você revisa e assina</h4>
+              <div class="soap" id="soapOut">Aguardando geração…</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- JORNADA -->
+        <div class="panel" role="tabpanel" id="pJor">
+          <div class="split">
+            <div class="box">
+              <h4>Linha do tempo · Ana, 34</h4>
+              <div class="timeline">
+                <div class="tl-item"><b>Hoje — Consulta cardio do esporte</b><span>Vínculo anual assinado digitalmente</span></div>
+                <div class="tl-item"><b>Há 12 dias — Alerta preditivo</b><span>FC repouso +17% · sono &lt;6h por 10 noites</span></div>
+                <div class="tl-item"><b>Há 2 meses — Exames</b><span>LDL 162 · interpretado e anexado pela IA</span></div>
+                <div class="tl-item"><b>Há 6 meses — Árvore familiar</b><span>Pai: IAM aos 52 · risco recalculado</span></div>
+              </div>
+            </div>
+            <div class="box">
+              <h4>Relatório 360° · resumo vivo</h4>
+              <p style="font-size:13.5px;color:var(--muted)">Corredora, 40 km/sem. Risco cardiovascular moderado-alto para a idade (histórico familiar + LDL + queda de recuperação). Prioridades: estratificação cardiológica, meta LDL &lt;100, sono.</p>
+              <div class="metric-row" style="margin-top:12px">
+                <div class="metric"><b>7.2</b><span>SosMed Score</span></div>
+                <div class="metric"><b>3</b><span>ações pendentes</span></div>
+                <div class="metric"><b>92%</b><span>adesão</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PREDITIVA -->
+        <div class="panel" role="tabpanel" id="pPred">
+          <div class="box">
+            <h4>Wearables · 30 dias</h4>
+            <svg viewBox="0 0 600 110" width="100%" height="110" role="img" aria-label="Gráfico: frequência cardíaca de repouso subindo e sono caindo ao longo de 30 dias">
+              <polyline points="0,78 60,76 120,74 180,72 240,68 300,64 360,58 420,54 480,50 540,46 600,42" fill="none" stroke="#C97F16" stroke-width="3"/>
+              <polyline points="0,30 60,32 120,36 180,38 240,42 300,46 360,50 420,54 480,58 540,62 600,66" fill="none" stroke="#0C6B5C" stroke-width="3" stroke-dasharray="6 5"/>
+              <text x="6" y="16" fill="#0C6B5C" font-size="11">— — Sono (↓)</text>
+              <text x="6" y="102" fill="#9A5B00" font-size="11">— FC repouso (↑)</text>
+            </svg>
+            <div class="alert">⚑ <b style="color:var(--amber-ink)">Alerta do SosMed:</b> padrão compatível com sobrecarga de treino + privação de sono em paciente com risco familiar. Sugestão (com referências) enviada à médica — <em>ela decide, sempre</em>.</div>
+          </div>
+        </div>
+
+        <!-- SUPORTE -->
+        <div class="panel" role="tabpanel" id="pSup">
+          <div class="support">
+            <div class="box"><h4>Falar com a gente</h4><p>WhatsApp do suporte — atendido pela nossa própria Lia (dogfooding público), com humano em &lt;5 min no horário comercial e &lt;2h fora.</p></div>
+            <div class="box"><h4>Ritual de resultados</h4><p>Call de ativação (30 min) + revisões nos dias 14 e 30 com seus números na tela. É o ritual que segura churn e gera depoimento.</p></div>
+            <div class="box"><h4>Status &amp; dados</h4><p>Status page pública, exportação dos seus dados a qualquer momento e cancelamento em 2 cliques, sem fricção (com pesquisa de motivo — dado que nos ajusta).</p></div>
+            <div class="box"><h4>Macros prontas</h4><p>Um clique para as tarefas de sempre: ajustar linguagem da Lia, trocar agenda e preços, pausar nas férias, exportar dados. Vídeos de 2 minutos por tarefa na central de ajuda.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modstrip reveal">
+      <span class="modchip"><b>Lia</b> · vendas no WhatsApp</span>
+      <span class="modchip"><b>Consulta</b> · vídeo + IA que documenta</span>
+      <span class="modchip"><b>Prontuário 360</b> · linha do tempo viva</span>
+      <span class="modchip"><b>Planos</b> · recorrência + contrato digital</span>
+      <span class="modchip"><b>Financeiro</b> · sinal, Pix, assinaturas</span>
+      <span class="modchip"><b>Marketing</b> · reativação e campanhas</span>
+      <span class="modchip"><b>Documentos</b> · receita, atestado, laudo em 1 clique</span>
+      <span class="modchip"><b>Índice de Saúde</b> · 0–100 e A–F por paciente</span>
+      <span class="modchip"><b>Copiloto</b> · anamnese e alertas em tempo real</span>
+      <span class="modchip"><b>Academia</b> · playbooks de vendas compliant</span>
+    </div>
+  </section>
+
+  <!-- ============ ROI ============ -->
+  <section id="roi">
+    <div class="reveal">
+      <div class="kicker">Simulador</div>
+      <h2 class="section-title">Quanto sua agenda está perdendo?</h2>
+      <p class="section-sub">A venda por matemática, em quatro linhas. Preencha com os seus números.</p>
+    </div>
+    <div class="roi reveal">
+      <div class="box">
+        <label for="rLeads">Leads por semana no WhatsApp</label>
+        <input type="number" id="rLeads" value="50" min="0">
+        <label for="rTicket">Ticket médio da consulta (R$)</label>
+        <input type="number" id="rTicket" value="300" min="0">
+        <label for="rBase">Pacientes na sua base antiga</label>
+        <input type="number" id="rBase" value="400" min="0">
+        <button class="btn" id="roiBtn">Calcular</button>
+      </div>
+      <div class="box roi-out">
+        <div><span>Hoje (10% de conversão)</span><b id="oNow">R$ 6.000/mês</b></div>
+        <div><span>Com a Lia (25% de conversão)</span><b id="oLia">R$ 15.000/mês</b></div>
+        <div><span>+ Reativação da base (7,5%)</span><b id="oBase">R$ 9.000 (única)</b></div>
+        <div class="destaque"><span>+ Recorrência (15% viram plano)</span><b id="oRec">R$ 7.500/mês</b></div>
+        <p class="roi-note">Simulação ilustrativa com premissas nossas (conversão de 25% com a Lia, reativação de 7,5% da base, 15% de adesão a planos), que você pode conferir e contestar na demonstração. Resultados variam por especialidade, região e agenda disponível. Nada aqui é promessa de resultado — e você deveria desconfiar de quem promete.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FUNDADORES ============ -->
+  <section id="fundadores">
+    <div class="founder reveal">
+      <div>
+        <div class="kicker">Plano fundadores · <span data-bind="vagas.total">100</span> vagas</div>
+        <h2 class="section-title" style="font-size:30px">Tudo configurado por nós. Preço de fundador garantido em contrato.</h2>
+        <ul>
+          <li>Lia treinada com a sua linguagem (done-for-you) <span style="margin-left:auto;color:#9FBDB6;font-size:12.5px;white-space:nowrap">valor de tabela R$ 1.500</span></li>
+          <li>Importação + campanha de reativação da sua base <span style="margin-left:auto;color:#9FBDB6;font-size:12.5px;white-space:nowrap">valor de tabela R$ 997</span></li>
+          <li>Biblioteca de scripts e ofertas da sua especialidade <span style="margin-left:auto;color:#9FBDB6;font-size:12.5px;white-space:nowrap">valor de tabela R$ 497</span></li>
+          <li>Construtor de plano recorrente + contrato digital <span style="margin-left:auto;color:var(--amber-bright);font-size:12.5px;white-space:nowrap">incluído</span></li>
+          <li>Comunidade fundadora + call mensal de estratégia <span style="margin-left:auto;color:var(--amber-bright);font-size:12.5px;white-space:nowrap">incluído</span></li>
+          <li>Selo de fundador: condição vitalícia, garantida em contrato <span style="margin-left:auto;color:var(--amber-bright);font-size:12.5px;white-space:nowrap">exclusivo da coorte</span></li>
+        </ul>
+        <p style="color:#9FBDB6;font-size:11.5px;margin-top:10px">Valores de tabela = o que a implantação custará fora da coorte de fundadores. Dentro dela, está tudo na mensalidade.</p>
+        <div class="guarantee">🛡️ <b>Garantia incondicional de 30 dias:</b> use o SosMed por um mês inteiro. Se decidir que não é para você — por qualquer motivo —, devolvemos 100% da mensalidade, direto pelo painel, sem justificativa e sem retenção. Garantimos o software e o serviço; resultado clínico, jamais — e você deveria desconfiar de quem garante.</div>
+      </div>
+      <div style="text-align:center;align-self:center">
+        <div class="price-big"><span data-bind="preco.mensalidade">R$ 349</span><small>/mês</small></div>
+        <p style="color:#9FBDB6;font-size:13px;margin:8px 0 20px" data-bind="preco.condicao">Sem fidelidade · cancele em 2 cliques</p>
+        <button class="btn" data-demo>Garantir vaga de fundador</button>
+        <p class="vagas-note">⏳ Vagas desta coorte: <span data-bind="vagas.restantes">37</span> de <span data-bind="vagas.total">100</span> · atualizado em <span data-bind="atualizado_em">14/07/2026</span></p>
+        <p style="color:#C9DAD4;font-size:11.5px;margin-top:8px">Por que existe limite: o onboarding é feito à mão pela nossa equipe — 100 consultórios por coorte é a nossa capacidade real de configurar bem. Fechou a coorte, abre lista de espera.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROVAS ============ -->
+  <section>
+    <div class="reveal">
+      <div class="kicker">Prova, não promessa</div>
+      <h2 class="section-title">O que os números da rede mostram</h2>
+      <p class="section-sub">Nenhum antes/depois clínico. Nenhuma promessa de faturamento. Enquanto o SosMed é protótipo, os cards abaixo são cenários ilustrativos — serão substituídos por registros operacionais reais, com autorização escrita, a partir da 1ª coorte.</p>
+    </div>
+    <div class="provas reveal" id="provasGrid"><!-- renderizado de data/site-data.json --></div>
+  </section>
+</div>
+
+<!-- ============ QUEM SOMOS ============ -->
+<section class="quem">
+  <div class="wrap reveal">
+    <div class="kicker">Construído em público</div>
+    <blockquote style="margin-top:14px">O SosMed está sendo construído em público por um estudante de medicina que se recusou a aceitar que a tecnologia chegasse à saúde apenas como burocracia. Cada semana, mostramos o que construímos, o que erramos e o que os números dizem.</blockquote>
+    <p class="assin">Você não compra uma caixa preta — acompanha a construção. Roadmap, métricas e erros: tudo aberto.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <!-- ============ FAQ ============ -->
+  <section id="faq">
+    <div class="reveal">
+      <div class="kicker">Perguntas frequentes</div>
+      <h2 class="section-title" style="margin-bottom:20px">As 12 perguntas que todo profissional faz</h2>
+      <div class="alert" style="margin:0 0 26px;max-width:760px">🛡️ <b style="color:var(--amber-ink)">Antes de perguntar:</b> a Lia foi construída para proteger o seu registro profissional — não dá orientação clínica, não promete resultado e se apresenta sempre como assistente digital. Nada disso pode ser desligado.</div>
+    </div>
+    <div id="faqList" class="reveal"><!-- renderizado de data/site-data.json --></div>
+  </section>
+
+  <!-- ============ CTA FINAL ============ -->
+  <section class="cta-final">
+    <div class="kicker">A decisão</div>
+    <h2>Daqui a 30 dias, seu WhatsApp continuará tocando de madrugada. A única pergunta é se alguém estará respondendo.</h2>
+    <p>Demonstração de 15 minutos, com o seu caso real na tela. Sem compromisso.</p>
+    <button class="btn" data-demo style="font-size:16px;padding:16px 34px">Agendar minha demonstração</button>
+    <p class="ps"><b>P.S.:</b> Cada semana sem resposta no seu WhatsApp é uma semana de leads indo para quem respondeu primeiro. A demonstração leva 15 minutos e usa os seus números — o simulador acima mostra o que está em jogo.</p>
+  </section>
+
+  <footer class="site">
+    <div>© 2026 SosMed Solutions — protótipo conceitual · dados fictícios · marca em registro · <a href="privacidade.html">Política de privacidade</a></div>
+    <div>Teste de headline: <a href="?v=a">A</a> · <a href="?v=b">B</a> · <a href="?v=c">C</a> · sosmed.health · Atrair. Cuidar. Prosperar.</div>
+  </footer>
+</div>
+
+<!-- ============ MODAL DEMO (qualificação) ============ -->
+<div class="modal-bg" id="demoModal" role="dialog" aria-modal="true" aria-labelledby="demoTitle">
+  <div class="modal">
+    <h3 id="demoTitle">Agendar demonstração</h3>
+    <p class="msub">6 perguntas rápidas — elas alimentam o raio-x comercial da sua agenda, que abre a sua call.</p>
+    <form id="demoForm">
+      <label for="fEspecialidade">Profissão / especialidade</label>
+      <input type="text" id="fEspecialidade" name="especialidade" placeholder="Ex.: nutricionista esportiva" required>
+      <label for="fLeads">Contatos de pacientes por semana no WhatsApp</label>
+      <select id="fLeads" name="leads"><option>0–10</option><option selected>10–30</option><option>30–100</option><option>100+</option></select>
+      <label for="fTicket">Ticket médio de consulta (R$)</label>
+      <input type="number" id="fTicket" name="ticket" placeholder="300" min="0" required>
+      <label for="fBase">Tamanho da base de pacientes antigos</label>
+      <input type="number" id="fBase" name="base" placeholder="400" min="0" required>
+      <label for="fQuem">Quem responde seu WhatsApp hoje?</label>
+      <select id="fQuem" name="quem"><option>Eu mesmo</option><option>Secretária</option><option>Ninguém em horário integral</option></select>
+      <label for="fCapacidade">Se a Lia lotasse sua agenda, você teria horários?</label>
+      <select id="fCapacidade" name="capacidade"><option>Sim, tenho horários livres</option><option>Parcialmente</option><option>Minha agenda já é cheia</option></select>
+      <p style="font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.55">Usamos essas respostas apenas para preparar a sua demonstração e falar com você sobre ela. Nada de spam, nada de venda de dados. <a href="privacidade.html" target="_blank" rel="noopener">Política de privacidade</a>.</p>
+      <button type="submit" class="btn">Gerar meu raio-x da agenda</button>
+    </form>
+    <div class="diag" id="diagOut"></div>
+    <button class="fechar" data-fechar>Fechar</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- Dados vivos: fetch de data/site-data.json com fallback estático ---------- */
+  var DATA = null;
+
+  function bindData(d){
+    document.querySelectorAll('[data-bind]').forEach(function(el){
+      var path = el.getAttribute('data-bind').split('.');
+      var v = d;
+      for (var i=0;i<path.length;i++){ if(v==null) return; v = v[path[i]]; }
+      if (v!=null) el.textContent = String(v);
+    });
+  }
+
+  function renderFAQ(faq){
+    var list = document.getElementById('faqList');
+    if(!list || !Array.isArray(faq) || !faq.length) return;
+    list.innerHTML = '';
+    faq.forEach(function(item){
+      var div = document.createElement('div');
+      div.className = 'faq-item';
+      var q = document.createElement('button');
+      q.className = 'faq-q';
+      q.setAttribute('aria-expanded','false');
+      q.appendChild(document.createTextNode(item.q));
+      var plus = document.createElement('span');
+      plus.textContent = '+';
+      plus.setAttribute('aria-hidden','true');
+      q.appendChild(plus);
+      var a = document.createElement('div');
+      a.className = 'faq-a';
+      a.textContent = item.a;
+      div.appendChild(q); div.appendChild(a);
+      list.appendChild(div);
+    });
+  }
+
+  function renderProvas(provas){
+    var grid = document.getElementById('provasGrid');
+    if(!grid || !Array.isArray(provas) || !provas.length) return;
+    grid.innerHTML = '';
+    provas.forEach(function(p){
+      var card = document.createElement('div');
+      card.className = 'prova';
+      var tipo = document.createElement('div'); tipo.className='ptipo'; tipo.textContent = p.tipo || 'registro';
+      var h = document.createElement('h3'); h.textContent = p.titulo;
+      card.appendChild(tipo); card.appendChild(h);
+      if (p.numero_vivo){
+        var n = document.createElement('div'); n.className='pnum'; n.textContent = p.numero_vivo;
+        card.appendChild(n);
+      }
+      var t = document.createElement('p'); t.textContent = p.texto;
+      var f = document.createElement('footer'); f.textContent = p.autor;
+      card.appendChild(t); card.appendChild(f);
+      grid.appendChild(card);
+    });
+  }
+
+  function applyData(d){
+    DATA = d;
+    bindData(d);
+    renderFAQ(d.faq);
+    renderProvas(d.provas);
+    if (d.roi_padrao){
+      var m = {rLeads:'leads_semana', rTicket:'ticket_medio', rBase:'base_antiga'};
+      Object.keys(m).forEach(function(id){
+        var el = document.getElementById(id);
+        if (el && d.roi_padrao[m[id]] != null) el.value = d.roi_padrao[m[id]];
+      });
+      calcROI();
+    }
+  }
+
+  var FALLBACK = {
+    faq: [
+      {q:'Meu paciente vai perceber que é um robô?', a:'A Lia se apresenta como assistente digital — transparência é lei e gera confiança. Ela usa a sua linguagem e responde em segundos; o que o paciente percebe é ser atendido na hora.'},
+      {q:'E se o paciente falar de sintomas ou urgência?', a:'A Lia não dá nenhuma orientação clínica. Ao detectar tema de saúde, transfere para você com resumo pronto; sinais de urgência recebem orientação imediata de procurar atendimento presencial.'},
+      {q:'Isso é permitido pelo CFM?', a:'Automatizar atendimento administrativo e comercial não é ato profissional de saúde e não é vedado pelos conselhos. A plataforma toma como referência a Res. CFM 2.314/2022 (telemedicina), a Res. CFM 2.336/2023 (publicidade) e as normas equivalentes de nutrição e psicologia. Por princípio: nenhuma promessa de resultado.'},
+      {q:'Vão banir meu WhatsApp?', a:'Usamos exclusivamente a API oficial da Meta (WhatsApp Business Platform), com número verificado e templates aprovados — nada de QR code ou soluções não-oficiais, associadas à maioria dos relatos de banimento.'},
+      {q:'Já tenho secretária. Preciso da Lia?', a:'Perfeito — a Lia cobre as 16 horas em que sua secretária dorme e a parcela dos contatos — mais da metade, na nossa simulação — que chega fora do expediente. Sua secretária vira gestora do consultório, não digitadora.'},
+      {q:'Quanto tempo para configurar?', a:'Em torno de 7 dias, com a nossa equipe fazendo por você (done-for-you). Há quem registre o primeiro agendamento no próprio dia da ativação — não é garantia, depende da sua base de contatos.'},
+      {q:'Onde ficam meus dados e os dos meus pacientes?', a:'Servidores no Brasil, LGPD desde a arquitetura, dados de conversa separados do prontuário. Você e seus pacientes podem exportar ou apagar tudo a qualquer momento.'},
+      {q:'E se eu já uso iClinic, Feegow ou a agenda do Google?', a:'Integramos com Google Agenda hoje e migramos seus contatos por planilha. Conectores com sistemas de gestão estão no roadmap público.'},
+      {q:'Serve para a minha especialidade?', a:'A Lia é treinada com scripts por especialidade — estética, nutrição, psicologia, clínica geral, odontologia e outras. Na demonstração, mostramos com o seu caso real.'},
+      {q:'Quanto custa além da mensalidade?', a:'Nada obrigatório. A API do WhatsApp tem custo por conversa (centavos), repassado a preço de custo e estimado no simulador antes de você assinar.'},
+      {q:'E se não funcionar para mim?', a:'Garantia incondicional de 30 dias: se decidir que não é para você, por qualquer motivo, devolvemos 100% da mensalidade — direto pelo painel, sem justificativa. Sem letra miúda.'},
+      {q:'Por que não contratar uma agência?', a:'Agência gera lead; a Lia converte, cobra e entrega o paciente dentro da sua sala de consulta digital. São papéis complementares — e a Lia trabalha 24/7 no canal onde o paciente já está.'}
+    ],
+    provas: [
+      {tipo:'print', titulo:'Ativação em tempo real', texto:'Ativamos a Lia às 10h. Às 10h43, três agendamentos confirmados — dois de pacientes que não voltavam há mais de um ano.', autor:'Cenário ilustrativo · números reais entrarão aqui com a 1ª coorte'},
+      {tipo:'caso', titulo:'Nutricionista · São Paulo', texto:'Base de 380 pacientes antigos importada na segunda. Na sexta, 22 retornos agendados e 6 planos trimestrais fechados.', autor:'Cenário ilustrativo · números reais entrarão aqui com a 1ª coorte'},
+      {tipo:'painel', titulo:'Painel vivo da rede', numero_vivo:'1.284', texto:'Consultas agendadas pela Lia neste mês em toda a rede SosMed — número agregado, atualizado diariamente.', autor:'Cenário ilustrativo · sem antes/depois clínico, sem promessa de faturamento'}
+    ]
+  };
+
+  fetch('data/site-data.json', {cache:'no-store'})
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(applyData)
+    .catch(function(){ applyData(FALLBACK); });
+
+  /* ---------- Tabs do console ---------- */
+  document.querySelectorAll('.side .tab').forEach(function(t){
+    t.addEventListener('click', function(){
+      document.querySelectorAll('.side .tab').forEach(function(x){ x.classList.remove('active'); x.setAttribute('aria-selected','false'); });
+      document.querySelectorAll('.panel').forEach(function(x){ x.classList.remove('active'); });
+      t.classList.add('active');
+      t.setAttribute('aria-selected','true');
+      var p = document.getElementById(t.dataset.p);
+      if (p) p.classList.add('active');
+    });
+  });
+
+  /* ---------- Headline A/B/C (Bloco 1 do script: 3 variantes para teste) ---------- */
+  var HEADLINES = {
+    a: 'Enquanto você atende, a <em>Lia</em> vende.',
+    b: '57% dos seus pacientes chamam fora do horário. A <em>Lia</em> responde em 3 segundos — e agenda.',
+    c: 'Volte a cuidar de gente. O SosMed cuida do resto.'
+  };
+  (function(){
+    var h1 = document.getElementById('headline');
+    if (!h1) return;
+    var param = new URLSearchParams(location.search).get('v');
+    var v = (param && HEADLINES[param]) ? param : null;
+    try {
+      if (v) localStorage.setItem('farol_headline', v);
+      else v = localStorage.getItem('farol_headline') || 'a';
+    } catch(_){ v = v || 'a'; }
+    if (!HEADLINES[v]) v = 'a';
+    h1.innerHTML = HEADLINES[v];
+    h1.dataset.variante = v;
+  })();
+
+  /* ---------- Animação do chat (dispara quando visível + replay) ---------- */
+  var chat = document.getElementById('liaChat');
+  var chatPlayed = false;
+  function playChat(){
+    if (chatPlayed) return; chatPlayed = true;
+    var msgs = chat.querySelectorAll('.msg');
+    msgs.forEach(function(m,i){ setTimeout(function(){ m.classList.add('show'); }, 400 + i*700); });
+  }
+  var replayBtn = document.getElementById('chatReplay');
+  if (replayBtn) replayBtn.addEventListener('click', function(){
+    chat.querySelectorAll('.msg').forEach(function(m){ m.classList.remove('show'); });
+    chatPlayed = false;
+    playChat();
+  });
+  if ('IntersectionObserver' in window && chat){
+    new IntersectionObserver(function(entries, obs){
+      entries.forEach(function(e){ if(e.isIntersecting){ playChat(); obs.disconnect(); } });
+    }, {threshold:.3}).observe(chat);
+    setTimeout(playChat, 2500);
+  } else if (chat){ playChat(); }
+
+  /* ---------- Scroll reveal (com fallback: conteúdo nunca fica preso invisível) ---------- */
+  function revealAll(){
+    document.querySelectorAll('.reveal:not(.in)').forEach(function(el){ el.classList.add('in'); });
+  }
+  if ('IntersectionObserver' in window){
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -5% 0px'});
+    document.querySelectorAll('.reveal').forEach(function(el){ ro.observe(el); });
+    setTimeout(revealAll, 2000);
+  } else {
+    revealAll();
+  }
+
+  /* ---------- SOAP typewriter ---------- */
+  var soapText = 'S — Palpitações aos esforços (>10 km), sem dor torácica. Sono 5h34. Pai com IAM aos 52.\nO — FC repouso 52→61 bpm (30d), HRV 38 ms. LDL prévio 162.\nA — Palpitação ao esforço a esclarecer; risco familiar CV; provável overtraining + privação de sono.\nP — ECG + ergometria; reduzir treino 30% por 14d; higiene do sono; meta LDL <100; retorno 3 semanas.';
+  var genBtn = document.getElementById('genBtn'), soapOut = document.getElementById('soapOut'), typing = false;
+  if (genBtn) genBtn.addEventListener('click', function(){
+    if (typing) return; typing = true; soapOut.textContent = '';
+    var i = 0;
+    var iv = setInterval(function(){
+      soapOut.textContent += soapText[i++];
+      if (i >= soapText.length){ clearInterval(iv); typing = false; }
+    }, 12);
+  });
+
+  /* ---------- FAQ accordion (delegado — funciona com itens do JSON) ---------- */
+  document.getElementById('faqList').addEventListener('click', function(ev){
+    var q = ev.target.closest('.faq-q');
+    if (!q) return;
+    var item = q.parentElement;
+    var open = item.classList.toggle('open');
+    q.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  /* ---------- ROI ---------- */
+  function calcROI(){
+    var p = (DATA && DATA.roi_padrao) || {};
+    var convHoje = p.conversao_hoje != null ? p.conversao_hoje : 0.10;
+    var convLia  = p.conversao_lia  != null ? p.conversao_lia  : 0.25;
+    var txReat   = p.taxa_reativacao != null ? p.taxa_reativacao : 0.075;
+    var txRec    = p.taxa_recorrencia != null ? p.taxa_recorrencia : 0.15;
+    var vlPlano  = p.valor_plano_mensal != null ? p.valor_plano_mensal : 250;
+
+    var l = +document.getElementById('rLeads').value || 0,
+        t = +document.getElementById('rTicket').value || 0,
+        b = +document.getElementById('rBase').value || 0;
+    var fmt = function(v){ return 'R$ ' + Math.round(v).toLocaleString('pt-BR'); };
+    document.getElementById('oNow').textContent  = fmt(l*4*convHoje*t) + '/mês';
+    document.getElementById('oLia').textContent  = fmt(l*4*convLia*t) + '/mês';
+    document.getElementById('oBase').textContent = fmt(b*txReat*t) + ' (única)';
+    document.getElementById('oRec').textContent  = fmt(l*4*convLia*txRec*vlPlano) + '/mês';
+  }
+  document.getElementById('roiBtn').addEventListener('click', calcROI);
+  ['rLeads','rTicket','rBase'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', calcROI);
+  });
+  calcROI();
+
+  /* ---------- Modal de demonstração + raio-x comercial (com focus-trap acessível) ---------- */
+  var modal = document.getElementById('demoModal');
+  var lastFocus = null;
+
+  function modalFocusables(){
+    return Array.prototype.filter.call(
+      modal.querySelectorAll('input, select, button, a[href]'),
+      function(el){ return !el.disabled && el.offsetParent !== null; }
+    );
+  }
+  function openModal(){
+    lastFocus = document.activeElement;
+    modal.classList.add('open');
+    var first = document.getElementById('fEspecialidade') || modalFocusables()[0];
+    if (first) first.focus();
+  }
+  function closeModal(){
+    if (!modal.classList.contains('open')) return;
+    modal.classList.remove('open');
+    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    lastFocus = null;
+  }
+
+  document.querySelectorAll('[data-demo]').forEach(function(b){
+    b.addEventListener('click', openModal);
+  });
+  modal.querySelector('[data-fechar]').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeModal(); });
+  modal.addEventListener('keydown', function(e){
+    if (e.key !== 'Tab') return;
+    var els = modalFocusables();
+    if (!els.length) return;
+    var first = els[0], last = els[els.length - 1];
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  });
+
+  function escapeHTML(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  document.getElementById('demoForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var f = new FormData(e.target);
+    var esp = escapeHTML(f.get('especialidade') || 'sua especialidade');
+    var leadsFaixa = escapeHTML(f.get('leads') || '10–30');
+    var ticket = +f.get('ticket') || 300;
+    var base = +f.get('base') || 0;
+    var quem = escapeHTML(f.get('quem') || '—');
+    var rp = (DATA && DATA.roi_padrao) || {};
+    var convLia = rp.conversao_lia != null ? rp.conversao_lia : 0.25;
+    var txReat = rp.taxa_reativacao != null ? rp.taxa_reativacao : 0.075;
+    var leadsMedios = {'0–10':5, '10–30':20, '30–100':65, '100+':120}[leadsFaixa] || 20;
+    var potencial = Math.round(leadsMedios*4*convLia*ticket);
+    var reativ = Math.round(base*txReat*ticket);
+    var diag = document.getElementById('diagOut');
+    diag.innerHTML = '<b>Raio-x comercial preliminar · ' + esp + '</b><br>' +
+      '• Com ' + leadsFaixa + ' contatos/semana e ticket de R$ ' + ticket.toLocaleString('pt-BR') +
+      ', sua agenda teria potencial estimado de até <b>R$ ' + potencial.toLocaleString('pt-BR') + '/mês</b>, usando as premissas do nosso simulador.<br>' +
+      (base > 0 ? '• Sua base de ' + base.toLocaleString('pt-BR') + ' pacientes antigos vale ~<b>R$ ' + reativ.toLocaleString('pt-BR') + '</b> em reativação imediata.<br>' : '') +
+      '• Hoje quem responde é: <b>' + quem + '</b> — é exatamente a lacuna que a Lia cobre 24/7.<br>' +
+      '<span style="color:var(--muted);font-size:12px">Estimativa automática com premissas nossas — não é promessa de resultado. Traremos esse raio-x refinado na sua call.</span>';
+    diag.classList.add('show');
+    try {
+      var registros = JSON.parse(localStorage.getItem('farol_leads') || '[]');
+      registros.push(Object.fromEntries(f.entries()));
+      localStorage.setItem('farol_leads', JSON.stringify(registros));
+    } catch(_){}
+  });
+})();
+</script>
+<script>
+/* Micro-interação aditiva: sombra da navbar ao rolar (não toca em nenhuma lógica existente) */
+(function(){
+  'use strict';
+  var nb = document.querySelector('.navbar');
+  if (!nb) return;
+  var update = function(){
+    nb.classList.toggle('scrolled', (window.scrollY || document.documentElement.scrollTop || 0) > 6);
+  };
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

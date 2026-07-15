@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SosMed — Encontre seu profissional e agende online</title>
+<meta name="description" content="Busque por especialidade, veja horários reais e agende sua consulta online ou presencial.">
+<meta name="theme-color" content="#0C6B5C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ccircle%20cx='50'%20cy='50'%20r='44'%20fill='none'%20stroke='%23083F36'%20stroke-width='8'/%3E%3Cpath%20d='M14%2050%20L36%2050%20L43%2032%20L52%2066%20L59%2042%20L64%2050%20L86%2050'%20fill='none'%20stroke='%23083F36'%20stroke-width='8'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='7'%20fill='%23C97F16'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF9F6; --surface:#FFFFFF; --ink:#132420; --muted:#5B6B65;
+    --line:#E7E4DC; --line-soft:#EFEDE6; --line-strong:#D8D4C8;
+    --teal:#0C6B5C; --teal-deep:#083F36; --teal-tint:#EBF3F0; --teal-ghost:#F3F8F6;
+    --amber:#C97F16; --amber-bright:#E89A2B; --amber-tint:#FBF1E0; --amber-ink:#9A5B00;
+    --shadow-sm:0 1px 2px rgba(19,36,32,.05);
+    --shadow-md:0 1px 2px rgba(19,36,32,.04), 0 12px 32px -12px rgba(19,36,32,.12);
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15.5px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+  button{font-family:inherit;cursor:pointer}
+  input,select,textarea{font-family:inherit;font-size:14.5px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:11px 13px;width:100%;transition:border-color .15s, box-shadow .15s}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(12,107,92,.12)}
+  label{font-size:12.5px;font-weight:600;color:var(--muted);display:block;margin:12px 0 5px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--teal);color:#fff;border:none;padding:11px 22px;border-radius:999px;font-weight:600;font-size:14px;transition:background .15s,transform .15s;box-shadow:var(--shadow-sm)}
+  .btn:hover{background:var(--teal-deep);transform:translateY(-1px)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-strong);box-shadow:none;font-weight:500}
+  .btn.ghost:hover{background:var(--surface)}
+  .btn.mini{padding:7px 14px;font-size:12.5px}
+
+  header.top{background:rgba(250,249,246,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line-soft);position:sticky;top:0;z-index:40}
+  header.top nav{display:flex;justify-content:space-between;align-items:center;padding:13px 0}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',Georgia,serif;font-size:21px;font-weight:700;color:var(--teal-deep);text-decoration:none}
+  .logo small{font-family:'Inter';font-size:9.5px;color:var(--muted);letter-spacing:.18em;display:block;line-height:1.2;font-weight:600}
+  .toplinks{display:flex;gap:18px;align-items:center;font-size:13.5px}
+  .toplinks a{color:var(--muted);text-decoration:none;font-weight:500}
+  .toplinks a:hover{color:var(--teal-deep)}
+
+  .hero{padding:52px 0 30px;text-align:center}
+  h1{font-family:'Fraunces',Georgia,serif;font-size:clamp(28px,4.4vw,44px);font-weight:600;letter-spacing:-.015em;line-height:1.12}
+  .hero p{color:var(--muted);margin:12px auto 26px;max-width:560px}
+  .searchbar{display:flex;gap:10px;max-width:720px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px;box-shadow:var(--shadow-md);flex-wrap:wrap}
+  .searchbar select,.searchbar input{border:none;box-shadow:none;flex:1;min-width:160px}
+  .searchbar select:focus,.searchbar input:focus{box-shadow:none}
+  .searchbar .btn{flex-shrink:0}
+
+  .resultados{padding:34px 0 70px}
+  .rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:18px}
+  .prof{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s,transform .2s}
+  .prof:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+  .prof .head{display:flex;gap:12px;align-items:center}
+  .avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal-deep));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:19px;font-family:'Fraunces',Georgia,serif;flex-shrink:0}
+  .prof h3{font-family:'Fraunces',Georgia,serif;font-size:18px;font-weight:600;line-height:1.25}
+  .prof .esp{font-size:12.5px;color:var(--muted)}
+  .stars{color:var(--amber-ink);font-size:13px;font-weight:600}
+  .stars .n{color:var(--muted);font-weight:400}
+  .pills{display:flex;gap:6px;flex-wrap:wrap}
+  .pill{font-size:11px;font-weight:600;border-radius:99px;padding:2px 10px;background:var(--teal-tint);color:var(--teal-deep)}
+  .pill.amber{background:var(--amber-tint);color:var(--amber-ink)}
+  .pill.you{background:var(--teal-deep);color:#fff}
+  .preco{font-family:'Fraunces',Georgia,serif;font-size:19px;color:var(--teal-deep);font-variant-numeric:tabular-nums}
+  .preco small{font-family:'Inter';font-size:11.5px;color:var(--muted)}
+  .slots{display:flex;gap:6px;flex-wrap:wrap}
+  .slot{background:var(--teal-ghost);border:1px solid var(--line);border-radius:8px;padding:5px 10px;font-size:11.5px;font-weight:600;color:var(--teal-deep)}
+  .empty{color:var(--muted);text-align:center;padding:40px;border:1px dashed var(--line);border-radius:14px;margin-top:18px}
+
+  /* Perfil / modal */
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(8,63,54,.45);z-index:100;align-items:flex-start;justify-content:center;padding:24px;backdrop-filter:blur(4px);overflow-y:auto}
+  .modal-bg.open{display:flex}
+  .modal{background:var(--surface);border-radius:20px;max-width:640px;width:100%;padding:30px;box-shadow:var(--shadow-md);margin:auto}
+  .modal h2{font-family:'Fraunces',Georgia,serif;font-size:24px;font-weight:600}
+  .modal .fechar{background:none;border:none;color:var(--muted);font-size:22px;float:right;line-height:1;padding:4px 8px;border-radius:8px}
+  .modal .fechar:hover{background:var(--line-soft);color:var(--ink)}
+  .sec{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px;font-weight:700}
+  .agenda-grid{display:flex;flex-direction:column;gap:10px}
+  .dia-row b{font-size:12.5px;display:block;margin-bottom:6px;text-transform:capitalize}
+  .dia-row .slots .slot{cursor:pointer;transition:background .15s,color .15s}
+  .dia-row .slots .slot:hover,.slot.sel{background:var(--teal);color:#fff;border-color:var(--teal)}
+  .aval{border-top:1px solid var(--line-soft);padding:12px 0;font-size:13.5px}
+  .aval b{font-size:13px}
+  .aval .stars{font-size:12px}
+  .aviso{background:var(--amber-tint);border:1px solid rgba(201,127,22,.3);border-radius:10px;padding:10px 13px;font-size:12px;line-height:1.5;margin-top:14px}
+  .sucesso{background:var(--teal-tint);border:1px solid rgba(12,107,92,.3);border-radius:12px;padding:16px;font-size:14px;line-height:1.6;display:none}
+  .sucesso.show{display:block}
+  .toast{position:fixed;bottom:22px;right:22px;background:var(--teal-deep);color:#fff;padding:12px 18px;border-radius:12px;font-size:13.5px;box-shadow:var(--shadow-md);opacity:0;transform:translateY(10px);transition:.3s;z-index:300;max-width:340px}
+  .toast.show{opacity:1;transform:none}
+  footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:12px;text-align:center;line-height:1.7}
+  footer a{color:var(--teal)}
+  @media(max-width:640px){ .searchbar{flex-direction:column} .toplinks{display:none} }
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap"><nav>
+  <a class="logo" href="index.html"><svg width="30" height="30" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="none" stroke="#083F36" stroke-width="5"/><path d="M14 50 L36 50 L43 32 L52 66 L59 42 L64 50 L86 50" fill="none" stroke="#083F36" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="5" fill="#C97F16"/></svg><div>sosmed<small>ENCONTRE SEU PROFISSIONAL</small></div></a>
+  <div class="toplinks">
+    <a href="index.html">Sobre o SosMed</a>
+    <a href="app.html">Sou profissional → meu console</a>
+  </div>
+</nav></div></header>
+
+<section class="hero"><div class="wrap">
+  <h1>Cuide de você. A agenda é de verdade.</h1>
+  <p>Busque por especialidade, veja os horários livres reais e agende consulta online ou presencial — em menos de um minuto.</p>
+  <div class="searchbar">
+    <select id="fEsp" aria-label="Especialidade"><option value="">Todas as especialidades</option></select>
+    <input id="fCidade" placeholder="Cidade (ex.: São Paulo)" aria-label="Cidade">
+    <button class="btn" id="btnBuscar">Buscar</button>
+  </div>
+  <p style="margin-top:16px;font-size:13.5px"><a href="saude.html" style="color:var(--teal);font-weight:600">📋 Não sabe por onde começar? Faça sua Avaliação de Saúde gratuita (5 min)</a> — receba seu retrato de 0 a 100 e descubra qual profissional procurar.</p>
+</div></section>
+
+<section class="resultados"><div class="wrap">
+  <div id="resumo" style="color:var(--muted);font-size:13px"></div>
+  <div class="rgrid" id="grid"></div>
+  <div class="empty" id="vazio" hidden>Nenhum profissional encontrado com esses filtros. Tente ampliar a busca.</div>
+</div></section>
+
+<footer><div class="wrap">
+  Protótipo SosMed — os perfis marcados como "demonstração" são fictícios; perfis reais entram conforme profissionais se cadastram.<br>
+  Avaliações passam por moderação e não podem conter conteúdo clínico. · <a href="privacidade.html">Política de privacidade</a> · <a href="index.html">Para profissionais</a>
+</div></footer>
+
+<!-- ============ MODAL PERFIL ============ -->
+<div class="modal-bg" id="mPerfil" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button class="fechar" data-close aria-label="Fechar">×</button>
+    <div id="perfilConteudo"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ============ DADOS ============ */
+var MKEY = 'farolMarket_v1';
+var AKEY = 'farolApp_v1';
+
+function loadMarket(){
+  try{ var raw = localStorage.getItem(MKEY); if (raw) return JSON.parse(raw); }catch(_){}
+  return null;
+}
+function saveMarket(){ try{ localStorage.setItem(MKEY, JSON.stringify(market)); }catch(_){} }
+function loadApp(){
+  try{ var raw = localStorage.getItem(AKEY); if (raw) return JSON.parse(raw); }catch(_){}
+  return null;
+}
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function fmtBRL(v){ return 'R$ ' + Math.round(v).toLocaleString('pt-BR'); }
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._tm); t._tm = setTimeout(function(){ t.classList.remove('show'); }, 3600);
+}
+
+var market = loadMarket() || { profissionais: [], agendamentos: [] };
+market.agendamentos = market.agendamentos || [];
+var DEMOS = [
+    { id:'demo1', demo:true, nome:'Dra. Helena Prado', especialidade:'Dermatologia', cidade:'São Paulo', preco:380, online:true, presencial:true,
+      bio:'15 anos de consultório, foco em dermatologia clínica do adulto. Atendimento direto, sem pressa.',
+      avaliacoes:[{nome:'M. Santos', estrelas:5, texto:'Pontual e atenciosa, explicou tudo com calma.', aprovada:true},
+                  {nome:'R. Oliveira', estrelas:5, texto:'Agendei à noite pelo site e fui atendida no dia seguinte.', aprovada:true},
+                  {nome:'C. Lima', estrelas:4, texto:'Ótimo atendimento online, sem atraso.', aprovada:true}] },
+    { id:'demo2', demo:true, nome:'Dr. Rafael Nogueira', especialidade:'Cardiologia', cidade:'São Paulo', preco:450, online:true, presencial:true,
+      bio:'Cardiologia do esporte e prevenção. Trabalho com dados dos seus exames e do seu dia a dia.',
+      avaliacoes:[{nome:'P. Almeida', estrelas:5, texto:'Consulta online funcionou perfeitamente.', aprovada:true},
+                  {nome:'J. Costa', estrelas:5, texto:'Direto ao ponto e muito atencioso.', aprovada:true}] },
+    { id:'demo3', demo:true, nome:'Ana Beatriz Ramos', especialidade:'Nutrição', cidade:'Rio de Janeiro', preco:250, online:true, presencial:false,
+      bio:'Nutrição comportamental — planos que cabem na sua rotina, sem terrorismo alimentar.',
+      avaliacoes:[{nome:'L. Ferreira', estrelas:5, texto:'Plano realista, acompanhamento de verdade.', aprovada:true}] },
+    { id:'demo4', demo:true, nome:'Dr. Tiago Farias', especialidade:'Psicologia', cidade:'Belo Horizonte', preco:220, online:true, presencial:true,
+      bio:'Terapia cognitivo-comportamental para adultos. Primeira conversa sem compromisso.',
+      avaliacoes:[{nome:'A. Souza', estrelas:5, texto:'Me senti ouvido desde a primeira sessão.', aprovada:true},
+                  {nome:'F. Rocha', estrelas:4, texto:'Horários flexíveis, atendimento humano.', aprovada:true}] },
+    { id:'demo5', demo:true, nome:'Dra. Camila Duarte', especialidade:'Clínica Geral', cidade:'São Paulo', preco:300, online:true, presencial:true,
+      bio:'Medicina de família: acompanho você e não só a sua doença. Checkups e cuidado contínuo.',
+      avaliacoes:[{nome:'B. Martins', estrelas:5, texto:'Resolveu em uma consulta o que eu adiava há meses.', aprovada:true}] },
+    { id:'demo6', demo:true, nome:'Dr. Otávio Bastos', especialidade:'Odontologia', cidade:'Curitiba', preco:280, online:false, presencial:true,
+      bio:'Odontologia estética e preventiva com plano de acompanhamento semestral.',
+      avaliacoes:[{nome:'T. Ribeiro', estrelas:5, texto:'Consultório impecável e agenda pontual.', aprovada:true}] }
+  ];
+if (!market.profissionais.some(function(p){ return p.demo; })){
+  market.profissionais = market.profissionais.concat(DEMOS);
+  saveMarket();
+}
+
+/* Perfil do profissional do console (se publicado) */
+var app = loadApp();
+function perfilProprio(){
+  return market.profissionais.find(function(p){ return p.proprio; });
+}
+
+/* ============ SLOTS ============ */
+function slotsDe(prof, dias){
+  // Para o perfil próprio: horários livres reais da agenda do console.
+  // Para demos: horários determinísticos a partir do id.
+  var out = [];
+  var agora = new Date();
+  for (var d = 0; d < dias; d++){
+    var dia = new Date(agora); dia.setDate(dia.getDate() + d); dia.setMinutes(0,0,0);
+    if (dia.getDay() === 0) continue;
+    var horas = [];
+    for (var h = 8; h < 18; h++){
+      var slot = new Date(dia); slot.setHours(h);
+      if (slot <= agora) continue;
+      if (prof.proprio && app){
+        var ocupado = (app.consultas||[]).some(function(c){
+          return c.status === 'agendada' && new Date(c.inicio).getTime() === slot.getTime();
+        });
+        var jaMarcado = market.agendamentos.some(function(a){
+          return a.profId === prof.id && new Date(a.inicio).getTime() === slot.getTime();
+        });
+        if (!ocupado && !jaMarcado) horas.push(slot);
+      } else {
+        // pseudo-disponibilidade estável: id + dia + hora
+        var seed = (prof.id + d + '' + h).split('').reduce(function(s,c){ return s + c.charCodeAt(0); }, 0);
+        var jaMarcadoDemo = market.agendamentos.some(function(a){
+          return a.profId === prof.id && new Date(a.inicio).getTime() === slot.getTime();
+        });
+        if (seed % 3 !== 0 && !jaMarcadoDemo) horas.push(slot);
+      }
+    }
+    if (horas.length) out.push({ dia: dia, horas: horas });
+    if (out.length >= 4) break;
+  }
+  return out;
+}
+function fmtDiaLongo(d){ return d.toLocaleDateString('pt-BR', {weekday:'long', day:'2-digit', month:'2-digit'}); }
+function fmtHora(d){ return d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}); }
+
+/* ============ BUSCA ============ */
+function especialidades(){
+  var set = {};
+  market.profissionais.forEach(function(p){ set[p.especialidade] = true; });
+  return Object.keys(set).sort();
+}
+function mediaEstrelas(p){
+  var apr = (p.avaliacoes||[]).filter(function(a){ return a.aprovada; });
+  if (!apr.length) return null;
+  return { media: (apr.reduce(function(s,a){ return s + a.estrelas; }, 0) / apr.length), n: apr.length };
+}
+function render(){
+  var esp = document.getElementById('fEsp').value;
+  var cid = (document.getElementById('fCidade').value || '').toLowerCase().trim();
+  var lista = market.profissionais.filter(function(p){
+    return (!esp || p.especialidade === esp) && (!cid || (p.cidade||'').toLowerCase().indexOf(cid) >= 0);
+  });
+  // perfil próprio primeiro
+  lista.sort(function(a,b){ return (b.proprio?1:0) - (a.proprio?1:0); });
+  document.getElementById('resumo').textContent = lista.length + ' profissiona' + (lista.length === 1 ? 'l' : 'is') + ' encontrado' + (lista.length === 1 ? '' : 's');
+  document.getElementById('vazio').hidden = lista.length > 0;
+  document.getElementById('grid').innerHTML = lista.map(function(p){
+    var m = mediaEstrelas(p);
+    var prox = slotsDe(p, 7);
+    var chips = [];
+    if (prox[0]) chips.push(fmtDiaLongo(prox[0].dia).split(',')[0].slice(0,3) + ' ' + fmtHora(prox[0].horas[0]));
+    if (prox[0] && prox[0].horas[1]) chips.push(fmtDiaLongo(prox[0].dia).split(',')[0].slice(0,3) + ' ' + fmtHora(prox[0].horas[1]));
+    var av = p.foto
+      ? '<img class="avatar" src="' + p.foto + '" alt="" style="object-fit:cover">'
+      : '<div class="avatar">' + esc(p.nome.replace(/^(Dra?\.\s*)/i,'').charAt(0)) + '</div>';
+    return '<article class="prof">' +
+      '<div class="head">' + av +
+      '<div><h3>' + esc(p.nome) + '</h3><div class="esp">' + esc(p.especialidade) + ' · ' + esc(p.cidade) + '</div>' +
+      (m ? '<div class="stars">' + '★'.repeat(Math.round(m.media)) + ' <span class="n">' + m.media.toFixed(1) + ' (' + m.n + ')</span></div>' : '<div class="stars n" style="color:var(--muted);font-weight:400;font-size:12px">sem avaliações ainda</div>') +
+      '</div></div>' +
+      '<div class="pills">' + (p.proprio ? '<span class="pill you">seu perfil</span>' : '') + (p.demo ? '<span class="pill amber">demonstração</span>' : '') +
+        (p.online ? '<span class="pill">online</span>' : '') + (p.presencial ? '<span class="pill">presencial</span>' : '') + '</div>' +
+      '<div class="preco">' + fmtBRL(p.preco) + ' <small>/ consulta</small></div>' +
+      (chips.length ? '<div class="slots">' + chips.map(function(c){ return '<span class="slot">' + c + '</span>'; }).join('') + '</div>' : '') +
+      '<button class="btn" data-perfil="' + p.id + '" style="margin-top:4px">Ver perfil e agendar</button>' +
+      '</article>';
+  }).join('');
+}
+document.getElementById('btnBuscar').addEventListener('click', render);
+document.getElementById('fEsp').addEventListener('change', render);
+document.getElementById('fCidade').addEventListener('input', render);
+
+/* ============ PERFIL + AGENDAMENTO ============ */
+var slotSel = null, profAtual = null;
+document.getElementById('grid').addEventListener('click', function(e){
+  var b = e.target.closest('[data-perfil]');
+  if (b) abrirPerfil(b.dataset.perfil);
+});
+function abrirPerfil(id){
+  profAtual = market.profissionais.find(function(p){ return p.id === id; });
+  if (!profAtual) return;
+  slotSel = null;
+  renderPerfil();
+  document.getElementById('mPerfil').classList.add('open');
+}
+function renderPerfil(){
+  var p = profAtual;
+  var m = mediaEstrelas(p);
+  var dias = slotsDe(p, 10);
+  var aprovadas = (p.avaliacoes||[]).filter(function(a){ return a.aprovada; });
+  var avPerfil = p.foto
+    ? '<img class="avatar" src="' + p.foto + '" alt="" style="width:60px;height:60px;object-fit:cover">'
+    : '<div class="avatar" style="width:60px;height:60px;font-size:23px">' + esc(p.nome.replace(/^(Dra?\.\s*)/i,'').charAt(0)) + '</div>';
+  var html =
+    '<div class="head" style="display:flex;gap:14px;align-items:center">' + avPerfil +
+    '<div><h2>' + esc(p.nome) + '</h2><div class="esp" style="color:var(--muted);font-size:13px">' + esc(p.especialidade) + ' · ' + esc(p.cidade) + '</div>' +
+    (m ? '<div class="stars">' + '★'.repeat(Math.round(m.media)) + ' <span class="n">' + m.media.toFixed(1) + ' · ' + m.n + ' avaliações</span></div>' : '') + '</div></div>' +
+    '<div class="pills" style="margin-top:12px">' + (p.demo ? '<span class="pill amber">perfil de demonstração</span>' : '') + (p.online ? '<span class="pill">online</span>' : '') + (p.presencial ? '<span class="pill">presencial</span>' : '') + '</div>' +
+    '<p style="margin-top:12px;font-size:14px;color:var(--muted)">' + esc(p.bio || '') + '</p>' +
+    (p.abordagem ? '<h3 class="sec">Como trabalha</h3><p style="font-size:13.5px;color:var(--muted)">' + esc(p.abordagem) + '</p>' : '') +
+    '<div class="preco" style="margin-top:10px">' + fmtBRL(p.preco) + ' <small>/ consulta</small></div>' +
+
+    '<h3 class="sec">Escolha um horário</h3><div class="agenda-grid">' +
+    (dias.length ? dias.map(function(dr){
+      return '<div class="dia-row"><b>' + fmtDiaLongo(dr.dia) + '</b><div class="slots">' +
+        dr.horas.slice(0,6).map(function(h){
+          var iso = h.toISOString();
+          return '<button class="slot' + (slotSel === iso ? ' sel' : '') + '" data-slot="' + iso + '">' + fmtHora(h) + '</button>';
+        }).join('') + '</div></div>';
+    }).join('') : '<p style="color:var(--muted);font-size:13px">Sem horários nos próximos dias.</p>') + '</div>' +
+
+    '<div id="formAgendar" style="display:' + (slotSel ? 'block' : 'none') + '">' +
+      '<h3 class="sec">Seus dados</h3>' +
+      '<label>Nome completo</label><input id="agNome" placeholder="Seu nome">' +
+      '<label>WhatsApp</label><input id="agTel" placeholder="(11) 9…">' +
+      (p.online && p.presencial ? '<label>Modalidade</label><select id="agMod"><option>online</option><option>presencial</option></select>'
+        : '<input type="hidden" id="agMod" value="' + (p.online ? 'online' : 'presencial') + '">') +
+      '<p class="aviso">Usamos seus dados apenas para confirmar esta consulta (LGPD). Neste protótipo, nada sai do seu navegador — <a href="privacidade.html" target="_blank" rel="noopener">política de privacidade</a>.</p>' +
+      '<button class="btn" id="btnConfirmar" style="width:100%;margin-top:14px">Confirmar agendamento</button>' +
+    '</div>' +
+    '<div class="sucesso" id="agSucesso"></div>' +
+
+    '<h3 class="sec">Avaliações</h3>' +
+    (aprovadas.length ? aprovadas.map(function(a){
+      return '<div class="aval"><b>' + esc(a.nome) + '</b> <span class="stars">' + '★'.repeat(a.estrelas) + '</span><br>' + esc(a.texto) + '</div>';
+    }).join('') : '<p style="color:var(--muted);font-size:13px">Ainda sem avaliações publicadas.</p>') +
+    '<h3 class="sec">Deixar avaliação</h3>' +
+    '<label>Seu nome</label><input id="avNome" placeholder="Como quer aparecer">' +
+    '<label>Nota</label><select id="avEstrelas"><option value="5">★★★★★</option><option value="4">★★★★</option><option value="3">★★★</option><option value="2">★★</option><option value="1">★</option></select>' +
+    '<label>Comentário (sobre atendimento e experiência — nunca sobre diagnóstico ou tratamento)</label><textarea id="avTexto" rows="2"></textarea>' +
+    '<button class="btn ghost" id="btnAvaliar" style="margin-top:12px">Enviar para moderação</button>' +
+    '<p style="font-size:11px;color:var(--muted);margin-top:8px">Avaliações são publicadas após moderação. Conteúdo clínico ou identificável é removido (Res. CFM 2.336/2023).</p>';
+  document.getElementById('perfilConteudo').innerHTML = html;
+}
+document.getElementById('perfilConteudo').addEventListener('click', function(e){
+  var s = e.target.closest('[data-slot]');
+  if (s){ slotSel = s.dataset.slot; renderPerfil(); return; }
+  if (e.target.id === 'btnConfirmar') confirmarAgendamento();
+  if (e.target.id === 'btnAvaliar') enviarAvaliacao();
+});
+function confirmarAgendamento(){
+  var nome = document.getElementById('agNome').value.trim();
+  var tel = document.getElementById('agTel').value.trim();
+  var mod = document.getElementById('agMod').value;
+  if (!nome){ toast('Escreva seu nome para confirmar.'); return; }
+  if (!slotSel){ toast('Escolha um horário.'); return; }
+  var p = profAtual, quando = new Date(slotSel);
+  market.agendamentos.push({ id: uid(), profId: p.id, inicio: slotSel, nome: nome, tel: tel, modalidade: mod, criadoEm: new Date().toISOString() });
+  saveMarket();
+  // Se for o profissional do console, cria a consulta REAL na agenda dele
+  if (p.proprio && app){
+    var pac = (app.pacientes||[]).find(function(x){ return x.nome.toLowerCase() === nome.toLowerCase(); });
+    if (!pac){
+      pac = { id: uid(), nome: nome, tel: tel, criadoEm: new Date().toISOString(), plano: null, prontuarios: [], notas: 'Origem: marketplace SosMed' };
+      app.pacientes.push(pac);
+    }
+    app.consultas.push({ id: uid(), pacienteId: pac.id, inicio: slotSel, tipo: mod, valor: p.preco, status: 'agendada', origem: 'marketplace', prontuario: null });
+    try{ localStorage.setItem(AKEY, JSON.stringify(app)); }catch(_){}
+  }
+  // Ponte para a base clínica unificada (MedEasy): agenda + paciente
+  try{
+    var clin = JSON.parse(localStorage.getItem('scp_clinic_v1'));
+    if (clin && clin.agenda){
+      var cpac = (clin.pacientes||[]).find(function(x){ return x.nome.toLowerCase() === nome.toLowerCase(); });
+      if (!cpac){
+        cpac = { id: uid(), nome: nome, nascimento:'', sexo:'', cpf:'', telefone: tel, email:'', alergias:'', condicoes:'', obs:'Origem: Marketplace SosMed', criado: new Date().toISOString() };
+        clin.pacientes.push(cpac);
+      }
+      clin.agenda.push({ id: uid(), pacienteId: cpac.id, data: slotSel, tipo: mod === 'online' ? 'tele' : 'presencial', teleLink:'', obs:'Agendado pelo Marketplace 🔎', status:'agendado' });
+      localStorage.setItem('scp_clinic_v1', JSON.stringify(clin));
+    }
+  }catch(_){}
+  var suc = document.getElementById('agSucesso');
+  suc.innerHTML = '✅ <b>Consulta confirmada!</b> ' + esc(fmtDiaLongo(quando)) + ' às ' + fmtHora(quando) + ' com ' + esc(p.nome) + ' (' + mod + ').' +
+    (mod === 'online' ? '<br><a class="btn mini" style="margin-top:10px" href="consulta-online.html?prof=' + encodeURIComponent(p.nome) + '&h=' + encodeURIComponent(fmtHora(quando)) + '">🎥 Entrar na sala de teleconsulta (demo)</a>' : '') +
+    (p.proprio ? '<br><span style="font-size:12px;color:var(--muted)">Esta consulta acabou de aparecer na Agenda do seu Console SosMed.</span>' : '');
+  suc.classList.add('show');
+  document.getElementById('formAgendar').style.display = 'none';
+  toast('Agendamento confirmado 🎉');
+}
+function enviarAvaliacao(){
+  var nome = document.getElementById('avNome').value.trim();
+  var texto = document.getElementById('avTexto').value.trim();
+  var estrelas = +document.getElementById('avEstrelas').value;
+  if (!nome || !texto){ toast('Preencha nome e comentário.'); return; }
+  profAtual.avaliacoes = profAtual.avaliacoes || [];
+  profAtual.avaliacoes.push({ nome: nome, estrelas: estrelas, texto: texto, aprovada: false, em: new Date().toISOString() });
+  saveMarket();
+  toast('Avaliação enviada para moderação — obrigado! 💛');
+  document.getElementById('avNome').value = ''; document.getElementById('avTexto').value = '';
+}
+
+/* Modal close */
+var mp = document.getElementById('mPerfil');
+mp.addEventListener('click', function(e){ if (e.target === mp || e.target.closest('[data-close]')) mp.classList.remove('open'); });
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') mp.classList.remove('open'); });
+
+/* ============ INIT ============ */
+var sel = document.getElementById('fEsp');
+especialidades().forEach(function(e){
+  var o = document.createElement('option'); o.value = e; o.textContent = e; sel.appendChild(o);
+});
+render();
+})();
+</script>
+</body>
+</html>
