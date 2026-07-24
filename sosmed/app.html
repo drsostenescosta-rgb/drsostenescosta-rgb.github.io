@@ -365,6 +365,18 @@
     <section class="page" id="page-config">
       <div class="page-head"><div><h1>Configurações</h1><p class="sub">Seu cadastro profissional e o controle total dos seus dados (LGPD).</p></div></div>
       <div class="grid2">
+        <div class="card" style="border-left:3px solid var(--teal)">
+          <h3 class="sec">☁️ Conta na nuvem (SosMed)</h3>
+          <p id="nuvemStatus" style="font-size:13px;color:var(--muted);line-height:1.6">Desconectado — seus dados estão só neste navegador. Crie sua conta para sincronizar em qualquer dispositivo e aparecer no marketplace real.</p>
+          <label for="nvEmail">E-mail</label><input id="nvEmail" type="email" autocomplete="email">
+          <label for="nvSenha">Senha (mín. 6 caracteres)</label><input id="nvSenha" type="password" autocomplete="current-password">
+          <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+            <button class="btn" id="btnNvEntrar">Entrar</button>
+            <button class="btn ghost" id="btnNvCriar">Criar conta</button>
+            <button class="btn ghost" id="btnNvSair" hidden>Sair</button>
+          </div>
+          <p style="font-size:11px;color:var(--muted);margin-top:8px">Servidor no Brasil (São Paulo) · cada profissional só acessa os próprios dados (RLS) · LGPD.</p>
+        </div>
         <div class="card">
           <h3 class="sec">Cadastro profissional</h3>
           <label for="cfgNome">Nome</label><input id="cfgNome">
@@ -503,6 +515,7 @@
 
 <div class="toast" id="toast" role="status"></div>
 
+<script src="sosmed-config.js"></script>
 <script>
 (function(){
 'use strict';
@@ -520,7 +533,7 @@ function load(){
   }catch(_){}
   return { prof:null, pacientes:[], consultas:[], conversas:[], reativados:[] };
 }
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(_){} }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(_){} try{ agendarSync(); }catch(_){} }
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 function fmtBRL(v){ return 'R$ ' + Math.round(v).toLocaleString('pt-BR'); }
 function fmtDia(d){ return d.toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'2-digit'}); }
@@ -1576,6 +1589,155 @@ document.getElementById('btnSeed').addEventListener('click', function(){
   save(); renderAll();
   toast('Dados de exemplo carregados — explore as abas!');
 });
+
+/* ============================================================
+   NUVEM — Supabase: conta, sincronização e marketplace real
+============================================================ */
+var SB = window.SOSMED_BACKEND || null;
+var SKEY = 'sosmedSessao_v1';
+var sessao = null;
+try{ sessao = JSON.parse(localStorage.getItem(SKEY) || 'null'); }catch(_){}
+
+function sbAuthHeaders(){
+  var h = { 'apikey': SB.key, 'Content-Type': 'application/json' };
+  if (sessao) h['Authorization'] = 'Bearer ' + sessao.access_token;
+  else h['Authorization'] = 'Bearer ' + SB.key;
+  return h;
+}
+function salvarSessao(s){ sessao = s; try{ s ? localStorage.setItem(SKEY, JSON.stringify(s)) : localStorage.removeItem(SKEY); }catch(_){} renderNuvem(); }
+
+function sbRefresh(){
+  if (!sessao || !sessao.refresh_token) return Promise.reject();
+  return fetch(SB.url + '/auth/v1/token?grant_type=refresh_token', {
+    method: 'POST', headers: { 'apikey': SB.key, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ refresh_token: sessao.refresh_token })
+  }).then(function(r){ return r.json(); }).then(function(d){
+    if (d.access_token){ salvarSessao(d); return d; }
+    salvarSessao(null); throw d;
+  });
+}
+function sbFetch(path, opts, tentouRefresh){
+  opts = opts || {};
+  opts.headers = Object.assign(sbAuthHeaders(), opts.headers || {});
+  return fetch(SB.rest(path), opts).then(function(r){
+    if (r.status === 401 && sessao && !tentouRefresh){
+      return sbRefresh().then(function(){ return sbFetch(path, opts, true); });
+    }
+    return r;
+  });
+}
+
+var syncTimer = null, syncPendente = false;
+function agendarSync(){
+  if (!SB || !sessao) return;
+  syncPendente = true;
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(empurrarEstado, 2000);
+}
+function empurrarEstado(){
+  if (!SB || !sessao || !syncPendente) return;
+  syncPendente = false;
+  sbFetch('console_estado?on_conflict=profissional_id', {
+    method: 'POST',
+    headers: { 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+    body: JSON.stringify({ profissional_id: sessao.user.id, estado: state, atualizado_em: new Date().toISOString() })
+  }).then(function(r){
+    if (r.ok) renderNuvem('sincronizado às ' + new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'}));
+  }).catch(function(){});
+}
+function puxarEstado(){
+  return sbFetch('console_estado?select=estado,atualizado_em').then(function(r){ return r.ok ? r.json() : []; })
+    .then(function(rows){
+      if (rows.length && rows[0].estado && rows[0].estado.prof){
+        state = rows[0].estado;
+        try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(_){}
+        toast('Dados da nuvem carregados (última sync: ' + new Date(rows[0].atualizado_em).toLocaleString('pt-BR') + ').');
+      } else {
+        agendarSync(); // primeira vez: sobe o estado local
+      }
+      return importarAgendamentosRemotos();
+    });
+}
+function importarAgendamentosRemotos(){
+  return sbFetch('marketplace_agendamentos?status=eq.novo&select=*').then(function(r){ return r.ok ? r.json() : []; })
+    .then(function(rows){
+      if (!rows.length) return;
+      rows.forEach(function(a){
+        var pac = state.pacientes.find(function(p){ return p.nome.toLowerCase() === a.nome.toLowerCase(); });
+        if (!pac){
+          pac = { id: uid(), nome: a.nome, tel: a.tel || '', criadoEm: new Date().toISOString(), plano: null, prontuarios: [], notas: 'Origem: marketplace SosMed (nuvem)' };
+          state.pacientes.push(pac);
+        }
+        state.consultas.push({ id: uid(), pacienteId: pac.id, inicio: a.inicio, tipo: a.modalidade === 'online' ? 'online' : 'presencial',
+          valor: state.prof ? state.prof.valorConsulta : 300, status: 'agendada', origem: 'marketplace', prontuario: null });
+        sbFetch('marketplace_agendamentos?id=eq.' + a.id, { method: 'PATCH', headers: { 'Prefer': 'return=minimal' }, body: JSON.stringify({ status: 'confirmado' }) }).catch(function(){});
+      });
+      save(); renderAll();
+      toast(rows.length + ' agendamento(s) do marketplace importado(s) para a sua Agenda! 🎉');
+    });
+}
+
+function renderNuvem(extra){
+  var el = document.getElementById('nuvemStatus');
+  if (!el) return;
+  if (sessao){
+    el.innerHTML = '✅ Conectado como <b>' + esc(sessao.user.email) + '</b> — dados sincronizando com o servidor (São Paulo).' + (extra ? '<br><span style="font-size:11px">' + esc(extra) + '</span>' : '');
+    document.getElementById('btnNvSair').hidden = false;
+    document.getElementById('btnNvEntrar').hidden = true;
+    document.getElementById('btnNvCriar').hidden = true;
+  } else {
+    el.textContent = 'Desconectado — seus dados estão só neste navegador. Crie sua conta para sincronizar em qualquer dispositivo e aparecer no marketplace real.';
+    document.getElementById('btnNvSair').hidden = true;
+    document.getElementById('btnNvEntrar').hidden = false;
+    document.getElementById('btnNvCriar').hidden = false;
+  }
+}
+document.getElementById('btnNvCriar').addEventListener('click', function(){
+  if (!state.prof) return toast('Complete o cadastro profissional primeiro (é ele que vai para a nuvem).');
+  var email = document.getElementById('nvEmail').value.trim(), senha = document.getElementById('nvSenha').value;
+  if (!email || senha.length < 6) return toast('Informe e-mail válido e senha de 6+ caracteres.');
+  fetch(SB.url + '/auth/v1/signup', { method: 'POST', headers: { 'apikey': SB.key, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, password: senha, data: { nome: state.prof.nome, especialidade: state.prof.especialidade } })
+  }).then(function(r){ return r.json(); }).then(function(d){
+    if (d.access_token){ salvarSessao(d); puxarEstado(); toast('Conta criada — bem-vindo(a) à nuvem SosMed! ☁️'); }
+    else if (d.user && !d.access_token){ toast('Conta criada! Confirme pelo link enviado ao seu e-mail e depois clique em Entrar.'); }
+    else toast('Não deu: ' + (d.msg || d.error_description || d.message || 'erro no cadastro.'));
+  }).catch(function(){ toast('Sem conexão com o servidor.'); });
+});
+document.getElementById('btnNvEntrar').addEventListener('click', function(){
+  var email = document.getElementById('nvEmail').value.trim(), senha = document.getElementById('nvSenha').value;
+  if (!email || !senha) return toast('Informe e-mail e senha.');
+  fetch(SB.url + '/auth/v1/token?grant_type=password', { method: 'POST', headers: { 'apikey': SB.key, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, password: senha })
+  }).then(function(r){ return r.json(); }).then(function(d){
+    if (d.access_token){ salvarSessao(d); puxarEstado().then(function(){ renderAll(); }); toast('Conectado! Sincronizando…'); }
+    else toast('Login falhou: ' + (d.error_description || d.msg || 'verifique e-mail/senha (ou confirme o e-mail).'));
+  }).catch(function(){ toast('Sem conexão com o servidor.'); });
+});
+document.getElementById('btnNvSair').addEventListener('click', function(){
+  salvarSessao(null); toast('Desconectado — os dados continuam neste navegador.');
+});
+
+/* Publicação REAL no marketplace (além da local) */
+document.getElementById('btnPublicar').addEventListener('click', function(){
+  if (!SB || !sessao || !state.prof) return;
+  var cidade = document.getElementById('mkCidade').value.trim();
+  if (!cidade) return;
+  sbFetch('marketplace_perfis?on_conflict=profissional_id', {
+    method: 'POST', headers: { 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+    body: JSON.stringify({ profissional_id: sessao.user.id, nome: state.prof.nome,
+      especialidade: state.prof.especialidade.charAt(0).toUpperCase() + state.prof.especialidade.slice(1),
+      cidade: cidade, bio: document.getElementById('mkBio').value.trim(),
+      abordagem: document.getElementById('mkAbordagem').value.trim(),
+      preco: state.prof.valorConsulta, online: document.getElementById('mkOnline').checked,
+      presencial: true, publicado: true })
+  }).then(function(r){
+    if (r.ok) toast('🌍 Perfil publicado no marketplace REAL — visível de qualquer dispositivo!');
+  }).catch(function(){});
+});
+
+if (SB && sessao){ puxarEstado().then(function(){ renderAll(); }).catch(function(){}); }
+setTimeout(renderNuvem, 0);
 
 /* ============================================================
    RENDER GERAL
