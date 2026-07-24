@@ -826,6 +826,50 @@ function slotsLivres(n){
 }
 function descSlot(d){ return fmtDia(d) + ' às ' + fmtHora(d); }
 
+function liaCriaAgendamento(conv, quando){
+  var pac = state.pacientes.find(function(p){ return p.nome.toLowerCase() === conv.nome.toLowerCase(); });
+  if (!pac){
+    pac = { id: uid(), nome: conv.nome, tel: conv.tel || '', criadoEm: new Date().toISOString(), plano: null, prontuarios: [], notas: 'Origem: Lia (lead do WhatsApp)' };
+    state.pacientes.push(pac);
+  }
+  state.consultas.push({ id: uid(), pacienteId: pac.id, inicio: quando.toISOString(), tipo: 'presencial',
+    valor: state.prof.valorConsulta, status: 'agendada', origem: 'lia', prontuario: null });
+  conv.stage = 'agendado'; conv.status = 'agendada'; conv.pacienteId = pac.id;
+}
+
+/* Lia com IA real (Vercel /api/lia) — fallback automático para as regras locais */
+function liaRemota(conv, textoLead){
+  if (!window.SOSMED_BACKEND || !SOSMED_BACKEND.api || !state.prof) return Promise.reject('sem api/prof');
+  var horarios = slotsLivres(2);
+  conv.ofertas = horarios.map(function(s){ return s.toISOString(); });
+  var mensagens = conv.msgs.filter(function(m){ return m.de !== 'sys'; }).map(function(m){
+    return { role: m.de === 'lia' ? 'assistant' : 'user', content: m.texto };
+  });
+  return fetch(SOSMED_BACKEND.api + '/api/lia', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ mensagens: mensagens,
+      perfil: { nome: state.prof.nome, especialidade: state.prof.especialidade, valorConsulta: state.prof.valorConsulta, valorPlano: state.prof.valorPlano },
+      horarios: horarios.map(descSlot), profissionalId: (sessao && sessao.user && sessao.user.id) || null })
+  }).then(function(r){ if (!r.ok) throw r.status; return r.json(); })
+    .then(function(d){
+      var t = (d.resposta || '').trim();
+      if (!t) throw 'vazio';
+      if (t.indexOf('[TRANSFERIR]') === 0){
+        conv.status = 'transferida';
+        return { lia: t.replace('[TRANSFERIR]', '').trim(), sys: '🛡️ IA detectou tema clínico → conversa transferida para você com resumo.' };
+      }
+      var m = t.match(/^\[AGENDAR:(\d+)\]\s*/);
+      if (m){
+        var iso = conv.ofertas[+m[1]] || conv.ofertas[0];
+        if (iso){
+          liaCriaAgendamento(conv, new Date(iso));
+          return { lia: t.replace(m[0], '').trim(), sys: '✅ Consulta criada na Agenda (' + descSlot(new Date(iso)) + ') e paciente cadastrado — via IA.' };
+        }
+      }
+      return { lia: t };
+    });
+}
+
 function liaResponde(conv, textoLead){
   // Guarda-corpo clínico — sempre primeiro
   if (CLINICO.test(textoLead)){
@@ -868,15 +912,7 @@ function liaResponde(conv, textoLead){
       return { lia: 'Só para eu confirmar certinho: responda 1 para a primeira opção ou 2 para a segunda 😊' };
     }
     var quando = new Date(conv.ofertas[idx]);
-    // cria (ou encontra) o paciente
-    var pac = state.pacientes.find(function(p){ return p.nome.toLowerCase() === conv.nome.toLowerCase(); });
-    if (!pac){
-      pac = { id: uid(), nome: conv.nome, tel: conv.tel || '', criadoEm: new Date().toISOString(), plano: null, prontuarios: [], notas: 'Origem: Lia (lead do WhatsApp simulado)' };
-      state.pacientes.push(pac);
-    }
-    state.consultas.push({ id: uid(), pacienteId: pac.id, inicio: quando.toISOString(), tipo: 'presencial',
-      valor: state.prof.valorConsulta, status: 'agendada', origem: 'lia', prontuario: null });
-    conv.stage = 'agendado'; conv.status = 'agendada'; conv.pacienteId = pac.id;
+    liaCriaAgendamento(conv, quando);
     return { lia: 'Reservado, ' + conv.nome.split(' ')[0] + '! ✨ ' + descSlot(quando) + ' com ' + state.prof.nome + '. Vou te enviar 3 perguntinhas rápidas de pré-consulta para chegarmos preparados.' + (state.prof.programaAtivo ? ' Ah — e na consulta pergunte sobre o "' + state.prof.programaAtivo + '", muita gente prefere esse formato de cuidado contínuo. 😉' : '') + ' Até lá!',
       sys: '✅ Consulta criada na sua Agenda (' + descSlot(quando) + ') e paciente ' + (conv.tel ? 'com telefone ' + conv.tel + ' ' : '') + 'cadastrado automaticamente.' };
   }
@@ -887,6 +923,7 @@ function enviarComoLead(){
   var input = document.getElementById('chatText');
   var texto = input.value.trim();
   if (!texto || !convSel) return;
+  if (!state.prof){ toast('Complete seu cadastro profissional primeiro — a Lia fala em seu nome.'); openModal('mOnboard'); return; }
   var conv = state.conversas.find(function(c){ return c.id === convSel; });
   if (!conv) return;
   conv.msgs.push({ de: 'lead', texto: texto, ts: new Date().toISOString() });
@@ -894,11 +931,14 @@ function enviarComoLead(){
   save(); renderLia();
   if (conv.status === 'transferida') return;
   setTimeout(function(){
-    var resp = liaResponde(conv, texto);
-    conv.msgs.push({ de: 'lia', texto: resp.lia, ts: new Date().toISOString() });
-    if (resp.sys) conv.msgs.push({ de: 'sys', texto: resp.sys, ts: new Date().toISOString() });
-    save(); renderAll();
-  }, 650);
+    liaRemota(conv, texto)
+      .catch(function(){ return liaResponde(conv, texto); })
+      .then(function(resp){
+        conv.msgs.push({ de: 'lia', texto: resp.lia, ts: new Date().toISOString() });
+        if (resp.sys) conv.msgs.push({ de: 'sys', texto: resp.sys, ts: new Date().toISOString() });
+        save(); renderAll();
+      });
+  }, 400);
 }
 document.getElementById('chatSend').addEventListener('click', enviarComoLead);
 document.getElementById('chatText').addEventListener('keydown', function(e){ if (e.key === 'Enter') enviarComoLead(); });
@@ -988,8 +1028,19 @@ function gerarSOAP(texto){
 }
 document.getElementById('btnSOAP').addEventListener('click', function(){
   var texto = document.getElementById('transcript').textContent;
-  var soap = gerarSOAP(texto);
-  document.getElementById('soapBox').textContent = soap || 'A transcrição está vazia — grave, cole ou use o exemplo.';
+  if (!texto.trim()){ document.getElementById('soapBox').textContent = 'A transcrição está vazia — grave, cole ou use o exemplo.'; return; }
+  if (!state.prof){ toast('Complete seu cadastro profissional primeiro.'); openModal('mOnboard'); return; }
+  var box = document.getElementById('soapBox');
+  box.textContent = '✦ Gerando com IA…';
+  var remoto = (window.SOSMED_BACKEND && SOSMED_BACKEND.api)
+    ? fetch(SOSMED_BACKEND.api + '/api/soap', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ transcricao: texto, profissional: { nome: state.prof.nome, registro: state.prof.registro },
+          profissionalId: (sessao && sessao.user && sessao.user.id) || null }) })
+        .then(function(r){ if (!r.ok) throw r.status; return r.json(); })
+        .then(function(d){ if (!d.soap) throw 'vazio'; return d.soap; })
+    : Promise.reject('sem api');
+  remoto.catch(function(){ return gerarSOAP(texto) + '\n\n[Gerado localmente — a versão com IA ativa quando as chaves forem configuradas]'; })
+    .then(function(soap){ box.textContent = soap; });
 });
 document.getElementById('btnSalvarProntuario').addEventListener('click', function(){
   var cid = document.getElementById('selConsulta').value;
@@ -1104,6 +1155,31 @@ function analisarTranscricao(){
 }
 document.getElementById('transcript').addEventListener('input', analisarTranscricao);
 setInterval(analisarTranscricao, 2500);
+
+/* Copiloto com IA real — enriquece os painéis a cada 8s quando a transcrição muda */
+var cpRemotoUltimo = 0, cpRemotoHash = '', cpRemotoInflight = false;
+setInterval(function(){
+  var texto = document.getElementById('transcript').textContent || '';
+  if (!window.SOSMED_BACKEND || !SOSMED_BACKEND.api || cpRemotoInflight) return;
+  if (texto.length < 80 || texto === cpRemotoHash || Date.now() - cpRemotoUltimo < 8000) return;
+  cpRemotoInflight = true; cpRemotoUltimo = Date.now(); cpRemotoHash = texto;
+  fetch(SOSMED_BACKEND.api + '/api/copiloto', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ transcricao: texto, especialidade: state.prof ? state.prof.especialidade : '',
+      profissionalId: (sessao && sessao.user && sessao.user.id) || null }) })
+    .then(function(r){ if (!r.ok) throw r.status; return r.json(); })
+    .then(function(d){
+      var c = d.copiloto || {};
+      function lista(arr){ return '<ul style="padding-left:16px">' + arr.map(function(x){ return '<li style="margin:3px 0">' + esc(String(x)) + '</li>'; }).join('') + '</ul>'; }
+      if (Array.isArray(c.perguntas) && c.perguntas.length)
+        document.getElementById('cpPerguntas').innerHTML = '<b style="color:var(--amber-ink)">🤖 IA sugere:</b>' + lista(c.perguntas);
+      if (Array.isArray(c.alertas) && c.alertas.length)
+        document.getElementById('cpAlertas').innerHTML = c.alertas.map(function(a){ return '<div class="bubble" style="background:var(--danger-tint);border-color:rgba(179,64,42,.4);color:var(--danger);margin-bottom:6px">⚠️ ' + esc(String(a)) + '</div>'; }).join('');
+      if (Array.isArray(c.hipoteses) && c.hipoteses.length)
+        document.getElementById('cpHipoteses').innerHTML = '<b style="color:var(--amber-ink)">🤖 A considerar (IA — você decide):</b>' + lista(c.hipoteses);
+    })
+    .catch(function(){})
+    .then(function(){ cpRemotoInflight = false; });
+}, 3000);
 
 /* Retrato do paciente (conexão com saude.html + importação) */
 function pacienteDaConsulta(){
