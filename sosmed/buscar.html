@@ -136,6 +136,7 @@
 
 <div class="toast" id="toast" role="status"></div>
 
+<script src="sosmed-config.js"></script>
 <script>
 (function(){
 'use strict';
@@ -361,6 +362,12 @@ function confirmarAgendamento(){
   var p = profAtual, quando = new Date(slotSel);
   market.agendamentos.push({ id: uid(), profId: p.id, inicio: slotSel, nome: nome, tel: tel, modalidade: mod, criadoEm: new Date().toISOString() });
   saveMarket();
+  if (p.remotoId && window.SOSMED_BACKEND){
+    fetch(SOSMED_BACKEND.rest('marketplace_agendamentos'), { method: 'POST',
+      headers: SOSMED_BACKEND.headers({ Prefer: 'return=minimal' }),
+      body: JSON.stringify({ perfil_id: p.remotoId, nome: nome, tel: tel, inicio: slotSel, modalidade: mod })
+    }).catch(function(){});
+  }
   // Se for o profissional do console, cria a consulta REAL na agenda dele
   if (p.proprio && app){
     var pac = (app.pacientes||[]).find(function(x){ return x.nome.toLowerCase() === nome.toLowerCase(); });
@@ -400,6 +407,12 @@ function enviarAvaliacao(){
   profAtual.avaliacoes = profAtual.avaliacoes || [];
   profAtual.avaliacoes.push({ nome: nome, estrelas: estrelas, texto: texto, aprovada: false, em: new Date().toISOString() });
   saveMarket();
+  if (profAtual.remotoId && window.SOSMED_BACKEND){
+    fetch(SOSMED_BACKEND.rest('avaliacoes'), { method: 'POST',
+      headers: SOSMED_BACKEND.headers({ Prefer: 'return=minimal' }),
+      body: JSON.stringify({ perfil_id: profAtual.remotoId, nome: nome, estrelas: estrelas, texto: texto, aprovada: false })
+    }).catch(function(){});
+  }
   toast('Avaliação enviada para moderação — obrigado! 💛');
   document.getElementById('avNome').value = ''; document.getElementById('avTexto').value = '';
 }
@@ -415,6 +428,34 @@ especialidades().forEach(function(e){
   var o = document.createElement('option'); o.value = e; o.textContent = e; sel.appendChild(o);
 });
 render();
+
+/* ===== Backend real (Supabase): perfis publicados de qualquer dispositivo ===== */
+if (window.SOSMED_BACKEND){
+  fetch(SOSMED_BACKEND.rest('marketplace_perfis?publicado=eq.true&select=*'), { headers: SOSMED_BACKEND.headers() })
+    .then(function(r){ return r.ok ? r.json() : []; })
+    .then(function(rows){
+      rows.forEach(function(p){
+        if (!market.profissionais.some(function(x){ return x.remotoId === p.id; })){
+          market.profissionais.unshift({ id: 'r-' + p.id, remotoId: p.id, real: true,
+            nome: p.nome, especialidade: p.especialidade, cidade: p.cidade, bio: p.bio || '',
+            abordagem: p.abordagem || '', foto: p.foto_url || null, preco: +p.preco,
+            online: p.online, presencial: p.presencial, avaliacoes: [] });
+        }
+      });
+      return fetch(SOSMED_BACKEND.rest('avaliacoes?aprovada=eq.true&select=*'), { headers: SOSMED_BACKEND.headers() })
+        .then(function(r){ return r.ok ? r.json() : []; });
+    })
+    .then(function(avs){
+      (avs || []).forEach(function(a){
+        var prof = market.profissionais.find(function(x){ return x.remotoId === a.perfil_id; });
+        if (prof) prof.avaliacoes.push({ nome: a.nome, estrelas: a.estrelas, texto: a.texto, aprovada: true });
+      });
+      sel.innerHTML = '<option value="">Todas as especialidades</option>';
+      especialidades().forEach(function(e){ var o = document.createElement('option'); o.value = e; o.textContent = e; sel.appendChild(o); });
+      render();
+    })
+    .catch(function(){ /* offline: segue com perfis locais */ });
+}
 })();
 </script>
 </body>
