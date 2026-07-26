@@ -16,12 +16,12 @@
 | Camada | Onde | Status |
 |---|---|---|
 | Site + páginas (vendas, captura, app, investidores) | **GitHub Pages** — `drsostenescosta-rgb.github.io/medgroth/` | ✅ no ar com o push |
-| Banco (leads, futuras assinaturas) | **Supabase** projeto `sosmed` (`yaqphldowpshhrtvvfaq`, região São Paulo) | ⚠️ criar tabela `medgroth_leads` (SQL abaixo) |
+| Banco (leads, futuras assinaturas) | **Supabase** projeto `sosmed` (`yaqphldowpshhrtvvfaq`, região São Paulo) | ✅ tabela `medgroth_leads` criada com RLS (insert anônimo, leitura autenticada) |
 | Funções serverless (IA, webhooks de pagamento) | **Vercel** time `sosmedai` (mesmo deploy do SosMed) | ⏳ próximo ciclo |
 | Domínio próprio (`medgroth.com.br` ou `medgroth.app`) | Registro.br / Vercel Domains | ⏳ decidir e apontar |
 | E-mail transacional (boas-vindas, recuperação de lead) | Resend ou Brevo (camada gratuita) | ⏳ próximo ciclo |
 
-### SQL pendente no Supabase (rodar uma vez)
+### SQL já aplicado no Supabase (referência)
 
 ```sql
 create table if not exists public.medgroth_leads (
@@ -46,7 +46,7 @@ create policy "leitura autenticada" on public.medgroth_leads
 
 ## Sprint 1 — Funil vivo (destrava a venda)
 
-- [ ] Rodar o SQL acima → captura gravando 100% no banco real
+- [x] Rodar o SQL acima → captura gravando 100% no banco real
 - [ ] Painel do fundador: página simples que lista `medgroth_leads` (login Supabase) com botão "chamar no WhatsApp"
 - [ ] Notificação de lead novo no WhatsApp/e-mail do fundador (função Vercel + webhook do Supabase)
 - [ ] Pixel/analytics (Umami ou Plausible) nas 4 páginas para medir captura → diagnóstico → conversa
