@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MedGroth — Projeto de vendas para investidores</title>
+<meta name="description" content="MedGroth: SaaS de crescimento para médicos e clínicas no Brasil. Tese, mercado, modelo de receita, projeções e roadmap — o plano de vendas aberto para investidores." />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#04080a; --card:rgba(13,26,26,0.6); --em:#19c37d; --em-light:#3ddc97; --em-dark:#0e9f63;
+    --gold:#c9a227; --gold-light:#e2c464; --text:#e8efea; --muted:#8fa39a;
+    --border:rgba(232,239,234,0.09); --border-strong:rgba(232,239,234,0.18);
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.65; }
+  a { color:inherit; text-decoration:none; }
+  h1,h2,h3 { font-family:var(--serif); font-weight:500; line-height:1.15; }
+  em { font-style:italic; color:var(--em-light); }
+  .wrap { max-width:960px; margin:0 auto; padding:0 24px; }
+  .orb { position:fixed; border-radius:50%; filter:blur(110px); opacity:0.35; z-index:-1; pointer-events:none; }
+  .o1 { width:560px; height:560px; top:-15%; left:-8%; background:radial-gradient(circle,rgba(25,195,125,0.3),transparent 70%); }
+  .o2 { width:480px; height:480px; bottom:-16%; right:-10%; background:radial-gradient(circle,rgba(201,162,39,0.22),transparent 70%); }
+  .eyebrow { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--em-light); font-weight:600; }
+  .grad { background:linear-gradient(115deg,#fff 0%,#d9f5e6 45%,var(--em-light) 80%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  header { padding:34px 0 0; }
+  .top { display:flex; justify-content:space-between; align-items:center; }
+  .brand { display:flex; align-items:center; gap:10px; font-family:var(--serif); }
+  .logo { width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center; color:var(--em-light); background:rgba(25,195,125,0.12); border:1px solid rgba(25,195,125,0.45); }
+  .back { font-size:0.8rem; color:var(--muted); } .back:hover{color:var(--em-light)}
+  .hero { padding:60px 0 40px; }
+  .hero h1 { font-size:clamp(2rem,4.6vw,3rem); margin:16px 0 18px; }
+  .hero p { color:var(--muted); font-size:1.05rem; max-width:64ch; }
+  section { padding:44px 0; border-top:1px solid var(--border); }
+  section h2 { font-size:1.6rem; margin-bottom:6px; }
+  .sec-sub { color:var(--muted); font-size:0.92rem; margin-bottom:24px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:22px 24px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  @media (max-width:760px){ .grid2,.grid3{grid-template-columns:1fr} }
+  .stat { text-align:center; padding:22px 16px; }
+  .stat .n { font-family:var(--serif); font-size:2rem; color:var(--em-light); }
+  .stat .l { font-size:0.74rem; color:var(--muted); font-family:var(--mono); text-transform:uppercase; letter-spacing:0.08em; margin-top:4px; }
+  .card h3 { font-size:1.05rem; margin-bottom:8px; }
+  .card p, .card li { color:var(--muted); font-size:0.92rem; }
+  .card ul { margin:8px 0 0 18px; display:grid; gap:6px; }
+  table { width:100%; border-collapse:collapse; font-size:0.88rem; }
+  th, td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--border); }
+  th { font-family:var(--mono); font-size:0.68rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); }
+  td strong { color:var(--em-light); }
+  .table-scroll { overflow-x:auto; }
+  .pill { display:inline-block; font-family:var(--mono); font-size:0.64rem; letter-spacing:0.06em; text-transform:uppercase; border-radius:99px; padding:3px 10px; background:rgba(25,195,125,0.1); color:var(--em-light); border:1px solid rgba(25,195,125,0.3); margin-right:6px; }
+  .pill.gold { background:rgba(201,162,39,0.1); color:var(--gold-light); border-color:rgba(201,162,39,0.35); }
+  .timeline { border-left:2px solid var(--border); margin-left:6px; padding-left:24px; display:grid; gap:22px; }
+  .t-item { position:relative; }
+  .t-item::before { content:''; position:absolute; left:-31px; top:6px; width:11px; height:11px; border-radius:50%; background:var(--bg); border:3px solid var(--em); }
+  .t-when { font-family:var(--mono); font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold-light); }
+  .t-item h3 { font-size:1.02rem; margin:3px 0 4px; }
+  .t-item p { color:var(--muted); font-size:0.9rem; }
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:13px 26px; border-radius:999px; font-weight:700; font-size:0.94rem; cursor:pointer; border:1px solid transparent; transition:transform .2s, filter .2s; }
+  .btn-em { background:linear-gradient(135deg,var(--em-light),var(--em-dark)); color:#03130b; box-shadow:0 4px 22px rgba(25,195,125,0.3); }
+  .btn-em:hover { transform:translateY(-2px); filter:brightness(1.05); }
+  .btn-ghost { border-color:var(--border-strong); color:var(--text); }
+  .btn-ghost:hover { border-color:var(--em); color:var(--em-light); }
+  .note { font-size:0.74rem; color:rgba(143,163,154,0.75); margin-top:14px; }
+  footer { border-top:1px solid var(--border); padding:30px 0 50px; color:var(--muted); font-size:0.82rem; }
+</style>
+</head>
+<body>
+<div class="orb o1"></div><div class="orb o2"></div>
+
+<header class="wrap">
+  <div class="top">
+    <a class="brand" href="index.html"><span class="logo">Mg</span> MedGroth · para investidores</a>
+    <a class="back" href="index.html">← site do produto</a>
+  </div>
+  <div class="hero">
+    <span class="eyebrow">Projeto de vendas · memorando aberto</span>
+    <h1 class="grad">O sistema operacional de crescimento da clínica brasileira</h1>
+    <p>O Brasil forma médicos excelentes e empreendedores despreparados. O MedGroth transforma consultórios em negócios previsíveis — diagnóstico, plano, funil e recorrência num único produto, dentro de um ecossistema clínico que já existe.</p>
+  </div>
+</header>
+
+<section class="wrap">
+  <h2>1 · O problema</h2>
+  <div class="sec-sub">A dor é estrutural, não pontual.</div>
+  <div class="grid3">
+    <div class="card"><h3>Formação zero em negócio</h3><p>A faculdade de medicina não ensina captação, precificação nem gestão. O médio médico brasileiro abre consultório sem funil, sem CRM e sem método de venda.</p></div>
+    <div class="card"><h3>Renda esmagada</h3><p>A consulta avulsa via convênio paga cada vez menos. A saída — protocolos particulares e recorrência — exige exatamente as habilidades que ninguém ensinou.</p></div>
+    <div class="card"><h3>Soluções erradas</h3><p>O que existe hoje são cursos de guru e agências caras. Nenhum produto de software guia o médico da estratégia à execução, semana a semana.</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>2 · O mercado</h2>
+  <div class="sec-sub">Estimativas próprias a partir de dados públicos (Demografia Médica/CFM) — para dimensionamento, não promessa.</div>
+  <div class="grid3">
+    <div class="card stat"><div class="n">~600 mil</div><div class="l">médicos ativos no Brasil</div></div>
+    <div class="card stat"><div class="n">~350 mil</div><div class="l">atuam em consultório/clínica privada (est.)</div></div>
+    <div class="card stat"><div class="n">R$ 1,2 bi+</div><div class="l">mercado anual endereçável a R$ 297/mês (est.)</div></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <p><strong style="color:var(--text)">Recorte inicial (SOM):</strong> médicos de nicho particular (emagrecimento, longevidade, estética, performance, dor) que já faturam R$ 10–80 mil/mês e sentem o teto. São dezenas de milhares de profissionais com dor aguda, dinheiro para pagar e decisão de compra individual — o melhor perfil possível para SaaS B2B de ciclo curto.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>3 · O produto e o fosso</h2>
+  <div class="sec-sub">MedGroth não vive sozinho — é a camada de crescimento de um ecossistema clínico.</div>
+  <div class="grid2">
+    <div class="card"><h3><span class="pill">MedGroth</span> camada de crescimento</h3>
+      <ul><li>Diagnóstico de crescimento em 3 minutos</li><li>Plano de 4 semanas com checklist executável</li><li>CRM de leads (funil visual) e metas de receita</li><li>Protocolos precificados por nicho</li></ul></div>
+    <div class="card"><h3><span class="pill gold">Ecossistema</span> MedEasy + SosMed</h3>
+      <ul><li><strong>MedEasy:</strong> a consulta que se documenta sozinha + Índice de Saúde (A–F) — a prova de valor clínico que sustenta a venda ética</li><li><strong>SosMed:</strong> marketplace e camada de pacientes</li><li>Backend comum (Supabase/Vercel) já provisionado</li></ul></div>
+  </div>
+  <div class="card" style="margin-top:16px"><h3>Por que ganhamos</h3>
+    <p>Cursos entregam conteúdo; agências entregam dependência. O MedGroth entrega <em>sistema</em>: o plano vive dentro do produto onde os leads andam e as metas aparecem — e o Índice de Saúde do MedEasy dá ao médico o argumento de venda mais honesto do mercado: resultado clínico medido. Software + dados clínicos na mesma casa é o fosso.</p></div>
+</section>
+
+<section class="wrap">
+  <h2>4 · Modelo de receita</h2>
+  <div class="sec-sub">SaaS por assinatura, decisão de compra individual, ciclo de venda curto.</div>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Plano</th><th>Preço/mês</th><th>Para quem</th><th>Papel no funil</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Groth Start</strong></td><td>R$ 97</td><td>Médico se organizando</td><td>Porta de entrada, volume</td></tr>
+      <tr><td><strong>Groth Pro</strong></td><td>R$ 297</td><td>Clínica buscando previsibilidade</td><td>Plano central (ancoragem)</td></tr>
+      <tr><td><strong>Groth Aceleração</strong></td><td>R$ 997</td><td>Implementação 1:1, vagas limitadas</td><td>Alto LTV + laboratório de casos</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid3" style="margin-top:16px">
+    <div class="card stat"><div class="n">R$ 250</div><div class="l">ticket médio alvo (blended)</div></div>
+    <div class="card stat"><div class="n">&lt; R$ 500</div><div class="l">CAC alvo (canal fundador: conteúdo + comunidade médica)</div></div>
+    <div class="card stat"><div class="n">18 meses+</div><div class="l">retenção alvo (plano vive no produto)</div></div>
+  </div>
+  <div class="note">Expansão natural de receita: cross-sell MedEasy (R$ 349/mês), taxa sobre agendamentos do marketplace SosMed e, mais adiante, meios de pagamento embutidos (sinal de consulta via Pix).</div>
+</section>
+
+<section class="wrap">
+  <h2>5 · Plano de vendas — como chegamos aos primeiros 1.000 assinantes</h2>
+  <div class="sec-sub">Vendemos com o mesmo funil que o produto ensina. Cada etapa já está no ar.</div>
+  <div class="timeline">
+    <div class="t-item"><div class="t-when">Fase 0 · agora</div><h3>Funil próprio no ar</h3><p>Página de captura → diagnóstico gratuito → plano na hora → oferta dos planos pagos. Leads caem em banco real (Supabase) e no WhatsApp do fundador. Meta: validar conversão captura→diagnóstico→conversa.</p></div>
+    <div class="t-item"><div class="t-when">Fase 1 · 20 clínicas fundadoras</div><h3>Venda direta + preço de fundador</h3><p>Venda 1:1 pelo WhatsApp para a rede médica do fundador e indicações. Preço de fundador vitalício cria urgência honesta. Meta: R$ 5–10 mil MRR e 10 casos documentados.</p></div>
+    <div class="t-item"><div class="t-when">Fase 2 · escala por conteúdo</div><h3>Casos + conteúdo + comunidade</h3><p>Casos reais (antes/depois de receita) viram conteúdo orgânico em Instagram/YouTube médico. Diagnóstico gratuito como lead magnet perene. Meta: 200–300 assinantes, CAC orgânico.</p></div>
+    <div class="t-item"><div class="t-when">Fase 3 · tráfego pago + parcerias</div><h3>Máquina paga e canais B2B2C</h3><p>Tráfego pago sobre o funil já validado; parcerias com sociedades de especialidade, contadores médicos e distribuidores de equipamentos. Meta: 1.000 assinantes (~R$ 250 mil MRR).</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>6 · Projeções (cenário base)</h2>
+  <div class="sec-sub">Premissas conservadoras, sem cross-sell. Números são estimativas do fundador, não garantia.</div>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Horizonte</th><th>Assinantes</th><th>MRR</th><th>ARR</th><th>Marco</th></tr></thead>
+    <tbody>
+      <tr><td>6 meses</td><td>20</td><td>R$ 5 mil</td><td>R$ 60 mil</td><td>Clínicas fundadoras + casos documentados</td></tr>
+      <tr><td>12 meses</td><td>150</td><td><strong>R$ 37 mil</strong></td><td>R$ 450 mil</td><td>Funil orgânico validado</td></tr>
+      <tr><td>24 meses</td><td>600</td><td><strong>R$ 150 mil</strong></td><td>R$ 1,8 mi</td><td>Tráfego pago + parcerias</td></tr>
+      <tr><td>36 meses</td><td>1.500</td><td><strong>R$ 375 mil</strong></td><td>R$ 4,5 mi</td><td>Ecossistema integrado (MedGroth+MedEasy)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="wrap">
+  <h2>7 · Uso de capital & o convite</h2>
+  <div class="grid2">
+    <div class="card"><h3>Rodada-alvo: pré-seed</h3>
+      <ul>
+        <li><strong>40%</strong> produto e engenharia (backend, IA, integrações de pagamento)</li>
+        <li><strong>35%</strong> aquisição (conteúdo, tráfego, parcerias)</li>
+        <li><strong>15%</strong> sucesso do cliente (onboarding das fundadoras)</li>
+        <li><strong>10%</strong> jurídico/regulatório (LGPD, publicidade médica)</li>
+      </ul></div>
+    <div class="card"><h3>O fundador</h3>
+      <p><strong style="color:var(--text)">Sóstenes Costa Paiva</strong> — trancou medicina para construir tecnologia de saúde. Vive os dois lados da dor: entende a clínica por dentro e constrói o software por fora. Ecossistema (MedEasy, SosMed, MedGroth) desenhado, publicado e com infraestrutura real provisionada.</p>
+      <p style="margin-top:10px"><a href="../index.html" style="color:var(--em-light)">história completa →</a></p></div>
+  </div>
+  <div style="text-align:center; padding:44px 0 10px">
+    <h2 style="margin-bottom:10px">Quer ver o funil <em>funcionando ao vivo</em>?</h2>
+    <p style="color:var(--muted); margin-bottom:26px">O produto, a captura e o banco de leads estão no ar. A demonstração leva 15 minutos.</p>
+    <a class="btn btn-em" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20Sostenes!%20Vi%20o%20memorando%20do%20MedGroth%20e%20quero%20conversar%20como%20investidor." target="_blank" rel="noopener">Falar com o fundador →</a>
+    &nbsp;
+    <a class="btn btn-ghost" href="captura.html">Ver o funil como um lead vê</a>
+  </div>
+  <div class="note">Este memorando é material informativo do fundador, não oferta pública de valores mobiliários. Projeções são estimativas sujeitas a risco; resultados reais podem diferir materialmente.</div>
+</section>
+
+<footer class="wrap">© 2026 MedGroth · Zetheon · <a href="index.html" style="color:var(--em-light)">medgroth</a> · <a href="../index.html" style="color:var(--em-light)">Sóstenes Costa Paiva</a></footer>
+</body>
+</html>

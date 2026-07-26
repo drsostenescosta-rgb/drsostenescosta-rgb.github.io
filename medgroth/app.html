@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MedGroth — Cockpit de Crescimento</title>
+<meta name="description" content="Diagnóstico, plano de 4 semanas, CRM de leads e metas de receita. O cockpit de crescimento para médicos e clínicas." />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#04080a; --bg-2:#071013; --card:rgba(13,26,26,0.6); --card-solid:#0b1518;
+    --em:#19c37d; --em-light:#3ddc97; --em-dark:#0e9f63;
+    --gold:#c9a227; --gold-light:#e2c464; --red:#e05a5a; --red-light:#f18b8b;
+    --text:#e8efea; --muted:#8fa39a; --border:rgba(232,239,234,0.09); --border-strong:rgba(232,239,234,0.18);
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.55; min-height:100vh; }
+  a { color:inherit; text-decoration:none; }
+  h1,h2,h3 { font-family:var(--serif); font-weight:500; line-height:1.15; }
+  .grad { background:linear-gradient(115deg,#fff 0%,#d9f5e6 45%,var(--em-light) 80%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  .orb { position:fixed; border-radius:50%; filter:blur(110px); opacity:0.35; z-index:-1; pointer-events:none; }
+  .o1 { width:560px; height:560px; top:-15%; left:-8%; background:radial-gradient(circle,rgba(25,195,125,0.32),transparent 70%); }
+  .o2 { width:460px; height:460px; bottom:-16%; right:-10%; background:radial-gradient(circle,rgba(201,162,39,0.18),transparent 70%); }
+
+  /* topo */
+  header { position:sticky; top:0; z-index:50; backdrop-filter:blur(16px); background:rgba(4,8,10,0.7); border-bottom:1px solid var(--border); }
+  .top { display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:1180px; margin:0 auto; padding:12px 20px; }
+  .brand { display:flex; align-items:center; gap:10px; font-family:var(--serif); font-size:1rem; }
+  .logo { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--em-light); background:rgba(25,195,125,0.12); border:1px solid rgba(25,195,125,0.45); font-size:0.95rem; }
+  .user { font-size:0.78rem; color:var(--muted); display:flex; align-items:center; gap:12px; }
+  .user button { background:none; border:1px solid var(--border); color:var(--muted); border-radius:99px; padding:4px 12px; cursor:pointer; font-size:0.72rem; }
+  .user button:hover { color:var(--red-light); border-color:var(--red); }
+
+  /* tabs */
+  nav.tabs { display:flex; gap:6px; max-width:1180px; margin:0 auto; padding:10px 20px 0; overflow-x:auto; }
+  .tab { padding:9px 16px; border-radius:10px 10px 0 0; font-size:0.85rem; font-weight:600; color:var(--muted); cursor:pointer; border:1px solid transparent; border-bottom:none; white-space:nowrap; }
+  .tab.active { color:var(--em-light); background:var(--card); border-color:var(--border); }
+  main { max-width:1180px; margin:0 auto; padding:22px 20px 80px; }
+
+  .card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 22px; margin-bottom:16px; }
+  .card h3 { font-size:1.02rem; margin-bottom:4px; }
+  .card-sub { color:var(--muted); font-size:0.85rem; margin-bottom:14px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .grid4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  @media (max-width:880px){ .grid2,.grid3,.grid4{grid-template-columns:1fr 1fr} }
+  @media (max-width:560px){ .grid2,.grid3,.grid4{grid-template-columns:1fr} }
+
+  .stat { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px 18px; }
+  .stat .n { font-family:var(--serif); font-size:1.7rem; }
+  .stat .n.up { color:var(--em-light); }
+  .stat .l { font-size:0.74rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; font-family:var(--mono); }
+
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:999px; font-weight:700; font-size:0.86rem; cursor:pointer; border:1px solid transparent; transition:transform .15s, filter .15s; }
+  .btn:hover { transform:translateY(-1px); filter:brightness(1.06); }
+  .btn-em { background:linear-gradient(135deg,var(--em-light),var(--em-dark)); color:#03130b; }
+  .btn-ghost { border-color:var(--border-strong); color:var(--text); background:rgba(255,255,255,0.02); }
+  .btn-sm { padding:6px 13px; font-size:0.76rem; }
+
+  label { font-size:0.78rem; font-weight:600; display:grid; gap:5px; margin-bottom:12px; }
+  input, select, textarea { background:rgba(4,8,10,0.7); border:1px solid var(--border); border-radius:9px; padding:10px 12px; color:var(--text); font-family:var(--sans); font-size:0.92rem; width:100%; }
+  input:focus, select:focus, textarea:focus { outline:none; border-color:var(--em); box-shadow:0 0 0 3px rgba(25,195,125,0.14); }
+
+  .bar { height:9px; border-radius:99px; background:rgba(255,255,255,0.07); overflow:hidden; }
+  .fill { height:100%; border-radius:99px; background:linear-gradient(90deg,var(--em-dark),var(--em-light)); transition:width .4s; }
+
+  /* checklist */
+  .chk { display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px dashed var(--border); font-size:0.9rem; cursor:pointer; }
+  .chk:last-child { border-bottom:none; }
+  .chk input { width:auto; accent-color:var(--em); margin-top:4px; }
+  .chk.done span { color:var(--muted); text-decoration:line-through; }
+
+  /* kanban */
+  .kan { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; align-items:start; }
+  @media (max-width:1000px){ .kan{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:560px){ .kan{grid-template-columns:1fr} }
+  .kol { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px; min-height:120px; }
+  .kol h4 { font-size:0.72rem; font-family:var(--mono); text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:10px; display:flex; justify-content:space-between; }
+  .lead { background:rgba(4,8,10,0.55); border:1px solid var(--border); border-radius:10px; padding:10px 12px; margin-bottom:8px; font-size:0.84rem; }
+  .lead b { display:block; }
+  .lead .m { color:var(--muted); font-size:0.74rem; }
+  .lead .acts { display:flex; gap:6px; margin-top:7px; flex-wrap:wrap; }
+  .lead .acts button { background:none; border:1px solid var(--border); color:var(--muted); border-radius:7px; padding:2px 8px; cursor:pointer; font-size:0.72rem; }
+  .lead .acts button:hover { color:var(--em-light); border-color:var(--em); }
+
+  .pill { display:inline-block; font-family:var(--mono); font-size:0.62rem; letter-spacing:0.06em; text-transform:uppercase; border-radius:99px; padding:2px 9px; background:rgba(25,195,125,0.1); color:var(--em-light); border:1px solid rgba(25,195,125,0.3); }
+  .pill.gold { background:rgba(201,162,39,0.1); color:var(--gold-light); border-color:rgba(201,162,39,0.35); }
+
+  .empty { text-align:center; color:var(--muted); padding:34px 14px; font-size:0.9rem; }
+  .empty .big { font-size:2.1rem; margin-bottom:8px; }
+
+  .disclaimer { font-size:0.72rem; color:rgba(143,163,154,0.7); margin-top:20px; }
+
+  /* auth */
+  #auth { max-width:460px; margin:60px auto; padding:0 20px; }
+  #auth .card { padding:30px 28px; }
+  #auth h1 { font-size:1.7rem; margin-bottom:8px; }
+  #auth p { color:var(--muted); font-size:0.9rem; margin-bottom:20px; }
+
+  @media print {
+    body{background:#fff;color:#111} .orb,header,nav.tabs,.btn,.no-print{display:none!important}
+    .card,.stat{border-color:#ddd;background:#fff}
+  }
+</style>
+</head>
+<body>
+<div class="orb o1"></div><div class="orb o2"></div>
+
+<div id="auth" style="display:none">
+  <div style="text-align:center; margin-bottom:26px">
+    <a class="brand" href="index.html" style="justify-content:center; display:inline-flex"><span class="logo">Mg</span>&nbsp; MedGroth</a>
+  </div>
+  <div class="card">
+    <h1 class="grad">Criar minha conta</h1>
+    <p>Seus dados ficam no seu navegador (e em breve na nuvem). Leva 30 segundos.</p>
+    <label>Nome*<input id="a-nome" placeholder="Dra. Ana Souza"></label>
+    <label>WhatsApp*<input id="a-zap" placeholder="(84) 99999-0000"></label>
+    <label>E-mail<input id="a-email" type="email" placeholder="voce@clinica.com.br"></label>
+    <label>Nome da clínica / consultório<input id="a-clinica" placeholder="Clínica Vida Plena"></label>
+    <div class="erro" id="a-erro" style="color:var(--red-light); font-size:0.8rem; display:none; margin-bottom:10px">Preencha nome e WhatsApp.</div>
+    <button class="btn btn-em" style="width:100%; justify-content:center" onclick="App.signup()">Entrar no MedGroth →</button>
+    <div style="text-align:center; margin-top:12px"><a href="index.html" style="font-size:0.78rem; color:var(--muted)">← voltar para o site</a></div>
+  </div>
+</div>
+
+<div id="shell" style="display:none">
+  <header>
+    <div class="top">
+      <a class="brand" href="index.html"><span class="logo">Mg</span> MedGroth <span class="pill" style="margin-left:6px">beta fundador</span></a>
+      <div class="user"><span id="u-nome"></span><button onclick="App.logout()">sair</button></div>
+    </div>
+    <nav class="tabs" id="tabs"></nav>
+  </header>
+  <main id="main"></main>
+</div>
+
+<script src="config.js"></script>
+<script>
+/* ============================ dados ============================ */
+const KEY='medgroth_db';
+let DB = JSON.parse(localStorage.getItem(KEY) || 'null') || { user:null, diagnostico:null, checks:{}, leads:[], tarefas:[] };
+const save = () => localStorage.setItem(KEY, JSON.stringify(DB));
+const BRL = n => (n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+const uid = () => 'id'+Math.random().toString(36).slice(2,9);
+const esc = s => String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ============================ motor de crescimento ============================ */
+const PROTOCOLOS = {
+  'Emagrecimento':[
+    {nome:'Protocolo Emagrecimento 90 dias', promessa:'Perda de peso sustentável com acompanhamento próximo e método', entreg:['Consultas quinzenais','Plano alimentar e de atividade','Medicação quando indicada','Reavaliação mensal','Canal de suporte'], mult:10},
+    {nome:'Reset Metabólico 30 dias (entrada)', promessa:'Destravar o metabolismo e gerar o primeiro resultado', entreg:['Avaliação completa','Protocolo inicial','2 retornos'], mult:3},
+  ],
+  'Metabólico / Longevidade':[
+    {nome:'Programa Longevidade & Metabolismo', promessa:'Prevenção e vitalidade com base em dados clínicos', entreg:['Check-up e exames','Plano personalizado','Reavaliações trimestrais','Suplementação orientada'], mult:12},
+    {nome:'Check-up Inteligente', promessa:'Fotografia completa da saúde com plano de ação', entreg:['Avaliação completa','Interpretação de exames','Plano de 90 dias'], mult:2.5},
+  ],
+  'Estética':[ {nome:'Protocolo Estético (pacote de sessões)', promessa:'Resultado estético com plano de sessões e manutenção', entreg:['Avaliação','Pacote de sessões','Manutenção trimestral'], mult:8} ],
+  'Performance / Esporte':[ {nome:'Performance & Energia', promessa:'Mais energia, foco e recuperação', entreg:['Avaliação','Protocolo de suplementação','Acompanhamento mensal'], mult:6} ],
+  'Saúde mental / Sono':[ {nome:'Equilíbrio Mental & Sono', promessa:'Reduzir ansiedade e recuperar o sono', entreg:['Avaliação de saúde mental','Plano terapêutico','Acompanhamento quinzenal'], mult:6} ],
+  'Dor / Reabilitação':[ {nome:'Protocolo Dor & Movimento', promessa:'Sair da dor e recuperar função', entreg:['Avaliação funcional','Plano de reabilitação','Reavaliações'], mult:7} ],
+  'Clínica geral':[ {nome:'Acompanhamento Premium', promessa:'Um médico de confiança sempre por perto', entreg:['Consultas periódicas','App do paciente','Canal direto'], mult:8} ],
+};
+function growthPlan(i){
+  const ticket=+i.ticket||0, sem=+i.atendSemana||0;
+  const mensalAtual = ticket*sem*4;
+  const projTicket = Math.round(ticket*1.3);
+  const projMensal = Math.round(projTicket*sem*4*1.2);
+  let perfil, foco;
+  if(i.gargalo==='Captação'){ perfil='Especialista sem fluxo de captação'; foco='construir uma máquina de aquisição previsível'; }
+  else if(i.gargalo==='Conversão'){ perfil='Boa captação, conversão abaixo do potencial'; foco='estruturar a consulta de avaliação e a oferta'; }
+  else if(i.gargalo==='Precificação'){ perfil='Entrega alto valor, cobra abaixo do mercado'; foco='reposicionar preço e empacotar em protocolos'; }
+  else if(i.gargalo==='Retenção'){ perfil='Atrai, mas perde o paciente cedo'; foco='criar recorrência e acompanhamento de longo prazo'; }
+  else { perfil='Sobrecarregado na operação'; foco='ganhar tempo com processos e tecnologia'; }
+  const roadmap=[
+    {fase:'Semana 1 — Fundação', acoes:['Definir posicionamento e nicho ('+(i.nicho||'—')+')','Criar a oferta central (protocolo âncora)','Padronizar a consulta (modelo de anamnese + prova de valor clínico)']},
+    {fase:'Semana 2 — Captação', acoes: i.maturidade==='Baixa'
+        ? ['Estruturar Instagram e Google Meu Negócio','Sistema de indicação com incentivo','Coletar provas sociais (com consentimento)']
+        : i.maturidade==='Média'
+        ? ['Calendário de conteúdo semanal','Captação ativa por WhatsApp/lista','Campanha simples de tráfego para consulta de avaliação']
+        : ['Funil de captação com tráfego pago','Campanhas sazonais','CRM e qualificação de leads']},
+    {fase:'Semana 3 — Conversão', acoes:['Roteiro da consulta de avaliação (diagnóstico → plano → oferta)','Apresentar plano visual ao paciente','Ancoragem de preço com 2 opções de protocolo']},
+    {fase:'Semana 4 — Retenção & LTV', acoes:['Planos de acompanhamento recorrente','Canal ativo com o paciente (lembretes, reavaliações)','Rotina de recall e reavaliação periódica']},
+  ];
+  const base = PROTOCOLOS[i.nicho] || PROTOCOLOS['Clínica geral'];
+  const protocolos = base.map(pr=>({...pr, preco: Math.max(ticket*pr.mult, ticket||297)}));
+  const produto = {
+    'Mais pacientes':['Crie uma oferta de entrada acessível (consulta de avaliação ou reset 30 dias)','Use o protocolo âncora para subir o paciente de nível'],
+    'Aumentar ticket':['Empacote atendimentos avulsos em protocolos/planos premium','Adicione recorrência (assinatura de acompanhamento)'],
+    'Escalar / previsibilidade':['Padronize protocolos e delegue operação','Crie recorrência e metas de MRR'],
+    'Autoridade / marca':['Nomeie seu método próprio','Documente resultados como prova (com consentimento)'],
+  }[i.objetivo] || [];
+  const mkt = i.maturidade==='Baixa'
+    ? ['Perfil profissional otimizado + provas sociais','Google Meu Negócio e avaliações','Indicações estruturadas de pacientes atuais']
+    : i.maturidade==='Média'
+    ? ['Conteúdo educativo semanal no nicho','Captação por WhatsApp com oferta de avaliação','CRM simples para não perder lead']
+    : ['Tráfego pago para funil de avaliação','Lançamentos e campanhas sazonais','Equipe de atendimento e qualificação'];
+  const vendas = {
+    'Captação':['Oferta de entrada irresistível (consulta de avaliação)','Presença ativa onde seu público está'],
+    'Conversão':['Consulta de avaliação com método claro','Prova de valor clínico para justificar plano e preço','Ofereça 2 opções de plano (ancoragem)'],
+    'Precificação':['Suba o ticket de forma gradual e justificada','Empacote em protocolos com resultado prometido','Elimine o "avulso barato"'],
+    'Retenção':['Planos de acompanhamento e reavaliação','Canal ativo com o paciente','Recall automático de retorno'],
+    'Tempo / operacional':['Automatize a documentação da consulta (MedEasy)','Padronize com modelos de anamnese','Delegue tarefas administrativas'],
+  }[i.gargalo] || [];
+  return { perfil, foco, mensalAtual, projTicket, projMensal, roadmap, protocolos, estrategias:{produto,mkt,vendas} };
+}
+
+/* ============================ app ============================ */
+const TABS = [ ['painel','📊 Painel'], ['diagnostico','🧭 Diagnóstico'], ['plano','🗺️ Plano'], ['leads','👥 Leads'], ['execucao','✅ Execução'] ];
+let VIEW = 'painel';
+const PAGES = {};
+
+PAGES.painel = function(){
+  const d = DB.diagnostico;
+  if(!d) return `<div class="empty"><div class="big">🧭</div>Comece pelo diagnóstico: 7 perguntas, 3 minutos, e o seu cockpit ganha vida.<br><br><button class="btn btn-em" onclick="App.go('diagnostico')">Fazer meu diagnóstico</button></div>`;
+  const pl = growthPlan(d);
+  const tot = Object.keys(allChecks()).length, done = Object.values(DB.checks).filter(Boolean).length;
+  const pct = tot ? Math.round(done/tot*100) : 0;
+  const ativos = DB.leads.filter(l=>!['fechado','perdido'].includes(l.st)).length;
+  const fechados = DB.leads.filter(l=>l.st==='fechado');
+  const receitaFunil = fechados.reduce((s,l)=>s+(+l.valor||0),0);
+  return `
+  <div class="grid4">
+    <div class="stat"><div class="n">${BRL(pl.mensalAtual)}</div><div class="l">Receita mensal atual</div></div>
+    <div class="stat"><div class="n up">${BRL(pl.projMensal)}</div><div class="l">Projeção com o plano</div></div>
+    <div class="stat"><div class="n">${ativos}</div><div class="l">Leads ativos no funil</div></div>
+    <div class="stat"><div class="n up">${BRL(receitaFunil)}</div><div class="l">Fechado via funil</div></div>
+  </div>
+  <div class="card">
+    <h3>Progresso do plano de 4 semanas</h3>
+    <div class="card-sub">${done} de ${tot} ações concluídas — perfil: <strong style="color:var(--em-light)">${esc(pl.perfil)}</strong></div>
+    <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
+    <div style="margin-top:14px"><button class="btn btn-ghost btn-sm" onclick="App.go('plano')">Ver o plano →</button>
+    <button class="btn btn-ghost btn-sm" onclick="App.go('leads')">Abrir o funil →</button></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>🎯 Foco do momento</h3><div class="card-sub">${esc(pl.foco)}</div>
+      <div style="font-size:0.86rem; color:var(--muted)">Ticket atual ${BRL(+d.ticket)} → sugerido <strong style="color:var(--em-light)">${BRL(pl.projTicket)}</strong> com empacotamento em protocolos.</div></div>
+    <div class="card"><h3>🧠 Ecossistema</h3><div class="card-sub">A prova de valor mais honesta é resultado clínico medido.</div>
+      <a class="btn btn-ghost btn-sm" href="../medeasy.html">Conhecer o MedEasy →</a></div>
+  </div>`;
+};
+
+PAGES.diagnostico = function(){
+  const d = DB.diagnostico || {};
+  const pre = JSON.parse(localStorage.getItem('medgroth_prefill')||'{}');
+  const nicho = d.nicho || pre.especialidade || '';
+  const opt = (list, sel) => list.map(o=>`<option ${o===sel?'selected':''}>${o}</option>`).join('');
+  return `
+  <div class="card">
+    <h3>🧭 Diagnóstico de crescimento</h3>
+    <div class="card-sub">7 perguntas. Seja honesto — o plano só é bom se o retrato for real.</div>
+    <div class="grid2">
+      <label>1 · Nicho principal
+        <select id="d-nicho">${opt(['','Emagrecimento','Metabólico / Longevidade','Estética','Performance / Esporte','Saúde mental / Sono','Dor / Reabilitação','Clínica geral'], nicho)}</select></label>
+      <label>2 · Ticket médio da consulta (R$)
+        <input id="d-ticket" type="number" min="0" value="${esc(d.ticket||'')}" placeholder="300"></label>
+      <label>3 · Atendimentos por semana
+        <input id="d-sem" type="number" min="0" value="${esc(d.atendSemana||'')}" placeholder="25"></label>
+      <label>4 · Maturidade de marketing
+        <select id="d-mat">${opt(['','Baixa','Média','Alta'], d.maturidade)}</select></label>
+      <label>5 · Maior gargalo hoje
+        <select id="d-garg">${opt(['','Captação','Conversão','Precificação','Retenção','Tempo / operacional'], d.gargalo)}</select></label>
+      <label>6 · Objetivo nº 1 nos próximos 90 dias
+        <select id="d-obj">${opt(['','Mais pacientes','Aumentar ticket','Escalar / previsibilidade','Autoridade / marca'], d.objetivo)}</select></label>
+      <label>7 · Quem atende o WhatsApp da clínica?
+        <select id="d-quem">${opt(['','Eu mesmo(a)','Secretária / recepção','Ninguém fixo'], d.quemAtende)}</select></label>
+    </div>
+    <button class="btn btn-em" onclick="App.runDiagnostico()">Gerar meu plano de crescimento →</button>
+  </div>
+  ${DB.diagnostico ? `<div class="card"><h3>Plano atual</h3><div class="card-sub">Você já tem um plano gerado. Refazer o diagnóstico recalcula o plano (o progresso das ações é mantido por ação idêntica).</div><button class="btn btn-ghost btn-sm" onclick="App.go('plano')">Ver plano atual →</button></div>`:''}
+  <div class="disclaimer">🚀 O plano é um <strong>guia estratégico</strong> gerado a partir das suas respostas. Adapte à sua realidade e à regulamentação da publicidade médica (CFM/conselhos).</div>`;
+};
+
+function allChecks(){
+  const out={};
+  if(!DB.diagnostico) return out;
+  growthPlan(DB.diagnostico).roadmap.forEach((f,fi)=>f.acoes.forEach((a,ai)=>{ out[fi+':'+ai]=a; }));
+  return out;
+}
+
+PAGES.plano = function(){
+  const d = DB.diagnostico;
+  if(!d) return `<div class="empty"><div class="big">🗺️</div>Sem diagnóstico, sem plano. <br><br><button class="btn btn-em" onclick="App.go('diagnostico')">Fazer o diagnóstico</button></div>`;
+  const pl = growthPlan(d);
+  return `
+  <div class="card">
+    <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center">
+      <div><h3 class="grad" style="font-size:1.3rem">Seu plano de crescimento</h3>
+      <div class="card-sub">Perfil: <strong style="color:var(--em-light)">${esc(pl.perfil)}</strong> · Foco: ${esc(pl.foco)}</div></div>
+      <button class="btn btn-ghost btn-sm no-print" onclick="window.print()">🖨 Imprimir</button>
+    </div>
+    <div class="grid3">
+      <div class="stat"><div class="n">${BRL(pl.mensalAtual)}</div><div class="l">Hoje / mês</div></div>
+      <div class="stat"><div class="n up">${BRL(pl.projMensal)}</div><div class="l">Projeção / mês</div></div>
+      <div class="stat"><div class="n">${BRL(pl.projTicket)}</div><div class="l">Ticket sugerido</div></div>
+    </div>
+  </div>
+  ${pl.roadmap.map((f,fi)=>`
+    <div class="card"><h3>${esc(f.fase)}</h3>
+      ${f.acoes.map((a,ai)=>{ const k=fi+':'+ai, on=!!DB.checks[k]; return `
+        <label class="chk ${on?'done':''}"><input type="checkbox" ${on?'checked':''} onchange="App.toggleCheck('${k}')"><span>${esc(a)}</span></label>`;}).join('')}
+    </div>`).join('')}
+  <div class="card"><h3>💊 Protocolos sugeridos para ${esc(d.nicho||'seu nicho')}</h3><div class="card-sub">Empacote a entrega. Preços de referência a partir do seu ticket atual.</div>
+    ${pl.protocolos.map(p=>`
+      <div style="border:1px solid var(--border); border-radius:11px; padding:14px 16px; margin-bottom:10px">
+        <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap"><strong>${esc(p.nome)}</strong><span class="pill gold">${BRL(p.preco)}</span></div>
+        <div style="color:var(--muted); font-size:0.85rem; margin:4px 0 8px">${esc(p.promessa)}</div>
+        <div style="font-size:0.8rem; color:var(--muted)">${p.entreg.map(e=>'• '+esc(e)).join('&nbsp;&nbsp;')}</div>
+      </div>`).join('')}
+  </div>
+  <div class="grid3">
+    <div class="card"><h3>📦 Produto</h3>${pl.estrategias.produto.map(s=>`<div class="chk" style="cursor:default"><span>· ${esc(s)}</span></div>`).join('')}</div>
+    <div class="card"><h3>📣 Marketing</h3>${pl.estrategias.mkt.map(s=>`<div class="chk" style="cursor:default"><span>· ${esc(s)}</span></div>`).join('')}</div>
+    <div class="card"><h3>🤝 Vendas</h3>${pl.estrategias.vendas.map(s=>`<div class="chk" style="cursor:default"><span>· ${esc(s)}</span></div>`).join('')}</div>
+  </div>
+  <div class="disclaimer">Guia estratégico gerado das suas respostas — não é garantia de resultado. Respeite as normas de publicidade médica.</div>`;
+};
+
+const FUNIL = [ ['novo','Novo'], ['conversando','Conversando'], ['avaliacao','Avaliação agendada'], ['fechado','Fechado ✓'], ['perdido','Perdido'] ];
+PAGES.leads = function(){
+  const importaveis = JSON.parse(localStorage.getItem('medgroth_leads')||'[]').filter(c => !DB.leads.some(l=>l.whatsapp===c.whatsapp && l.nome===c.nome));
+  return `
+  <div class="card">
+    <h3>👥 Funil de leads</h3>
+    <div class="card-sub">Todo contato entra aqui. Ninguém mais evapora no WhatsApp.</div>
+    <div class="grid3">
+      <label>Nome*<input id="l-nome" placeholder="Maria Lima"></label>
+      <label>WhatsApp<input id="l-zap" placeholder="(84) 98888-0000"></label>
+      <label>Origem<select id="l-orig"><option>Indicação</option><option>Instagram</option><option>Google</option><option>WhatsApp</option><option>Página de captura</option><option>Outro</option></select></label>
+    </div>
+    <button class="btn btn-em btn-sm" onclick="App.addLead()">+ Adicionar lead</button>
+    ${importaveis.length? `<button class="btn btn-ghost btn-sm" onclick="App.importLeads()">⤵ Importar ${importaveis.length} da página de captura</button>`:''}
+  </div>
+  <div class="kan">
+    ${FUNIL.map(([st,label])=>{
+      const col = DB.leads.filter(l=>l.st===st);
+      return `<div class="kol"><h4>${label}<span>${col.length}</span></h4>
+        ${col.map(l=>`
+          <div class="lead"><b>${esc(l.nome)}</b>
+            <div class="m">${esc(l.origem||'—')}${l.whatsapp?' · '+esc(l.whatsapp):''}${l.valor?' · '+BRL(+l.valor):''}</div>
+            <div class="acts">
+              ${st!=='novo'? `<button onclick="App.moveLead('${l.id}',-1)">◀</button>`:''}
+              ${st!=='perdido'? `<button onclick="App.moveLead('${l.id}',1)">▶</button>`:''}
+              ${st==='avaliacao'? `<button onclick="App.setValor('${l.id}')">R$</button>`:''}
+              ${l.whatsapp? `<a href="https://wa.me/55${String(l.whatsapp).replace(/\D/g,'')}" target="_blank" rel="noopener"><button>💬</button></a>`:''}
+              <button onclick="App.delLead('${l.id}')">✕</button>
+            </div></div>`).join('') || '<div class="m" style="color:var(--muted); font-size:0.78rem; text-align:center; padding:10px">vazio</div>'}
+      </div>`;}).join('')}
+  </div>`;
+};
+
+PAGES.execucao = function(){
+  const done = DB.tarefas.filter(t=>t.ok).length;
+  const pct = DB.tarefas.length ? Math.round(done/DB.tarefas.length*100) : 0;
+  return `
+  <div class="card">
+    <h3>✅ Backlog de execução</h3>
+    <div class="card-sub">A semana só conta se virar tarefa feita. ${DB.tarefas.length? done+' de '+DB.tarefas.length+' concluídas.':''}</div>
+    ${DB.tarefas.length? `<div class="bar" style="margin-bottom:16px"><div class="fill" style="width:${pct}%"></div></div>`:''}
+    <div class="grid2">
+      <label>Nova tarefa<input id="t-desc" placeholder="Gravar 3 stories sobre o protocolo âncora"></label>
+      <label>Semana<select id="t-sem"><option>Semana 1</option><option>Semana 2</option><option>Semana 3</option><option>Semana 4</option><option>Contínuo</option></select></label>
+    </div>
+    <button class="btn btn-em btn-sm" onclick="App.addTarefa()">+ Adicionar</button>
+    ${DB.diagnostico? `<button class="btn btn-ghost btn-sm" onclick="App.seedTarefas()">⚡ Gerar tarefas do meu plano</button>`:''}
+  </div>
+  <div class="card">
+    ${DB.tarefas.length? DB.tarefas.map(t=>`
+      <label class="chk ${t.ok?'done':''}"><input type="checkbox" ${t.ok?'checked':''} onchange="App.toggleTarefa('${t.id}')"><span><span class="pill" style="margin-right:8px">${esc(t.sem)}</span>${esc(t.desc)}</span></label>`).join('')
+    : '<div class="empty"><div class="big">✅</div>Nenhuma tarefa ainda. Gere as tarefas do seu plano ou adicione a primeira.</div>'}
+  </div>`;
+};
+
+const App = {
+  go(v){ VIEW=v; render(); window.scrollTo({top:0}); },
+  signup(){
+    const nome=document.getElementById('a-nome').value.trim();
+    const zap=document.getElementById('a-zap').value.trim();
+    if(!nome || zap.replace(/\D/g,'').length<10){ document.getElementById('a-erro').style.display='block'; return; }
+    DB.user={ nome, whatsapp:zap, email:document.getElementById('a-email').value.trim(), clinica:document.getElementById('a-clinica').value.trim(), criadoEm:new Date().toISOString() };
+    save();
+    MEDGROTH.saveLead({ nome, whatsapp:zap, email:DB.user.email, origem:'cadastro-app' });
+    boot();
+  },
+  logout(){ if(confirm('Sair da conta? Seus dados continuam salvos neste navegador.')){ DB.user=null; save(); boot(); } },
+  runDiagnostico(){
+    const g=id=>document.getElementById(id).value;
+    const d={ nicho:g('d-nicho'), ticket:g('d-ticket'), atendSemana:g('d-sem'), maturidade:g('d-mat'), gargalo:g('d-garg'), objetivo:g('d-obj'), quemAtende:g('d-quem') };
+    if(!d.nicho||!d.ticket||!d.atendSemana||!d.maturidade||!d.gargalo||!d.objetivo){ alert('Responda as perguntas 1 a 6 para gerar o plano.'); return; }
+    DB.diagnostico=d; save(); App.go('plano');
+  },
+  toggleCheck(k){ DB.checks[k]=!DB.checks[k]; save(); render(); },
+  addLead(){
+    const nome=document.getElementById('l-nome').value.trim(); if(!nome) return;
+    DB.leads.push({ id:uid(), nome, whatsapp:document.getElementById('l-zap').value.trim(), origem:document.getElementById('l-orig').value, st:'novo', criadoEm:new Date().toISOString() });
+    save(); render();
+  },
+  importLeads(){
+    const caps=JSON.parse(localStorage.getItem('medgroth_leads')||'[]');
+    caps.forEach(c=>{ if(!DB.leads.some(l=>l.whatsapp===c.whatsapp && l.nome===c.nome)) DB.leads.push({ id:uid(), nome:c.nome, whatsapp:c.whatsapp, origem:'Página de captura', st:'novo', criadoEm:c.criado_em }); });
+    save(); render();
+  },
+  moveLead(id,dir){
+    const l=DB.leads.find(x=>x.id===id); if(!l) return;
+    const order=FUNIL.map(f=>f[0]); let i=order.indexOf(l.st)+dir;
+    l.st=order[Math.max(0,Math.min(order.length-1,i))]; save(); render();
+  },
+  setValor(id){
+    const l=DB.leads.find(x=>x.id===id); if(!l) return;
+    const v=prompt('Valor do protocolo/plano em negociação (R$):', l.valor||''); if(v===null) return;
+    l.valor=parseFloat(String(v).replace(/[^\d,\.]/g,'').replace(',','.'))||0; save(); render();
+  },
+  delLead(id){ if(confirm('Remover este lead?')){ DB.leads=DB.leads.filter(l=>l.id!==id); save(); render(); } },
+  addTarefa(){
+    const d=document.getElementById('t-desc').value.trim(); if(!d) return;
+    DB.tarefas.push({ id:uid(), desc:d, sem:document.getElementById('t-sem').value, ok:false }); save(); render();
+  },
+  seedTarefas(){
+    growthPlan(DB.diagnostico).roadmap.forEach((f,fi)=>f.acoes.forEach(a=>{
+      if(!DB.tarefas.some(t=>t.desc===a)) DB.tarefas.push({ id:uid(), desc:a, sem:'Semana '+(fi+1), ok:!!DB.checks && Object.entries(DB.checks).some(([k,v])=>v && allChecks()[k]===a) });
+    })); save(); render();
+  },
+  toggleTarefa(id){ const t=DB.tarefas.find(x=>x.id===id); if(t){ t.ok=!t.ok; save(); render(); } },
+};
+
+function render(){
+  document.getElementById('tabs').innerHTML = TABS.map(([v,l])=>`<div class="tab ${v===VIEW?'active':''}" onclick="App.go('${v}')">${l}</div>`).join('');
+  document.getElementById('main').innerHTML = PAGES[VIEW]();
+}
+function boot(){
+  const logged = !!DB.user;
+  document.getElementById('auth').style.display = logged?'none':'block';
+  document.getElementById('shell').style.display = logged?'block':'none';
+  if(logged){
+    document.getElementById('u-nome').textContent = DB.user.nome + (DB.user.clinica? ' · '+DB.user.clinica : '');
+    const params=new URLSearchParams(location.search);
+    if(params.get('diagnostico')==='1' && !DB.diagnostico) VIEW='diagnostico';
+    render();
+  } else {
+    /* pré-preenche cadastro com dados da captura */
+    const pre=JSON.parse(localStorage.getItem('medgroth_prefill')||'{}');
+    if(pre.nome) document.getElementById('a-nome').value=pre.nome;
+    if(pre.whatsapp) document.getElementById('a-zap').value=pre.whatsapp;
+    if(pre.email) document.getElementById('a-email').value=pre.email;
+  }
+}
+boot();
+</script>
+</body>
+</html>
