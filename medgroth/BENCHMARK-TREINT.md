@@ -78,6 +78,72 @@
 | Compliance local | Não visível | Regra de produto explícita (CFM, venda ética) |
 | Prova social | Claim sem nome | 20 fundadoras com casos medidos (planejado) |
 
-## 8. Resumo executivo
+## 8. Investigação aprofundada (27/07/2026) — empresa, expansão, stack, dados e funil
+
+### 8.1 A empresa por trás dos produtos
+
+- **Razão social:** Treint Business, sede em Noida, Índia (Pride Corporate Park, Sector 136 — o mesmo "Sec-136, Noida" que aparece na demo do Prime). Fundada em **2019**.
+- **Fundadores:** Sheikhislam Sakhi (CEO — médico, formação em neurologia/neurocirurgia por Sapienza di Roma, Universität des Saarlandes e Astana Medical University), Rachit Tomar, Aziz Akkayev e Alzhan Sainov.
+- **História de expansão em 2 atos:** a Treint original nasceu no **Cazaquistão** (Almaty) como app B2C de saúde para pacientes (gestão de receitas, agendamento, telemedicina) e levantou **US$ 1,2M**; o Crunchbase marca essa entidade como **inativa**. A operação renasceu na **Índia** (Treint Business, sem captação registrada no Tracxn) com pivô completo para o médico (B2B2C). Ou seja: **pivô geográfico + de persona** — do paciente cazaque para o médico indiano, mercado com >1 milhão de médicos registrados.
+- **Porte declarado:** 51–200 funcionários no LinkedIn (autodeclarado; sem confirmação independente).
+- **Credencial recente:** DocX aceita no **NVIDIA Inception Program** (anúncio do CEO em fev/2026) — programa que dá créditos de GPU/cloud, acesso técnico e selo de credibilidade para startups de IA.
+- **Concorrentes mapeados pelo Tracxn:** Veeva Systems, Health Catalyst, IKS Health (629 competidores ativos no espaço).
+- Há um 4º/5º produto citado em material público: **"Apollo"** (junto de DocX, Prime e DocAtlas), sem detalhes públicos.
+
+### 8.2 Estratégia de expansão (o playbook deles)
+
+1. **Terra arrasada → replantio:** falhou no B2C (Cazaquistão), reabriu no B2B2C num mercado 60x maior (Índia). Lição: eles escolheram o mercado pelo tamanho do lado da oferta (médicos), não da demanda.
+2. **Land-and-expand por camadas:** DocAtlas (conhecimento, hábito diário, porta de entrada barata) → Treatment Intelligence (demonstração de IA) → Prime (operação da clínica, contrato B2B) → DocX (economia recorrente do médico, onde mora o take rate). Cada produto tem landing e domínio próprios para receber tráfego separadamente.
+3. **Enterprise em paralelo:** o discurso "Enterprise Solutions / institutional-grade / OPD-IPD" mira hospitais — venda consultiva de ticket alto enquanto o funil digital captura médicos individuais.
+4. **Credencial antes de receita:** sem funding registrado na Índia, eles compram credibilidade com selos (NVIDIA Inception), imprensa paga/advertorial (artigo no CIO&Leader) e claims agressivos ("10.000+ profissionais").
+5. **Founder-led marketing:** o CEO é médico e roda conteúdo no Instagram (@doctor.sakhi) e LinkedIn — a cara do fundador é o canal. **Paralelo direto com você:** médico-fundador vendendo para médicos é exatamente a sua tese; eles validam o formato.
+
+### 8.3 Ferramentas e stack tecnológica (evidências + inferências sinalizadas)
+
+| Camada | O que se sabe | Grau de certeza |
+|---|---|---|
+| Frontend/hospedagem | **Vercel** (produto principal roda em `treint.vercel.app`); padrão fortíssimo de **Next.js/React** | Alto (URL pública) |
+| Site institucional | `treint.com` em HTML estático (`about-us.html`) + captura de newsletter | Alto |
+| Autenticação | Login por **número de celular/OTP** (header do DocAtlas mostra "Hi User 9811098110") | Alto (screenshot) |
+| IA/GPU | **NVIDIA Inception** → créditos de GPU e cloud; sugere ambição de modelo próprio/fine-tuning em vez de só API de terceiros | Médio (programa confirmado; uso interno inferido) |
+| Base de medicamentos | Estrutura idêntica a bancos farmacêuticos indianos (marketer, salt, substitutos por laboratório — Cipla, Dr. Reddy's, Mylan): dados **licenciados ou raspados** de base local tipo 1mg | Médio (padrão visual) |
+| Aquisição | **Meta Ads** (Instagram Stories com `fbclid`), landings por produto | Alto (o parâmetro veio na sua URL) |
+| Banco de dados / onde armazenam | **Não divulgado publicamente.** Vercel não hospeda banco → backend em cloud à parte (AWS/GCP/Azure, provavelmente região Índia; o DPDP Act 2023 indiano empurra dados de saúde para armazenamento local). Nenhuma página pública de segurança/compliance encontrada | Baixo (inferência) |
+
+**Insight competitivo:** a ausência de página de segurança, DPA ou certificação (ISO 27001, HIPAA-like) num produto que guarda prontuário é uma fraqueza séria deles — e um argumento de venda para você, que já projeta RLS, criptografia de campo, trilha de auditoria e caminho SBIS/ICP-Brasil no SosMed.
+
+### 8.4 Estratégia de vendas e funil de captação (reconstruído com evidências)
+
+```
+Instagram Ads (Meta, fbclid) + conteúdo do CEO (@doctor.sakhi)
+        │
+        ▼
+Landing por produto (docx.treint.com · treint.vercel.app · /docatlas · treatmentintelligence.com)
+        │
+        ├─ DocAtlas → uso gratuito da enciclopédia → hábito diário → login por celular (OTP)
+        ├─ Treatment Intelligence → demo de 1 campo ("Describe your patient case") → uau de IA
+        ├─ DocX → "Apply to Join" (aplicação curada, escassez, clube) → onboarding assistido
+        └─ Prime/Enterprise → "Contact Us" → venda consultiva B2B (hospitais/clínicas)
+        │
+        ▼
+Sem preço público em lugar nenhum → funil 100% sales-led, alto toque
+        │
+        ▼
+Retenção: enciclopédia diária + operação da clínica dentro do Prime
+Monetização final: assinatura de pacientes via DocX (recorrência do médico = receita da plataforma)
+```
+
+Características do modelo de vendas: **(a)** nenhum preço público — tudo é conversa; **(b)** aplicação em vez de cadastro no produto-chave (qualifica e cria desejo); **(c)** newsletter no site institucional como rede de segurança de lead; **(d)** PR/selos como aquecimento de confiança antes do contato comercial.
+
+### 8.5 O que isso muda nas recomendações para o MedGroth
+
+1. **Confirma a ideia nº 2 (Apply to Join):** eles usam aplicação curada exatamente porque não têm preço público — no seu caso, a aplicação pode conviver com preço transparente (diferencial de confiança à brasileira).
+2. **Funil deles depende de mão de obra de vendas; o seu não precisa.** Com preços públicos (R$ 97/297/997) + diagnóstico automatizado + WhatsApp, seu CAC estrutural é menor. Não copie o "sem preço"; copie só a curadoria.
+3. **Selo/credencial barata:** inscreva o ecossistema em programas equivalentes (NVIDIA Inception aceita startups globais; Google for Startups, Microsoft for Startups, AWS Activate dão créditos de cloud/IA). Custo zero, credibilidade e subsídio de infraestrutura para os sprints de IA do SosMed/MedGroth.
+4. **Founder-led à brasileira:** o CEO deles roda Instagram como médico. Sua presença pessoal (Instagram/LinkedIn) falando de crescimento de consultório é o canal de menor CAC — os anúncios deles chegaram até você exatamente assim.
+5. **Compliance como arma de venda:** eles não mostram onde guardam dados de saúde; você pode estampar "dados no Brasil (Supabase São Paulo), LGPD, RLS, auditoria" nas páginas de venda. Num mercado pós-vazamentos, isso fecha negócio.
+6. **Cuidado com o espelho:** eles já queimaram um mercado com produto amplo e raso (Cazaquistão) e repetem o padrão com 4-5 produtos simultâneos sem funding. Reforça a sua regra: profundidade antes de amplitude — funil vivo (Sprint 1) e cobrança real (Sprint 2) antes de qualquer produto novo.
+
+## 9. Resumo executivo
 
 A Treint valida a tese de que o próximo passo do SaaS médico é **transformar o médico em dono de receita recorrente** — exatamente o degrau que falta entre o MedGroth de hoje (crescimento da agenda) e o de amanhã (assinatura de pacientes por protocolo). As três apostas que mais valem o esforço: **(1)** protocolos por assinatura sobre a infra de cobrança do Sprint 2, **(2)** funil de aplicação nas vagas de fundador, **(3)** demo pública de IA de um campo só via `/api/groth`. Tudo o mais deles é execução ampla e rasa; o diferencial defensável do seu ecossistema é profundidade + compliance brasileiro.
