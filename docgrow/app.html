@@ -357,6 +357,7 @@
 
 var DB_KEY = 'docgrow_db';
 var db = load();
+MEDGROTH.track('docgrow-app');
 
 function load() {
   try { var d = JSON.parse(localStorage.getItem(DB_KEY) || 'null'); if (d) return d; } catch (e) {}

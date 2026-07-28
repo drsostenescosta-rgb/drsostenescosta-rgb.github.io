@@ -80,7 +80,7 @@ create policy "leitura autenticada" on public.medgroth_leads
 - [x] Rodar o SQL acima → captura gravando 100% no banco real
 - [x] Painel do fundador: `../docgrow/painel.html` lista `medgroth_leads` (login Supabase) com botão "chamar no WhatsApp" (28/07 — falta criar o usuário no dashboard Supabase)
 - [ ] Notificação de lead novo no WhatsApp/e-mail do fundador (função Vercel + webhook do Supabase)
-- [ ] Pixel/analytics (Umami ou Plausible) nas 4 páginas para medir captura → diagnóstico → conversa
+- [x] Analytics primária LGPD-friendly (tabela `docgrow_pageviews`, sem cookies/IP) nas 5 páginas do funil + visão de funil com conversão no painel do fundador (28/07)
 - [ ] Teste do funil completo com 5 médicos reais da rede do fundador
 
 ## Sprint 2 — Conta na nuvem e cobrança
@@ -89,7 +89,7 @@ create policy "leitura autenticada" on public.medgroth_leads
 - [x] Sincronizar o banco local do DocGrow (pacientes, consultas, follow-ups, protocolos, assinaturas, pagamentos, eventos) por usuário via upsert com RLS (28/07)
 - [ ] Assinatura dos planos (Stripe Billing ou Mercado Pago Assinaturas) + tabela `assinaturas` compartilhada
 - [ ] Bloqueio suave por plano: Start (diagnóstico+plano+CRM) vs Pro (metas, scripts, integração MedEasy)
-- [ ] Contador real de vagas de fundador (20) lendo do banco
+- [x] Contador real de vagas de fundador (20) lendo do banco — RPC `docgrow_vagas_restantes` na landing e na aplicação (28/07)
 
 ## Sprint 3 — Diferencial de IA e ecossistema
 

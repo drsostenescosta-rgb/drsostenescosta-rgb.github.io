@@ -125,6 +125,7 @@
 <script src="../medgroth/config.js"></script>
 <script>
 (function(){
+  MEDGROTH.track('docgrow-aplicacao');
   /* contador real de vagas (RPC agregado — nenhum lead é exposto) */
   fetch(MEDGROTH.url + '/rest/v1/rpc/docgrow_vagas_restantes', {
     method: 'POST', headers: MEDGROTH.headers(), body: '{}'

@@ -184,3 +184,18 @@ returns integer language sql security definer set search_path = public as $$
 $$;
 revoke all on function public.docgrow_vagas_restantes() from public;
 grant execute on function public.docgrow_vagas_restantes() to anon, authenticated;
+
+-- ── Analytics primária (LGPD by design) ─────────────────────
+-- Sem cookie, sem IP, sem identificador de pessoa: só página + referrer + hora.
+create table if not exists public.docgrow_pageviews (
+  id uuid primary key default gen_random_uuid(),
+  pagina text not null,
+  ref text,
+  criado_em timestamptz default now()
+);
+-- RLS: anon insere; só autenticado lê (painel do fundador).
+create or replace view public.docgrow_funil_resumo as
+select pagina, count(*) as total,
+  count(*) filter (where criado_em > now() - interval '7 days') as d7,
+  count(*) filter (where criado_em > now() - interval '30 days') as d30
+from docgrow_pageviews group by pagina;
