@@ -78,15 +78,15 @@ create policy "leitura autenticada" on public.medgroth_leads
 ## Sprint 1 — Funil vivo (destrava a venda)
 
 - [ ] Rodar o SQL acima → captura gravando 100% no banco real
-- [ ] Painel do fundador: página simples que lista `medgroth_leads` (login Supabase) com botão "chamar no WhatsApp"
+- [x] Painel do fundador: `../docgrow/painel.html` lista `medgroth_leads` (login Supabase) com botão "chamar no WhatsApp" (28/07 — falta criar o usuário no dashboard Supabase)
 - [ ] Notificação de lead novo no WhatsApp/e-mail do fundador (função Vercel + webhook do Supabase)
 - [ ] Pixel/analytics (Umami ou Plausible) nas 4 páginas para medir captura → diagnóstico → conversa
 - [ ] Teste do funil completo com 5 médicos reais da rede do fundador
 
 ## Sprint 2 — Conta na nuvem e cobrança
 
-- [ ] Login real no app (Supabase Auth, mesmo padrão do SosMed) mantendo o modo local como fallback
-- [ ] Sincronizar `medgroth_db` (diagnóstico, checks, leads, tarefas) com o banco por usuário
+- [x] Login real no app (Supabase Auth e-mail/senha) mantendo o modo local como fallback — `../docgrow/app.html` "Conectar à nuvem" (28/07)
+- [x] Sincronizar o banco local do DocGrow (pacientes, consultas, follow-ups, protocolos, assinaturas, pagamentos, eventos) por usuário via upsert com RLS (28/07)
 - [ ] Assinatura dos planos (Stripe Billing ou Mercado Pago Assinaturas) + tabela `assinaturas` compartilhada
 - [ ] Bloqueio suave por plano: Start (diagnóstico+plano+CRM) vs Pro (metas, scripts, integração MedEasy)
 - [ ] Contador real de vagas de fundador (20) lendo do banco
