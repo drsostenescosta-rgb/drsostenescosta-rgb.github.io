@@ -3,7 +3,9 @@
 Exigência do Founder (Fase 2): *"O modelo precisa rodar no mínimo viável, testado, ANTES da primeira venda."*
 Suite end-to-end com **Playwright (Chromium)** cobrindo os fluxos críticos e as regressões dos vetos do Conselho.
 
-**Última execução: 2026-07-28 — 23 testes, 23 verdes (0 falhas).**
+**Última execução: 2026-07-28 — 29 testes, 29 verdes (0 falhas).**
+
+Cobre também as duas decisões do Founder de 2026-07-28: **ICP ampliado** (profissionais da saúde e donos de clínica, não só médicos) e **assinatura anual** (R$ 970 / R$ 2.970 / R$ 9.970 por ano).
 
 ## Como rodar
 
@@ -40,8 +42,9 @@ Notas do ambiente:
 | 9 | Cadastro exige consentimento LGPD | Sem o checkbox, não cria conta, não mostra o shell e não dispara nenhuma chamada ao banco | VERDE |
 | 10 | **Contrato do payload do cadastro-app** | Intercepta o POST do signup e asserta `origem: "cadastro-app"`, `consentimento_lgpd: true`, `politica_versao: "1.0-2026-07"` no body | VERDE |
 | 11 | Diagnóstico de 7 perguntas → plano gerado | Cadastro, aba Diagnóstico, 7 respostas, plano de 4 semanas renderizado (Semana 1 a Semana 4); o conteúdo gerado **não** contém "resultado prometido" e contém "resultado medido e acompanhado" | VERDE |
-| 12 | CRM: adicionar lead e mudar de etapa | Lead entra na coluna "Novo", botão ▶ move para "Conversando", coluna origem esvazia | VERDE |
-| 13 | Checklist persiste após reload | Ação marcada no plano continua marcada após `reload`; painel mostra "1 de N ações concluídas" | VERDE |
+| 12 | **ICP ampliado: nicho novo gera plano real** | Diagnóstico com nicho "Fisioterapia" (novo) executa o motor real e renderiza "Protocolos sugeridos para Fisioterapia" com o protocolo "Ciclo de Reabilitação"; conteúdo gerado sem vocabulário de desfecho clínico (veto vale para todos os conselhos, não só CFM) | VERDE |
+| 13 | CRM: adicionar lead e mudar de etapa | Lead entra na coluna "Novo", botão ▶ move para "Conversando", coluna origem esvazia | VERDE |
+| 14 | Checklist persiste após reload | Ação marcada no plano continua marcada após `reload`; painel mostra "1 de N ações concluídas" | VERDE |
 
 ### `regressao.spec.js` — grep estático nos artefatos
 
@@ -49,26 +52,32 @@ Escopo do grep: **apenas `.html` e `.js` no topo de `medgroth/`** (arquivos serv
 
 | # | Teste | O que cobre | Resultado |
 |---|-------|-------------|-----------|
-| 14 | "resultado prometido" banido | Nenhum `.html`/`.js` servido ao usuário contém a expressão vetada (CFM) | VERDE |
-| 15 | Escassez fabricada banida | `index.html` e `captura.html` sem "20 primeiras", "primeiras 20", "vagas limitadas", "Aplicar para uma vaga" | VERDE |
-| 16 | Features futuras marcadas "em breve" | Bullets de planos pagos que ainda não existem no app têm `class="soon"` + selo `em breve` visualmente distinto | VERDE |
-| 17 | Consentimento LGPD no HTML | `captura.html` contém o checkbox `id="lgpd"` e o link `href="privacidade.html"` | VERDE |
-| 18 | Vocabulário de desfecho clínico banido de `app.html` | "sair da dor", "resultado estético", "reduzir ansiedade", "resultado prometido" e o campo `promessa:` não existem no código (campo renomeado para `proposta`) | VERDE |
-| 19 | "exemplo ilustrativo" no mock do hero | `index.html` declara a natureza ilustrativa junto ao número da projeção | VERDE |
-| 20 | FAQ sem absoluto | "Tudo que o MedGroth recomenda" removido do FAQ CFM | VERDE |
-| 21 | E-mail obrigatório + honeypot no HTML | `captura.html` tem `id="email"` com `required` e o campo honeypot `id="hp-site"` | VERDE |
-| 22 | Versão única da política | `"1.0-2026-07"` definida em `config.js` (`MEDGROTH.politicaVersao`), exibida em `privacidade.html`; captura e app usam a fonte única, sem versão divergente hardcoded | VERDE |
-| 23 | Termos publicados e linkados | `termos-beta.html` existe e está linkado nos footers de `index.html` e `privacidade.html`, junto da Privacidade | VERDE |
+| 15 | "resultado prometido" banido | Nenhum `.html`/`.js` servido ao usuário contém a expressão vetada (CFM) | VERDE |
+| 16 | Escassez fabricada banida | `index.html` e `captura.html` sem "20 primeiras", "primeiras 20", "vagas limitadas", "Aplicar para uma vaga" | VERDE |
+| 17 | Features futuras marcadas "em breve" | Bullets de planos pagos que ainda não existem no app têm `class="soon"` + selo `em breve` visualmente distinto | VERDE |
+| 18 | Consentimento LGPD no HTML | `captura.html` contém o checkbox `id="lgpd"` e o link `href="privacidade.html"` | VERDE |
+| 19 | Vocabulário de desfecho clínico banido de `app.html` | "sair da dor", "resultado estético", "reduzir ansiedade", "resultado prometido" e o campo `promessa:` não existem no código (campo renomeado para `proposta`) | VERDE |
+| 20 | "exemplo ilustrativo" no mock do hero | `index.html` declara a natureza ilustrativa junto ao número da projeção | VERDE |
+| 21 | FAQ sem absoluto | "Tudo que o MedGroth recomenda" removido do FAQ CFM | VERDE |
+| 22 | E-mail obrigatório + honeypot no HTML | `captura.html` tem `id="email"` com `required` e o campo honeypot `id="hp-site"` | VERDE |
+| 23 | Versão única da política | `"1.0-2026-07"` definida em `config.js` (`MEDGROTH.politicaVersao`), exibida em `privacidade.html`; captura e app usam a fonte única, sem versão divergente hardcoded | VERDE |
+| 24 | **ICP ampliado no index** | `index.html` contém "profissionais da saúde" e "COFFITO" (FAQ generalizada para os conselhos); headline/eyebrow restritos a médicos ("máquina de crescimento para médicos", "Para médicos e clínicas que querem crescer") não podem renascer | VERDE |
+| 25 | **ICP ampliado na captura** | Select de especialidade contém os 6 novos nichos: Fisioterapia, Nutrição, Odontologia, Enfermagem / Clínica de enfermagem, Estética avançada / Biomedicina, Clínica multiprofissional (dono/gestor) | VERDE |
+| 26 | **ICP ampliado no app** | `PROTOCOLOS` tem entrada para cada novo nicho, todas com campo `proposta:` (nunca `promessa:`); guarda-corpo cita COFFITO (regra generalizada para todos os conselhos) | VERDE |
+| 27 | **Preços anuais no index** | Os 3 valores anuais (`R$ 970/ano`, `R$ 2.970/ano`, `R$ 9.970/ano`) presentes; 3 linhas "equivale a R$ X/mês" como apoio; nota "Preço de lançamento … não afetam assinaturas ativas"; os preços mensais antigos (`R$ 97/mês`, `R$ 297/mês`, `R$ 997/mês`) não podem renascer | VERDE |
+| 28 | **Termos em ciclo anual** | `termos-beta.html` contém "assinatura anual" e "Cobrança anual antecipada" (e não contém mais "assinatura mensal"/"Cobrança mensal"); reajuste só na renovação com "pelo menos 30 dias de antecedência"; vigentes "mantêm o preço contratado até a renovação seguinte"; arrependimento CDC "art. 49" mantido | VERDE |
+| 29 | Termos publicados e linkados | `termos-beta.html` existe e está linkado nos footers de `index.html` e `privacidade.html`, junto da Privacidade | VERDE |
 
 ## Evidência
 
 ```
-Running 23 tests using 1 worker
-  23 passed (6.2s)
+Running 29 tests using 1 worker
+  29 passed (7.4s)
 ```
 
 ## O que ainda NÃO está coberto (dívida de teste declarada)
 
+- **DIVERGÊNCIA DE OFERTA (L5):** `investidores.html` ainda exibe os preços mensais antigos (R$ 97/297/997) e ICP só-médicos — fora do escopo da decisão do Founder nesta rodada; pendente de decisão do Conselho. A `campanha/` foi atualizada para o anual pelo Marketing na mesma rodada (working tree, com os mesmos equivalentes mensais R$ 81/248/831 — coerente com a landing); o grep de preços (teste 27) cobre só `index.html` por enquanto — ampliar o escopo para a campanha quando ela for integrada, conforme L3/L5.
 - `investidores.html` (documento interno para investidores) não passa pelo grep de escassez — ainda menciona "vagas limitadas"; decisão pendente do Conselho sobre escopo.
 - Import de leads da captura para o CRM (`⤵ Importar N da página de captura`) não tem teste dedicado.
 - A fila local de backup não é reenviada automaticamente ao banco quando a conexão volta (comportamento ainda não existe — ver BACKLOG).

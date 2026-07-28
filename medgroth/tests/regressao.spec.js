@@ -75,6 +75,69 @@ test('versão única da política: "1.0-2026-07" em config.js e exibida em priva
   expect(fs.readFileSync(path.join(DIR, 'app.html'), 'utf8')).toContain('MEDGROTH.politicaVersao');
 });
 
+/* ---- Decisão do Founder (2026-07-28): ICP ampliado para profissionais da saúde ---- */
+
+test('ICP ampliado: index fala com profissionais da saúde, não restringe a médicos', async () => {
+  const index = fs.readFileSync(path.join(DIR, 'index.html'), 'utf8');
+  expect(index).toContain('profissionais da saúde');
+  // headline/eyebrow antigos restritos a médicos não podem renascer
+  expect(index.includes('máquina de crescimento para médicos')).toBe(false);
+  expect(index.includes('Para médicos e clínicas que querem crescer')).toBe(false);
+  // FAQ generalizada para os conselhos (não só CFM)
+  expect(index).toContain('COFFITO');
+});
+
+test('ICP ampliado: captura oferece os novos nichos no select de especialidade', async () => {
+  const cap = fs.readFileSync(path.join(DIR, 'captura.html'), 'utf8');
+  for (const nicho of ['Fisioterapia', 'Nutrição', 'Odontologia', 'Enfermagem / Clínica de enfermagem',
+                       'Estética avançada / Biomedicina', 'Clínica multiprofissional (dono/gestor)']) {
+    expect(cap.includes(nicho), `nicho "${nicho}" ausente do select de captura.html`).toBe(true);
+  }
+});
+
+test('ICP ampliado: app tem PROTOCOLOS e opção de diagnóstico para cada novo nicho', async () => {
+  const app = fs.readFileSync(path.join(DIR, 'app.html'), 'utf8');
+  for (const nicho of ['Fisioterapia', 'Nutrição', 'Odontologia', 'Enfermagem / Clínica de enfermagem',
+                       'Estética avançada / Biomedicina', 'Clínica multiprofissional (dono/gestor)']) {
+    // chave nos PROTOCOLOS (proposta de valor equivalente aos nichos originais)
+    expect(app.includes(`'${nicho}':[`), `PROTOCOLOS['${nicho}'] ausente em app.html`).toBe(true);
+  }
+  // guarda-corpo generalizado: a regra vale para todos os conselhos, não só CFM
+  expect(app).toContain('COFFITO');
+  // cada novo protocolo usa o campo "proposta" (o veto ao campo "promessa" já é coberto pelo teste CFM acima)
+  const novos = app.match(/'(Fisioterapia|Nutrição|Odontologia|Enfermagem \/ Clínica de enfermagem|Estética avançada \/ Biomedicina|Clínica multiprofissional \(dono\/gestor\))':\[[^\]]*\]/g) || [];
+  expect(novos.length).toBeGreaterThanOrEqual(6);
+  for (const bloco of novos) expect(bloco).toContain('proposta:');
+});
+
+/* ---- Decisão do Founder (2026-07-28): assinatura anual ---- */
+
+test('preços anuais: os 3 valores (R$ 970, R$ 2.970, R$ 9.970) por ano no index, sem os mensais antigos', async () => {
+  const index = fs.readFileSync(path.join(DIR, 'index.html'), 'utf8');
+  for (const preco of ['R$ 970<small>/ano</small>', 'R$ 2.970<small>/ano</small>', 'R$ 9.970<small>/ano</small>']) {
+    expect(index.includes(preco), `preço anual "${preco}" ausente de index.html`).toBe(true);
+  }
+  // equivalente mensal como apoio + nota honesta de preço de lançamento
+  expect((index.match(/equivale a R\$ \d+\/mês/g) || []).length).toBe(3);
+  expect(index).toContain('Preço de lançamento');
+  expect(index).toContain('não afetam assinaturas ativas');
+  // os preços mensais antigos não podem renascer na página de venda
+  for (const antigo of ['R$ 97<small>/mês</small>', 'R$ 297<small>/mês</small>', 'R$ 997<small>/mês</small>']) {
+    expect(index.includes(antigo), `preço mensal antigo "${antigo}" reapareceu em index.html`).toBe(false);
+  }
+});
+
+test('termos: ciclo anual, reajuste só na renovação com aviso de 30 dias, CDC art. 49 mantido', async () => {
+  const termos = fs.readFileSync(path.join(DIR, 'termos-beta.html'), 'utf8');
+  expect(termos).toContain('assinatura anual');
+  expect(termos).toContain('Cobrança anual antecipada');
+  expect(termos.includes('assinatura mensal')).toBe(false);
+  expect(termos.includes('Cobrança mensal')).toBe(false);
+  expect(termos).toContain('pelo menos 30 dias de antecedência');
+  expect(termos).toContain('mantêm o preço contratado até a renovação seguinte');
+  expect(termos).toContain('art. 49');
+});
+
 test('termos-beta.html publicado e linkado no footer junto da privacidade', async () => {
   expect(fs.existsSync(path.join(DIR, 'termos-beta.html'))).toBe(true);
   const termos = fs.readFileSync(path.join(DIR, 'termos-beta.html'), 'utf8');

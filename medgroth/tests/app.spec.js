@@ -72,6 +72,30 @@ test('diagnóstico: 7 perguntas respondidas geram o plano de 4 semanas', async (
   expect(body).toContain('resultado medido e acompanhado');
 });
 
+test('ICP ampliado: diagnóstico com nicho novo (Fisioterapia) gera plano com protocolo do nicho', async ({ page }) => {
+  // não basta a opção existir no select (grep): o motor real precisa gerar
+  // protocolos equivalentes aos dos nichos originais, com proposta de valor
+  // e sem vocabulário de desfecho clínico (veto vale para todos os conselhos)
+  await signup(page);
+  await page.click('.tab:has-text("Diagnóstico")');
+  await page.selectOption('#d-nicho', 'Fisioterapia');
+  await page.fill('#d-ticket', '150');
+  await page.fill('#d-sem', '30');
+  await page.selectOption('#d-mat', 'Baixa');
+  await page.selectOption('#d-garg', 'Captação');
+  await page.selectOption('#d-obj', 'Mais pacientes');
+  await page.selectOption('#d-quem', 'Eu mesmo(a)');
+  await page.click('text=Gerar meu plano de crescimento');
+
+  await expect(page.locator('h3.grad')).toContainText('Seu plano de crescimento');
+  await expect(page.getByText('Protocolos sugeridos para Fisioterapia')).toBeVisible();
+  await expect(page.getByText('Ciclo de Reabilitação (pacote de sessões)')).toBeVisible();
+
+  const body = await page.textContent('body');
+  expect(body).not.toContain('resultado prometido');
+  expect(body.toLowerCase()).not.toContain('sair da dor');
+});
+
 test('CRM: adicionar lead e movê-lo de "Novo" para "Conversando"', async ({ page }) => {
   await signup(page);
   await page.click('.tab:has-text("Leads")');
