@@ -1,10 +1,10 @@
-# MedGroth — Roteiro da conversa de 15 minutos (WhatsApp/call) — onde o dinheiro acontece
+# ClinicNow — Roteiro da conversa de 15 minutos (WhatsApp/call) — onde o dinheiro acontece
 
 **O que é esta conversa:** o lead completou o diagnóstico e aceitou o convite (e-mail 5 ou WhatsApp 1:1). Ele chega com um perfil identificado ({perfil_diagnostico}) e um plano de 4 semanas em mãos. A conversa existe para diagnosticar o travamento real, mostrar UMA coisa concreta do produto, e pedir a venda com clareza.
 
-**Regra do CEO-3, acima de qualquer meta:** convencer, nunca manipular. Um "não" rápido é melhor que um "sim" arrependido — o "sim" arrependido vira churn no mês 2 e detrator no mês 3. Se o MedGroth não for a resposta certa para essa clínica agora, dizer isso é a jogada de maior LTV que existe.
+**Regra do CEO-3, acima de qualquer meta:** convencer, nunca manipular. Um "não" rápido é melhor que um "sim" arrependido — o "sim" arrependido vira churn no mês 2 e detrator no mês 3. Se o ClinicNow não for a resposta certa para essa clínica agora, dizer isso é a jogada de maior LTV que existe.
 
-**Preparação (2 min antes, obrigatória):** abrir o lead no funil do MedGroth (dogfooding), ler as 7 respostas do diagnóstico, anotar o perfil e o faturamento declarado. Chegar sem isso é desrespeito com os 15 minutos da pessoa.
+**Preparação (2 min antes, obrigatória):** abrir o lead no funil do ClinicNow (dogfooding), ler as 7 respostas do diagnóstico, anotar o perfil e o faturamento declarado. Chegar sem isso é desrespeito com os 15 minutos da pessoa.
 
 **Postura:** você não é vendedor visitando consultório. Você é alguém que passou 10 anos dentro de clínica — como fisioterapeuta e biomédico — e construiu uma ferramenta. No ICP amplo (esteticista, fisio, nutri, dentista, enfermeira, médico, dono de clínica), você fala como par de fato, não como fornecedor.
 
@@ -27,7 +27,7 @@
 
 ## Bloco 1 — Abertura (0–2 min): a pergunta que abre a dor
 
-Sem small talk longo, sem "deixa eu te apresentar o MedGroth". Uma pergunta, e depois silêncio:
+Sem small talk longo, sem "deixa eu te apresentar o ClinicNow". Uma pergunta, e depois silêncio:
 
 > **"{nome}, antes de qualquer coisa sobre ferramenta: se você pudesse resolver UMA coisa na sua clínica nos próximos 30 dias — uma só — qual seria?"**
 
@@ -60,11 +60,11 @@ Apresentar sempre nesta ordem (Pro primeiro, como referência; Start como reduç
 
 > "Deixa eu te mostrar como funciona o preço — é simples, são três formatos, todos assinatura anual.
 >
-> O plano de referência é o **Groth Pro: R$ 2.970 por ano — dá cerca de R$ 248 por mês**: tudo que te mostrei, mais metas, projeção e o backlog de execução semanal. É o formato pra quem quer previsibilidade de verdade — na maioria dos nichos, isso é menos que um atendimento seu por mês pra estruturar todos os outros.
+> O plano de referência é o **ClinicNow Pro: R$ 2.970 por ano — dá cerca de R$ 248 por mês**: tudo que te mostrei, mais metas, projeção e o backlog de execução semanal. É o formato pra quem quer previsibilidade de verdade — na maioria dos nichos, isso é menos que um atendimento seu por mês pra estruturar todos os outros.
 >
-> Se você quer começar mais enxuto, existe o **Groth Start: R$ 970 por ano — cerca de R$ 81 por mês**: diagnóstico, plano de 4 semanas, protocolos precificados e o funil de leads. Sem as metas avançadas.
+> Se você quer começar mais enxuto, existe o **ClinicNow Start: R$ 970 por ano — cerca de R$ 81 por mês**: diagnóstico, plano de 4 semanas, protocolos precificados e o funil de leads. Sem as metas avançadas.
 >
-> E se você quer implementação lado a lado, o **Groth Aceleração: R$ 9.970 por ano — cerca de R$ 831 por mês**: tudo do Pro mais dois encontros 1:1 por mês comigo, construção da oferta âncora junto e revisão de posicionamento e precificação.
+> E se você quer implementação lado a lado, o **ClinicNow Aceleração: R$ 9.970 por ano — cerca de R$ 831 por mês**: tudo do Pro mais dois encontros 1:1 por mês comigo, construção da oferta âncora junto e revisão de posicionamento e precificação.
 >
 > Duas coisas verdadeiras sobre o momento: estamos em beta fundador, então o acompanhamento é direto comigo — e minha agenda 1:1 tem limite físico real. E o preço que você contratar agora é o preço de lançamento: se ele subir no futuro, quem já tem assinatura ativa não é afetado. Está nos termos, não é promessa de conversa. A assinatura é anual — na renovação, a decisão de continuar é sua, sem pegadinha."
 
@@ -102,7 +102,7 @@ Se a dúvida for legítima, combinar data concreta: "te chamo {dia} pra você me
 
 ### Objeção 3 — "Já tenho consultor / agência de marketing"
 
-> "Ótimo — sério, isso te coloca na frente de 90% das clínicas. E o MedGroth não compete com eles: consultor e agência te dão direção e tráfego; o MedGroth é o sistema onde isso vira operação diária — o funil onde cada lead da agência é acompanhado, os protocolos precificados, a meta acompanhada semana a semana. A pergunta que eu te faria: hoje, os leads que a agência gera, caem onde? Se a resposta for 'no WhatsApp e depois na memória', a gente se completa, não se substitui. Se o seu consultor já te dá tudo isso rodando, então você não precisa de mim agora — e eu te digo isso na cara dura."
+> "Ótimo — sério, isso te coloca na frente de 90% das clínicas. E o ClinicNow não compete com eles: consultor e agência te dão direção e tráfego; o ClinicNow é o sistema onde isso vira operação diária — o funil onde cada lead da agência é acompanhado, os protocolos precificados, a meta acompanhada semana a semana. A pergunta que eu te faria: hoje, os leads que a agência gera, caem onde? Se a resposta for 'no WhatsApp e depois na memória', a gente se completa, não se substitui. Se o seu consultor já te dá tudo isso rodando, então você não precisa de mim agora — e eu te digo isso na cara dura."
 
 ### Objeção 4 (nova, do ICP amplo) — "Isso não é coisa de médico? Serve pra estética/fisio/nutri/odonto?"
 

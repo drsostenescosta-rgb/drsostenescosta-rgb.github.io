@@ -1,4 +1,4 @@
-# MedGroth — Relatório de Testes Automatizados
+# ClinicNow — Relatório de Testes Automatizados
 
 Exigência do Founder (Fase 2): *"O modelo precisa rodar no mínimo viável, testado, ANTES da primeira venda."*
 Suite end-to-end com **Playwright (Chromium)** cobrindo os fluxos críticos e as regressões dos vetos do Conselho.
@@ -10,15 +10,15 @@ Cobre também as duas decisões do Founder de 2026-07-28: **ICP ampliado** (prof
 ## Como rodar
 
 ```bash
-cd medgroth/tests
+cd clinicnow/tests
 npm install          # instala @playwright/test 1.56.1 (uma vez)
 npm test             # roda a suíte inteira
 ```
 
 Notas do ambiente:
 - O Chromium já está instalado em `/opt/pw-browsers/chromium` — **não** rode `playwright install`. O `playwright.config.js` aponta `executablePath` direto para esse binário.
-- O config sobe automaticamente `python3 -m http.server 8199` na raiz do repositório (via `webServer`) e navega em `http://127.0.0.1:8199/medgroth/`. Não é preciso subir servidor manualmente.
-- Todos os testes são herméticos: fontes externas são abortadas e as chamadas ao Supabase (`/rest/v1/medgroth_leads`) são interceptadas/mockadas — nenhum teste depende de rede ou grava no banco real.
+- O config sobe automaticamente `python3 -m http.server 8199` na raiz do repositório (via `webServer`) e navega em `http://127.0.0.1:8199/clinicnow/`. Não é preciso subir servidor manualmente.
+- Todos os testes são herméticos: fontes externas são abortadas e as chamadas ao Supabase (`/rest/v1/clinicnow_leads`) são interceptadas/mockadas — nenhum teste depende de rede ou grava no banco real.
 
 ## Testes e resultados
 
@@ -48,7 +48,7 @@ Notas do ambiente:
 
 ### `regressao.spec.js` — grep estático nos artefatos
 
-Escopo do grep: **apenas `.html` e `.js` no topo de `medgroth/`** (arquivos servidos ao usuário). Docs internos (`TESTES.md`, `juridico/`, `campanha/`) podem citar as frases vetadas para documentá-las e ficam fora do escopo por design.
+Escopo do grep: **apenas `.html` e `.js` no topo de `clinicnow/`** (arquivos servidos ao usuário). Docs internos (`TESTES.md`, `juridico/`, `campanha/`) podem citar as frases vetadas para documentá-las e ficam fora do escopo por design.
 
 | # | Teste | O que cobre | Resultado |
 |---|-------|-------------|-----------|
@@ -58,9 +58,9 @@ Escopo do grep: **apenas `.html` e `.js` no topo de `medgroth/`** (arquivos serv
 | 18 | Consentimento LGPD no HTML | `captura.html` contém o checkbox `id="lgpd"` e o link `href="privacidade.html"` | VERDE |
 | 19 | Vocabulário de desfecho clínico banido de `app.html` | "sair da dor", "resultado estético", "reduzir ansiedade", "resultado prometido" e o campo `promessa:` não existem no código (campo renomeado para `proposta`) | VERDE |
 | 20 | "exemplo ilustrativo" no mock do hero | `index.html` declara a natureza ilustrativa junto ao número da projeção | VERDE |
-| 21 | FAQ sem absoluto | "Tudo que o MedGroth recomenda" removido do FAQ CFM | VERDE |
+| 21 | FAQ sem absoluto | "Tudo que o ClinicNow recomenda" removido do FAQ CFM | VERDE |
 | 22 | E-mail obrigatório + honeypot no HTML | `captura.html` tem `id="email"` com `required` e o campo honeypot `id="hp-site"` | VERDE |
-| 23 | Versão única da política | `"1.0-2026-07"` definida em `config.js` (`MEDGROTH.politicaVersao`), exibida em `privacidade.html`; captura e app usam a fonte única, sem versão divergente hardcoded | VERDE |
+| 23 | Versão única da política | `"1.0-2026-07"` definida em `config.js` (`CLINICNOW.politicaVersao`), exibida em `privacidade.html`; captura e app usam a fonte única, sem versão divergente hardcoded | VERDE |
 | 24 | **ICP ampliado no index** | `index.html` contém "profissionais da saúde" e "COFFITO" (FAQ generalizada para os conselhos); headline/eyebrow restritos a médicos ("máquina de crescimento para médicos", "Para médicos e clínicas que querem crescer") não podem renascer | VERDE |
 | 25 | **ICP ampliado na captura** | Select de especialidade contém os 6 novos nichos: Fisioterapia, Nutrição, Odontologia, Enfermagem / Clínica de enfermagem, Estética avançada / Biomedicina, Clínica multiprofissional (dono/gestor) | VERDE |
 | 26 | **ICP ampliado no app** | `PROTOCOLOS` tem entrada para cada novo nicho, todas com campo `proposta:` (nunca `promessa:`); guarda-corpo cita COFFITO (regra generalizada para todos os conselhos) | VERDE |
@@ -91,8 +91,8 @@ O que de fato foi verificado, com as limitações declaradas:
 | # | Verificação | O que foi feito de verdade | Resultado |
 |---|-------------|----------------------------|-----------|
 | 13a | Escopo do grep CFM | Corrigido para só arquivos servidos ao usuário (`.html`/`.js`); docs internos podem citar a frase vetada para documentá-la | VERDE |
-| 14a | Esquema real de `medgroth_leads` | Colunas conferidas via API de administração. **Bug pego**: o form enviava `consentimento_lgpd`, coluna que não existia → todo cadastro real falharia com 400 | CORRIGIDO |
-| 15a | Migração `medgroth_leads_consentimento_lgpd` | Colunas `consentimento_lgpd` (boolean) e `politica_versao` (text) criadas — registro de consentimento exigido pela LGPD art. 8º §2º | APLICADA |
+| 14a | Esquema real de `clinicnow_leads` | Colunas conferidas via API de administração. **Bug pego**: o form enviava `consentimento_lgpd`, coluna que não existia → todo cadastro real falharia com 400 | CORRIGIDO |
+| 15a | Migração `clinicnow_leads_consentimento_lgpd` | Colunas `consentimento_lgpd` (boolean) e `politica_versao` (text) criadas — registro de consentimento exigido pela LGPD art. 8º §2º | APLICADA |
 | 16a | Insert sob papel `anon` (RLS real), transação com rollback | **Ressalva importante**: o payload foi **montado à mão** para reproduzir o que o app enviaria, não capturado do app real. Naquele momento o `config.js` **não** incluía `consentimento_lgpd`/`politica_versao` no body — ou seja, o smoke test validou o banco, mas **não** o contrato app→banco, e por isso não pegou o defeito. 1 linha inserida e revertida | VERDE, COM RESSALVA |
 
 **Lição registrada (pós-mortem):** smoke test com payload montado à mão valida o destino, não o remetente. A lacuna foi fechada pelos testes de contrato #4 e #10, que interceptam o POST **do próprio app** e assertam o body — esses rodam em toda execução da suíte.

@@ -1,11 +1,11 @@
-# MedGroth — Sequência de 5 e-mails pós-diagnóstico (lead que completou o diagnóstico gratuito)
+# ClinicNow — Sequência de 5 e-mails pós-diagnóstico (lead que completou o diagnóstico gratuito)
 
 **Disparo:** e-mail 1 imediato após o diagnóstico; depois D+2, D+4, D+7, D+10.
-**Remetente:** "Sóstenes, do MedGroth" <contato@...> — sempre pessoa, nunca "Equipe MedGroth".
+**Remetente:** "Sóstenes, do ClinicNow" <contato@...> — sempre pessoa, nunca "Equipe ClinicNow".
 **Regras:** texto puro ou HTML mínimo (parecer e-mail de gente, não de ferramenta). Sem countdown, sem "ÚLTIMA CHANCE". Toda menção a número é hipótese com premissa à vista. CTA final da sequência: conversa de 15 min no WhatsApp com o Sóstenes — enquadrada como conversa, não como "call de vendas" (a landing promete "sem call de vendas"; a conversa é opt-in explícito do lead).
 **ICP (ampliado pelo Founder):** profissionais da saúde em geral e donos de clínica — esteticistas, fisioterapeutas, biomédicos, enfermeiros, nutricionistas, dentistas, médicos. Os e-mails já eram escritos sobre a dor comum (sabe cuidar, não sabe cobrar/captar); a regra agora é: nenhum exemplo exclusivamente médico, e {especialidade} cobre qualquer vertical.
 **Personalização mínima disponível no lead (captura.html):** {nome}, {especialidade}, {faturamento}, {perfil_diagnostico} (ex.: "especialista sem captação").
-**Rodapé fixo em todos:** endereço, link de descadastro em 1 clique, e a linha: "O MedGroth é ferramenta de estratégia e gestão. Projeções são estimativas a partir das suas respostas, não garantia de resultado."
+**Rodapé fixo em todos:** endereço, link de descadastro em 1 clique, e a linha: "O ClinicNow é ferramenta de estratégia e gestão. Projeções são estimativas a partir das suas respostas, não garantia de resultado."
 
 ---
 
@@ -32,7 +32,7 @@ Duas notas de transparência, porque é assim que trabalho:
 Bom trabalho na semana 1.
 
 — Sóstenes
-fundador do MedGroth (a história de por que construí isso está em [link do blog])
+fundador do ClinicNow (a história de por que construí isso está em [link do blog])
 
 **CTA:** botão único "Abrir meu plano de 4 semanas".
 
@@ -51,9 +51,9 @@ a cena mais comum em clínica particular no Brasil — no consultório médico, 
 
 Quase nunca é "achei caro". Na maioria das vezes é: a vida atropelou, ela ia decidir depois, e ninguém voltou a falar com ela. Quem some não disse "não" — só não foi acompanhada.
 
-O hábito que resolve boa parte disso, com ou sem MedGroth:
+O hábito que resolve boa parte disso, com ou sem ClinicNow:
 
-1. **Todo contato vira registro.** Nome + o que pediu + data. (No MedGroth, é o funil de leads; num caderno, também funciona — o que não funciona é a memória.)
+1. **Todo contato vira registro.** Nome + o que pediu + data. (No ClinicNow, é o funil de leads; num caderno, também funciona — o que não funciona é a memória.)
 2. **Retorno em 48h para quem não respondeu.** Uma mensagem simples e honesta: "Oi, {{primeiro nome}}, passando pra saber se ficou alguma dúvida sobre a avaliação. Se não for o momento, sem problema nenhum." Sem pressão — pressão em saúde afasta, e com razão.
 3. **Um horário fixo por dia (5 min)** para olhar a lista e ver quem está parado.
 
@@ -78,7 +78,7 @@ Mas eu passei quase dez anos atendendo (fisioterapia, protocolos de emagreciment
 
 O protocolo com acompanhamento contínuo existe primeiro pelo motivo clínico: reavaliações marcadas, ajuste de conduta, adesão. A previsibilidade de receita é consequência de fazer a coisa certa — não o contrário.
 
-É por isso que o plano do MedGroth estrutura a sua oferta âncora como protocolo: entrega claramente definida, reavaliações no calendário, preço fechado que o paciente entende. Venda ética é quando o melhor para o paciente e o melhor para a clínica são a mesma coisa.
+É por isso que o plano do ClinicNow estrutura a sua oferta âncora como protocolo: entrega claramente definida, reavaliações no calendário, preço fechado que o paciente entende. Venda ética é quando o melhor para o paciente e o melhor para a clínica são a mesma coisa.
 
 A semana 4 do seu plano monta isso passo a passo: [Ver minha semana 4]
 
@@ -105,7 +105,7 @@ O que eu faria no seu lugar, em ordem:
 2. Escolher UMA ação da semana 2 e agendar 1 hora na agenda desta semana — literalmente como se fosse um paciente.
 3. Ignorar o resto até essa hora acontecer.
 
-E uma honestidade sobre o produto: o MedGroth gratuito te dá o diagnóstico e o plano. A execução acompanhada — metas, projeção, scripts de conversão, backlog semanal — é dos planos pagos (assinatura anual, com preço de lançamento; os valores estão na página). Não vou fingir que a versão gratuita faz tudo; ela faz o suficiente para você validar se o método funciona para você. Se estiver funcionando, os planos estão aqui: [Ver planos]
+E uma honestidade sobre o produto: o ClinicNow gratuito te dá o diagnóstico e o plano. A execução acompanhada — metas, projeção, scripts de conversão, backlog semanal — é dos planos pagos (assinatura anual, com preço de lançamento; os valores estão na página). Não vou fingir que a versão gratuita faz tudo; ela faz o suficiente para você validar se o método funciona para você. Se estiver funcionando, os planos estão aqui: [Ver planos]
 
 — Sóstenes
 
@@ -126,7 +126,7 @@ Quero te fazer um convite direto: **15 minutos de conversa no WhatsApp, comigo, 
 
 Três coisas para ficarem claras antes de você aceitar:
 
-1. **Não é call de vendas disfarçada.** Se o MedGroth pago fizer sentido para o seu caso, eu vou dizer — e dizer qual plano e por quê. Se não fizer, eu vou dizer também. Já falei "não é pra você agora" mais de uma vez, e vou continuar falando.
+1. **Não é call de vendas disfarçada.** Se o ClinicNow pago fizer sentido para o seu caso, eu vou dizer — e dizer qual plano e por quê. Se não fizer, eu vou dizer também. Já falei "não é pra você agora" mais de uma vez, e vou continuar falando.
 2. **Por que eu faço isso de graça:** estou nos primeiros clientes do produto. Cada conversa me ensina mais sobre a dor real do que qualquer métrica. Você me dá contexto; eu te dou o que sei. Troca justa.
 3. **Sobre o momento:** estamos em beta fundador. Isso significa duas coisas verdadeiras: quem assina agora fecha a assinatura anual no preço de lançamento, e ajustes futuros de preço não afetam assinaturas ativas (está nos termos — não é promessa de e-mail). E o acompanhamento é feito por mim, diretamente. Essa segunda parte tem um limite físico honesto: minha agenda de conversas 1:1 é a minha agenda de verdade. Quando ela aperta, o próximo horário fica mais longe — só isso. Sem contador, sem "vagas acabando".
 
@@ -139,7 +139,7 @@ Obrigado por ter chegado até aqui.
 — Sóstenes
 "Vou ser honesto desde a primeira linha: eu tive medo." — a história completa: [link do blog]
 
-**CTA:** link wa.me/5584999869468 com texto pré-preenchido: "Oi, Sóstenes! Fiz o diagnóstico do MedGroth ({perfil_diagnostico}) e quero os 15 minutos de conversa."
+**CTA:** link wa.me/5584999869468 com texto pré-preenchido: "Oi, Sóstenes! Fiz o diagnóstico do ClinicNow ({perfil_diagnostico}) e quero os 15 minutos de conversa."
 
 ---
 
@@ -147,7 +147,7 @@ Obrigado por ter chegado até aqui.
 
 Nenhum e-mail desta sequência pode ser disparado antes de resolver os 5 itens abaixo. Isto não é burocracia: três deles são contrato com o lead.
 
-1. **Remetente real a definir.** O cabeçalho diz `<contato@...>` porque o endereço não existe ainda. Precisa de domínio de envio próprio (ou subdomínio, ex.: `sostenes@mail.medgroth.com.br`) com SPF/DKIM/DMARC configurados — sem isso, a meta de abertura de 60% do e-mail 1 é fantasia de entregabilidade. Dono: Engenharia; decisão de nome: Founder.
+1. **Remetente real a definir.** O cabeçalho diz `<contato@...>` porque o endereço não existe ainda. Precisa de domínio de envio próprio (ou subdomínio, ex.: `sostenes@mail.clinicnow.com.br`) com SPF/DKIM/DMARC configurados — sem isso, a meta de abertura de 60% do e-mail 1 é fantasia de entregabilidade. Dono: Engenharia; decisão de nome: Founder.
 2. **ESP/ferramenta de disparo inexistente.** Não há hoje nenhuma ferramenta contratada que dispare a sequência D+0/D+2/D+4/D+7/D+10 a partir do evento "diagnóstico completo" no Supabase. Escolher (ex.: Resend, Brevo, Loops) e integrar com o webhook do lead antes de prometer qualquer automação. Dono: Engenharia.
 3. **Placeholder `[link do blog]`.** Aparece nos e-mails 1 e 5 e aponta para uma página que precisa ser confirmada (a história do founder no index raiz? um post dedicado?). Definir a URL final e substituir nos dois pontos antes do disparo. Dono: Founder.
 4. **Preços anuais ratificados e publicados.** Os e-mails 4 e 5 agora referenciam a assinatura anual (Start R$ 970/ano, Pro R$ 2.970/ano, Aceleração R$ 9.970/ano — proposta do Conselho, ratificável). Antes do disparo: Founder ratifica os valores, os termos e a página de planos exibem exatamente esses números e a regra "ajustes futuros não afetam assinaturas ativas". E-mail prometendo preço que a página não confirma é quebra de confiança na primeira dobra. Dono: Founder + Engenharia.

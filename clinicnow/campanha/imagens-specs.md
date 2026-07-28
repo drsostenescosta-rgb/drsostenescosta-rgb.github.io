@@ -1,4 +1,4 @@
-# MedGroth — Specs de 8 criativos de imagem (prontos para geração; NÃO publicar antes do gate)
+# ClinicNow — Specs de 8 criativos de imagem (prontos para geração; NÃO publicar antes do gate)
 
 **ICP (ampliado pelo Founder):** profissionais da saúde em geral e donos de clínica — esteticistas, fisioterapeutas, biomédicos, enfermeiros, nutricionistas, dentistas, médicos. Nenhuma peça fala só com médico.
 **Veto regulatório ampliado (vale para TODAS as peças):** as restrições publicitárias valem pelos conselhos de todas as profissões do ICP (CFM, COFFITO, COREN, CFN, CFO, CFBM). Em especial: **nenhum "antes e depois" com promessa** (CFN e o campo da estética são os mais restritivos e dão o teto), nenhuma promessa de desfecho clínico/estético, nenhuma imagem de corpo/rosto transformado como argumento de venda.
@@ -7,7 +7,7 @@
 - **Paleta:** fundo verde-preto profundo #04080a / #071013; esmeralda #19c37d e #3ddc97 (destaque principal); dourado #c9a227 / #e2c464 (acento raro, máx. 1 elemento por peça); texto off-white #e8efea; cinza-esverdeado #8fa39a para apoio.
 - **Tipografia nas artes:** títulos em serifada elegante (Fraunces ou similar: serif de alto contraste, itálico permitido na palavra de ênfase); apoio em sans (Inter); rótulos técnicos em mono (JetBrains Mono, caixa alta, letter-spacing largo).
 - **Mood:** sóbrio, clínico-premium, "fintech da saúde". NUNCA: estetoscópio em cima de dinheiro, profissional de jaleco sorrindo apontando pra texto, seta de foguete, dourado excessivo, "antes e depois" de qualquer natureza. Isso é linguagem de guru — defeito de marca (e risco regulatório no ICP amplo).
-- **Assinatura:** logo "Mg" (quadrado arredondado com borda esmeralda) + "MedGroth" pequeno no rodapé de cada peça.
+- **Assinatura:** logo "CN" (quadrado arredondado com borda esmeralda) + "ClinicNow" pequeno no rodapé de cada peça.
 - Disclaimers exigidos por peça estão indicados. Texto de disclaimer sempre legível (mín. ~18px em 1080px de largura).
 
 ---

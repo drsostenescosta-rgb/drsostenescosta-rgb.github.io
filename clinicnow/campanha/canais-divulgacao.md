@@ -1,4 +1,4 @@
-# MedGroth — Plano de canais para os 10 primeiros clientes (ICP ampliado: profissionais da saúde e donos de clínica)
+# ClinicNow — Plano de canais para os 10 primeiros clientes (ICP ampliado: profissionais da saúde e donos de clínica)
 
 > **DECISÃO DO FOUNDER (registrada — encerra a pendência anterior sobre reinstaurar teto de vagas):** sem teto de vagas, sem contador. Oferta canônica: **assinatura ANUAL** com preço de lançamento — Start R$ 970/ano, Pro R$ 2.970/ano, Aceleração R$ 9.970/ano (proposta do Conselho, ratificável) — com a regra "ajustes futuros de preço não afetam assinaturas ativas". A única urgência citável continua sendo a real: beta fundador com acompanhamento direto do Sóstenes, limitado pela agenda 1:1 dele.
 
@@ -28,7 +28,7 @@ O canal que provavelmente fecha os 10 sozinho. A rede do Sóstenes já contém o
 **Processo:**
 1. Listar 100–150 contatos da rede em 3 camadas **(recontadas para o ICP amplo)**: (A) profissionais do ICP com relação próxima — ex-alunos de protocolos, colegas fisio/biomédicos, esteticistas treinadas, médicos próximos; (B) profissionais do ICP com relação fria; (C) conectores não-ICP — contadores, representantes de equipamentos/injetáveis, professores de pós — que recebem o script de indicação.
 2. 10–15 mensagens/dia, 100% personalizadas na primeira linha. Nunca broadcast.
-3. Todo contato entra no funil do próprio MedGroth (dogfooding — e vira story de bastidor).
+3. Todo contato entra no funil do próprio ClinicNow (dogfooding — e vira story de bastidor).
 
 **Script de abertura — camada A (relação próxima):**
 > "Oi, {nome}! Sóstenes aqui. Lembra que eu tranquei medicina pra construir tecnologia de saúde? Lancei a primeira ferramenta e queria a sua opinião sincera antes de qualquer coisa — é um diagnóstico de crescimento pra quem vive da própria clínica (vale pra estética, fisio, nutri, odonto, consultório médico): 7 perguntas, 3 minutos, e sai um plano de 4 semanas pro seu nicho. Gratuito, e vou ser direto: em troca eu quero seu feedback do que ficou bom e do que ficou ruim. Topa fazer e me contar? {link}"
@@ -108,7 +108,7 @@ Rotação por vertical (2–4 por post, conforme o exemplo da peça):
 ## Painel único da fase (revisar toda segunda)
 | Indicador | Alvo 90 dias | Checkpoint dia 30 | Fonte |
 |---|---|---|---|
-| Abordagens WhatsApp 1:1 | 100–150 (200 se checkpoint disparar) | ≥ 40 feitas | funil MedGroth (dogfooding) |
+| Abordagens WhatsApp 1:1 | 100–150 (200 se checkpoint disparar) | ≥ 40 feitas | funil ClinicNow (dogfooding) |
 | Diagnósticos completos | 60 | ≥ 15 vindos do Instagram (senão: re-planejar) | Supabase (leads) |
 | Conversas de 15 min realizadas | 25 | ≥ 8 | agenda |
 | Clientes pagantes | 10 (esperado realista: 5–7 até dia 60) | ≥ 2 | assinaturas |
