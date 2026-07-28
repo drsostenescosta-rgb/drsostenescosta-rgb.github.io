@@ -1,6 +1,6 @@
 # EQUIPE — Scorecard vivo dos agentes
 > Mantido pelo setor-evolucao-talentos · atualizado a cada fiscalização · métrica em pares ([B9]): nota média + taxa de devolução
-> Missão de referência: MedGroth "10 primeiros clientes pagantes" (M1), 2026-07-28
+> Missão de referência: ClinicNow "10 primeiros clientes pagantes" (M1), 2026-07-28
 
 | Agente | Notas (M1) | Devoluções | Força comprovada | Fraqueza a treinar | Tendência |
 |--------|-----------|------------|------------------|--------------------|-----------|
