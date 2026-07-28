@@ -11,6 +11,37 @@
 - [x] **Config de backend** (`medgroth/config.js`) — Supabase compartilhado com o SosMed, gravação de leads com fallback local (nunca perde lead)
 - [x] Card do MedGroth no site pessoal (seção "no que trabalho")
 
+## Decisões do comitê — 28/07/2026
+
+Fonte: `../ideias/2026-07-comite-aprovacao.md`. Este bloco prevalece sobre qualquer meta anterior deste arquivo. Revisão: primeira quinzena de outubro/2026.
+
+### Regra de frente única
+- DocGrow/MedGroth é O produto até outubro/2026. Nenhuma linha de código de CareLoop ou MedVerse antes de 5 médicos reais percorrerem o funil completo (Sprint 1 é bloqueador absoluto; zero mídia paga antes disso).
+
+### Metas revisadas (substituem as anteriores)
+- Marketing 90 dias: **1.500 seguidores qualificados** e **30 diagnósticos/mês**.
+- WhatsApp: **janelas fixas de resposta + primeira resposta automatizada** (o SLA "<1h" foi reprovado).
+- Meta 2026: **40–60 clientes / MRR R$ 12–18 mil**; se dezembro fechar abaixo de 30 clientes, replanejar a curva 2027+.
+- Métricas exigidas até outubro: ≥30 diagnósticos/mês gravados no Supabase com lead→conversa ≥40%; ≥10 clientes pagantes com cobrança recorrente ativa; 100% das fundadoras ativas na semana 4 e churn zero no trimestre (cancelamento exige post-mortem escrito).
+
+### Adições obrigatórias por sprint
+- **Sprint 2:** dashboard "quanto o produto te gerou em R$ este mês" como **tela inicial** do app (lição Zocdoc). Views `docgrow_health_score` e `docgrow_cofre_recuperado` já criadas no Supabase (28/07).
+- **Sprint 3:** confirmação de consulta anti no-show via WhatsApp + coleta ativa de reviews Google (ROI comprovado — Doctolib/Tebra). Filtro CFM no `/api/groth`: veto a promessa de resultado, superlativos e antes/depois fora das hipóteses da Res. 2.336/2023.
+- **Sprint 4:** landing internacional DocGrow **somente após 2 casos documentados** (a página `../docgrow/` já existe com preço em US$; tráfego só após o gatilho).
+
+### Gatilhos de expansão (nada anda sem a métrica)
+- **CareLoop módulo-piloto (3–5 fundadoras):** liberar com 10 clientes pagantes DocGrow + parecer jurídico ANS entregue. As 5 condições do advogado são vinculantes.
+- **CareLoop standalone:** 5 médicos com ≥5 pacientes assinantes ativos cada.
+- **MedVerse:** ADIADO. Desbloqueio: MRR ≥ R$ 30 mil e churn < 3% por 2 meses, OU cofundador dedicado. Autorizado desde já só o teste de fumaça (bot "questão do dia": 500 usuários, D30 > 40%).
+
+### Pendências com prazo (até 31/ago/2026)
+- [ ] Registrar domínios disponíveis das 4 marcas (esta semana)
+- [ ] Buscas INPI (classes 9/42/44) antes de material público — obrigatório para MedVerse
+- [ ] Encomendar o parecer jurídico ANS do CareLoop
+- [ ] Teste de pricing por resultado (take rate) com 2–3 fundadoras
+- [ ] Fluxo de consentimento de telemedicina (Res. 2.314/2022) antes do 1º vídeo
+- [ ] Inscrição em 2 programas de startup (NVIDIA Inception, Google/Microsoft for Startups, AWS Activate)
+
 ## Hospedagens & infraestrutura
 
 | Camada | Onde | Status |
@@ -78,6 +109,6 @@ create policy "leitura autenticada" on public.medgroth_leads
 ## Regras que não mudam
 
 1. **Nenhum lead se perde** — fallback local sempre ativo; banco é espelho, não gargalo.
-2. **Venda ética** — tudo que o produto recomenda respeita publicidade médica (CFM); prova de valor = resultado clínico medido, nunca promessa.
+2. **Venda ética** — tudo que o produto recomenda respeita publicidade médica (CFM); prova de valor = resultado medido de receita/gestão do consultório, nunca promessa e jamais resultado clínico de pacientes (Res. CFM 2.336/2023).
 3. **Chave de API nunca no frontend** — IA e pagamentos só via funções serverless.
 4. **Preço de fundador é sagrado** — quem entrar nas 20 primeiras mantém o preço para sempre.

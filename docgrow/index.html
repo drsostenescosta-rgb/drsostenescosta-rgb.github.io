@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DocGrow — O cockpit de crescimento e operação do médico</title>
+<meta name="description" content="DocGrow é a evolução do MedGroth: diagnóstico e plano de crescimento, CRM de leads, agenda inteligente, follow-up automático no WhatsApp e telemedicina integrada — o médico dono da própria demanda. Do ecossistema Zatheon." />
+<meta property="og:title" content="DocGrow — O cockpit de crescimento e operação do médico" />
+<meta property="og:description" content="Marketing, organização e telemedicina num só lugar: diagnóstico em 3 minutos, plano de 4 semanas, agenda unificada, follow-up automático e teleconsulta com um clique." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#04080a; --bg-2:#071013; --card:rgba(13,26,26,0.6); --card-solid:#0b1518;
+    --em:#19c37d; --em-light:#3ddc97; --em-dark:#0e9f63;
+    --vi:#8b5cf6; --vi-light:#a78bfa; --vi-dark:#6d3fe0;
+    --gold:#c9a227; --gold-light:#e2c464;
+    --text:#e8efea; --muted:#8fa39a; --border:rgba(232,239,234,0.09); --border-strong:rgba(232,239,234,0.18);
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.6; overflow-x:hidden; }
+  a { color:inherit; text-decoration:none; }
+  h1,h2,h3 { font-family:var(--serif); font-weight:500; line-height:1.15; }
+  em { font-style:italic; color:var(--em-light); }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 24px; position:relative; z-index:2; }
+  .bg-orbs { position:fixed; inset:0; z-index:-2; overflow:hidden; pointer-events:none; }
+  .orb { position:absolute; border-radius:50%; filter:blur(100px); opacity:0.45; }
+  .orb-a { width:620px; height:620px; top:-14%; left:-10%; background:radial-gradient(circle,rgba(25,195,125,0.30),transparent 70%); animation:d1 26s ease-in-out infinite; }
+  .orb-b { width:540px; height:540px; bottom:-16%; right:-10%; background:radial-gradient(circle,rgba(139,92,246,0.22),transparent 70%); animation:d2 32s ease-in-out infinite; }
+  @keyframes d1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(60px,50px)} }
+  @keyframes d2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-50px,-40px)} }
+  @media (prefers-reduced-motion:reduce){ .orb{animation:none} }
+  .eyebrow { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--em-light); font-weight:600; display:inline-flex; align-items:center; gap:10px; }
+  .eyebrow::before { content:''; width:26px; height:1px; background:linear-gradient(90deg,var(--em),var(--vi),transparent); }
+  .grad { background:linear-gradient(115deg,#fff 0%,#d9f5e6 40%,var(--em-light) 68%,var(--vi-light) 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+
+  header.nav { position:fixed; top:0; left:0; right:0; z-index:100; backdrop-filter:blur(18px); background:rgba(4,8,10,0.65); border-bottom:1px solid var(--border); }
+  .nav-inner { display:flex; align-items:center; justify-content:space-between; padding:13px 24px; max-width:1120px; margin:0 auto; gap:14px; }
+  .brand { display:flex; align-items:center; gap:11px; }
+  .logo { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:1.05rem; color:var(--em-light); background:linear-gradient(145deg,rgba(25,195,125,0.16),rgba(139,92,246,0.10)); border:1px solid rgba(25,195,125,0.45); box-shadow:0 0 18px rgba(139,92,246,0.20); }
+  .brand-name { font-family:var(--serif); font-size:1.05rem; }
+  .brand-sub { font-family:var(--mono); font-size:0.56rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase; }
+  .badge-z { font-family:var(--mono); font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--vi-light); border:1px solid rgba(139,92,246,0.45); background:rgba(139,92,246,0.10); padding:3px 10px; border-radius:999px; white-space:nowrap; }
+  .nav-note { font-size:0.72rem; color:var(--muted); font-family:var(--mono); white-space:nowrap; }
+  .nav-links { display:flex; gap:20px; }
+  .nav-links a { font-size:0.85rem; color:var(--muted); transition:color .2s; }
+  .nav-links a:hover { color:var(--em-light); }
+  @media (max-width:960px){ .nav-links{display:none} .nav-note{display:none} }
+  @media (max-width:560px){ .badge-z{display:none} }
+
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:12px 24px; border-radius:999px; font-weight:700; font-size:0.92rem; cursor:pointer; border:1px solid transparent; white-space:nowrap; transition:transform .2s, box-shadow .3s, filter .2s; }
+  .btn-em { background:linear-gradient(135deg,var(--em-light),var(--em-dark)); color:#03130b; box-shadow:0 4px 22px rgba(25,195,125,0.3); }
+  .btn-em:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(25,195,125,0.5); filter:brightness(1.05); }
+  .btn-ghost { border-color:var(--border-strong); color:var(--text); background:rgba(255,255,255,0.02); }
+  .btn-ghost:hover { border-color:var(--vi); color:var(--vi-light); transform:translateY(-2px); }
+  .btn-lg { padding:15px 30px; font-size:1rem; }
+
+  .hero { padding:150px 0 70px; }
+  .hero-grid { display:grid; grid-template-columns:1.05fr 0.95fr; gap:52px; align-items:center; }
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr} }
+  .hero h1 { font-size:clamp(2.3rem,4.8vw,3.6rem); margin:20px 0; letter-spacing:-0.01em; }
+  .hero-sub { color:var(--muted); font-size:1.08rem; max-width:52ch; margin-bottom:30px; }
+  .hero-ctas { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:22px; }
+  .hero-note { font-size:0.78rem; color:var(--muted); font-family:var(--mono); }
+  .selo { display:inline-flex; align-items:center; gap:8px; margin-top:14px; font-family:var(--mono); font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); border:1px solid var(--border); border-radius:999px; padding:6px 14px; background:rgba(255,255,255,0.02); }
+  .selo::before { content:'🔒'; font-size:0.8rem; }
+
+  .mock { border-radius:20px; border:1px solid var(--border-strong); background:linear-gradient(160deg,rgba(13,26,26,0.92),rgba(6,12,13,0.92)); box-shadow:0 30px 80px rgba(0,0,0,0.55); overflow:hidden; }
+  .mock-bar { display:flex; gap:7px; padding:12px 16px; border-bottom:1px solid var(--border); }
+  .mock-dot { width:10px; height:10px; border-radius:50%; background:rgba(232,239,234,0.16); }
+  .mock-dot.e { background:var(--em); } .mock-dot.v { background:var(--vi); }
+  .mock-body { padding:20px; display:grid; gap:10px; }
+  .m-row { display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:11px; background:rgba(255,255,255,0.025); border:1px solid var(--border); }
+  .m-label { font-size:0.82rem; color:var(--muted); }
+  .m-val { font-family:var(--mono); font-weight:600; font-size:0.92rem; }
+  .m-val.up { color:var(--em-light); }
+  .m-val.vi { color:var(--vi-light); }
+  .m-bar { height:8px; border-radius:99px; background:rgba(255,255,255,0.06); overflow:hidden; }
+  .m-fill { height:100%; border-radius:99px; background:linear-gradient(90deg,var(--em-dark),var(--em-light),var(--vi-light)); }
+
+  section { padding:74px 0; }
+  section + section { border-top:1px solid var(--border); }
+  .sec-head { max-width:640px; margin-bottom:44px; }
+  .sec-head h2 { font-size:clamp(1.7rem,3.4vw,2.4rem); margin:16px 0 14px; }
+  .sec-head p { color:var(--muted); }
+
+  .cards3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  @media (max-width:860px){ .cards3{grid-template-columns:1fr} }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:26px; }
+  .card .ico { font-size:1.5rem; margin-bottom:12px; }
+  .card h3 { font-size:1.1rem; margin-bottom:8px; }
+  .card p { color:var(--muted); font-size:0.92rem; }
+  .card ul { margin:12px 0 0 18px; color:var(--muted); font-size:0.9rem; display:grid; gap:6px; }
+  .card .pill { display:inline-block; font-family:var(--mono); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--vi-light); border:1px solid rgba(139,92,246,0.4); background:rgba(139,92,246,0.08); padding:3px 10px; border-radius:999px; margin-bottom:12px; }
+
+  .steps { display:grid; gap:14px; counter-reset:st; }
+  .step { display:flex; gap:18px; align-items:flex-start; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 22px; }
+  .step .n { counter-increment:st; flex-shrink:0; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-weight:600; color:var(--em-light); background:rgba(25,195,125,0.1); border:1px solid rgba(25,195,125,0.4); }
+  .step .n::before { content:counter(st); }
+  .step h3 { font-size:1.02rem; margin-bottom:4px; }
+  .step p { color:var(--muted); font-size:0.9rem; }
+
+  .plans { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:stretch; }
+  @media (max-width:900px){ .plans{grid-template-columns:1fr} }
+  .plan { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:30px 26px; display:flex; flex-direction:column; position:relative; }
+  .plan.hot { border-color:rgba(25,195,125,0.55); box-shadow:0 0 40px rgba(139,92,246,0.14); }
+  .plan .tag { position:absolute; top:-12px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; background:linear-gradient(135deg,var(--em-light),var(--vi)); color:#03130b; font-weight:700; padding:5px 14px; border-radius:999px; }
+  .plan h3 { font-size:1.15rem; }
+  .plan .for { color:var(--muted); font-size:0.82rem; margin:4px 0 16px; }
+  .price { font-family:var(--serif); font-size:2.2rem; }
+  .price small { font-size:0.85rem; color:var(--muted); font-family:var(--sans); }
+  .plan ul { list-style:none; margin:18px 0 24px; display:grid; gap:9px; flex:1; }
+  .plan li { font-size:0.89rem; color:var(--muted); padding-left:24px; position:relative; }
+  .plan li::before { content:'✓'; position:absolute; left:0; color:var(--em-light); font-weight:700; }
+  .plan li.no::before { content:'—'; color:rgba(232,239,234,0.25); }
+  .plan .btn { justify-content:center; }
+  .founder { margin-top:22px; text-align:center; font-size:0.85rem; color:var(--gold-light); font-family:var(--mono); }
+
+  .quote { background:var(--card); border:1px solid var(--border); border-left:3px solid var(--em); border-radius:0 16px 16px 0; padding:26px 30px; font-family:var(--serif); font-size:1.15rem; font-style:italic; max-width:760px; }
+  .quote .who { display:block; margin-top:14px; font-family:var(--mono); font-style:normal; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+
+  details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 22px; margin-bottom:10px; }
+  summary { cursor:pointer; font-weight:600; font-size:0.95rem; }
+  details p { color:var(--muted); font-size:0.9rem; margin-top:10px; }
+
+  .cta-final { text-align:center; padding:90px 0; }
+  .cta-final h2 { font-size:clamp(1.8rem,3.6vw,2.6rem); margin-bottom:14px; }
+  .cta-final p { color:var(--muted); max-width:52ch; margin:0 auto 30px; }
+
+  footer { border-top:1px solid var(--border); padding:34px 0; }
+  .foot { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center; color:var(--muted); font-size:0.82rem; }
+  .foot a { color:var(--muted); border-bottom:1px solid transparent; }
+  .foot a:hover { color:var(--em-light); }
+  .disclaimer { margin-top:14px; font-size:0.72rem; color:rgba(143,163,154,0.7); max-width:70ch; }
+</style>
+</head>
+<body>
+<div class="bg-orbs"><div class="orb orb-a"></div><div class="orb orb-b"></div></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <span class="logo">Dg</span>
+      <span><span class="brand-name">DocGrow</span> <span class="badge-z">por Zatheon</span><br><span class="brand-sub">crescimento + operação médica</span></span>
+    </a>
+    <span class="nav-note">evolução do MedGroth</span>
+    <nav class="nav-links">
+      <a href="#metodo">Como funciona</a>
+      <a href="#produto">Funcionalidades</a>
+      <a href="#ecossistema">Ecossistema</a>
+      <a href="#planos">Planos</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-em" href="https://wa.me/5584999869468?text=Quero%20conhecer%20o%20DocGrow" target="_blank" rel="noopener">Falar no WhatsApp</a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Marketing · Organização · Telemedicina</span>
+      <h1><span class="grad">O médico dono</span><br>da própria <em>demanda</em>.</h1>
+      <p class="hero-sub">O DocGrow diagnostica sua clínica em 3 minutos e monta seu plano de crescimento — e depois <strong>opera o seu dia</strong>: agenda inteligente, leads num funil visual, follow-up automático de pacientes no WhatsApp e teleconsulta integrada com um clique. A máquina de crescimento que também opera o seu dia.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-em btn-lg" href="https://wa.me/5584999869468?text=Quero%20fazer%20o%20diagn%C3%B3stico%20do%20DocGrow" target="_blank" rel="noopener">Fazer meu diagnóstico gratuito →</a>
+        <a class="btn btn-ghost btn-lg" href="#metodo">Ver como funciona</a>
+      </div>
+      <div class="hero-note">3 minutos · sem cartão · plano na hora</div>
+      <br>
+      <span class="selo">Dados no Brasil · LGPD · Supabase São Paulo</span>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-bar"><span class="mock-dot e"></span><span class="mock-dot v"></span><span class="mock-dot"></span></div>
+      <div class="mock-body">
+        <div class="m-row"><span class="m-label">Funil da semana</span><span class="m-val">17 leads → 9 consultas</span></div>
+        <div class="m-row"><span class="m-label">Agenda de hoje</span><span class="m-val vi">8 presenciais · 3 tele 🎥</span></div>
+        <div class="m-row"><span class="m-label">Próxima teleconsulta</span><span class="m-val vi">14h30 · link enviado</span></div>
+        <div class="m-row"><span class="m-label">Follow-ups pendentes</span><span class="m-val up">5 retornos · 2 recalls</span></div>
+        <div class="m-row" style="display:block">
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px"><span class="m-label">Meta do mês</span><span class="m-val up">71%</span></div>
+          <div class="m-bar"><div class="m-fill" style="width:71%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="dor">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">O problema</span>
+      <h2>Você não tem um problema de talento.<br>Tem um problema de <em>sistema</em>.</h2>
+      <p>A rotina do médico brasileiro é a mesma há décadas: depende de indicação para crescer, junta cinco ferramentas para operar e perde o paciente no meio do caminho.</p>
+    </div>
+    <div class="cards3">
+      <div class="card"><div class="ico">🎲</div><h3>Crescer na sorte</h3><p>Paciente novo chega por indicação — quando chega. Sem funil, sem origem rastreada, sem previsibilidade. O crescimento da clínica está na mão dos outros, não na sua.</p></div>
+      <div class="card"><div class="ico">🧩</div><h3>Ferramentas espalhadas</h3><p>Agenda num app, leads no caderno, vídeo em outro lugar, mensagens no celular pessoal. Cada consulta atravessa quatro sistemas que não conversam — e você é o integrador manual de todos eles.</p></div>
+      <div class="card"><div class="ico">🕳️</div><h3>O paciente que não volta</h3><p>Alta, retorno em 60 dias… e silêncio. Sem follow-up, o paciente esquece, a continuidade do cuidado se perde e a agenda do mês que vem começa do zero.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="metodo">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Como funciona</span>
+      <h2>Diagnóstico → Plano → Cockpit → <em>Teleconsulta</em></h2>
+      <p>O DocGrow não é curso nem promessa de guru. É um sistema que primeiro entende sua clínica — e depois trabalha nela todos os dias.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="n"></span><div><h3>Diagnóstico em 3 minutos</h3><p>Perguntas diretas sobre nicho, ticket, volume, gargalo e objetivo. O sistema identifica seu perfil de crescimento: captação fraca, conversão travada, operação sobrecarregada ou retenção baixa.</p></div></div>
+      <div class="step"><span class="n"></span><div><h3>Plano de 4 semanas com checklist</h3><p>Posicionamento, máquina de captação, roteiro de conversão e retenção — ações concretas por semana, com checklist executável e scripts prontos para o seu nicho.</p></div></div>
+      <div class="step"><span class="n"></span><div><h3>Cockpit diário: agenda, leads e follow-ups num só lugar</h3><p>Você abre uma tela e vê o dia inteiro: consultas presenciais e teles, leads que precisam de resposta, retornos a confirmar e recalls a disparar. Nada espalhado, nada esquecido.</p></div></div>
+      <div class="step"><span class="n"></span><div><h3>Teleconsulta integrada com um clique</h3><p>O horário de tele já nasce com sala de vídeo e link único para o paciente. Você atende no navegador e o registro vai para o prontuário no SosMed — em conformidade com a Resolução CFM nº 2.314/2022.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="produto">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Funcionalidades</span>
+      <h2>Um cockpit que cresce a clínica <em>e</em> opera o dia</h2>
+      <p>Tudo que estava espalhado em cinco apps, num só lugar — do lead que chegou hoje à teleconsulta das 14h30.</p>
+    </div>
+    <div class="cards3">
+      <div class="card"><div class="ico">🧭</div><h3>Diagnóstico + plano de crescimento com IA</h3><p>Perfil identificado em 3 minutos e plano de 4 semanas gerado para o seu nicho, com checklist executável e scripts de conversão — sempre dentro das normas de publicidade médica.</p></div>
+      <div class="card"><div class="ico">📈</div><h3>CRM kanban com origem do lead</h3><p>Novo → conversando → avaliação → fechado. Cada lead com origem rastreada (indicação, Instagram, Google) para você saber de onde vem sua demanda — e investir onde funciona.</p></div>
+      <div class="card"><div class="ico">📅</div><h3>Agenda unificada: presencial + tele</h3><p>Uma só agenda para consultório e telemedicina. Bloqueios, encaixes e confirmações num lugar só, com o dia inteiro visível de manhã, no celular ou no computador.</p></div>
+      <div class="card"><div class="ico">🔁</div><h3>Follow-up automático no WhatsApp</h3><p>Recall de pacientes antigos, lembrete de retorno e mensagem pós-consulta — disparados no momento certo, com o seu tom. O paciente sente cuidado; a agenda sente o efeito.</p></div>
+      <div class="card"><div class="ico">🎥</div><h3>Sala de telemedicina no navegador</h3><p>Sem app para instalar: o paciente recebe um link único e entra. A consulta fica registrada no prontuário SosMed, em conformidade com a Resolução CFM nº 2.314/2022.</p></div>
+      <div class="card"><div class="ico">🎯</div><h3>Painel de metas + relatório mensal</h3><p>Meta de receita, funil da semana e o relatório "sua clínica este mês": leads, conversão, comparecimento e receita vs. meta — os números do crescimento na sua frente.</p></div>
+    </div>
+    <div style="margin-top:34px; display:flex; gap:14px; flex-wrap:wrap">
+      <a class="btn btn-em" href="https://wa.me/5584999869468?text=Quero%20come%C3%A7ar%20no%20DocGrow" target="_blank" rel="noopener">Quero o DocGrow →</a>
+      <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Quero%20fazer%20o%20diagn%C3%B3stico%20do%20DocGrow" target="_blank" rel="noopener">Começar pelo diagnóstico gratuito</a>
+    </div>
+  </div>
+</section>
+
+<section id="ecossistema">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Ecossistema Zatheon</span>
+      <h2>O DocGrow não trabalha <em>sozinho</em></h2>
+      <p>Cada produto do ecossistema cobre uma parte da vida do médico — e todos conversam entre si.</p>
+    </div>
+    <div class="cards3">
+      <div class="card"><span class="pill">Recorrência</span><h3>CareLoop</h3><p>Transforme o retorno em assinatura: acompanhamento contínuo do paciente entre as consultas, com receita previsível para a clínica.</p><p style="margin-top:12px"><a href="../careloop/" style="color:var(--em-light)">Conhecer o CareLoop →</a></p></div>
+      <div class="card"><span class="pill">Clínico</span><h3>SosMed</h3><p>Prontuário inteligente com a Lia, a assistente que documenta a consulta. É nele que a teleconsulta do DocGrow registra o atendimento.</p><p style="margin-top:12px"><a href="../sosmed/" style="color:var(--em-light)">Conhecer o SosMed →</a></p></div>
+      <div class="card"><span class="pill">Educação</span><h3>MedVerse</h3><p>A camada de educação do ecossistema: aprendizado contínuo para o médico que quer dominar tanto a clínica quanto o negócio.</p><p style="margin-top:12px"><a href="../medverse/" style="color:var(--em-light)">Conhecer o MedVerse →</a></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="planos">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Planos</span>
+      <h2>Escolha a velocidade do seu <em>crescimento</em></h2>
+      <p>Sem fidelidade. Cancele quando quiser. Assinantes do MedGroth migram para o DocGrow sem custo — com o preço de fundador preservado.</p>
+      <p style="margin-top:10px; font-family:var(--mono); font-size:0.78rem; color:var(--muted)">Preço internacional em dólar, abaixo do menor concorrente global — Vezeeta US$ 43/mês, Tebra a partir de US$ 49/mês, Doctolib ~US$ 120/mês. No Brasil, a cobrança é em reais pelo câmbio do dia.</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Grow Start</h3>
+        <div class="for">Para quem está começando a se organizar</div>
+        <div class="price">US$ 39<small>/mês</small></div>
+        <ul>
+          <li>Diagnóstico de crescimento ilimitado</li>
+          <li>Plano de 4 semanas com checklist</li>
+          <li>CRM kanban de leads com origem</li>
+          <li>Agenda unificada (presencial + tele)</li>
+          <li class="no">Follow-up automático no WhatsApp</li>
+          <li class="no">Sala de telemedicina integrada</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Quero%20o%20plano%20Start%20do%20DocGrow" target="_blank" rel="noopener">Começar pelo diagnóstico</a>
+      </div>
+      <div class="plan hot">
+        <span class="tag">Recomendado</span>
+        <h3>Grow Pro</h3>
+        <div class="for">Para quem quer o cockpit completo</div>
+        <div class="price">US$ 99<small>/mês</small></div>
+        <ul>
+          <li>Tudo do Start</li>
+          <li>Sala de telemedicina no navegador (CFM 2.314/2022)</li>
+          <li>Follow-up automático: recall, retorno e pós-consulta</li>
+          <li>Scripts de conversão gerados por IA</li>
+          <li>Painel de metas + relatório "sua clínica este mês"</li>
+          <li class="no">Mentoria de implantação</li>
+        </ul>
+        <a class="btn btn-em" href="https://wa.me/5584999869468?text=Quero%20o%20plano%20Pro%20do%20DocGrow" target="_blank" rel="noopener">Quero o Pro →</a>
+      </div>
+      <div class="plan">
+        <h3>Grow Aceleração</h3>
+        <div class="for">Implantação lado a lado, vagas limitadas</div>
+        <div class="price">US$ 299<small>/mês</small></div>
+        <ul>
+          <li>Tudo do Pro</li>
+          <li>Mentoria de implantação (encontros 1:1 mensais)</li>
+          <li>Construção da oferta âncora com você</li>
+          <li>Revisão de posicionamento e precificação</li>
+          <li>Prioridade em novos recursos</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Quero%20aplicar%20para%20o%20plano%20Acelera%C3%A7%C3%A3o%20do%20DocGrow" target="_blank" rel="noopener">Aplicar para uma vaga</a>
+      </div>
+    </div>
+    <div class="founder">★ Assinantes MedGroth migram sem custo e mantêm o preço de fundador em reais (R$ 97/297/997) — para sempre.</div>
+  </div>
+</section>
+
+<section id="prova">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Por que existe</span>
+      <h2>Construído por quem <em>vive</em> os dois mundos</h2>
+    </div>
+    <blockquote class="quote">
+      "O DocGrow nasceu de uma convicção simples: médico cresce com <em>método</em>, não com promessa. Diagnóstico honesto, plano executável, operação organizada e o paciente bem acompanhado — o resto é consequência. Nenhuma ferramenta séria promete resultado; ela constrói as condições para ele."
+      <span class="who">Sóstenes Costa Paiva · fundador · Zatheon</span>
+    </blockquote>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">FAQ</span>
+      <h2>Perguntas diretas, respostas diretas</h2>
+    </div>
+    <details><summary>Qual a diferença para o MedGroth?</summary><p>O DocGrow é a evolução do MedGroth. Tudo que o MedGroth fazia — diagnóstico, plano de 4 semanas, CRM de leads e metas — continua aqui, e ganhou a camada de operação: agenda inteligente unificada, follow-up automático de pacientes no WhatsApp e telemedicina integrada. Assinantes do MedGroth migram sem custo, com o preço de fundador preservado.</p></details>
+    <details><summary>A telemedicina é regulamentada?</summary><p>Sim. A telemedicina no Brasil é regulamentada pela Resolução CFM nº 2.314/2022, e a sala de vídeo do DocGrow foi desenhada para operar em conformidade com ela: consentimento do paciente, identificação das partes e registro do atendimento no prontuário (SosMed). A decisão sobre quando a teleconsulta é adequada permanece, como sempre, do médico.</p></details>
+    <details><summary>Preciso trocar de agenda?</summary><p>A proposta é justamente parar de ter várias. A agenda do DocGrow unifica presencial e tele num lugar só, com follow-ups e leads ao lado. Você pode migrar aos poucos: comece marcando as teles nela e traga o restante quando fizer sentido.</p></details>
+    <details><summary>Funciona para a minha especialidade?</summary><p>O diagnóstico gera o plano a partir do seu nicho — emagrecimento, longevidade, estética, performance, saúde mental, dor/reabilitação ou clínica geral — com scripts e referências específicos. A agenda, o follow-up e a telemedicina funcionam para qualquer especialidade que atenda em consultório ou a distância.</p></details>
+    <details><summary>E os meus dados e os dos meus pacientes?</summary><p>Ficam no Brasil: infraestrutura Supabase na região de São Paulo, tratamento conforme a LGPD, e os dados são seus — do médico e dos seus pacientes. Não vendemos, não compartilhamos e você pode exportar tudo quando quiser.</p></details>
+    <details><summary>Posso cancelar quando quiser?</summary><p>Sim. Sem fidelidade, sem multa e sem ligação constrangedora. Cancelou, seus dados continuam disponíveis para exportação.</p></details>
+    <details><summary>Por que o preço é em dólar?</summary><p>O DocGrow é a versão internacional do ecossistema, e o preço foi ancorado abaixo do menor concorrente global da categoria (Vezeeta US$ 43, Tebra US$ 49, Doctolib ~US$ 120). No Brasil, a cobrança é feita em reais pela conversão do dia — e quem veio do MedGroth mantém o preço original em reais, travado para sempre.</p></details>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="wrap">
+    <span class="eyebrow" style="justify-content:center">Comece agora</span>
+    <h2>Seu diagnóstico leva <em>3 minutos</em>.<br>O cockpit assume o resto do dia.</h2>
+    <p>Sem cartão, sem call de vendas, sem enrolação. Responda as perguntas, receba seu plano de 4 semanas e veja a agenda, os leads e os follow-ups num só lugar.</p>
+    <a class="btn btn-em btn-lg" href="https://wa.me/5584999869468?text=Quero%20fazer%20o%20diagn%C3%B3stico%20do%20DocGrow" target="_blank" rel="noopener">Fazer meu diagnóstico gratuito →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>© 2026 DocGrow · Zatheon · <a href="../index.html">Sóstenes Costa Paiva</a></div>
+    <div style="display:flex; gap:18px; flex-wrap:wrap">
+      <a href="../medgroth/index.html">MedGroth</a>
+      <a href="../careloop/">CareLoop</a>
+      <a href="../sosmed/">SosMed</a>
+      <a href="../medverse/">MedVerse</a>
+      <a href="https://wa.me/5584999869468?text=Quero%20conhecer%20o%20DocGrow" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="../sosmed/privacidade.html">Política de Privacidade</a>
+    </div>
+  </div>
+  <div class="wrap disclaimer">🔒 Dados no Brasil · LGPD · Supabase São Paulo. O DocGrow é uma ferramenta de estratégia, gestão e operação. Não presta orientação clínica nem substitui a responsabilidade profissional e regulatória (CFM/conselhos) de cada usuário. A telemedicina opera em conformidade com a Resolução CFM nº 2.314/2022. Projeções são estimativas baseadas nas respostas fornecidas — nunca promessa ou garantia de resultado.</div>
+</footer>
+</body>
+</html>
