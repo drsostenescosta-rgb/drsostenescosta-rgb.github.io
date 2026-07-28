@@ -41,3 +41,7 @@ Formato: **L# — lição → mecanismo do erro que a originou → regra operant
 **L9 — Naming e qualquer escolha de identidade: gerar e verificar colisão no MESMO ciclo; votar antes da due diligence desperdiça a rodada.**
 *Origem (assembleia de naming):* o Conselho votou às cegas em 91 nomes e os 6 mais votados morreram na checagem de colisão (Prax era homônimo de concorrente direto financiado; Healix, de gigante global com marca USPTO). A rodada seguinte, com verificação embutida na geração, produziu finalistas limpos em uma passada.
 *Regra:* toda proposta de identidade (nome, domínio, handle, marca) chega à votação já com verificação de colisão anexada; candidato sem evidência de busca não entra na cédula. Verificação formal (INPI/USPTO/registro.br) antes de qualquer registro ou anúncio público.
+
+**L10 — Filtro de voz alta em PT-BR: todo nome/marca é lido em voz alta caçando homófonos vulgares ou pejorativos ANTES de chegar à mesa do Founder.**
+*Origem:* o sistema recomendou "ClinicPeak" com nota 8,5 e celebrou que "Peak vira 'pique' no ouvido brasileiro" — sem perceber que "pique/pica" é gíria de pênis. O Founder pegou o que três CEOs e dois setores não viram.
+*Regra:* toda proposta de identidade passa por leitura falada em PT-BR (e nas línguas dos mercados-alvo) com caça ativa a duplo sentido sexual, escatológico ou pejorativo; o teste é falar o nome numa recepção de clínica cheia — se constrange, morre. Complementa a L9 (colisão) com a dimensão fonética.
