@@ -154,8 +154,9 @@
       <a href="#ecossistema">Ecossistema</a>
       <a href="#planos">Planos</a>
       <a href="#faq">FAQ</a>
+      <a href="app.html">Entrar</a>
     </nav>
-    <a class="btn btn-em" href="https://wa.me/5584999869468?text=Quero%20conhecer%20o%20DocGrow" target="_blank" rel="noopener">Falar no WhatsApp</a>
+    <a class="btn btn-em" href="app.html">Abrir meu cockpit</a>
   </div>
 </header>
 
@@ -166,8 +167,8 @@
       <h1><span class="grad">O médico dono</span><br>da própria <em>demanda</em>.</h1>
       <p class="hero-sub">O DocGrow diagnostica sua clínica em 3 minutos e monta seu plano de crescimento — e depois <strong>opera o seu dia</strong>: agenda inteligente, leads num funil visual, follow-up automático de pacientes no WhatsApp e teleconsulta integrada com um clique. A máquina de crescimento que também opera o seu dia.</p>
       <div class="hero-ctas">
-        <a class="btn btn-em btn-lg" href="https://wa.me/5584999869468?text=Quero%20fazer%20o%20diagn%C3%B3stico%20do%20DocGrow" target="_blank" rel="noopener">Fazer meu diagnóstico gratuito →</a>
-        <a class="btn btn-ghost btn-lg" href="#metodo">Ver como funciona</a>
+        <a class="btn btn-em btn-lg" href="#demo">Fazer meu diagnóstico gratuito →</a>
+        <a class="btn btn-ghost btn-lg" href="app.html">Entrar no DocGrow</a>
       </div>
       <div class="hero-note">3 minutos · sem cartão · plano na hora</div>
       <br>
@@ -203,6 +204,46 @@
     </div>
   </div>
 </section>
+
+<section id="demo">
+  <div class="wrap" style="max-width:820px">
+    <div class="sec-head">
+      <span class="eyebrow">Experimente agora</span>
+      <h2>Descreva sua clínica em <em>1 frase</em></h2>
+      <p>A inteligência do DocGrow devolve na hora um raio-X parcial do seu crescimento. Sem cadastro, sem cartão.</p>
+    </div>
+    <div style="background:var(--card, rgba(13,26,26,0.6)); border:1px solid rgba(232,239,234,0.12); border-radius:16px; padding:26px">
+      <input id="demo-input" placeholder="Ex.: Sou endocrinologista, atendo 60 consultas/mês, dependo de indicação e não faço acompanhamento contínuo…" style="width:100%; background:rgba(4,8,10,0.7); border:1px solid rgba(232,239,234,0.15); border-radius:10px; padding:14px 16px; color:inherit; font-size:0.95rem; font-family:inherit">
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px">
+        <button class="btn btn-em" onclick="demoRun('diagnostico')">🩺 Diagnóstico</button>
+        <button class="btn btn-ghost" onclick="demoRun('plano')">🗺️ Plano de 4 semanas</button>
+        <button class="btn btn-ghost" onclick="demoRun('script')">💬 Script de conversão</button>
+      </div>
+      <div id="demo-out" style="display:none; margin-top:16px; border-top:1px dashed rgba(232,239,234,0.15); padding-top:16px; font-size:0.9rem; line-height:1.7"></div>
+    </div>
+    <p style="text-align:center; margin-top:14px; font-size:0.78rem; opacity:0.7">Demonstração parcial gerada por regras — a análise completa e personalizada vive dentro do DocGrow. Nada aqui é orientação clínica.</p>
+  </div>
+</section>
+<script>
+function demoRun(tipo) {
+  var t = (document.getElementById('demo-input').value || '').toLowerCase();
+  var nicho = /emagre|obesid|metab/.test(t) ? 'emagrecimento' : /longev|prevent/.test(t) ? 'longevidade' : /estétic|estetic|harmoniz/.test(t) ? 'estética' : /mental|psiquiat|ansied/.test(t) ? 'saúde mental' : /dor|reabilit|fisiatr/.test(t) ? 'dor crônica' : 'sua especialidade';
+  var dores = [];
+  if (/indica/.test(t)) dores.push('dependência de indicação (fonte única de pacientes = risco)');
+  if (/instagram|rede|social/.test(t)) dores.push('presença digital sem funil (seguidor não vira consulta sozinho)');
+  if (/agenda|vazi|ocios/.test(t)) dores.push('agenda com ociosidade (capacidade parada é o custo invisível)');
+  if (/retorno|some|volta|sumid/.test(t) || !/acompanhamento contínuo|recorr/.test(t)) dores.push('sem acompanhamento contínuo (paciente some e a receita recomeça do zero todo mês)');
+  if (!dores.length) dores.push('funil de captação sem medição (sem dado, toda decisão é chute)');
+  var out = {
+    diagnostico: '<b>🩺 Diagnóstico parcial — ' + nicho + ':</b><br>' + dores.map(function(d){return '• ' + d;}).join('<br>') + '<br><br><b>O que o raio-X completo mede:</b> origem de cada lead, taxa lead→consulta, receita por hora de agenda e potencial de recorrência do seu nicho.',
+    plano: '<b>🗺️ Semana 1 do seu plano (amostra):</b><br>• Mapear as 3 origens dos seus últimos 20 pacientes<br>• Definir sua oferta âncora de acompanhamento contínuo<br>• Ativar confirmação de consulta via WhatsApp (anti no-show)<br><br>As semanas 2–4 (funil, protocolo por assinatura e metas) são geradas no seu diagnóstico completo.',
+    script: '<b>💬 Script de conversão (amostra — dentro da publicidade médica CFM):</b><br>"O seu tratamento funciona melhor com acompanhamento contínuo. Em vez de consultas soltas, posso te oferecer um plano de acompanhamento com consultas programadas, revisão de exames e canal de dúvidas — com valor mensal e cancelamento livre. Quer que eu detalhe?"<br><br>Scripts completos por nicho e por objeção vivem no DocGrow.'
+  };
+  var el = document.getElementById('demo-out');
+  el.style.display = '';
+  el.innerHTML = out[tipo] + '<div style="margin-top:14px"><a class="btn btn-em" href="app.html">Destravar minha análise completa →</a> <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=' + encodeURIComponent('Fiz a demo do DocGrow e quero aplicar para uma vaga. Minha clínica: ' + (document.getElementById('demo-input').value || '(não descrevi)')) + '" target="_blank" rel="noopener">Aplicar para uma vaga de fundador</a></div>';
+}
+</script>
 
 <section id="metodo">
   <div class="wrap">
@@ -347,7 +388,8 @@
     <span class="eyebrow" style="justify-content:center">Comece agora</span>
     <h2>Seu diagnóstico leva <em>3 minutos</em>.<br>O cockpit assume o resto do dia.</h2>
     <p>Sem cartão, sem call de vendas, sem enrolação. Responda as perguntas, receba seu plano de 4 semanas e veja a agenda, os leads e os follow-ups num só lugar.</p>
-    <a class="btn btn-em btn-lg" href="https://wa.me/5584999869468?text=Quero%20fazer%20o%20diagn%C3%B3stico%20do%20DocGrow" target="_blank" rel="noopener">Fazer meu diagnóstico gratuito →</a>
+    <a class="btn btn-em btn-lg" href="#demo">Fazer meu diagnóstico gratuito →</a>
+    <a class="btn btn-ghost btn-lg" href="app.html">Entrar no DocGrow</a>
   </div>
 </section>
 
