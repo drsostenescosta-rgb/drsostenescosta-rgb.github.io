@@ -1,0 +1,11 @@
+{
+  "name": "medgroth-tests",
+  "private": true,
+  "description": "Testes end-to-end do MedGroth (Playwright). Rodar: npm test",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
+}
