@@ -201,6 +201,7 @@
       <h3>Ações de hoje</h3>
       <div class="card-sub">O que move dinheiro agora, em ordem de impacto.</div>
       <div id="today-actions"></div>
+      <div style="margin-top:14px; text-align:right"><button class="btn btn-ghost btn-sm" onclick="relatorioMes()">📄 Relatório do mês</button></div>
     </div>
   </div>
   <div class="disclaimer">Valores do Cofre são atribuídos por você ao marcar um follow-up como convertido — o DocGrow só soma o que foi medido de verdade. Nenhum número desta tela é projeção.</div>
@@ -624,6 +625,41 @@ function renderCockpit() {
   if (!db.protocolos.length) acts.push('<div class="row"><div><b>Crie seu 1º protocolo por assinatura</b><span class="m">receita recorrente começa aqui (a ideia mais valiosa do benchmark)</span></div><div class="acts"><button onclick="go(\'assinaturas\')">Criar →</button></div></div>');
   if (db.pacientes.length < 5) acts.push('<div class="row"><div><b>Cadastre seus pacientes atuais</b><span class="m">o recall automático só funciona com a base viva</span></div><div class="acts"><button onclick="go(\'pacientes\')">Cadastrar →</button></div></div>');
   document.getElementById('today-actions').innerHTML = acts.length ? acts.join('') : '<div class="empty"><div class="big">🌿</div>Nada urgente. Agenda em dia, follow-ups em dia.</div>';
+}
+
+/* ── relatório mensal "sua clínica este mês" ─────────────── */
+function relatorioMes() {
+  var c = cofre(), hs = healthScore();
+  var receitaMes = db.pagamentos.filter(function (g) { return g.status === 'pago' && inMonth(g.criado_em); }).reduce(function (s, g) { return s + Number(g.valor || 0); }, 0);
+  var realizadas = db.consultas.filter(function (x) { return x.status === 'realizada' && inMonth(x.inicio); }).length;
+  var noshows = db.consultas.filter(function (x) { return x.status === 'no_show' && inMonth(x.inicio); }).length;
+  var novos = db.pacientes.filter(function (p) { return inMonth(p.criado_em); }).length;
+  var assAtivas = db.assinaturas.filter(function (a) { return a.status === 'ativa'; });
+  var mrr = assAtivas.reduce(function (s, a) { return s + Number(a.valor || 0); }, 0);
+  var fupsConv = db.followups.filter(function (f) { return f.status === 'convertido' && inMonth(f.resolvido_em || f.criado_em); }).length;
+  var meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+  var n = new Date();
+  var w = window.open('', '_blank');
+  if (!w) { alert('Libere pop-ups para gerar o relatório.'); return; }
+  w.document.write('<!doctype html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Sua clínica em ' + meses[n.getMonth()] + '</title>' +
+    '<style>body{font-family:Georgia,serif;max-width:640px;margin:40px auto;padding:0 20px;color:#16211c;line-height:1.6}h1{font-weight:500}table{width:100%;border-collapse:collapse;margin:20px 0}td{padding:10px 6px;border-bottom:1px solid #ddd}td:last-child{text-align:right;font-weight:bold}.foot{font-size:0.75rem;color:#777;margin-top:30px}@media print{.np{display:none}}</style></head><body>' +
+    '<h1>Sua clínica em ' + meses[n.getMonth()] + ' de ' + n.getFullYear() + '</h1>' +
+    '<p>' + esc((db.profile || {}).nome || '') + ' · relatório gerado pelo DocGrow em ' + n.toLocaleDateString('pt-BR') + '</p>' +
+    '<table>' +
+    '<tr><td>Receita paga no mês</td><td>' + fmt(receitaMes) + '</td></tr>' +
+    '<tr><td>Receita recorrente mensal (assinaturas ativas)</td><td>' + fmt(mrr) + ' · ' + assAtivas.length + ' assinante(s)</td></tr>' +
+    '<tr><td>💰 Cofre: receita recuperada pelos follow-ups</td><td>' + fmt(c.total) + '</td></tr>' +
+    '<tr><td>Consultas realizadas</td><td>' + realizadas + '</td></tr>' +
+    '<tr><td>No-shows</td><td>' + noshows + '</td></tr>' +
+    '<tr><td>Pacientes novos</td><td>' + novos + '</td></tr>' +
+    '<tr><td>Follow-ups convertidos</td><td>' + fupsConv + '</td></tr>' +
+    '<tr><td>Practice Health Score</td><td>' + hs.score + '/100</td></tr>' +
+    '</table>' +
+    '<button class="np" onclick="window.print()" style="padding:10px 22px;font-size:1rem;cursor:pointer">Imprimir / salvar PDF</button>' +
+    '<p class="foot">Números medidos dos seus registros no DocGrow — nunca projeção. Este relatório é para sua gestão; ao divulgar resultados publicamente, observe a Res. CFM 2.336/2023.</p>' +
+    '</body></html>');
+  w.document.close();
+  ev('relatorio_gerado', { mes: n.getMonth() + 1 });
 }
 
 /* ── agenda ──────────────────────────────────────────────── */

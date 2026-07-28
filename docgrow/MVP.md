@@ -1,6 +1,15 @@
 # DocGrow — Especificação do MVP (28/07/2026)
 
-Evolução do MedGroth para a marca internacional. Estado: **fundação pronta** — banco em 5 camadas no ar, landing publicada com preço em dólar, compliance auditado por agentes. Este documento define o que é o MVP e o que falta para ligá-lo.
+Evolução do MedGroth para a marca internacional. Estado: **MVP DE CÓDIGO COMPLETO** — funil, app, sync na nuvem, painel, analytics e testes e2e verdes. O que resta depende de ações do fundador (checklist abaixo).
+
+## ✅ Handoff — o que só o fundador pode destravar
+
+1. **Criar seu usuário de login** no Supabase (dashboard → Authentication → Users → Add user) — destrava o painel (`painel.html`) e o "Conectar à nuvem" do app. 2 minutos.
+2. **Publicar na `main`** — todo o produto está nas branches; sem merge, o site público não muda. Pedir o merge/PR quando quiser ir ao ar.
+3. **Testar o funil com 5 médicos reais** (Sprint 1 — bloqueador absoluto do comitê): landing → demo → aplicação → cockpit. Os leads caem no painel.
+4. **Escolher o gateway de cobrança** (Stripe Billing ou Mercado Pago Assinaturas) — único item de produto que falta para cobrar de verdade (`docgrow_pagamentos.externo_id` já espera o id do gateway).
+5. **Conta Vercel** para as funções serverless: `/api/groth` (IA com guarda-corpos CFM) e notificação de lead novo por webhook.
+6. **Domínios + INPI + parecer ANS + programas de startup** (pendências com prazo no BACKLOG, até 31/ago).
 
 ## O que já está pronto
 
