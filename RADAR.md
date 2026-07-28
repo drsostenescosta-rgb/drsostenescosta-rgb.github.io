@@ -4,8 +4,8 @@
 
 | # | Ponto falho | Evidência | Gravidade | Dono | Corrige em |
 |---|-------------|-----------|-----------|------|------------|
-| P4 | **Não existe forma de pagar.** Nenhum link de assinatura nos 3 planos; nenhuma transação testada; tempo "sim"→dinheiro = infinito | Veredito CEO-2 (Fase 1 e Fase 3); todos os CTAs → WhatsApp | 🔴 | Financeiro (próxima onda) + Founder | Abertura do gate |
-| P4b | **Emissor fiscal indefinido** — quem fatura: CNPJ, MEI, PF? | Veredito CEO-2 Fase 3: "nenhum documento responde" | 🔴 | **Founder (porta de mão única)** | Antes da 1ª cobrança |
+| P4 | Forma de pagar: **Stripe escolhido pelo Founder** — falta criar os 3 Payment Links/Prices na conta Stripe e testar 1 transação real com estorno | Decisão do Founder 2026-07-28; links ainda não criados | 🟠 | Financeiro + Founder (conta Stripe) | Abertura do gate |
+| P4b | ~~Emissor fiscal indefinido~~ **RESOLVIDO: CNPJ "Dr Sos Service and Consultancy"** | Decisão do Founder 2026-07-28 | ✅ | — | Feito |
 | P8 | **Zero conversas reais com clientes documentadas; zero leads no banco** | `medgroth_leads` = 0 linhas (verificado 2x no Supabase); nenhuma objeção registrada | 🔴 | Vendas + Founder (lista de contatos) | Abertura do gate |
 | P10 | Consentimento LGPD não persistido + porta lateral do cadastro-app | Vereditos CEO-1/CEO-3 Fase 3 | 🔴→em correção | Engenharia (rodada 2 em curso) | Rodada 2 |
 | P11 | 6 protocolos do app com promessa de desfecho clínico (CFM) | `app.html:152-166`; `juridico/revisao-cfm.md` item 2 CRÍTICO | 🔴→em correção | Engenharia (rodada 2 em curso) | Rodada 2 |
