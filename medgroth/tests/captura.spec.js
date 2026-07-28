@@ -15,17 +15,76 @@ test.beforeEach(async ({ page }) => {
 async function preencheBasico(page) {
   await page.fill('#nome', 'Dra. Teste Playwright');
   await page.fill('#whatsapp', '(84) 99999-0000');
+  await page.fill('#email', 'teste@clinica.com.br');
 }
 
-test('validação: sem nome/WhatsApp mostra erro e não mostra obrigado', async ({ page }) => {
+test('validação: sem nome/WhatsApp/e-mail mostra erro e não mostra obrigado', async ({ page }) => {
   let chamadas = 0;
   await page.route(SUPABASE, r => { chamadas++; r.fulfill({ status: 201, body: '' }); });
   await page.goto('captura.html');
   await page.click('#enviar');
   await expect(page.locator('#erro')).toBeVisible();
-  await expect(page.locator('#erro')).toContainText('nome e WhatsApp');
+  await expect(page.locator('#erro')).toContainText('nome, WhatsApp e e-mail');
   await expect(page.locator('#obrigado')).toBeHidden();
   expect(chamadas).toBe(0);
+});
+
+test('e-mail é obrigatório: nome+WhatsApp sem e-mail bloqueia o envio', async ({ page }) => {
+  let chamadas = 0;
+  await page.route(SUPABASE, r => { chamadas++; r.fulfill({ status: 201, body: '' }); });
+  await page.goto('captura.html');
+  await page.fill('#nome', 'Dra. Teste Playwright');
+  await page.fill('#whatsapp', '(84) 99999-0000');
+  await page.check('#lgpd');
+  await page.click('#enviar');
+  await expect(page.locator('#erro')).toBeVisible();
+  await expect(page.locator('#erro')).toContainText('e-mail');
+  await expect(page.locator('#obrigado')).toBeHidden();
+  expect(chamadas).toBe(0);
+});
+
+test('honeypot preenchido (bot): descartado em silêncio, nenhuma chamada de rede, nada no backup', async ({ page }) => {
+  let chamadas = 0;
+  await page.route(SUPABASE, r => { chamadas++; r.fulfill({ status: 201, body: '' }); });
+  await page.goto('captura.html');
+  await preencheBasico(page);
+  await page.check('#lgpd');
+  await page.evaluate(() => { document.getElementById('hp-site').value = 'http://spam.example'; });
+  await page.click('#enviar');
+  // bot vê a tela de sucesso (não aprende a contornar), mas nada foi enviado nem guardado
+  await expect(page.locator('#obrigado')).toBeVisible();
+  expect(chamadas).toBe(0);
+  const backup = await page.evaluate(() => JSON.parse(localStorage.getItem('medgroth_leads') || '[]'));
+  expect(backup.length).toBe(0);
+});
+
+test('contrato do payload: POST leva consentimento_lgpd, politica_versao e o id retornado é guardado', async ({ page }) => {
+  // Este é o teste que teria pego o defeito "consentimento nunca chega ao banco":
+  // não basta o app mostrar sucesso — o BODY enviado precisa conter o consentimento.
+  let req = null;
+  await page.route(SUPABASE, r => {
+    req = { headers: r.request().headers(), body: r.request().postDataJSON() };
+    r.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify([{ id: 4242 }]) });
+  });
+  await page.goto('captura.html');
+  await preencheBasico(page);
+  await page.check('#lgpd');
+  await page.click('#enviar');
+  await expect(page.locator('#obrigado')).toBeVisible();
+
+  expect(req).not.toBeNull();
+  expect(req.body.nome).toBe('Dra. Teste Playwright');
+  expect(req.body.whatsapp).toBe('(84) 99999-0000');
+  expect(req.body.email).toBe('teste@clinica.com.br');
+  expect(req.body.consentimento_lgpd).toBe(true);
+  expect(req.body.politica_versao).toBe('1.0-2026-07');
+  expect(req.body.origem).toBe('pagina-captura');
+  expect(req.headers['prefer']).toBe('return=representation');
+
+  // id devolvido pelo banco gravado no backup local (correlação lead → plano → e-mail)
+  const backup = await page.evaluate(() => JSON.parse(localStorage.getItem('medgroth_leads') || '[]'));
+  expect(backup.length).toBe(1);
+  expect(backup[0].id).toBe(4242);
 });
 
 test('LGPD: checkbox obrigatório com link para privacidade.html; desmarcado bloqueia o envio', async ({ page }) => {

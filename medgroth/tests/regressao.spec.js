@@ -41,3 +41,47 @@ test('captura exige consentimento LGPD no HTML (checkbox + link)', async () => {
   expect(txt).toContain('id="lgpd"');
   expect(txt).toContain('href="privacidade.html"');
 });
+
+test('app.html sem vocabulário de desfecho clínico (CFM) nem campo "promessa"', async () => {
+  const txt = fs.readFileSync(path.join(DIR, 'app.html'), 'utf8').toLowerCase();
+  for (const proibido of ['sair da dor', 'resultado estético', 'reduzir ansiedade', 'resultado prometido']) {
+    expect(txt.includes(proibido), `"${proibido}" encontrado em medgroth/app.html`).toBe(false);
+  }
+  // o campo dos protocolos chama-se "proposta" — "promessa:" reintroduziria o vocabulário proibido no código
+  expect(/promessa\s*:/.test(txt), 'campo "promessa:" encontrado em medgroth/app.html').toBe(false);
+});
+
+test('mock do hero em index.html declara "exemplo ilustrativo" junto ao número', async () => {
+  const txt = fs.readFileSync(path.join(DIR, 'index.html'), 'utf8');
+  expect(txt).toContain('exemplo ilustrativo');
+});
+
+test('FAQ CFM sem o absoluto "Tudo que o MedGroth recomenda"', async () => {
+  const txt = fs.readFileSync(path.join(DIR, 'index.html'), 'utf8');
+  expect(txt.includes('Tudo que o MedGroth recomenda')).toBe(false);
+});
+
+test('captura: e-mail obrigatório (required) e honeypot presentes no HTML', async () => {
+  const txt = fs.readFileSync(path.join(DIR, 'captura.html'), 'utf8');
+  expect(txt).toMatch(/<input[^>]*id="email"[^>]*required[^>]*>/);
+  expect(txt).toContain('id="hp-site"');
+});
+
+test('versão única da política: "1.0-2026-07" em config.js e exibida em privacidade.html', async () => {
+  expect(fs.readFileSync(path.join(DIR, 'config.js'), 'utf8')).toContain("politicaVersao: '1.0-2026-07'");
+  expect(fs.readFileSync(path.join(DIR, 'privacidade.html'), 'utf8')).toContain('Versão 1.0-2026-07');
+  // captura e app usam a fonte única (nenhuma versão hardcoded divergente)
+  expect(fs.readFileSync(path.join(DIR, 'captura.html'), 'utf8')).toContain('MEDGROTH.politicaVersao');
+  expect(fs.readFileSync(path.join(DIR, 'app.html'), 'utf8')).toContain('MEDGROTH.politicaVersao');
+});
+
+test('termos-beta.html publicado e linkado no footer junto da privacidade', async () => {
+  expect(fs.existsSync(path.join(DIR, 'termos-beta.html'))).toBe(true);
+  const termos = fs.readFileSync(path.join(DIR, 'termos-beta.html'), 'utf8');
+  expect(termos).toContain('Termos de Uso');
+  expect(termos).toContain('href="privacidade.html"');
+  const index = fs.readFileSync(path.join(DIR, 'index.html'), 'utf8');
+  expect(index).toContain('href="termos-beta.html"');
+  expect(index).toContain('href="privacidade.html"');
+  expect(fs.readFileSync(path.join(DIR, 'privacidade.html'), 'utf8')).toContain('href="termos-beta.html"');
+});

@@ -15,9 +15,37 @@ async function signup(page) {
   await expect(page.locator('#auth')).toBeVisible();
   await page.fill('#a-nome', 'Dra. Ana Teste');
   await page.fill('#a-zap', '(84) 98888-7777');
+  await page.check('#a-lgpd');
   await page.click('text=Entrar no MedGroth');
   await expect(page.locator('#shell')).toBeVisible();
 }
+
+test('cadastro do app exige consentimento LGPD: sem checkbox não cria conta nem envia lead', async ({ page }) => {
+  let chamadas = 0;
+  await page.route('**/rest/v1/medgroth_leads**', r => { chamadas++; r.fulfill({ status: 201, body: '' }); });
+  await page.goto('app.html');
+  await page.fill('#a-nome', 'Dra. Ana Teste');
+  await page.fill('#a-zap', '(84) 98888-7777');
+  await page.click('text=Entrar no MedGroth'); // sem marcar o consentimento
+  await expect(page.locator('#a-erro')).toBeVisible();
+  await expect(page.locator('#a-erro')).toContainText('Política de Privacidade');
+  await expect(page.locator('#shell')).toBeHidden();
+  expect(chamadas).toBe(0);
+});
+
+test('contrato do payload do cadastro-app: consentimento_lgpd e politica_versao no body', async ({ page }) => {
+  let req = null;
+  await page.route('**/rest/v1/medgroth_leads**', r => {
+    req = r.request().postDataJSON();
+    r.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify([{ id: 7 }]) });
+  });
+  await signup(page);
+  expect(req).not.toBeNull();
+  expect(req.nome).toBe('Dra. Ana Teste');
+  expect(req.origem).toBe('cadastro-app');
+  expect(req.consentimento_lgpd).toBe(true);
+  expect(req.politica_versao).toBe('1.0-2026-07');
+});
 
 async function fazDiagnostico(page) {
   await page.click('.tab:has-text("Diagnóstico")');
