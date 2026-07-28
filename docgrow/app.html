@@ -601,11 +601,11 @@ function renderCockpit() {
   document.getElementById('k-fups').textContent = devidos.length;
 
   var hs = healthScore();
-  document.getElementById('hs-val').innerHTML = hs.score + '<small>/100</small>';
   var deg = hs.score * 3.6;
-  document.getElementById('hs-ring').style.background = 'conic-gradient(var(--em-light) ' + deg + 'deg, rgba(255,255,255,0.07) ' + deg + 'deg)';
-  document.getElementById('hs-ring').style.borderRadius = '50%';
-  document.getElementById('hs-ring').innerHTML = '<span style="background:var(--bg); width:96px; height:96px; border-radius:50%; display:flex; align-items:center; justify-content:center" ><span class="val">' + hs.score + '<small>/100</small></span></span>';
+  var ring = document.getElementById('hs-ring');
+  ring.style.background = 'conic-gradient(var(--em-light) ' + deg + 'deg, rgba(255,255,255,0.07) ' + deg + 'deg)';
+  ring.style.borderRadius = '50%';
+  ring.innerHTML = '<span style="background:var(--bg); width:96px; height:96px; border-radius:50%; display:flex; align-items:center; justify-content:center"><span class="val">' + hs.score + '<small>/100</small></span></span>';
   document.getElementById('hs-break').innerHTML = hs.parts.map(function (x) {
     return '<div class="hs-item"><span>' + x[0] + '</span><span class="pt">' + x[1] + '/' + x[2] + '</span></div>';
   }).join('');

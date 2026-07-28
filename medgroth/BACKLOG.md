@@ -47,7 +47,7 @@ Fonte: `../ideias/2026-07-comite-aprovacao.md`. Este bloco prevalece sobre qualq
 | Camada | Onde | Status |
 |---|---|---|
 | Site + páginas (vendas, captura, app, investidores) | **GitHub Pages** — `drsostenescosta-rgb.github.io/medgroth/` | ✅ no ar com o push |
-| Banco (leads, futuras assinaturas) | **Supabase** projeto `sosmed` (`yaqphldowpshhrtvvfaq`, região São Paulo) | ✅ tabela `medgroth_leads` criada com RLS (insert anônimo, leitura autenticada) |
+| Banco (leads, futuras assinaturas) | **Supabase** projeto `sosmed` (`yaqphldowpshhrtvvfaq`, região São Paulo) | ✅ `medgroth_leads` com RLS + 10 tabelas `docgrow_*` (28/07) |
 | Funções serverless (IA, webhooks de pagamento) | **Vercel** time `sosmedai` (mesmo deploy do SosMed) | ⏳ próximo ciclo |
 | Domínio próprio (`medgroth.com.br` ou `medgroth.app`) | Registro.br / Vercel Domains | ⏳ decidir e apontar |
 | E-mail transacional (boas-vindas, recuperação de lead) | Resend ou Brevo (camada gratuita) | ⏳ próximo ciclo |

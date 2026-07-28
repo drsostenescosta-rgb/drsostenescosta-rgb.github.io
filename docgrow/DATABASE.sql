@@ -171,3 +171,16 @@ group by profile_id;
 -- Exceções: docgrow_diagnosticos aceita insert anônimo (funil de captura,
 -- espelho do padrão de medgroth_leads); leitura sempre autenticada.
 -- As políticas vivem na migração aplicada no Supabase em 28/07/2026.
+
+-- ── RPC público ─────────────────────────────────────────────
+-- Contador agregado das 20 vagas de fundador (landing + aplicação).
+-- security definer: o anon recebe só um número — nunca lê medgroth_leads.
+create or replace function public.docgrow_vagas_restantes()
+returns integer language sql security definer set search_path = public as $$
+  select greatest(0, 20 - (
+    select count(distinct regexp_replace(coalesce(whatsapp, ''), '\D', '', 'g'))::int
+    from medgroth_leads where origem = 'aplicacao-docgrow'
+  ));
+$$;
+revoke all on function public.docgrow_vagas_restantes() from public;
+grant execute on function public.docgrow_vagas_restantes() to anon, authenticated;
