@@ -1,5 +1,7 @@
 # Revisão de conformidade — Publicidade Médica (CFM) nas páginas do MedGroth
 
+> **Nota:** produto renomeado para ClinicNow em 2026-07-28. As menções a "MedGroth" abaixo são históricas.
+
 > Gerado por IA — exige revisão de advogado humano licenciado antes de uso real.
 > Varredura de: `medgroth/index.html`, `medgroth/captura.html`, `medgroth/app.html`, `medgroth/investidores.html` (estado de 2026-07-28).
 

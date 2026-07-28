@@ -1,5 +1,7 @@
 # Parecer — mudança para assinatura anual (MedGroth)
 
+> **Nota:** produto renomeado para ClinicNow em 2026-07-28. As menções a "MedGroth" abaixo são históricas.
+
 > Minuta/análise gerada por IA — exige revisão de advogado humano licenciado antes de uso real.
 
 ## 1. Enquadramento: quem é consumidor aqui?

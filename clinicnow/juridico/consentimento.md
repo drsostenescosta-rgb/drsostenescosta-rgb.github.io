@@ -1,5 +1,7 @@
 # Textos de consentimento — MedGroth
 
+> **Nota:** produto renomeado para ClinicNow em 2026-07-28. As menções a "MedGroth" abaixo são históricas.
+
 > Gerado por IA — exige revisão de advogado humano licenciado antes de uso real.
 
 ## 1. Checkbox do formulário de captura (`captura.html`)

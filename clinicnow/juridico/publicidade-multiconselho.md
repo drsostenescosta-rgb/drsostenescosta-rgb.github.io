@@ -1,5 +1,7 @@
 # Publicidade multiconselho — regras para o motor de texto do MedGroth (ICP ampliado)
 
+> **Nota:** produto renomeado para ClinicNow em 2026-07-28. As menções a "MedGroth" abaixo são históricas.
+
 > Minuta/análise gerada por IA — exige revisão de advogado humano licenciado antes de uso real.
 > Complementa `medgroth/juridico/revisao-cfm.md` (que cobre só medicina). Data-base: 2026-07-28.
 

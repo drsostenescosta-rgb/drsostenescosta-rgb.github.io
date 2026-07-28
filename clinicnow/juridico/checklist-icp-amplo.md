@@ -1,5 +1,7 @@
 # Checklist — riscos novos do ICP ampliado (profissionais da saúde em geral + donos de clínica)
 
+> **Nota:** produto renomeado para ClinicNow em 2026-07-28. As menções a "MedGroth" abaixo são históricas.
+
 > Minuta/análise gerada por IA — exige revisão de advogado humano licenciado antes de uso real.
 
 ## A. Riscos novos, ranqueados (probabilidade × impacto)

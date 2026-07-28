@@ -1,5 +1,7 @@
 # Termos de Uso — MedGroth Beta Fundador (v1.0, jul/2026)
 
+> **Nota:** produto renomeado para ClinicNow em 2026-07-28. As menções a "MedGroth" abaixo são históricas.
+
 > Gerado por IA — exige revisão de advogado humano licenciado antes de uso real.
 > Prontos para virar página no mesmo padrão visual (a Engenharia pode reaproveitar o template de `privacidade.html`).
 
