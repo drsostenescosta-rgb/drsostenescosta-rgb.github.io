@@ -88,8 +88,12 @@
       <label>WhatsApp* (com DDD)
         <input type="tel" id="whatsapp" placeholder="(84) 99999-0000" autocomplete="tel" required>
       </label>
-      <label>E-mail
-        <input type="email" id="email" placeholder="voce@clinica.com.br" autocomplete="email">
+      <label>E-mail*
+        <input type="email" id="email" placeholder="voce@clinica.com.br" autocomplete="email" required>
+      </label>
+      <!-- honeypot anti-spam: invisível para humanos; bot que preencher é descartado -->
+      <label class="hp" style="position:absolute; left:-9999px; top:-9999px" aria-hidden="true">Não preencha este campo
+        <input type="text" id="hp-site" name="site" tabindex="-1" autocomplete="off">
       </label>
       <label>Especialidade / nicho
         <select id="especialidade">
@@ -169,10 +173,17 @@
     e.preventDefault();
     var nome = document.getElementById('nome').value.trim();
     var zap  = document.getElementById('whatsapp').value.trim();
+    var email = document.getElementById('email').value.trim();
     var lgpd = document.getElementById('lgpd').checked;
     var erro = document.getElementById('erro');
-    if(!nome || zap.replace(/\D/g,'').length < 10){
-      erro.textContent = 'Preencha nome e WhatsApp para continuar.';
+    /* honeypot: humano não vê nem preenche este campo; bot preenchido = descarta
+       silenciosamente (mostrar erro ensinaria o bot a contornar) */
+    if(document.getElementById('hp-site').value){
+      document.getElementById('zap').href = zapLink(nome || 'visitante', 'Acabei de fazer meu cadastro');
+      mostrar('obrigado'); return;
+    }
+    if(!nome || zap.replace(/\D/g,'').length < 10 || !/^\S+@\S+\.\S+$/.test(email)){
+      erro.textContent = 'Preencha nome, WhatsApp e e-mail para continuar.';
       erro.style.display='block'; return;
     }
     if(!lgpd){
@@ -186,7 +197,7 @@
     var lead = {
       nome: nome,
       whatsapp: zap,
-      email: document.getElementById('email').value.trim(),
+      email: email,
       especialidade: document.getElementById('especialidade').value,
       faturamento: document.getElementById('faturamento').value,
       consentimento_lgpd: true,
