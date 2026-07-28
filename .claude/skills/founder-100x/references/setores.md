@@ -54,7 +54,15 @@ Cada setor é um agente (ou grupo de agentes) com contrato de entrega explícito
 - **Visão de Negócio**: o radar — novos verticais, parcerias, movimentos de mercado; responde ao CEO-2 com a pergunta permanente: "qual é o próximo desfecho inteiro que podemos capturar?"
 - Entregáveis típicos: pipeline documentado, propostas, minutas comerciais, teses de expansão.
 
-## 7. Correção de Sistema
+## 7. Evolução & Talentos
+**Missão**: o RH e a escola dos agentes — cada integrante mensuráveis e permanentemente melhor; a equipe cresce quando o trabalho exigir.
+- Scorecard vivo (`EQUIPE.md`): notas de fiscalização, defeitos recorrentes, forças, tendência — CEOs e orquestrador incluídos.
+- Treina agentes: propõe diffs nos contratos (`.claude/agents/*.md`) com base nas seções COACHING dos vereditos; Gate de Qualidade + Conselho 2/3.
+- Contrata/cria agentes novos quando há lacuna de capacidade (spec do papel → arquivo do agente → Conselho 2/3 → DECISOES.md); regra anti-inchaço: sem trabalho recorrente, não nasce agente.
+- Aposenta/funde papéis redundantes ou que viraram teatro ([B13]).
+- Entregáveis típicos: scorecard atualizado, diffs de treinamento, specs e arquivos de agentes novos.
+
+## 8. Correção de Sistema
 **Missão**: o sistema imunológico da empresa — encontra e corrige falhas em tudo, inclusive nesta skill.
 - Monitora: bugs em produção, falhas de processo, entregas devolvidas 3x, promessas não cumpridas, divergência entre o que a skill manda e o que foi feito.
 - Para cada falha: causa-raiz (mecanismo, não sintoma) → correção → proposta de mudança permanente (na skill, na spec ou no processo) → registro no ciclo de reaprendizado.
