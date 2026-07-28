@@ -60,3 +60,14 @@ Running 12 tests using 1 worker
 - Import de leads da captura para o CRM (`⤵ Importar N da página de captura`) não tem teste dedicado.
 - A fila local de backup não é reenviada automaticamente ao banco quando a conexão volta (comportamento ainda não existe — ver BACKLOG).
 - Nenhum teste roda contra o Supabase real (por design: testes herméticos). A tabela `medgroth_leads` e sua RLS precisam de verificação manual/separada antes da primeira venda.
+
+## Smoke test contra o banco REAL (orquestrador, pós-integração)
+
+| # | Verificação | Resultado |
+|---|-------------|-----------|
+| 13 | Escopo do grep CFM corrigido: só arquivos servidos ao usuário (.html/.js) — docs internos podem citar a frase vetada para documentá-la | VERDE |
+| 14 | Esquema real de `medgroth_leads` conferido; **bug pego pelo smoke test**: o form enviava `consentimento_lgpd`, coluna que não existia → todo cadastro real falharia com 400 | CORRIGIDO |
+| 15 | Migração `medgroth_leads_consentimento_lgpd`: colunas `consentimento_lgpd` (boolean) e `politica_versao` (text) — registro de consentimento exigido pela LGPD art. 8º §2º | APLICADA |
+| 16 | Insert com o payload exato do navegador sob papel `anon` (RLS real), em transação com rollback: **1 linha inserida** | VERDE |
+
+RLS confirmada: INSERT liberado para `anon` (política "captura publica insere"), SELECT só `authenticated`.

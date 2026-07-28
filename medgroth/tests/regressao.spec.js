@@ -1,5 +1,7 @@
 /* Regressão estática nos artefatos publicados do MedGroth:
-   - "resultado prometido" banido de todos os arquivos entregues (CFM);
+   - "resultado prometido" banido de todo arquivo servido ao usuário (CFM).
+     Docs internos (TESTES.md, juridico/, campanha/) podem CITAR a frase
+     vetada para documentá-la — por isso o escopo é só .html/.js;
    - escassez fabricada ("20 primeiras" / "vagas limitadas") banida das
      páginas de venda e captura;
    - planos pagos: features futuras marcadas visualmente como "em breve". */
@@ -8,9 +10,9 @@ const path = require('path');
 const { test, expect } = require('@playwright/test');
 
 const DIR = path.resolve(__dirname, '..');
-const ARTEFATOS = fs.readdirSync(DIR).filter(f => /\.(html|js|md)$/.test(f));
+const ARTEFATOS = fs.readdirSync(DIR).filter(f => /\.(html|js)$/.test(f));
 
-test('nenhum artefato contém "resultado prometido"', async () => {
+test('nenhum artefato servido ao usuário contém "resultado prometido"', async () => {
   for (const f of ARTEFATOS) {
     const txt = fs.readFileSync(path.join(DIR, f), 'utf8');
     expect(txt.includes('resultado prometido'), `"resultado prometido" encontrado em medgroth/${f}`).toBe(false);
