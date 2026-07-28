@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MedGroth — Cockpit de Crescimento</title>
-<meta name="description" content="Diagnóstico, plano de 4 semanas, CRM de leads e metas de receita. O cockpit de crescimento para médicos e clínicas." />
+<meta name="description" content="Diagnóstico, plano de 4 semanas, CRM de leads e metas de receita. O cockpit de crescimento para profissionais da saúde e donos de clínica." />
 <meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -155,9 +155,11 @@ const uid = () => 'id'+Math.random().toString(36).slice(2,9);
 const esc = s => String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 /* ============================ motor de crescimento ============================ */
-/* Textos conforme publicidade médica (Res. CFM 2.336/2023): comunicar
-   objetivo terapêutico, método e entrega — nunca prometer desfecho nem
-   prazo de resultado. Campo "proposta" (proposta de valor), não "promessa". */
+/* Textos conforme as normas de publicidade dos conselhos profissionais da
+   saúde (Res. CFM 2.336/2023 e normas equivalentes de COFFITO, COREN, CFN,
+   CFO, CFBM etc.): comunicar objetivo terapêutico, método e entrega — nunca
+   prometer desfecho nem prazo de resultado. Vale para TODOS os nichos abaixo.
+   Campo "proposta" (proposta de valor), não "promessa". */
 const PROTOCOLOS = {
   'Emagrecimento':[
     {nome:'Protocolo Emagrecimento 90 dias', proposta:'Programa de emagrecimento com método estruturado e acompanhamento próximo', entreg:['Consultas quinzenais','Plano alimentar e de atividade','Medicação quando indicada','Reavaliação mensal','Canal de suporte'], mult:10},
@@ -171,7 +173,19 @@ const PROTOCOLOS = {
   'Performance / Esporte':[ {nome:'Performance & Energia', proposta:'Protocolo de performance com avaliação, plano individualizado e acompanhamento mensal', entreg:['Avaliação','Protocolo de suplementação','Acompanhamento mensal'], mult:6} ],
   'Saúde mental / Sono':[ {nome:'Equilíbrio Mental & Sono', proposta:'Cuidado estruturado para ansiedade e sono, com plano terapêutico e acompanhamento quinzenal', entreg:['Avaliação de saúde mental','Plano terapêutico','Acompanhamento quinzenal'], mult:6} ],
   'Dor / Reabilitação':[ {nome:'Protocolo Dor & Movimento', proposta:'Avaliação funcional e plano de reabilitação com reavaliações periódicas', entreg:['Avaliação funcional','Plano de reabilitação','Reavaliações'], mult:7} ],
-  'Clínica geral':[ {nome:'Acompanhamento Premium', proposta:'Um médico de confiança sempre por perto', entreg:['Consultas periódicas','App do paciente','Canal direto'], mult:8} ],
+  'Fisioterapia':[
+    {nome:'Ciclo de Reabilitação (pacote de sessões)', proposta:'Plano de reabilitação estruturado em ciclos, com avaliação funcional e reavaliações programadas', entreg:['Avaliação funcional inicial','Pacote de sessões do ciclo','Reavaliação ao fim do ciclo','Orientações para casa'], mult:8},
+    {nome:'Avaliação Funcional Completa (entrada)', proposta:'Avaliação funcional detalhada com plano de tratamento apresentado na hora', entreg:['Avaliação completa','Plano de tratamento','1 retorno'], mult:2},
+  ],
+  'Nutrição':[
+    {nome:'Acompanhamento Nutricional Trimestral', proposta:'Plano alimentar individualizado com acompanhamento próximo e reavaliações mensais', entreg:['Avaliação nutricional e antropometria','Plano alimentar individualizado','Reavaliações mensais','Canal de suporte'], mult:6},
+    {nome:'Consultoria Nutricional de Entrada', proposta:'Avaliação completa e plano alimentar inicial com um retorno de ajuste', entreg:['Avaliação completa','Plano alimentar','1 retorno de ajuste'], mult:2},
+  ],
+  'Estética avançada / Biomedicina':[ {nome:'Plano Estético Semestral (pacote)', proposta:'Protocolo estético individualizado, com cronograma de sessões e manutenção programada', entreg:['Avaliação estética','Cronograma de sessões','Manutenção programada','Registro de evolução (com consentimento)'], mult:8} ],
+  'Odontologia':[ {nome:'Plano de Saúde Bucal Anual', proposta:'Acompanhamento odontológico programado ao longo do ano, com foco em prevenção e manutenção', entreg:['Avaliação completa','Limpezas programadas','Prioridade de agenda','Condições especiais em procedimentos'], mult:10} ],
+  'Enfermagem / Clínica de enfermagem':[ {nome:'Programa de Cuidado Contínuo', proposta:'Cuidado de enfermagem estruturado, com atendimentos programados e comunicação próxima com paciente e família', entreg:['Avaliação inicial de enfermagem','Atendimentos programados','Relatórios periódicos','Canal com a família'], mult:8} ],
+  'Clínica multiprofissional (dono/gestor)':[ {nome:'Programa Integrado Multiprofissional', proposta:'Jornada integrada entre os profissionais da clínica, com plano combinado e acompanhamento centralizado', entreg:['Avaliação de entrada','Plano integrado entre especialidades','Acompanhamento centralizado','Reavaliações periódicas'], mult:12} ],
+  'Clínica geral':[ {nome:'Acompanhamento Premium', proposta:'Um profissional de confiança sempre por perto', entreg:['Consultas periódicas','App do paciente','Canal direto'], mult:8} ],
 };
 function growthPlan(i){
   const ticket=+i.ticket||0, sem=+i.atendSemana||0;
@@ -200,7 +214,7 @@ function growthPlan(i){
     'Mais pacientes':['Crie uma porta de entrada de menor compromisso (consulta de avaliação bem estruturada)','Use o protocolo âncora para subir o paciente de nível'],
     'Aumentar ticket':['Empacote atendimentos avulsos em protocolos/planos premium','Adicione recorrência (assinatura de acompanhamento)'],
     'Escalar / previsibilidade':['Padronize protocolos e delegue operação','Crie recorrência e metas de MRR'],
-    'Autoridade / marca':['Nomeie seu método próprio','Documente resultados clínicos para uso interno e, quando for divulgar, siga as regras da publicidade médica (Res. CFM 2.336/2023): finalidade educativa, autorização por escrito do paciente e nunca com promessa de resultado'],
+    'Autoridade / marca':['Nomeie seu método próprio','Documente resultados clínicos para uso interno e, quando for divulgar, siga as normas de publicidade do seu conselho profissional (CFM, COFFITO, COREN, CFN, CFO etc. — ex.: Res. CFM 2.336/2023): finalidade educativa, autorização por escrito do paciente e nunca com promessa de resultado'],
   }[i.objetivo] || [];
   const mkt = i.maturidade==='Baixa'
     ? ['Perfil profissional otimizado + provas sociais','Google Meu Negócio e avaliações','Indicações estruturadas de pacientes atuais']
@@ -208,7 +222,7 @@ function growthPlan(i){
     ? ['Conteúdo educativo semanal no nicho','Captação por WhatsApp com oferta de avaliação','CRM simples para não perder lead']
     : ['Tráfego pago para funil de avaliação','Campanhas informativas sazonais (ex.: conscientização, check-ups de época) — sem descontos-relâmpago nem urgência artificial','Equipe de atendimento e qualificação'];
   const vendas = {
-    'Captação':['Ofereça uma consulta de avaliação estruturada, com escopo e valor claros — a porta de entrada digna do seu método (evite linguagem de promoção agressiva: consulta é ato médico, não isca)','Presença ativa onde seu público está'],
+    'Captação':['Ofereça uma consulta de avaliação estruturada, com escopo e valor claros — a porta de entrada digna do seu método (evite linguagem de promoção agressiva: consulta e sessão são atos profissionais de saúde, não isca)','Presença ativa onde seu público está'],
     'Conversão':['Consulta de avaliação com método claro','Prova de valor clínico para justificar plano e preço','Ofereça 2 opções de plano (ancoragem)'],
     'Precificação':['Suba o ticket de forma gradual e justificada','Empacote em protocolos com resultado medido e acompanhado','Elimine o "avulso barato"'],
     'Retenção':['Planos de acompanhamento e reavaliação','Canal ativo com o paciente','Recall automático de retorno'],
@@ -264,7 +278,7 @@ PAGES.diagnostico = function(){
     <div class="card-sub">7 perguntas. Seja honesto — o plano só é bom se o retrato for real.</div>
     <div class="grid2">
       <label>1 · Nicho principal
-        <select id="d-nicho">${opt(['','Emagrecimento','Metabólico / Longevidade','Estética','Performance / Esporte','Saúde mental / Sono','Dor / Reabilitação','Clínica geral'], nicho)}</select></label>
+        <select id="d-nicho">${opt(['','Emagrecimento','Metabólico / Longevidade','Estética','Estética avançada / Biomedicina','Performance / Esporte','Saúde mental / Sono','Dor / Reabilitação','Fisioterapia','Nutrição','Odontologia','Enfermagem / Clínica de enfermagem','Clínica geral','Clínica multiprofissional (dono/gestor)'], nicho)}</select></label>
       <label>2 · Ticket médio da consulta (R$)
         <input id="d-ticket" type="number" min="0" value="${esc(d.ticket||'')}" placeholder="300"></label>
       <label>3 · Atendimentos por semana
@@ -281,7 +295,7 @@ PAGES.diagnostico = function(){
     <button class="btn btn-em" onclick="App.runDiagnostico()">Gerar meu plano de crescimento →</button>
   </div>
   ${DB.diagnostico ? `<div class="card"><h3>Plano atual</h3><div class="card-sub">Você já tem um plano gerado. Refazer o diagnóstico recalcula o plano (o progresso das ações é mantido por ação idêntica).</div><button class="btn btn-ghost btn-sm" onclick="App.go('plano')">Ver plano atual →</button></div>`:''}
-  <div class="disclaimer">🚀 O plano é um <strong>guia estratégico</strong> gerado a partir das suas respostas. Adapte à sua realidade e à regulamentação da publicidade médica (CFM/conselhos).</div>`;
+  <div class="disclaimer">🚀 O plano é um <strong>guia estratégico</strong> gerado a partir das suas respostas. Adapte à sua realidade e às normas de publicidade do seu conselho profissional (CFM, COFFITO, COREN, CFN, CFO etc.).</div>`;
 };
 
 function allChecks(){
@@ -326,7 +340,7 @@ PAGES.plano = function(){
     <div class="card"><h3>📣 Marketing</h3>${pl.estrategias.mkt.map(s=>`<div class="chk" style="cursor:default"><span>· ${esc(s)}</span></div>`).join('')}</div>
     <div class="card"><h3>🤝 Vendas</h3>${pl.estrategias.vendas.map(s=>`<div class="chk" style="cursor:default"><span>· ${esc(s)}</span></div>`).join('')}</div>
   </div>
-  <div class="disclaimer">Guia estratégico gerado das suas respostas — não é garantia de resultado. Respeite as normas de publicidade médica.</div>`;
+  <div class="disclaimer">Guia estratégico gerado das suas respostas — não é garantia de resultado. Respeite as normas de publicidade do seu conselho profissional.</div>`;
 };
 
 const FUNIL = [ ['novo','Novo'], ['conversando','Conversando'], ['avaliacao','Avaliação agendada'], ['fechado','Fechado ✓'], ['perdido','Perdido'] ];
