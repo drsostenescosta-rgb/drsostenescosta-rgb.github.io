@@ -2,7 +2,7 @@
 
 **Regras aplicadas a todos os roteiros (vetos do Conselho):**
 - Nenhuma promessa de resultado clínico ou financeiro garantido. Projeção sempre nomeada como "projeção com premissas".
-- Nenhuma escassez fabricada. A única menção a limite é o preço de fundador para as 20 primeiras clínicas — mecanismo real, declarado na landing.
+- Nenhuma escassez fabricada. A oferta mencionável é a que os termos do beta (cláusula 2.2) e o site declaram hoje: preço de lançamento garantido enquanto a assinatura permanecer ativa, dentro de um beta fundador com acompanhamento direto do Sóstenes. O único limite citável é o real: a capacidade de conversas 1:1 dele é limitada pela agenda. Nenhum teto de vagas, nenhum contador, nenhuma promessa de preço eterno.
 - Nenhuma feature inexistente. Tudo que aparece em tela existe hoje: diagnóstico de 7 perguntas, plano de 4 semanas, CRM kanban, metas/projeção.
 - Tom: honestidade radical do Sóstenes. Zero voz de guru. Falar como quem viveu a clínica por dentro.
 - CTA padrão: "link na bio → diagnóstico gratuito de 3 minutos" (captura.html). Sem cartão, sem call de vendas — dizer isso é diferencial, use.

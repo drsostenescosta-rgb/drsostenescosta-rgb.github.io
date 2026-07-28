@@ -127,7 +127,7 @@ Três coisas para ficarem claras antes de você aceitar:
 
 1. **Não é call de vendas disfarçada.** Se o MedGroth pago fizer sentido para o seu caso, eu vou dizer — e dizer qual plano e por quê. Se não fizer, eu vou dizer também. Já falei "não é pra você agora" mais de uma vez, e vou continuar falando.
 2. **Por que eu faço isso de graça:** estou nos primeiros clientes do produto. Cada conversa me ensina mais sobre a dor real do que qualquer métrica. Você me dá contexto; eu te dou o que sei. Troca justa.
-3. **Sobre as 20 clínicas fundadoras:** existe um preço de fundador vitalício para as 20 primeiras clínicas ativas. Menciono porque é verdade e é relevante — não porque "as vagas estão acabando". Quando fecharem 20, esse parágrafo sai destes e-mails.
+3. **Sobre o momento:** estamos em beta fundador. Isso significa duas coisas verdadeiras: quem assina agora tem o preço de lançamento garantido enquanto a assinatura permanecer ativa (está nos termos, cláusula 2.2 — não é promessa de e-mail), e o acompanhamento é feito por mim, diretamente. Essa segunda parte tem um limite físico honesto: minha agenda de conversas 1:1 é a minha agenda de verdade. Quando ela aperta, o próximo horário fica mais longe — só isso. Sem contador, sem "vagas acabando".
 
 Se topar: [Chamar o Sóstenes no WhatsApp] (já vai com uma mensagem pronta, é só enviar)
 
@@ -139,6 +139,17 @@ Obrigado por ter chegado até aqui.
 "Vou ser honesto desde a primeira linha: eu tive medo." — a história completa: [link do blog]
 
 **CTA:** link wa.me/5584999869468 com texto pré-preenchido: "Oi, Sóstenes! Fiz o diagnóstico do MedGroth ({perfil_diagnostico}) e quero os 15 minutos de conversa."
+
+---
+
+## Pendências para o disparo (dono: Founder + Engenharia)
+
+Nenhum e-mail desta sequência pode ser disparado antes de resolver os 4 itens abaixo. Isto não é burocracia: dois deles são contrato com o lead.
+
+1. **Remetente real a definir.** O cabeçalho diz `<contato@...>` porque o endereço não existe ainda. Precisa de domínio de envio próprio (ou subdomínio, ex.: `sostenes@mail.medgroth.com.br`) com SPF/DKIM/DMARC configurados — sem isso, a meta de abertura de 60% do e-mail 1 é fantasia de entregabilidade. Dono: Engenharia; decisão de nome: Founder.
+2. **ESP/ferramenta de disparo inexistente.** Não há hoje nenhuma ferramenta contratada que dispare a sequência D+0/D+2/D+4/D+7/D+10 a partir do evento "diagnóstico completo" no Supabase. Escolher (ex.: Resend, Brevo, Loops) e integrar com o webhook do lead antes de prometer qualquer automação. Dono: Engenharia.
+3. **Placeholder `[link do blog]`.** Aparece nos e-mails 1 e 5 e aponta para uma página que precisa ser confirmada (a história do founder no index raiz? um post dedicado?). Definir a URL final e substituir nos dois pontos antes do disparo. Dono: Founder.
+4. **Descadastro em 1 clique — mecanismo REAL.** O rodapé promete "link de descadastro em 1 clique e funciona de verdade", e o e-mail 1 repete a promessa no corpo. Essa frase é contrato, não copy: exige endpoint de opt-out funcional (List-Unsubscribe header + supressão imediata na base), testado antes do primeiro envio. Se o mecanismo não existir, os e-mails não saem — é exatamente o tipo de promessa quebrada que a marca não sobrevive a quebrar. Dono: Engenharia; fiscalização: Founder.
 
 ---
 

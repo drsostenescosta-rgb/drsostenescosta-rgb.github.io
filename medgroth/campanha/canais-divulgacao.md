@@ -1,7 +1,12 @@
 # MedGroth — Plano de canais para os 10 primeiros clientes (ranqueado por custo × impacto)
 
-**Objetivo da fase:** 10 clínicas pagantes (contam para as 20 fundadoras). Orçamento de mídia: R$ 0. O ativo é o founder — rede de quase 10 anos na saúde (fisioterapia, biomedicina, ensino a "centenas de profissionais de saúde", franquia V4) + história pública.
-**Meta agregada da fase:** 10 clientes em até 60 dias do gate; funil de referência: ~200 conversas/leads → ~60 diagnósticos → ~25 conversas 1:1 → 10 fechamentos.
+> **DECISÃO PENDENTE DO FOUNDER:** reinstaurar o teto de 20 fundadoras como mecanismo real (contador auditável no site + cláusula nos termos)?
+> Se sim, estas peças ganham a variante B: e-mail 5 (parágrafo 3 volta a citar o teto com contador), Criativo 7 (versão com contador "clínica N de 20" no rótulo dourado) e os scripts de WhatsApp abaixo (linha de limite real na abertura).
+> Enquanto a decisão não sair, vale a oferta canônica dos termos 2.2: preço de lançamento garantido enquanto a assinatura permanecer ativa — sem teto, sem contador.
+
+**Objetivo da fase:** 10 clínicas pagantes no beta fundador. Orçamento de mídia: R$ 0. O ativo é o founder — rede de quase 10 anos na saúde (fisioterapia, biomedicina, ensino a "centenas de profissionais de saúde", franquia V4) + história pública.
+**Meta agregada da fase:** 10 clientes em 90 dias do gate. Honestidade de cálculo (CEO-2): o valor esperado realista é 5–7 clientes em 60 dias — a meta de 10 só fecha com os 30 dias extras, e é assim que ela está escrita. Funil de referência: ~200 conversas/leads → ~60 diagnósticos → ~25 conversas 1:1 → 10 fechamentos.
+**Checkpoint obrigatório — dia 30:** se o ciclo 1 do Instagram tiver gerado < 15 diagnósticos, re-planejar na hora: WhatsApp 1:1 vira motor único da fase e a lista amplia de 100 para 200 contatos (puxando as camadas B e C mais fundo na rede). O Instagram fica só como vitrine de credibilidade até o ciclo 2 provar o contrário.
 
 ---
 
@@ -28,10 +33,11 @@ O canal que provavelmente fecha os 10 sozinho. A rede do Sóstenes já contém o
 **Métricas-alvo:** taxa de resposta ≥ 50% (camada A) / ≥ 25% (B); resposta → diagnóstico ≥ 40%; diagnóstico → conversa ≥ 40%; conversa → cliente ≥ 30–40%.
 **Critério de corte:** se após 100 abordagens a conversão conversa→cliente < 15%, o problema é oferta/preço, não canal — parar de abordar e voltar a oferta ao Conselho antes de queimar o resto da lista.
 
-### 2º — Instagram orgânico @drsostenes (custo: produção · impacto: alto · velocidade: semanas)
-Executa o `instagram-calendario.md`. Papel estratégico: não é canal de fechamento na fase 1 — é a prova social pública que sustenta o WhatsApp (a pessoa recebe a mensagem, visita o perfil, e o perfil confirma que é gente séria).
-**Métricas-alvo:** as do calendário (≥100 cliques bio / ≥30 diagnósticos por ciclo de 14 dias).
-**Critério de corte:** nenhum na fase 1 — o canal cumpre função de credibilidade mesmo com conversão baixa. Reavaliar formatos (não o canal) a cada ciclo de 14 dias.
+### 2º — Instagram orgânico @drsostenes (custo: produção · impacto: HIPÓTESE A VALIDAR · velocidade: semanas)
+**Status: HIPÓTESE A VALIDAR.** Não existe histórico de alcance nem CTR deste perfil para este ICP — as metas do calendário são chute educado, não benchmark. O canal entra no plano pela lógica (prova social que sustenta o WhatsApp: a pessoa recebe a mensagem, visita o perfil, e o perfil confirma que é gente séria), não por evidência de conversão.
+Executa o `instagram-calendario.md`. Papel estratégico na fase 1: não é canal de fechamento — é credibilidade pública.
+**Métricas-alvo (hipótese):** as do calendário (≥100 cliques bio / ≥30 diagnósticos por ciclo de 14 dias).
+**Critério de validação:** o checkpoint do dia 30 (topo deste arquivo) decide. Ciclo 1 com < 15 diagnósticos → o canal é rebaixado a vitrine, WhatsApp vira motor único e a lista 1:1 amplia para 200. Reavaliar formatos a cada ciclo de 14 dias enquanto o canal estiver ativo.
 
 ### 3º — Grupos e comunidades médicas (custo: tempo · impacto: médio-alto · velocidade: semanas)
 Grupos de WhatsApp/Telegram de especialidade (emagrecimento, nutrologia, estética, dor), comunidades de pós-graduação onde o Sóstenes deu aula, grupos de médicos empreendedores.
@@ -67,11 +73,11 @@ Republicar a história do founder e os carrosséis educativos no LinkedIn (rede 
 ---
 
 ## Painel único da fase (revisar toda segunda)
-| Indicador | Alvo 60 dias | Fonte |
-|---|---|---|
-| Abordagens WhatsApp 1:1 | 100 | funil MedGroth (dogfooding) |
-| Diagnósticos completos | 60 | Supabase (leads) |
-| Conversas de 15 min realizadas | 25 | agenda |
-| Clientes pagantes | 10 | assinaturas |
-| Origem de cada cliente | 100% rastreada | campo `origem` do lead |
-| Tempo do founder em marketing | ≤ 2h/dia | auto-relato — acima disso está roubando da engenharia |
+| Indicador | Alvo 90 dias | Checkpoint dia 30 | Fonte |
+|---|---|---|---|
+| Abordagens WhatsApp 1:1 | 100 (200 se checkpoint disparar) | ≥ 40 feitas | funil MedGroth (dogfooding) |
+| Diagnósticos completos | 60 | ≥ 15 vindos do Instagram (senão: re-planejar) | Supabase (leads) |
+| Conversas de 15 min realizadas | 25 | ≥ 8 | agenda |
+| Clientes pagantes | 10 (esperado realista: 5–7 até dia 60) | ≥ 2 | assinaturas |
+| Origem de cada cliente | 100% rastreada | 100% rastreada | campo `origem` do lead |
+| Tempo do founder em marketing | ≤ 2h/dia | ≤ 2h/dia | auto-relato — acima disso está roubando da engenharia |

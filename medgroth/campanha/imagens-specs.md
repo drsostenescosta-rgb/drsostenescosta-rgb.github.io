@@ -56,12 +56,12 @@
 - **Apoio:** "Acompanhamento contínuo: melhor para o paciente. Mais previsível para a clínica."
 - **Disclaimer:** "Ilustração conceitual, não projeção de resultado."
 
-## Criativo 7 — "Preço de fundador" (oferta com mecanismo real)
-- **Formato:** Story 9:16 + feed 1:1. Uso: apenas quando o gate abrir e a contagem for verdadeira e auditável.
-- **Prompt:** "Dark premium announcement poster, deep green-black background, a thin elegant gold (#c9a227) keyline frame around the composition, centered serif headline in off-white, a small monospace counter element like 'clínica 03 de 20' in gold, restrained, no confetti, no urgency clichés, feels like a private members announcement"
-- **Headline:** "Preço de fundador. Para as 20 primeiras clínicas. Para sempre."
-- **Apoio:** "Não é contagem de mentira: quando fechar 20, acabou. O número atual está na arte." + contador real ("clínica N de 20").
-- **Regra do Conselho:** esta peça SÓ vai ao ar com contador verdadeiro atualizado a cada venda. Sem venda registrada, a peça não roda. Escassez com mecanismo real = permitida; sem mecanismo = vetada.
+## Criativo 7 — "Beta fundador" (oferta sem escassez fabricada)
+- **Formato:** Story 9:16 + feed 1:1. Uso: peça de oferta do beta; só afirma o que os termos (cláusula 2.2) e o site afirmam.
+- **Prompt:** "Dark premium announcement poster, deep green-black background, a thin elegant gold (#c9a227) keyline frame around the composition, centered serif headline in off-white, a small monospace label in gold reading a short uppercase phrase like 'BETA FUNDADOR · ACOMPANHAMENTO DIRETO', restrained, no confetti, no countdown, no urgency clichés, feels like a private members announcement"
+- **Headline:** "Preço de lançamento. Garantido enquanto sua assinatura estiver ativa."
+- **Apoio:** "Beta fundador: acompanhamento direto do Sóstenes — e a agenda 1:1 dele é limitada de verdade, pela agenda, não por contador." (Rótulo mono em dourado: "BETA FUNDADOR · ACOMPANHAMENTO DIRETO")
+- **Regra do Conselho:** a peça só afirma o que os termos do beta garantem. Nenhum número de vagas, nenhuma promessa de preço eterno, nenhum contador — a urgência legítima é a capacidade 1:1 real do founder, nada além.
 
 ## Criativo 8 — "Anúncio-mestre" (reserva para fase de tráfego pago — NÃO usar agora)
 - **Formato:** 1080×1080 e 1080×1920 (par para futuro Meta Ads). Produzir agora, engavetar até o Conselho liberar tráfego pago.
