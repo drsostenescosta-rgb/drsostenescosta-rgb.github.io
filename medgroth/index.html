@@ -109,6 +109,9 @@
   .plan li { font-size:0.89rem; color:var(--muted); padding-left:24px; position:relative; }
   .plan li::before { content:'✓'; position:absolute; left:0; color:var(--em-light); font-weight:700; }
   .plan li.no::before { content:'—'; color:rgba(232,239,234,0.25); }
+  .plan li.soon { color:rgba(143,163,154,0.75); }
+  .plan li.soon::before { content:'◷'; color:var(--gold-light); font-weight:400; }
+  .soon-tag { display:inline-block; font-family:var(--mono); font-size:0.58rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-light); border:1px solid rgba(201,162,39,0.4); border-radius:99px; padding:1px 8px; margin-left:6px; vertical-align:middle; }
   .plan .btn { justify-content:center; }
   .founder { margin-top:22px; text-align:center; font-size:0.85rem; color:var(--gold-light); font-family:var(--mono); }
 
@@ -246,7 +249,7 @@
     <div class="sec-head">
       <span class="eyebrow">Planos</span>
       <h2>Escolha a velocidade do seu <em>crescimento</em></h2>
-      <p>Sem fidelidade. Cancele quando quiser. Preço de fundador garantido para sempre para as primeiras 20 clínicas.</p>
+      <p>Sem fidelidade. Cancele quando quiser. Estamos em beta fundador: quem entra agora tem acompanhamento direto do fundador e preço de lançamento garantido enquanto mantiver a assinatura.</p>
     </div>
     <div class="plans">
       <div class="plan">
@@ -272,15 +275,15 @@
           <li>Tudo do Start</li>
           <li>Metas, projeção e acompanhamento de receita</li>
           <li>Backlog de execução semanal</li>
-          <li>Scripts de conversão e recall prontos</li>
-          <li>Integração com MedEasy (Índice de Saúde na venda)</li>
+          <li class="soon">Scripts de conversão e recall prontos <span class="soon-tag">em breve</span></li>
+          <li class="soon">Integração com MedEasy (Índice de Saúde na venda) <span class="soon-tag">em breve</span></li>
           <li class="no">Mentoria de implementação</li>
         </ul>
         <a class="btn btn-em" href="captura.html?plano=pro">Quero o Pro →</a>
       </div>
       <div class="plan">
         <h3>Groth Aceleração</h3>
-        <div class="for">Implementação lado a lado, vagas limitadas</div>
+        <div class="for">Implementação lado a lado, acompanhamento 1:1</div>
         <div class="price">R$ 997<small>/mês</small></div>
         <ul>
           <li>Tudo do Pro</li>
@@ -289,10 +292,10 @@
           <li>Revisão de posicionamento e precificação</li>
           <li>Prioridade em novos recursos</li>
         </ul>
-        <a class="btn btn-ghost" href="captura.html?plano=aceleracao">Aplicar para uma vaga</a>
+        <a class="btn btn-ghost" href="captura.html?plano=aceleracao">Quero implementação 1:1</a>
       </div>
     </div>
-    <div class="founder">★ Preço de fundador: essas condições valem para sempre para as 20 primeiras clínicas ativas.</div>
+    <div class="founder">★ Beta fundador: acompanhamento direto de quem constrói o produto e preço de lançamento garantido enquanto sua assinatura estiver ativa.</div>
   </div>
 </section>
 
