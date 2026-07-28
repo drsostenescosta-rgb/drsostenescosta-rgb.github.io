@@ -4,7 +4,7 @@
    com fallback de WhatsApp, mantendo o backup local. */
 const { test, expect } = require('@playwright/test');
 
-const SUPABASE = '**/rest/v1/medgroth_leads**';
+const SUPABASE = '**/rest/v1/clinicnow_leads**';
 
 test.beforeEach(async ({ page }) => {
   // testes herméticos: nada de fontes externas atrasando o load
@@ -54,7 +54,7 @@ test('honeypot preenchido (bot): descartado em silêncio, nenhuma chamada de red
   // bot vê a tela de sucesso (não aprende a contornar), mas nada foi enviado nem guardado
   await expect(page.locator('#obrigado')).toBeVisible();
   expect(chamadas).toBe(0);
-  const backup = await page.evaluate(() => JSON.parse(localStorage.getItem('medgroth_leads') || '[]'));
+  const backup = await page.evaluate(() => JSON.parse(localStorage.getItem('clinicnow_leads') || '[]'));
   expect(backup.length).toBe(0);
 });
 
@@ -80,13 +80,13 @@ test('contrato do payload: POST leva consentimento_lgpd, politica_versao e id ge
   expect(req.body.whatsapp).toBe('(84) 99999-0000');
   expect(req.body.email).toBe('teste@clinica.com.br');
   expect(req.body.consentimento_lgpd).toBe(true);
-  expect(req.body.politica_versao).toBe('1.0-2026-07');
+  expect(req.body.politica_versao).toBe('1.1-2026-07');
   expect(req.body.origem).toBe('pagina-captura');
   expect(req.headers['prefer']).toBe('return=minimal');
   expect(req.body.id).toMatch(/^[0-9a-f-]{36}$/i);
 
   // o MESMO id vai para o backup local (correlação lead → plano → e-mail)
-  const backup = await page.evaluate(() => JSON.parse(localStorage.getItem('medgroth_leads') || '[]'));
+  const backup = await page.evaluate(() => JSON.parse(localStorage.getItem('clinicnow_leads') || '[]'));
   expect(backup.length).toBe(1);
   expect(backup[0].id).toBe(req.body.id);
 });
@@ -131,7 +131,7 @@ test('falha de rede: mensagem honesta, fallback de WhatsApp, backup local e "ten
   expect(href).toContain('wa.me');
 
   // backup local preservado (lead não se perde)
-  const backup = await page.evaluate(() => JSON.parse(localStorage.getItem('medgroth_leads') || '[]'));
+  const backup = await page.evaluate(() => JSON.parse(localStorage.getItem('clinicnow_leads') || '[]'));
   expect(backup.length).toBe(1);
   expect(backup[0].nome).toBe('Dra. Teste Playwright');
 

@@ -1,7 +1,7 @@
 {
-  "name": "medgroth-tests",
+  "name": "clinicnow-tests",
   "private": true,
-  "description": "Testes end-to-end do MedGroth (Playwright). Rodar: npm test",
+  "description": "Testes end-to-end do ClinicNow (Playwright). Rodar: npm test",
   "scripts": {
     "test": "playwright test"
   },
