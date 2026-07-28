@@ -149,20 +149,23 @@ const uid = () => 'id'+Math.random().toString(36).slice(2,9);
 const esc = s => String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 /* ============================ motor de crescimento ============================ */
+/* Textos conforme publicidade médica (Res. CFM 2.336/2023): comunicar
+   objetivo terapêutico, método e entrega — nunca prometer desfecho nem
+   prazo de resultado. Campo "proposta" (proposta de valor), não "promessa". */
 const PROTOCOLOS = {
   'Emagrecimento':[
-    {nome:'Protocolo Emagrecimento 90 dias', promessa:'Perda de peso sustentável com acompanhamento próximo e método', entreg:['Consultas quinzenais','Plano alimentar e de atividade','Medicação quando indicada','Reavaliação mensal','Canal de suporte'], mult:10},
-    {nome:'Reset Metabólico 30 dias (entrada)', promessa:'Destravar o metabolismo e gerar o primeiro resultado', entreg:['Avaliação completa','Protocolo inicial','2 retornos'], mult:3},
+    {nome:'Protocolo Emagrecimento 90 dias', proposta:'Programa de emagrecimento com método estruturado e acompanhamento próximo', entreg:['Consultas quinzenais','Plano alimentar e de atividade','Medicação quando indicada','Reavaliação mensal','Canal de suporte'], mult:10},
+    {nome:'Reset Metabólico 30 dias (entrada)', proposta:'Avaliação metabólica completa e protocolo inicial de 30 dias com acompanhamento', entreg:['Avaliação completa','Protocolo inicial','2 retornos'], mult:3},
   ],
   'Metabólico / Longevidade':[
-    {nome:'Programa Longevidade & Metabolismo', promessa:'Prevenção e vitalidade com base em dados clínicos', entreg:['Check-up e exames','Plano personalizado','Reavaliações trimestrais','Suplementação orientada'], mult:12},
-    {nome:'Check-up Inteligente', promessa:'Fotografia completa da saúde com plano de ação', entreg:['Avaliação completa','Interpretação de exames','Plano de 90 dias'], mult:2.5},
+    {nome:'Programa Longevidade & Metabolismo', proposta:'Prevenção e vitalidade com base em dados clínicos', entreg:['Check-up e exames','Plano personalizado','Reavaliações trimestrais','Suplementação orientada'], mult:12},
+    {nome:'Check-up Inteligente', proposta:'Fotografia completa da saúde com plano de ação', entreg:['Avaliação completa','Interpretação de exames','Plano de 90 dias'], mult:2.5},
   ],
-  'Estética':[ {nome:'Protocolo Estético (pacote de sessões)', promessa:'Resultado estético com plano de sessões e manutenção', entreg:['Avaliação','Pacote de sessões','Manutenção trimestral'], mult:8} ],
-  'Performance / Esporte':[ {nome:'Performance & Energia', promessa:'Mais energia, foco e recuperação', entreg:['Avaliação','Protocolo de suplementação','Acompanhamento mensal'], mult:6} ],
-  'Saúde mental / Sono':[ {nome:'Equilíbrio Mental & Sono', promessa:'Reduzir ansiedade e recuperar o sono', entreg:['Avaliação de saúde mental','Plano terapêutico','Acompanhamento quinzenal'], mult:6} ],
-  'Dor / Reabilitação':[ {nome:'Protocolo Dor & Movimento', promessa:'Sair da dor e recuperar função', entreg:['Avaliação funcional','Plano de reabilitação','Reavaliações'], mult:7} ],
-  'Clínica geral':[ {nome:'Acompanhamento Premium', promessa:'Um médico de confiança sempre por perto', entreg:['Consultas periódicas','App do paciente','Canal direto'], mult:8} ],
+  'Estética':[ {nome:'Protocolo Estético (pacote de sessões)', proposta:'Plano estético individualizado, com sessões programadas e manutenção', entreg:['Avaliação','Pacote de sessões','Manutenção trimestral'], mult:8} ],
+  'Performance / Esporte':[ {nome:'Performance & Energia', proposta:'Protocolo de performance com avaliação, plano individualizado e acompanhamento mensal', entreg:['Avaliação','Protocolo de suplementação','Acompanhamento mensal'], mult:6} ],
+  'Saúde mental / Sono':[ {nome:'Equilíbrio Mental & Sono', proposta:'Cuidado estruturado para ansiedade e sono, com plano terapêutico e acompanhamento quinzenal', entreg:['Avaliação de saúde mental','Plano terapêutico','Acompanhamento quinzenal'], mult:6} ],
+  'Dor / Reabilitação':[ {nome:'Protocolo Dor & Movimento', proposta:'Avaliação funcional e plano de reabilitação com reavaliações periódicas', entreg:['Avaliação funcional','Plano de reabilitação','Reavaliações'], mult:7} ],
+  'Clínica geral':[ {nome:'Acompanhamento Premium', proposta:'Um médico de confiança sempre por perto', entreg:['Consultas periódicas','App do paciente','Canal direto'], mult:8} ],
 };
 function growthPlan(i){
   const ticket=+i.ticket||0, sem=+i.atendSemana||0;
@@ -181,25 +184,25 @@ function growthPlan(i){
         ? ['Estruturar Instagram e Google Meu Negócio','Sistema de indicação com incentivo','Coletar provas sociais (com consentimento)']
         : i.maturidade==='Média'
         ? ['Calendário de conteúdo semanal','Captação ativa por WhatsApp/lista','Campanha simples de tráfego para consulta de avaliação']
-        : ['Funil de captação com tráfego pago','Campanhas sazonais','CRM e qualificação de leads']},
+        : ['Funil de captação com tráfego pago','Campanhas informativas sazonais (conscientização, check-ups de época)','CRM e qualificação de leads']},
     {fase:'Semana 3 — Conversão', acoes:['Roteiro da consulta de avaliação (diagnóstico → plano → oferta)','Apresentar plano visual ao paciente','Ancoragem de preço com 2 opções de protocolo']},
     {fase:'Semana 4 — Retenção & LTV', acoes:['Planos de acompanhamento recorrente','Canal ativo com o paciente (lembretes, reavaliações)','Rotina de recall e reavaliação periódica']},
   ];
   const base = PROTOCOLOS[i.nicho] || PROTOCOLOS['Clínica geral'];
   const protocolos = base.map(pr=>({...pr, preco: Math.max(ticket*pr.mult, ticket||297)}));
   const produto = {
-    'Mais pacientes':['Crie uma oferta de entrada acessível (consulta de avaliação ou reset 30 dias)','Use o protocolo âncora para subir o paciente de nível'],
+    'Mais pacientes':['Crie uma porta de entrada de menor compromisso (consulta de avaliação bem estruturada)','Use o protocolo âncora para subir o paciente de nível'],
     'Aumentar ticket':['Empacote atendimentos avulsos em protocolos/planos premium','Adicione recorrência (assinatura de acompanhamento)'],
     'Escalar / previsibilidade':['Padronize protocolos e delegue operação','Crie recorrência e metas de MRR'],
-    'Autoridade / marca':['Nomeie seu método próprio','Documente resultados como prova (com consentimento)'],
+    'Autoridade / marca':['Nomeie seu método próprio','Documente resultados clínicos para uso interno e, quando for divulgar, siga as regras da publicidade médica (Res. CFM 2.336/2023): finalidade educativa, autorização por escrito do paciente e nunca com promessa de resultado'],
   }[i.objetivo] || [];
   const mkt = i.maturidade==='Baixa'
     ? ['Perfil profissional otimizado + provas sociais','Google Meu Negócio e avaliações','Indicações estruturadas de pacientes atuais']
     : i.maturidade==='Média'
     ? ['Conteúdo educativo semanal no nicho','Captação por WhatsApp com oferta de avaliação','CRM simples para não perder lead']
-    : ['Tráfego pago para funil de avaliação','Lançamentos e campanhas sazonais','Equipe de atendimento e qualificação'];
+    : ['Tráfego pago para funil de avaliação','Campanhas informativas sazonais (ex.: conscientização, check-ups de época) — sem descontos-relâmpago nem urgência artificial','Equipe de atendimento e qualificação'];
   const vendas = {
-    'Captação':['Oferta de entrada irresistível (consulta de avaliação)','Presença ativa onde seu público está'],
+    'Captação':['Ofereça uma consulta de avaliação estruturada, com escopo e valor claros — a porta de entrada digna do seu método (evite linguagem de promoção agressiva: consulta é ato médico, não isca)','Presença ativa onde seu público está'],
     'Conversão':['Consulta de avaliação com método claro','Prova de valor clínico para justificar plano e preço','Ofereça 2 opções de plano (ancoragem)'],
     'Precificação':['Suba o ticket de forma gradual e justificada','Empacote em protocolos com resultado medido e acompanhado','Elimine o "avulso barato"'],
     'Retenção':['Planos de acompanhamento e reavaliação','Canal ativo com o paciente','Recall automático de retorno'],
@@ -308,7 +311,7 @@ PAGES.plano = function(){
     ${pl.protocolos.map(p=>`
       <div style="border:1px solid var(--border); border-radius:11px; padding:14px 16px; margin-bottom:10px">
         <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap"><strong>${esc(p.nome)}</strong><span class="pill gold">${BRL(p.preco)}</span></div>
-        <div style="color:var(--muted); font-size:0.85rem; margin:4px 0 8px">${esc(p.promessa)}</div>
+        <div style="color:var(--muted); font-size:0.85rem; margin:4px 0 8px">${esc(p.proposta)}</div>
         <div style="font-size:0.8rem; color:var(--muted)">${p.entreg.map(e=>'• '+esc(e)).join('&nbsp;&nbsp;')}</div>
       </div>`).join('')}
   </div>
