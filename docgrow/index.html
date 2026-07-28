@@ -225,6 +225,15 @@
   </div>
 </section>
 <script>
+/* analytics primária: só página + domínio de origem (LGPD by design) */
+try {
+  fetch('https://yaqphldowpshhrtvvfaq.supabase.co/rest/v1/docgrow_pageviews', {
+    method: 'POST',
+    headers: { 'apikey': 'sb_publishable_V64ejsDNKclPdFlqymghnQ_jUr5ivj1', 'Authorization': 'Bearer sb_publishable_V64ejsDNKclPdFlqymghnQ_jUr5ivj1', 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ pagina: 'docgrow-landing', ref: document.referrer ? new URL(document.referrer).hostname : null })
+  }).catch(function () {});
+} catch (e) {}
+
 /* contador real das vagas de fundador — RPC agregado, sem expor nenhum lead */
 fetch('https://yaqphldowpshhrtvvfaq.supabase.co/rest/v1/rpc/docgrow_vagas_restantes', {
   method: 'POST',
