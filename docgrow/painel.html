@@ -65,8 +65,8 @@
     <div class="stats">
       <div class="stat"><div class="l">Total de leads</div><div class="n" id="s-total">—</div></div>
       <div class="stat"><div class="l">Últimos 7 dias</div><div class="n" id="s-7d">—</div></div>
-      <div class="stat"><div class="l">Aplicações DocGrow</div><div class="n" id="s-apl">—</div></div>
-      <div class="stat"><div class="l">Meta do mês (30)</div><div class="n" id="s-meta">—</div></div>
+      <div class="stat"><div class="l">Em conversa/proposta</div><div class="n" id="s-pipe">—</div></div>
+      <div class="stat"><div class="l">Clientes fechados</div><div class="n" id="s-cli">—</div></div>
     </div>
     <div class="card">
       <div id="lista">Carregando…</div>
@@ -147,25 +147,58 @@ function renderFunil(leads) {
 
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
+/* pipeline de vendas: cada etapa tem a mensagem certa (compliance CFM: sem promessa) */
+var ETAPAS = ['novo', 'conversando', 'proposta', 'cliente', 'perdido'];
+var ETAPA_COR = { novo: 'rgba(224,90,90,0.35)', conversando: 'rgba(74,157,224,0.35)', proposta: 'rgba(201,162,39,0.4)', cliente: 'rgba(25,195,125,0.45)', perdido: 'rgba(143,163,154,0.25)' };
+function msgEtapa(l) {
+  var nome = l.nome || '';
+  var aplic = (l.origem || '').indexOf('aplicacao') === 0;
+  var msgs = {
+    novo: 'Olá, ' + nome + '! Aqui é Sóstenes, do DocGrow. Vi seu cadastro' + (aplic ? ' — e sua aplicação para a vaga de fundador' : '') + '. Posso te fazer 2 perguntas rápidas sobre sua agenda para ver se o DocGrow encaixa no seu momento?',
+    conversando: 'Olá, ' + nome + '! Pensei no que você me contou. O DocGrow organiza exatamente isso: agenda com confirmação automática, pacientes que não somem e acompanhamento contínuo. Quer que eu te mostre o cockpit funcionando em 10 minutos, por vídeo ou aqui mesmo?',
+    proposta: 'Olá, ' + nome + '! Fechando o que combinamos: vaga de fundador do DocGrow com preço travado para sempre — Start R$ 97/mês, Pro R$ 297/mês ou Aceleração R$ 997/mês, sem fidelidade, cancela quando quiser. Pagamento por Pix mensal enquanto ativamos a cobrança automática. Qual plano faz sentido para começar?',
+    cliente: 'Olá, ' + nome + '! Bem-vindo(a) ao DocGrow 🎉 Seu primeiro passo: abra o cockpit (drsostenescosta-rgb.github.io/docgrow/app.html), cadastre seus 5 pacientes mais recentes e me chame aqui quando terminar — eu te acompanho na primeira semana inteira.',
+    perdido: 'Olá, ' + nome + '! Entendo que agora não é o momento. Vou deixar sua vaga aberta por mais um tempo — se a agenda apertar ou quiser retomar, é só me chamar. Obrigado pela conversa!'
+  };
+  return msgs[l.status || 'novo'] || msgs.novo;
+}
+function setEtapa(id, status) {
+  fetch(MEDGROTH.rest('medgroth_leads?id=eq.' + id), { method: 'PATCH', headers: authHeaders(), body: JSON.stringify({ status: status }) })
+    .then(function (r) { if (r.ok) show(); else alert('Não consegui salvar — recarregue e tente de novo.'); });
+}
+function setNota(id) {
+  var nota = prompt('Nota sobre este lead (só você vê):');
+  if (nota === null) return;
+  fetch(MEDGROTH.rest('medgroth_leads?id=eq.' + id), { method: 'PATCH', headers: authHeaders(), body: JSON.stringify({ nota: nota }) })
+    .then(function (r) { if (r.ok) show(); });
+}
+
 function render(leads) {
   if (!Array.isArray(leads)) leads = [];
   var agora = Date.now();
   var d7 = leads.filter(function (l) { return agora - new Date(l.criado_em).getTime() < 7 * 864e5; }).length;
-  var apl = leads.filter(function (l) { return (l.origem || '').indexOf('aplicacao') === 0; }).length;
-  var mes = leads.filter(function (l) { var d = new Date(l.criado_em), n = new Date(); return d.getMonth() === n.getMonth() && d.getFullYear() === n.getFullYear(); }).length;
+  var pipe = leads.filter(function (l) { return l.status === 'conversando' || l.status === 'proposta'; }).length;
+  var cli = leads.filter(function (l) { return l.status === 'cliente'; }).length;
   document.getElementById('s-total').textContent = leads.length;
   document.getElementById('s-7d').textContent = d7;
-  document.getElementById('s-apl').textContent = apl;
-  document.getElementById('s-meta').textContent = mes + '/30';
+  document.getElementById('s-pipe').textContent = pipe;
+  document.getElementById('s-cli').textContent = cli + '/10';
 
   var el = document.getElementById('lista');
   if (!leads.length) { el.innerHTML = '<div style="text-align:center; color:var(--muted); padding:30px">Nenhum lead ainda. Divulgue a captura e a aplicação — cada lead aparece aqui na hora.</div>'; return; }
+  var ordem = { novo: 0, conversando: 1, proposta: 2, cliente: 3, perdido: 4 };
+  leads.sort(function (a, b) { return (ordem[a.status || 'novo'] - ordem[b.status || 'novo']) || (new Date(b.criado_em) - new Date(a.criado_em)); });
   el.innerHTML = leads.map(function (l) {
-    var msg = 'Olá, ' + (l.nome || '') + '! Aqui é Sóstenes, do DocGrow. Vi seu cadastro' + ((l.origem || '').indexOf('aplicacao') === 0 ? ' — e sua aplicação para a vaga de fundador' : '') + '. Podemos conversar?';
+    var st = l.status || 'novo';
     var motivo = l.respostas && l.respostas.motivo ? ' · "' + esc(l.respostas.motivo) + '"' : '';
-    return '<div class="row"><div><b>' + esc(l.nome) + '</b> ' + ((l.origem || '').indexOf('aplicacao') === 0 ? '<span class="pill">aplicação</span>' : '') +
-      '<span class="m">' + esc(l.especialidade || '—') + ' · ' + esc(l.faturamento || 'faturamento n/d') + ' · ' + new Date(l.criado_em).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) + ' · ' + esc(l.origem || '') + motivo + '</span></div>' +
-      '<a class="zap" target="_blank" rel="noopener" href="https://wa.me/55' + String(l.whatsapp || '').replace(/\D/g, '') + '?text=' + encodeURIComponent(msg) + '">Chamar no WhatsApp →</a></div>';
+    var nota = l.nota ? '<span class="m">📝 ' + esc(l.nota) + '</span>' : '';
+    var sel = '<select onchange="setEtapa(\'' + l.id + '\', this.value)" style="width:auto; padding:4px 8px; font-size:0.74rem; border-radius:8px; border-color:' + (ETAPA_COR[st] || 'var(--border)') + '">' +
+      ETAPAS.map(function (e) { return '<option value="' + e + '"' + (e === st ? ' selected' : '') + '>' + e + '</option>'; }).join('') + '</select>';
+    return '<div class="row" style="border-color:' + (ETAPA_COR[st] || 'var(--border)') + '"><div><b>' + esc(l.nome) + '</b> ' + ((l.origem || '').indexOf('aplicacao') === 0 ? '<span class="pill">aplicação</span>' : '') +
+      '<span class="m">' + esc(l.especialidade || '—') + ' · ' + esc(l.faturamento || 'faturamento n/d') + ' · ' + new Date(l.criado_em).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) + motivo + '</span>' + nota + '</div>' +
+      '<div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap">' + sel +
+      '<a class="zap" target="_blank" rel="noopener" href="https://wa.me/55' + String(l.whatsapp || '').replace(/\D/g, '') + '?text=' + encodeURIComponent(msgEtapa(l)) + '">WhatsApp da etapa →</a>' +
+      '<button class="zap" style="background:none; cursor:pointer" onclick="setNota(\'' + l.id + '\')">nota</button></div></div>';
   }).join('');
 }
 

@@ -199,3 +199,9 @@ select pagina, count(*) as total,
   count(*) filter (where criado_em > now() - interval '7 days') as d7,
   count(*) filter (where criado_em > now() - interval '30 days') as d30
 from docgrow_pageviews group by pagina;
+
+-- ── Pipeline de vendas (28/07) ──────────────────────────────
+-- Cada lead ganha etapa e nota do fundador; atualização só autenticada.
+-- alter table medgroth_leads add column status text default 'novo';  -- novo|conversando|proposta|cliente|perdido
+-- alter table medgroth_leads add column nota text;
+-- create policy "atualizacao autenticada" on medgroth_leads for update to authenticated using (true) with check (true);
