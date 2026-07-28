@@ -96,7 +96,7 @@ create policy "leitura autenticada" on public.medgroth_leads
 - [ ] `/api/groth`: plano de crescimento reescrito por IA (claude-sonnet-5) a partir do diagnóstico — mais específico que o motor de regras atual, com guarda-corpos (publicidade médica/CFM, sem promessa de resultado)
 - [ ] Scripts de conversão gerados por IA para o nicho do usuário (roteiro da consulta de avaliação, mensagens de recall)
 - [ ] Ponte MedEasy: Índice de Saúde do paciente como argumento na proposta de protocolo
-- [ ] Relatório mensal automático: "sua clínica este mês" (leads, conversão, receita vs meta)
+- [x] Relatório mensal "sua clínica este mês" no cockpit (receita, MRR, Cofre, consultas, no-shows, Health Score — imprimível/PDF) (28/07)
 
 ## Sprint 4 — Escala de vendas
 
