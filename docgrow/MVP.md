@@ -12,6 +12,11 @@ Evolução do MedGroth para a marca internacional. Estado: **fundação pronta**
 | App funcional BR (diagnóstico, plano, CRM, metas) | ✅ herdado | `../medgroth/app.html` |
 | Views de valor: Practice Health Score + Cofre de Receita Recuperada | ✅ no ar | `docgrow_health_score`, `docgrow_cofre_recuperado` |
 | Auditoria (revisão, saúde/compliance, supervisão, inovação) | ✅ 28/07 | pareceres consolidados em `../ideias/` |
+| **App funcional DocGrow** (cockpit Cofre+Health Score, agenda×pagamento, CRM, follow-ups, assinaturas, GrothPedia) | ✅ 28/07 | `app.html` — local-first |
+| Sincronização com a nuvem (login Supabase e-mail/senha + upsert RLS nas tabelas `docgrow_*`) | ✅ 28/07 | `app.html` ("Conectar à nuvem") |
+| Aplicação curada Apply-to-Join (20 vagas de fundador) | ✅ 28/07 | `aplicacao.html` → `medgroth_leads` |
+| Painel do fundador (leads em tempo real + WhatsApp) | ✅ 28/07 | `painel.html` (login Supabase) |
+| Demo pública de IA de campo único (diagnóstico/plano/script por regras) | ✅ 28/07 | `index.html#demo` — sem chave no frontend |
 
 ## Escopo do MVP (Sprints 1–3 do BACKLOG)
 

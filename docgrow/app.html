@@ -152,8 +152,8 @@
 <div id="app" style="display:none">
 <header>
   <div class="top">
-    <a class="brand" href="index.html"><span class="logo">Dg</span>&nbsp; DocGrow <span class="pill dim" style="margin-left:6px">beta local</span></a>
-    <div class="user"><span id="u-nome"></span><button onclick="exportData()">Exportar dados</button><button onclick="resetAll()">Sair</button></div>
+    <a class="brand" href="index.html"><span class="logo">Dg</span>&nbsp; DocGrow <span class="pill dim" style="margin-left:6px" id="cloud-pill">local</span></a>
+    <div class="user"><span id="u-nome"></span><button onclick="openCloud()" id="cloud-btn">Conectar à nuvem</button><button onclick="exportData()">Exportar dados</button><button onclick="resetAll()">Sair</button></div>
   </div>
   <nav class="tabs">
     <div class="tab active" data-t="cockpit" onclick="go('cockpit')">💰 Cockpit</div>
@@ -325,6 +325,19 @@
   </div>
 </dialog>
 
+<dialog id="d-cloud">
+  <h3>Conectar à nuvem ☁️</h3>
+  <p style="color:var(--muted); font-size:0.86rem; margin-bottom:14px">Seus dados continuam neste navegador e passam a sincronizar com o Supabase (São Paulo · LGPD), protegidos por RLS: só você lê o que é seu.</p>
+  <label>E-mail<input id="cl-email" type="email" autocomplete="username" placeholder="voce@clinica.com.br"></label>
+  <label>Senha<input id="cl-senha" type="password" autocomplete="current-password" placeholder="mínimo 6 caracteres"></label>
+  <div id="cl-erro" style="color:var(--red-light); font-size:0.8rem; display:none; margin-bottom:8px"></div>
+  <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:6px; flex-wrap:wrap">
+    <button class="btn btn-ghost btn-sm" onclick="dc('d-cloud')">Agora não</button>
+    <button class="btn btn-ghost btn-sm" onclick="cloudAuth(true)">Criar conta</button>
+    <button class="btn btn-em btn-sm" onclick="cloudAuth(false)">Entrar e sincronizar</button>
+  </div>
+</dialog>
+
 <dialog id="d-converte">
   <h3>Follow-up convertido 🎉</h3>
   <p style="color:var(--muted); font-size:0.86rem; margin-bottom:14px">Quanto este retorno gerou (ou vai gerar) em receita? Esse valor entra no Cofre — só some o que é real.</p>
@@ -349,8 +362,27 @@ function load() {
   try { var d = JSON.parse(localStorage.getItem(DB_KEY) || 'null'); if (d) return d; } catch (e) {}
   return { profile: null, pacientes: [], consultas: [], followups: [], protocolos: [], assinaturas: [], pagamentos: [], eventos: [] };
 }
-function save() { localStorage.setItem(DB_KEY, JSON.stringify(db)); }
-function uid() { return 'dg-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8); }
+function save() { localStorage.setItem(DB_KEY, JSON.stringify(db)); scheduleSync(); }
+function uid() {
+  if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) { var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16); });
+}
+var UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+function migrateIds() {
+  /* ids antigos ('dg-…') viram UUID para casar com o schema do Supabase */
+  var map = {}, changed = false;
+  ['pacientes', 'consultas', 'followups', 'protocolos', 'assinaturas', 'pagamentos', 'eventos'].forEach(function (t) {
+    (db[t] || []).forEach(function (r) { if (r.id && !UUID_RE.test(r.id)) { map[r.id] = uid(); r.id = map[r.id]; changed = true; } });
+  });
+  if (db.profile && db.profile.id && !UUID_RE.test(db.profile.id)) { map[db.profile.id] = uid(); db.profile.id = map[db.profile.id]; changed = true; }
+  if (!changed) return;
+  var fix = function (r, k) { if (r[k] && map[r[k]]) r[k] = map[r[k]]; };
+  db.consultas.forEach(function (r) { fix(r, 'paciente_id'); });
+  db.followups.forEach(function (r) { fix(r, 'paciente_id'); });
+  db.assinaturas.forEach(function (r) { fix(r, 'paciente_id'); fix(r, 'protocolo_id'); });
+  db.pagamentos.forEach(function (r) { fix(r, 'assinatura_id'); fix(r, 'consulta_id'); });
+  localStorage.setItem(DB_KEY, JSON.stringify(db));
+}
 function ev(tipo, payload) { db.eventos.push({ id: uid(), tipo: tipo, payload: payload || null, criado_em: new Date().toISOString() }); save(); }
 function fmt(v) { return 'R$ ' + (Math.round(v || 0)).toLocaleString('pt-BR'); }
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -358,8 +390,100 @@ function zapLink(num, msg) { return 'https://wa.me/55' + String(num || '').repla
 function dc(id) { document.getElementById(id).close(); }
 function daysAgo(iso) { return Math.floor((Date.now() - new Date(iso).getTime()) / 864e5); }
 
+/* ── nuvem: auth + sincronização ─────────────────────────── */
+var CLOUD_KEY = 'docgrow_cloud';
+function cloud() { try { return JSON.parse(localStorage.getItem(CLOUD_KEY) || 'null'); } catch (e) { return null; } }
+function setCloud(c) { if (c) localStorage.setItem(CLOUD_KEY, JSON.stringify(c)); else localStorage.removeItem(CLOUD_KEY); cloudUi(); }
+function cloudUi() {
+  var c = cloud(), pill = document.getElementById('cloud-pill'), btn = document.getElementById('cloud-btn');
+  if (!pill) return;
+  if (c) { pill.textContent = 'nuvem ✓'; pill.className = 'pill'; btn.textContent = 'Sincronizar agora'; btn.onclick = function () { syncAll(true); }; }
+  else { pill.textContent = 'local'; pill.className = 'pill dim'; btn.textContent = 'Conectar à nuvem'; btn.onclick = openCloud; }
+}
+function openCloud() { document.getElementById('d-cloud').showModal(); }
+function cloudAuth(signup) {
+  var email = document.getElementById('cl-email').value.trim(), senha = document.getElementById('cl-senha').value;
+  var erro = document.getElementById('cl-erro'); erro.style.display = 'none';
+  if (!email || senha.length < 6) { erro.textContent = 'Informe e-mail e senha (mín. 6 caracteres).'; erro.style.display = 'block'; return; }
+  var path = signup ? '/auth/v1/signup' : '/auth/v1/token?grant_type=password';
+  fetch(MEDGROTH.url + path, { method: 'POST', headers: { 'apikey': MEDGROTH.key, 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, password: senha }) })
+    .then(function (r) { return r.json(); })
+    .then(function (j) {
+      if (j.access_token && j.user) {
+        setCloud({ token: j.access_token, refresh: j.refresh_token, exp: Date.now() + (j.expires_in || 3600) * 1000 - 60000, uid: j.user.id, email: email });
+        /* o perfil passa a usar o id do usuário autenticado (RLS: id = auth.uid()) */
+        if (db.profile) { db.profile.id = j.user.id; localStorage.setItem(DB_KEY, JSON.stringify(db)); }
+        dc('d-cloud'); syncAll(true);
+      } else if (signup && j.user && !j.access_token) {
+        erro.textContent = 'Conta criada! Confirme o e-mail que enviamos e depois clique em "Entrar e sincronizar".'; erro.style.display = 'block';
+      } else {
+        erro.textContent = j.error_description || j.msg || 'Falha na autenticação.'; erro.style.display = 'block';
+      }
+    }).catch(function () { erro.textContent = 'Sem conexão — tente de novo.'; erro.style.display = 'block'; });
+}
+function cloudToken() {
+  var c = cloud();
+  if (!c) return Promise.resolve(null);
+  if (Date.now() < c.exp) return Promise.resolve(c.token);
+  return fetch(MEDGROTH.url + '/auth/v1/token?grant_type=refresh_token', { method: 'POST', headers: { 'apikey': MEDGROTH.key, 'Content-Type': 'application/json' }, body: JSON.stringify({ refresh_token: c.refresh }) })
+    .then(function (r) { return r.json(); })
+    .then(function (j) { if (j.access_token) { setCloud({ token: j.access_token, refresh: j.refresh_token, exp: Date.now() + (j.expires_in || 3600) * 1000 - 60000, uid: c.uid, email: c.email }); return j.access_token; } setCloud(null); return null; })
+    .catch(function () { return null; });
+}
+/* colunas aceitas por tabela (espelho de DATABASE.sql) — nada fora disso vai pro banco */
+var SYNC_COLS = {
+  docgrow_pacientes: ['id', 'profile_id', 'nome', 'whatsapp', 'email', 'origem', 'status', 'criado_em'],
+  docgrow_protocolos: ['id', 'profile_id', 'nome', 'descricao', 'preco_mensal', 'moeda', 'ativo', 'criado_em'],
+  docgrow_consultas: ['id', 'profile_id', 'paciente_id', 'inicio', 'fim', 'tipo', 'consentimento_tele', 'status', 'valor', 'pago', 'criado_em'],
+  docgrow_assinaturas_pacientes: ['id', 'profile_id', 'paciente_id', 'protocolo_id', 'status', 'valor', 'iniciada_em', 'cancelada_em'],
+  docgrow_followups: ['id', 'profile_id', 'paciente_id', 'tipo', 'devido_em', 'enviado_em', 'status', 'resultado_valor', 'criado_em'],
+  docgrow_pagamentos: ['id', 'profile_id', 'assinatura_id', 'consulta_id', 'valor', 'moeda', 'metodo', 'status', 'criado_em'],
+  docgrow_eventos: ['id', 'profile_id', 'tipo', 'payload', 'criado_em']
+};
+function pick(r, cols, uidv) {
+  var o = { profile_id: uidv };
+  cols.forEach(function (k) { if (k !== 'profile_id' && r[k] !== undefined) o[k] = r[k]; });
+  return o;
+}
+function upsert(token, table, rows) {
+  if (!rows.length) return Promise.resolve(true);
+  return fetch(MEDGROTH.rest(table + '?on_conflict=id'), {
+    method: 'POST',
+    headers: { 'apikey': MEDGROTH.key, 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+    body: JSON.stringify(rows)
+  }).then(function (r) { return r.ok; }).catch(function () { return false; });
+}
+var syncTimer = null, syncing = false;
+function scheduleSync() { if (!cloud()) return; clearTimeout(syncTimer); syncTimer = setTimeout(function () { syncAll(false); }, 4000); }
+function syncAll(manual) {
+  if (syncing || !db.profile) return;
+  syncing = true;
+  var pill = document.getElementById('cloud-pill');
+  cloudToken().then(function (token) {
+    if (!token) { syncing = false; if (manual) alert('Sessão expirada — conecte de novo.'); cloudUi(); return; }
+    var u = cloud().uid;
+    var p = db.profile;
+    /* ordem respeita as FKs: profile → pacientes/protocolos → consultas/assinaturas → followups/pagamentos → eventos */
+    upsert(token, 'docgrow_profiles', [{ id: u, nome: p.nome, email: cloud().email, whatsapp: p.whatsapp || null, especialidade: p.especialidade || null, nicho: p.nicho || null, origem: p.origem || 'app', criado_em: p.criado_em }])
+      .then(function (ok) { return ok && upsert(token, 'docgrow_pacientes', db.pacientes.map(function (r) { return pick(r, SYNC_COLS.docgrow_pacientes, u); })); })
+      .then(function (ok) { return ok && upsert(token, 'docgrow_protocolos', db.protocolos.map(function (r) { return pick(r, SYNC_COLS.docgrow_protocolos, u); })); })
+      .then(function (ok) { return ok && upsert(token, 'docgrow_consultas', db.consultas.map(function (r) { return pick(r, SYNC_COLS.docgrow_consultas, u); })); })
+      .then(function (ok) { return ok && upsert(token, 'docgrow_assinaturas_pacientes', db.assinaturas.map(function (r) { return pick(r, SYNC_COLS.docgrow_assinaturas_pacientes, u); })); })
+      .then(function (ok) { return ok && upsert(token, 'docgrow_followups', db.followups.map(function (r) { return pick(r, SYNC_COLS.docgrow_followups, u); })); })
+      .then(function (ok) { return ok && upsert(token, 'docgrow_pagamentos', db.pagamentos.map(function (r) { return pick(r, SYNC_COLS.docgrow_pagamentos, u); })); })
+      .then(function (ok) { return ok && upsert(token, 'docgrow_eventos', db.eventos.map(function (r) { return pick(r, SYNC_COLS.docgrow_eventos, u); })); })
+      .then(function (ok) {
+        syncing = false;
+        if (pill) pill.textContent = ok ? 'nuvem ✓' : 'nuvem ⚠';
+        if (manual && ok) alert('Sincronizado! Seus dados estão na nuvem (São Paulo · LGPD).');
+        if (manual && !ok) alert('Sincronização parcial — os dados locais estão intactos; tento de novo na próxima alteração.');
+      });
+  });
+}
+
 /* ── boot ─────────────────────────────────────────────────── */
 function boot() {
+  migrateIds();
   if (!db.profile) {
     /* importa perfil do MedGroth se existir */
     try {
@@ -371,7 +495,7 @@ function boot() {
       }
     } catch (e) {}
   }
-  if (db.profile) { document.getElementById('app').style.display = ''; document.getElementById('u-nome').textContent = db.profile.nome + ' · ' + (db.profile.nicho || ''); renderAll(); }
+  if (db.profile) { document.getElementById('app').style.display = ''; document.getElementById('u-nome').textContent = db.profile.nome + ' · ' + (db.profile.nicho || ''); cloudUi(); renderAll(); }
   else { document.getElementById('auth').style.display = ''; }
 }
 function createProfile() {
