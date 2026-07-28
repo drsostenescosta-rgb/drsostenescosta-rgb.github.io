@@ -1,9 +1,12 @@
 # MedGroth — Specs de 8 criativos de imagem (prontos para geração; NÃO publicar antes do gate)
 
+**ICP (ampliado pelo Founder):** profissionais da saúde em geral e donos de clínica — esteticistas, fisioterapeutas, biomédicos, enfermeiros, nutricionistas, dentistas, médicos. Nenhuma peça fala só com médico.
+**Veto regulatório ampliado (vale para TODAS as peças):** as restrições publicitárias valem pelos conselhos de todas as profissões do ICP (CFM, COFFITO, COREN, CFN, CFO, CFBM). Em especial: **nenhum "antes e depois" com promessa** (CFN e o campo da estética são os mais restritivos e dão o teto), nenhuma promessa de desfecho clínico/estético, nenhuma imagem de corpo/rosto transformado como argumento de venda.
+
 ## Identidade visual (extraída do site — usar em TODOS os prompts)
 - **Paleta:** fundo verde-preto profundo #04080a / #071013; esmeralda #19c37d e #3ddc97 (destaque principal); dourado #c9a227 / #e2c464 (acento raro, máx. 1 elemento por peça); texto off-white #e8efea; cinza-esverdeado #8fa39a para apoio.
 - **Tipografia nas artes:** títulos em serifada elegante (Fraunces ou similar: serif de alto contraste, itálico permitido na palavra de ênfase); apoio em sans (Inter); rótulos técnicos em mono (JetBrains Mono, caixa alta, letter-spacing largo).
-- **Mood:** sóbrio, clínico-premium, "fintech da saúde". NUNCA: estetoscópio em cima de dinheiro, médico de jaleco sorrindo apontando pra texto, seta de foguete, dourado excessivo. Isso é linguagem de guru — defeito de marca.
+- **Mood:** sóbrio, clínico-premium, "fintech da saúde". NUNCA: estetoscópio em cima de dinheiro, profissional de jaleco sorrindo apontando pra texto, seta de foguete, dourado excessivo, "antes e depois" de qualquer natureza. Isso é linguagem de guru — defeito de marca (e risco regulatório no ICP amplo).
 - **Assinatura:** logo "Mg" (quadrado arredondado com borda esmeralda) + "MedGroth" pequeno no rodapé de cada peça.
 - Disclaimers exigidos por peça estão indicados. Texto de disclaimer sempre legível (mín. ~18px em 1080px de largura).
 
@@ -13,7 +16,7 @@
 - **Formato:** Feed 4:5 (1080×1350). Uso: post de fixação de posicionamento + capa de destaque.
 - **Prompt de geração:** "Minimalist dark editorial poster, deep green-black background (#04080a) with a very subtle radial emerald glow in the upper left, large elegant high-contrast serif typography in off-white reading centered, one word in italic emerald green (#3ddc97), generous negative space, faint thin monospace label in uppercase at top, premium fintech-health aesthetic, no people, no icons, film grain very subtle"
 - **Headline (na arte):** "Você aprendeu a cuidar. Ninguém te ensinou a *crescer*." (crescer em itálico esmeralda)
-- **Texto de apoio (na arte, pequeno, mono, topo):** PARA MÉDICOS DE NICHO PARTICULAR
+- **Texto de apoio (na arte, pequeno, mono, topo):** PARA QUEM VIVE DA PRÓPRIA CLÍNICA — ESTÉTICA · FISIO · NUTRIÇÃO · ODONTO · MEDICINA
 - **Legenda de apoio (fora da arte):** ver calendário, dia 1.
 - **Evidência da dor:** headline literal da landing — é a frase mais validada da marca.
 
@@ -60,8 +63,8 @@
 - **Formato:** Story 9:16 + feed 1:1. Uso: peça de oferta do beta; só afirma o que os termos (cláusula 2.2) e o site afirmam.
 - **Prompt:** "Dark premium announcement poster, deep green-black background, a thin elegant gold (#c9a227) keyline frame around the composition, centered serif headline in off-white, a small monospace label in gold reading a short uppercase phrase like 'BETA FUNDADOR · ACOMPANHAMENTO DIRETO', restrained, no confetti, no countdown, no urgency clichés, feels like a private members announcement"
 - **Headline:** "Preço de lançamento. Garantido enquanto sua assinatura estiver ativa."
-- **Apoio:** "Beta fundador: acompanhamento direto do Sóstenes — e a agenda 1:1 dele é limitada de verdade, pela agenda, não por contador." (Rótulo mono em dourado: "BETA FUNDADOR · ACOMPANHAMENTO DIRETO")
-- **Regra do Conselho:** a peça só afirma o que os termos do beta garantem. Nenhum número de vagas, nenhuma promessa de preço eterno, nenhum contador — a urgência legítima é a capacidade 1:1 real do founder, nada além.
+- **Apoio:** "Assinatura anual — Start R$ 970/ano · Pro R$ 2.970/ano · Aceleração R$ 9.970/ano. Ajustes futuros de preço não afetam assinaturas ativas. Beta fundador: acompanhamento direto do Sóstenes — e a agenda 1:1 dele é limitada de verdade, pela agenda, não por contador." (Rótulo mono em dourado: "BETA FUNDADOR · ASSINATURA ANUAL")
+- **Regra do Conselho:** a peça só afirma o que os termos do beta garantem. Valores conforme proposta do Conselho (ratificável — conferir contra os termos publicados antes de exportar). Nenhum número de vagas, nenhuma promessa de preço eterno, nenhum contador — a urgência legítima é a capacidade 1:1 real do founder, nada além.
 
 ## Criativo 8 — "Anúncio-mestre" (reserva para fase de tráfego pago — NÃO usar agora)
 - **Formato:** 1080×1080 e 1080×1920 (par para futuro Meta Ads). Produzir agora, engavetar até o Conselho liberar tráfego pago.
@@ -74,8 +77,10 @@
 ---
 
 ## Checklist de fiscalização antes de exportar qualquer peça
-1. Alguma promessa de resultado ("dobre sua receita", "fature X")? → reescrever.
-2. Alguma feature que não existe no produto hoje? → cortar.
-3. Escassez sem mecanismo real e auditável? → cortar.
-4. Passaria no teste "isso parece post de guru?" com um médico cético? → se sim, refazer.
-5. Disclaimer presente onde há número/projeção? → conferir legibilidade.
+1. Alguma promessa de resultado ("dobre sua receita", "fature X", desfecho clínico/estético)? → reescrever.
+2. Algum "antes e depois" — de paciente/cliente, de corpo, de faturamento? → cortar (veto de todos os conselhos; CFN e estética são o teto).
+3. Alguma feature que não existe no produto hoje? → cortar.
+4. Escassez sem mecanismo real e auditável? → cortar.
+5. Passaria no teste "isso parece post de guru?" com um profissional de saúde cético — a esteticista, o fisio, a nutri, o dentista? → se sim, refazer.
+6. Disclaimer presente onde há número/projeção? → conferir legibilidade.
+7. A peça fala só com médico (vocativo "doutora", "faculdade de medicina" como universal)? → ampliar para o espectro saúde.

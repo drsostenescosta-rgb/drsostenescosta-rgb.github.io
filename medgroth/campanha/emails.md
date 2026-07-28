@@ -3,6 +3,7 @@
 **Disparo:** e-mail 1 imediato após o diagnóstico; depois D+2, D+4, D+7, D+10.
 **Remetente:** "Sóstenes, do MedGroth" <contato@...> — sempre pessoa, nunca "Equipe MedGroth".
 **Regras:** texto puro ou HTML mínimo (parecer e-mail de gente, não de ferramenta). Sem countdown, sem "ÚLTIMA CHANCE". Toda menção a número é hipótese com premissa à vista. CTA final da sequência: conversa de 15 min no WhatsApp com o Sóstenes — enquadrada como conversa, não como "call de vendas" (a landing promete "sem call de vendas"; a conversa é opt-in explícito do lead).
+**ICP (ampliado pelo Founder):** profissionais da saúde em geral e donos de clínica — esteticistas, fisioterapeutas, biomédicos, enfermeiros, nutricionistas, dentistas, médicos. Os e-mails já eram escritos sobre a dor comum (sabe cuidar, não sabe cobrar/captar); a regra agora é: nenhum exemplo exclusivamente médico, e {especialidade} cobre qualquer vertical.
 **Personalização mínima disponível no lead (captura.html):** {nome}, {especialidade}, {faturamento}, {perfil_diagnostico} (ex.: "especialista sem captação").
 **Rodapé fixo em todos:** endereço, link de descadastro em 1 clique, e a linha: "O MedGroth é ferramenta de estratégia e gestão. Projeções são estimativas a partir das suas respostas, não garantia de resultado."
 
@@ -46,7 +47,7 @@ fundador do MedGroth (a história de por que construí isso está em [link do bl
 
 {nome},
 
-a cena mais comum em clínica particular no Brasil: a pessoa chama no WhatsApp, pergunta o preço da consulta, você responde… e ela some.
+a cena mais comum em clínica particular no Brasil — no consultório médico, na clínica de estética, no studio de fisio, na agenda da nutri: a pessoa chama no WhatsApp, pergunta o preço, você responde… e ela some.
 
 Quase nunca é "achei caro". Na maioria das vezes é: a vida atropelou, ela ia decidir depois, e ninguém voltou a falar com ela. Quem some não disse "não" — só não foi acompanhada.
 
@@ -71,9 +72,9 @@ Isso é a semana 3 do seu plano ("roteiro de conversão") começando cedo. Se qu
 
 {nome},
 
-vou te contar o que me incomoda no jeito que se fala de "recorrência" no marketing médico: parece truque para extrair mais do paciente. E quando é feito assim, é isso mesmo — e é errado.
+vou te contar o que me incomoda no jeito que se fala de "recorrência" no marketing de saúde: parece truque para extrair mais do paciente. E quando é feito assim, é isso mesmo — e é errado.
 
-Mas eu passei quase dez anos atendendo (fisioterapia, protocolos de emagrecimento e estética) e vi o outro lado: **o paciente de consulta avulsa é o paciente pior cuidado.** Ele vem uma vez, leva uma conduta, e volta — quando volta — meses depois, sem continuidade nenhuma. Em {especialidade}, você sabe melhor do que eu: nada relevante se resolve em um encontro.
+Mas eu passei quase dez anos atendendo (fisioterapia, protocolos de emagrecimento e estética) e vi o outro lado: **quem é atendido de forma avulsa é quem é pior cuidado.** A pessoa vem uma vez — consulta, sessão, procedimento — leva uma conduta, e volta, quando volta, meses depois, sem continuidade nenhuma. Em {especialidade}, você sabe melhor do que eu: nada relevante se resolve em um encontro.
 
 O protocolo com acompanhamento contínuo existe primeiro pelo motivo clínico: reavaliações marcadas, ajuste de conduta, adesão. A previsibilidade de receita é consequência de fazer a coisa certa — não o contrário.
 
@@ -96,7 +97,7 @@ A semana 4 do seu plano monta isso passo a passo: [Ver minha semana 4]
 
 uma semana desde o seu diagnóstico. Estatisticamente, é agora que acontece uma de duas coisas: o plano está andando — ou ele virou mais um PDF mental na pilha "depois eu vejo".
 
-Se travou, quase sempre foi na semana 2 (máquina de captação). É a que mais dá desconforto, porque envolve aparecer: definir o posicionamento e comunicar. Médico bom costuma odiar essa parte — parece autopromoção. Não é. É deixar que o paciente certo te encontre.
+Se travou, quase sempre foi na semana 2 (máquina de captação). É a que mais dá desconforto, porque envolve aparecer: definir o posicionamento e comunicar. Quem é bom no cuidado — a fisio, a nutri, o dentista, a esteticista, o médico — costuma odiar essa parte: parece autopromoção. Não é. É deixar que a pessoa certa te encontre.
 
 O que eu faria no seu lugar, em ordem:
 
@@ -104,7 +105,7 @@ O que eu faria no seu lugar, em ordem:
 2. Escolher UMA ação da semana 2 e agendar 1 hora na agenda desta semana — literalmente como se fosse um paciente.
 3. Ignorar o resto até essa hora acontecer.
 
-E uma honestidade sobre o produto: o MedGroth gratuito te dá o diagnóstico e o plano. A execução acompanhada — metas, projeção, scripts de conversão, backlog semanal — é dos planos pagos. Não vou fingir que a versão gratuita faz tudo; ela faz o suficiente para você validar se o método funciona para você. Se estiver funcionando, os planos estão aqui: [Ver planos]
+E uma honestidade sobre o produto: o MedGroth gratuito te dá o diagnóstico e o plano. A execução acompanhada — metas, projeção, scripts de conversão, backlog semanal — é dos planos pagos (assinatura anual, com preço de lançamento; os valores estão na página). Não vou fingir que a versão gratuita faz tudo; ela faz o suficiente para você validar se o método funciona para você. Se estiver funcionando, os planos estão aqui: [Ver planos]
 
 — Sóstenes
 
@@ -127,7 +128,7 @@ Três coisas para ficarem claras antes de você aceitar:
 
 1. **Não é call de vendas disfarçada.** Se o MedGroth pago fizer sentido para o seu caso, eu vou dizer — e dizer qual plano e por quê. Se não fizer, eu vou dizer também. Já falei "não é pra você agora" mais de uma vez, e vou continuar falando.
 2. **Por que eu faço isso de graça:** estou nos primeiros clientes do produto. Cada conversa me ensina mais sobre a dor real do que qualquer métrica. Você me dá contexto; eu te dou o que sei. Troca justa.
-3. **Sobre o momento:** estamos em beta fundador. Isso significa duas coisas verdadeiras: quem assina agora tem o preço de lançamento garantido enquanto a assinatura permanecer ativa (está nos termos, cláusula 2.2 — não é promessa de e-mail), e o acompanhamento é feito por mim, diretamente. Essa segunda parte tem um limite físico honesto: minha agenda de conversas 1:1 é a minha agenda de verdade. Quando ela aperta, o próximo horário fica mais longe — só isso. Sem contador, sem "vagas acabando".
+3. **Sobre o momento:** estamos em beta fundador. Isso significa duas coisas verdadeiras: quem assina agora fecha a assinatura anual no preço de lançamento, e ajustes futuros de preço não afetam assinaturas ativas (está nos termos — não é promessa de e-mail). E o acompanhamento é feito por mim, diretamente. Essa segunda parte tem um limite físico honesto: minha agenda de conversas 1:1 é a minha agenda de verdade. Quando ela aperta, o próximo horário fica mais longe — só isso. Sem contador, sem "vagas acabando".
 
 Se topar: [Chamar o Sóstenes no WhatsApp] (já vai com uma mensagem pronta, é só enviar)
 
@@ -144,12 +145,13 @@ Obrigado por ter chegado até aqui.
 
 ## Pendências para o disparo (dono: Founder + Engenharia)
 
-Nenhum e-mail desta sequência pode ser disparado antes de resolver os 4 itens abaixo. Isto não é burocracia: dois deles são contrato com o lead.
+Nenhum e-mail desta sequência pode ser disparado antes de resolver os 5 itens abaixo. Isto não é burocracia: três deles são contrato com o lead.
 
 1. **Remetente real a definir.** O cabeçalho diz `<contato@...>` porque o endereço não existe ainda. Precisa de domínio de envio próprio (ou subdomínio, ex.: `sostenes@mail.medgroth.com.br`) com SPF/DKIM/DMARC configurados — sem isso, a meta de abertura de 60% do e-mail 1 é fantasia de entregabilidade. Dono: Engenharia; decisão de nome: Founder.
 2. **ESP/ferramenta de disparo inexistente.** Não há hoje nenhuma ferramenta contratada que dispare a sequência D+0/D+2/D+4/D+7/D+10 a partir do evento "diagnóstico completo" no Supabase. Escolher (ex.: Resend, Brevo, Loops) e integrar com o webhook do lead antes de prometer qualquer automação. Dono: Engenharia.
 3. **Placeholder `[link do blog]`.** Aparece nos e-mails 1 e 5 e aponta para uma página que precisa ser confirmada (a história do founder no index raiz? um post dedicado?). Definir a URL final e substituir nos dois pontos antes do disparo. Dono: Founder.
-4. **Descadastro em 1 clique — mecanismo REAL.** O rodapé promete "link de descadastro em 1 clique e funciona de verdade", e o e-mail 1 repete a promessa no corpo. Essa frase é contrato, não copy: exige endpoint de opt-out funcional (List-Unsubscribe header + supressão imediata na base), testado antes do primeiro envio. Se o mecanismo não existir, os e-mails não saem — é exatamente o tipo de promessa quebrada que a marca não sobrevive a quebrar. Dono: Engenharia; fiscalização: Founder.
+4. **Preços anuais ratificados e publicados.** Os e-mails 4 e 5 agora referenciam a assinatura anual (Start R$ 970/ano, Pro R$ 2.970/ano, Aceleração R$ 9.970/ano — proposta do Conselho, ratificável). Antes do disparo: Founder ratifica os valores, os termos e a página de planos exibem exatamente esses números e a regra "ajustes futuros não afetam assinaturas ativas". E-mail prometendo preço que a página não confirma é quebra de confiança na primeira dobra. Dono: Founder + Engenharia.
+5. **Descadastro em 1 clique — mecanismo REAL.** O rodapé promete "link de descadastro em 1 clique e funciona de verdade", e o e-mail 1 repete a promessa no corpo. Essa frase é contrato, não copy: exige endpoint de opt-out funcional (List-Unsubscribe header + supressão imediata na base), testado antes do primeiro envio. Se o mecanismo não existir, os e-mails não saem — é exatamente o tipo de promessa quebrada que a marca não sobrevive a quebrar. Dono: Engenharia; fiscalização: Founder.
 
 ---
 
