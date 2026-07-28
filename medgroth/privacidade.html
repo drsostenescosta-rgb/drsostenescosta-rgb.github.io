@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Política de Privacidade — MedGroth</title>
+<meta name="description" content="Política de Privacidade do MedGroth (LGPD): quais dados coletamos, por quê, onde ficam, seus direitos e como falar com a gente." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#04080a; --bg-2:#071013; --card:rgba(13,26,26,0.6); --card-solid:#0b1518;
+    --em:#19c37d; --em-light:#3ddc97; --em-dark:#0e9f63;
+    --gold:#c9a227; --gold-light:#e2c464;
+    --text:#e8efea; --muted:#8fa39a; --border:rgba(232,239,234,0.09); --border-strong:rgba(232,239,234,0.18);
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.65; overflow-x:hidden; }
+  a { color:var(--em-light); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  h1,h2,h3 { font-family:var(--serif); font-weight:500; line-height:1.2; }
+  em { font-style:italic; color:var(--em-light); }
+  .wrap { max-width:820px; margin:0 auto; padding:0 24px; position:relative; z-index:2; }
+  .orb { position:fixed; border-radius:50%; filter:blur(110px); opacity:0.35; z-index:-1; pointer-events:none; }
+  .o1 { width:560px; height:560px; top:-15%; left:-10%; background:radial-gradient(circle,rgba(25,195,125,0.32),transparent 70%); }
+  .o2 { width:480px; height:480px; bottom:-18%; right:-12%; background:radial-gradient(circle,rgba(201,162,39,0.18),transparent 70%); }
+  .eyebrow { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--em-light); font-weight:600; display:inline-flex; align-items:center; gap:10px; }
+  .eyebrow::before { content:''; width:26px; height:1px; background:linear-gradient(90deg,var(--em),transparent); }
+  .grad { background:linear-gradient(115deg,#fff 0%,#d9f5e6 45%,var(--em-light) 75%,var(--em) 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+
+  header.nav { position:fixed; top:0; left:0; right:0; z-index:100; backdrop-filter:blur(18px); background:rgba(4,8,10,0.65); border-bottom:1px solid var(--border); }
+  .nav-inner { display:flex; align-items:center; justify-content:space-between; padding:13px 24px; max-width:1120px; margin:0 auto; gap:14px; }
+  .brand { display:flex; align-items:center; gap:11px; color:var(--text); }
+  .brand:hover { text-decoration:none; }
+  .logo { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:1.05rem; color:var(--em-light); background:linear-gradient(145deg,rgba(25,195,125,0.16),rgba(25,195,125,0.03)); border:1px solid rgba(25,195,125,0.45); box-shadow:0 0 18px rgba(25,195,125,0.18); }
+  .brand-name { font-family:var(--serif); font-size:1.05rem; }
+  .brand-sub { font-family:var(--mono); font-size:0.56rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase; }
+  .back { font-size:0.85rem; color:var(--muted); }
+  .back:hover { color:var(--em-light); text-decoration:none; }
+
+  .hero { padding:140px 0 30px; }
+  .hero h1 { font-size:clamp(2rem,4.4vw,3rem); margin:18px 0 14px; letter-spacing:-0.01em; }
+  .hero p { color:var(--muted); max-width:62ch; }
+  .meta { font-family:var(--mono); font-size:0.72rem; color:var(--muted); margin-top:16px; }
+
+  .toc { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 24px; margin:34px 0; }
+  .toc h2 { font-size:0.95rem; margin-bottom:10px; font-family:var(--mono); text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); }
+  .toc ol { margin-left:20px; display:grid; gap:5px; font-size:0.9rem; }
+  .toc a { color:var(--text); }
+  .toc a:hover { color:var(--em-light); }
+
+  section.pol { padding:26px 0; border-top:1px solid var(--border); }
+  section.pol h2 { font-size:1.4rem; margin-bottom:14px; }
+  section.pol h3 { font-size:1.05rem; margin:20px 0 8px; color:var(--em-light); }
+  section.pol p, section.pol li { color:var(--muted); font-size:0.95rem; }
+  section.pol p { margin-bottom:12px; }
+  section.pol strong { color:var(--text); }
+  section.pol ul, section.pol ol { margin:0 0 14px 20px; display:grid; gap:7px; }
+  .legal { font-family:var(--mono); font-size:0.72rem; color:rgba(143,163,154,0.85); background:rgba(25,195,125,0.05); border-left:2px solid var(--em); padding:8px 12px; border-radius:0 8px 8px 0; margin:10px 0 16px; }
+  .tbl-scroll { overflow-x:auto; margin:14px 0 18px; }
+  table { border-collapse:collapse; width:100%; min-width:560px; font-size:0.86rem; }
+  th, td { text-align:left; padding:10px 12px; border:1px solid var(--border); color:var(--muted); vertical-align:top; }
+  th { color:var(--text); font-family:var(--mono); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; background:rgba(255,255,255,0.02); }
+  .card-box { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 22px; margin:14px 0; }
+  .card-box h3 { margin-top:0; }
+  .warn { border-color:rgba(201,162,39,0.4); }
+  .warn h3 { color:var(--gold-light); }
+
+  footer { border-top:1px solid var(--border); padding:34px 0; margin-top:40px; }
+  .foot { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center; color:var(--muted); font-size:0.82rem; }
+  .foot a { color:var(--muted); }
+  .foot a:hover { color:var(--em-light); }
+  .disclaimer { margin-top:14px; font-size:0.72rem; color:rgba(143,163,154,0.7); max-width:75ch; }
+</style>
+</head>
+<body>
+<div class="orb o1"></div><div class="orb o2"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">Mg</span>
+      <span><span class="brand-name">MedGroth</span><br><span class="brand-sub">máquina de crescimento médico</span></span>
+    </a>
+    <a class="back" href="index.html">← voltar ao site</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <span class="eyebrow">Privacidade &amp; LGPD</span>
+    <h1><span class="grad">Política de Privacidade</span></h1>
+    <p>Aqui está, em português claro, o que coletamos, por quê, onde os dados ficam e o que você pode exigir da gente. Sem juridiquês vazio: se algo não estiver claro, escreva para <a href="mailto:drsostenescosta@gmail.com">drsostenescosta@gmail.com</a> e a gente explica.</p>
+    <div class="meta">Versão 1.0 · vigente a partir de julho/2026 · Lei nº 13.709/2018 (LGPD)</div>
+  </div>
+
+  <div class="toc">
+    <h2>Nesta página</h2>
+    <ol>
+      <li><a href="#quem">Quem é o responsável (controlador)</a></li>
+      <li><a href="#dados">Quais dados coletamos e para quê</a></li>
+      <li><a href="#base">Base legal de cada tratamento</a></li>
+      <li><a href="#onde">Onde os dados ficam (Supabase + seu navegador)</a></li>
+      <li><a href="#pacientes">Dados de pacientes no CRM: quem responde pelo quê</a></li>
+      <li><a href="#compartilhamento">Com quem compartilhamos</a></li>
+      <li><a href="#cookies">Cookies, localStorage e analytics</a></li>
+      <li><a href="#retencao">Por quanto tempo guardamos</a></li>
+      <li><a href="#direitos">Seus direitos e como exercê-los</a></li>
+      <li><a href="#seguranca">Segurança e incidentes</a></li>
+      <li><a href="#mudancas">Mudanças nesta política</a></li>
+      <li><a href="#contato">Contato do controlador e do encarregado</a></li>
+    </ol>
+  </div>
+
+  <section class="pol" id="quem">
+    <h2>1. Quem é o responsável pelos seus dados</h2>
+    <p>O MedGroth é um produto do ecossistema Zetheon, operado por <strong>Sóstenes Costa Paiva</strong> ("MedGroth", "nós"). Para os dados que você fornece ao usar o site, a página de diagnóstico e a sua conta no MedGroth, nós somos o <strong>controlador</strong>: decidimos por que e como esses dados são tratados.</p>
+    <p>Contato do controlador: <a href="mailto:drsostenescosta@gmail.com">drsostenescosta@gmail.com</a>. Enquanto o MedGroth estiver em fase beta, o próprio fundador acumula a função de <strong>encarregado de dados (DPO)</strong>, prevista no art. 41 da LGPD.</p>
+    <div class="legal">Base: LGPD, art. 5º, VI (controlador) e art. 41 (encarregado). Regra clara.</div>
+    <p><strong>Atenção:</strong> os dados de <em>pacientes</em> que um médico digita dentro do CRM do MedGroth seguem um regime diferente — nesse caso o médico é o controlador e nós somos o operador. Explicamos isso em detalhe na <a href="#pacientes">seção 5</a>.</p>
+  </section>
+
+  <section class="pol" id="dados">
+    <h2>2. Quais dados coletamos e para quê</h2>
+    <p>Coletamos o mínimo necessário para entregar o diagnóstico e operar o produto. Nada de rastreamento escondido.</p>
+    <div class="tbl-scroll">
+      <table>
+        <tr><th>Onde</th><th>Dados</th><th>Para quê</th></tr>
+        <tr>
+          <td>Página de diagnóstico (captura)</td>
+          <td>Nome, WhatsApp, e-mail (opcional), especialidade/nicho, faixa de faturamento (opcional)</td>
+          <td>Gerar seu diagnóstico e plano de crescimento; entrar em contato sobre o MedGroth (o diagnóstico e, se você aceitou, uma conversa comercial)</td>
+        </tr>
+        <tr>
+          <td>Cadastro no app</td>
+          <td>Nome, WhatsApp, e-mail (opcional), nome da clínica</td>
+          <td>Criar e identificar sua conta; suporte</td>
+        </tr>
+        <tr>
+          <td>Uso do app</td>
+          <td>Respostas do diagnóstico (nicho, ticket, atendimentos/semana, gargalo, objetivo), progresso do plano, tarefas, leads que você cadastra</td>
+          <td>Fazer o produto funcionar: plano, metas, funil</td>
+        </tr>
+        <tr>
+          <td>Assinatura (quando houver plano pago)</td>
+          <td>Dados de cobrança processados pelo meio de pagamento; nós não armazenamos número de cartão</td>
+          <td>Cobrar a assinatura e emitir documentos fiscais</td>
+        </tr>
+      </table>
+    </div>
+    <p>A faixa de <strong>faturamento é opcional</strong> — o campo padrão é "prefiro não dizer" e o diagnóstico funciona sem ela. Não coletamos dados de menores nem dados sensíveis <em>seus</em> (saúde, biometria etc.) para operar o MedGroth.</p>
+  </section>
+
+  <section class="pol" id="base">
+    <h2>3. Base legal de cada tratamento</h2>
+    <ul>
+      <li><strong>Diagnóstico e conta:</strong> execução de contrato ou de procedimentos preliminares a pedido do titular — você pede o diagnóstico, nós precisamos dos dados para entregá-lo. <span class="legal" style="display:inline-block; margin:4px 0">LGPD, art. 7º, V. Regra clara.</span></li>
+      <li><strong>Contato comercial (WhatsApp/e-mail) sobre o MedGroth:</strong> consentimento, dado no checkbox do formulário — e revogável a qualquer momento (basta pedir). <span class="legal" style="display:inline-block; margin:4px 0">LGPD, art. 7º, I e art. 8º, §5º. Regra clara.</span></li>
+      <li><strong>Melhorias do produto e prevenção a fraudes:</strong> legítimo interesse, sempre limitado ao mínimo e sem surpreender você. <span class="legal" style="display:inline-block; margin:4px 0">LGPD, art. 7º, IX e art. 10. A aplicação concreta do legítimo interesse é interpretação e depende de teste de balanceamento documentado.</span></li>
+      <li><strong>Obrigações fiscais e de cobrança:</strong> cumprimento de obrigação legal. <span class="legal" style="display:inline-block; margin:4px 0">LGPD, art. 7º, II. Regra clara.</span></li>
+    </ul>
+  </section>
+
+  <section class="pol" id="onde">
+    <h2>4. Onde os dados ficam</h2>
+    <h3>4.1 Supabase (nuvem)</h3>
+    <p>Os dados do formulário de diagnóstico são gravados em banco de dados hospedado no <strong>Supabase</strong>, com acesso controlado por regras de segurança em nível de linha (Row Level Security). O Supabase atua como nosso <strong>suboperador de infraestrutura</strong> e pode manter servidores fora do Brasil; nesse caso a transferência internacional se apoia nas salvaguardas contratuais do provedor.</p>
+    <div class="legal">Base: LGPD, art. 33 (transferência internacional). Regra clara quanto à necessidade de salvaguarda; a suficiência das cláusulas do provedor é interpretação — verificar a região do projeto Supabase e o DPA vigente.</div>
+    <h3>4.2 Seu navegador (localStorage)</h3>
+    <p>Durante o beta, o app guarda seus dados de trabalho — diagnóstico, plano, tarefas e o funil de leads — <strong>no armazenamento local do seu próprio navegador</strong> (localStorage). Na prática: esses dados ficam no seu computador, não nos nossos servidores, e desaparecem se você limpar os dados do navegador. Dois efeitos honestos disso:</p>
+    <ul>
+      <li>Nós não temos acesso ao que você digita no CRM enquanto ele viver só no seu navegador;</li>
+      <li>Em contrapartida, <strong>não há backup nosso</strong> desses dados no beta — proteja seu dispositivo e não use computadores compartilhados sem bloqueio.</li>
+    </ul>
+    <p>Quando a sincronização em nuvem for ativada, esta política será atualizada antes, e a seção 5 (pacientes) passa a valer integralmente para os dados hospedados por nós.</p>
+  </section>
+
+  <section class="pol" id="pacientes">
+    <h2>5. Dados de pacientes digitados no CRM</h2>
+    <div class="card-box warn">
+      <h3>Resumo em uma linha</h3>
+      <p style="margin:0">Sobre os dados dos <em>seus</em> pacientes e leads, <strong>você (médico/clínica) é o controlador</strong> e o <strong>MedGroth é o operador</strong>: tratamos esses dados somente para fazer o produto funcionar, seguindo suas instruções — nunca para fins próprios.</p>
+    </div>
+    <div class="legal">Base: LGPD, art. 5º, VI e VII (controlador/operador), art. 39 (operador trata conforme instruções do controlador) e art. 42 (responsabilidade). Regra clara quanto aos papéis; o enquadramento concreto de cada dado é interpretação caso a caso.</div>
+    <h3>5.1 O que cabe ao médico/clínica (controlador)</h3>
+    <ul>
+      <li>Ter base legal para registrar o paciente/lead no CRM — em geral, execução de contrato ou procedimentos preliminares (o paciente procurou a clínica) e, para comunicação de marketing, o consentimento do paciente (LGPD, art. 7º, V e I);</li>
+      <li>Redobrar o cuidado porque dado ligado a contexto clínico pode revelar <strong>dado sensível de saúde</strong> — ex.: constar no funil de uma clínica de emagrecimento já diz algo sobre a saúde da pessoa (LGPD, art. 5º, II e art. 11 — a extensão desse enquadramento é interpretação, mas a postura prudente é tratar como sensível);</li>
+      <li>Registrar no CRM apenas o necessário para gestão de relacionamento (nome, contato, etapa do funil). <strong>Não digite dados clínicos</strong> (diagnósticos, exames, medicações) no CRM do MedGroth — prontuário é lugar de prontuário, com as regras do CFM (Resolução CFM nº 1.821/2007 e Código de Ética Médica) e sigilo profissional;</li>
+      <li>Atender aos pedidos de direitos dos pacientes (acesso, correção, eliminação) e responder por eles perante a ANPD.</li>
+    </ul>
+    <h3>5.2 O que cabe ao MedGroth (operador)</h3>
+    <ul>
+      <li>Tratar os dados de pacientes exclusivamente para prestar o serviço contratado, seguindo as instruções do controlador (LGPD, art. 39);</li>
+      <li>Nunca usar dados de pacientes para publicidade própria, venda a terceiros ou treinamento de modelos;</li>
+      <li>Adotar medidas de segurança técnicas e administrativas (LGPD, arts. 46 e 47);</li>
+      <li>Avisar o controlador sem demora se soubermos de incidente de segurança que afete esses dados;</li>
+      <li>Excluir ou devolver os dados hospedados por nós ao fim do contrato, salvo dever legal de guarda (LGPD, arts. 15 e 16).</li>
+    </ul>
+    <p>Um <strong>acordo de tratamento de dados (DPA)</strong> entre a clínica e o MedGroth formalizará essas obrigações antes de qualquer sincronização de dados de pacientes para os nossos servidores.</p>
+  </section>
+
+  <section class="pol" id="compartilhamento">
+    <h2>6. Com quem compartilhamos</h2>
+    <ul>
+      <li><strong>Supabase</strong> — hospedagem do banco de dados (infraestrutura);</li>
+      <li><strong>Google Fonts</strong> — ao carregar as páginas, seu navegador solicita as fontes aos servidores do Google, que recebe seu endereço IP nessa requisição;</li>
+      <li><strong>WhatsApp (Meta)</strong> — apenas se você clicar no botão de conversa; nós não enviamos seus dados ao WhatsApp, é você quem abre a conversa;</li>
+      <li><strong>Meio de pagamento</strong> (quando houver plano pago) — para processar a assinatura;</li>
+      <li><strong>Autoridades</strong> — somente mediante obrigação legal ou ordem válida.</li>
+    </ul>
+    <p><strong>Nós não vendemos seus dados. Ponto.</strong></p>
+  </section>
+
+  <section class="pol" id="cookies">
+    <h2>7. Cookies, localStorage e analytics</h2>
+    <p>Hoje o MedGroth <strong>não usa cookies de rastreamento nem ferramentas de analytics de terceiros</strong>. Usamos apenas o localStorage do seu navegador, que é essencial para o funcionamento do app (guardar sua conta, plano e funil) — por ser estritamente necessário, dispensa consentimento, mas você pode apagá-lo a qualquer momento limpando os dados do site no navegador.</p>
+    <p>Se um dia adicionarmos analytics, faremos com ferramenta configurada para minimização de dados e atualizaremos esta seção antes de ativar.</p>
+    <div class="legal">Base: LGPD, art. 6º, III (necessidade) e Guia de Cookies da ANPD (out/2022) — a dispensa de consentimento para armazenamento estritamente necessário é orientação da ANPD, não texto de lei: interpretação com respaldo oficial.</div>
+  </section>
+
+  <section class="pol" id="retencao">
+    <h2>8. Por quanto tempo guardamos</h2>
+    <ul>
+      <li><strong>Leads (diagnóstico):</strong> enquanto durar o relacionamento ou até você pedir exclusão; leads inativos são revisados e eliminados periodicamente;</li>
+      <li><strong>Conta e dados de uso:</strong> enquanto a conta existir; após cancelamento, eliminamos ou anonimizamos, salvo dever legal de guarda;</li>
+      <li><strong>Registros de cobrança:</strong> pelos prazos fiscais e de prescrição aplicáveis (em regra, 5 anos);</li>
+      <li><strong>Dados no seu navegador:</strong> sob seu controle direto — limpe quando quiser.</li>
+    </ul>
+    <div class="legal">Base: LGPD, arts. 15 e 16 (término do tratamento e hipóteses de conservação). Regra clara; os prazos fiscais específicos dependem da legislação tributária aplicável.</div>
+  </section>
+
+  <section class="pol" id="direitos">
+    <h2>9. Seus direitos</h2>
+    <p>A LGPD garante a você, a qualquer momento e gratuitamente:</p>
+    <ul>
+      <li>Confirmar se tratamos seus dados e <strong>acessá-los</strong>;</li>
+      <li><strong>Corrigir</strong> dados incompletos, inexatos ou desatualizados;</li>
+      <li>Pedir <strong>anonimização, bloqueio ou eliminação</strong> de dados desnecessários ou excessivos;</li>
+      <li><strong>Portabilidade</strong> a outro fornecedor;</li>
+      <li><strong>Eliminação</strong> dos dados tratados com seu consentimento;</li>
+      <li>Saber com quem <strong>compartilhamos</strong>;</li>
+      <li><strong>Revogar o consentimento</strong> — inclusive o de contato comercial — sem prejuízo dos tratamentos já realizados;</li>
+      <li>Peticionar à <strong>ANPD</strong> (Autoridade Nacional de Proteção de Dados) se não resolvermos.</li>
+    </ul>
+    <p>Como exercer: envie e-mail para <a href="mailto:drsostenescosta@gmail.com">drsostenescosta@gmail.com</a> com o assunto "LGPD". Respondemos em até 15 dias. Se o pedido envolver dados de <em>pacientes</em> de uma clínica, encaminharemos ao médico responsável (controlador) e ajudaremos no que for técnico.</p>
+    <div class="legal">Base: LGPD, art. 18 (direitos do titular) e art. 8º, §5º (revogação). Regra clara. O prazo de 15 dias é o do art. 19, II, para declaração completa de tratamento; adotamos como padrão geral de resposta por transparência.</div>
+  </section>
+
+  <section class="pol" id="seguranca">
+    <h2>10. Segurança e incidentes</h2>
+    <p>Adotamos medidas proporcionais ao porte do produto: acesso ao banco restrito por Row Level Security, chaves públicas segregadas das administrativas, comunicação via HTTPS e princípio do mínimo necessário na coleta. Nenhum sistema é 100% seguro; se ocorrer incidente de segurança com risco relevante a você, comunicaremos você e a ANPD em prazo razoável, conforme a regulamentação vigente.</p>
+    <div class="legal">Base: LGPD, arts. 46-48 (segurança e comunicação de incidentes) e Resolução CD/ANPD nº 15/2024 (prazo de 3 dias úteis para comunicação de incidentes relevantes). Regra clara.</div>
+  </section>
+
+  <section class="pol" id="mudancas">
+    <h2>11. Mudanças nesta política</h2>
+    <p>Podemos atualizar esta política para refletir evolução do produto (ex.: sincronização em nuvem, analytics, meios de pagamento). Mudanças relevantes serão avisadas no site ou por e-mail antes de entrarem em vigor, com a data de versão sempre visível no topo.</p>
+  </section>
+
+  <section class="pol" id="contato">
+    <h2>12. Contato</h2>
+    <p><strong>Controlador:</strong> Sóstenes Costa Paiva (MedGroth · Zetheon)<br>
+    <strong>E-mail (controlador e encarregado/DPO):</strong> <a href="mailto:drsostenescosta@gmail.com">drsostenescosta@gmail.com</a><br>
+    <strong>WhatsApp:</strong> <a href="https://wa.me/5584999869468" target="_blank" rel="noopener">+55 84 99986-9468</a></p>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <div>© 2026 MedGroth · Zetheon · <a href="../index.html">Sóstenes Costa Paiva</a></div>
+    <div style="display:flex; gap:18px; flex-wrap:wrap">
+      <a href="index.html">Início</a>
+      <a href="captura.html">Diagnóstico</a>
+      <a href="app.html">Entrar</a>
+    </div>
+  </div>
+  <div class="wrap disclaimer">Documento gerado por IA — exige revisão de advogado humano licenciado antes de uso real. O MedGroth é ferramenta de estratégia e gestão; não presta orientação clínica nem substitui a responsabilidade profissional e regulatória (CFM/conselhos) de cada usuário.</div>
+</footer>
+</body>
+</html>
