@@ -11,8 +11,10 @@ window.MEDGROTH = {
     for (var k in (extra || {})) h[k] = extra[k];
     return h;
   },
-  /* Salva um lead: tenta o banco real; se falhar (offline / tabela ainda não
-     publicada), guarda na fila local e devolve {ok, remote}. Nunca perde lead. */
+  /* Salva um lead: guarda uma cópia local (backup, nunca perde lead) e tenta
+     o banco real. O resultado é HONESTO: ok=true só quando o insert remoto
+     confirmou. Falha remota devolve {ok:false, remote:false} — quem chama
+     decide o que mostrar ao usuário. */
   saveLead: function (lead) {
     var self = this;
     lead = Object.assign({ origem: 'site', criado_em: new Date().toISOString() }, lead);
@@ -27,7 +29,7 @@ window.MEDGROTH = {
         especialidade: lead.especialidade || null, faturamento: lead.faturamento || null,
         origem: lead.origem, respostas: lead.respostas || null
       })
-    }).then(function (r) { return { ok: true, remote: r.ok }; })
-      .catch(function () { return { ok: true, remote: false }; });
+    }).then(function (r) { return { ok: r.ok, remote: r.ok }; })
+      .catch(function () { return { ok: false, remote: false }; });
   }
 };
