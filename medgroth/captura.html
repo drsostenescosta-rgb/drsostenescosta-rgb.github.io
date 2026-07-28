@@ -45,6 +45,14 @@
   .btn:disabled { opacity:0.6; cursor:wait; transform:none; }
   .priv { font-size:0.7rem; color:rgba(143,163,154,0.75); text-align:center; }
   .erro { color:#f18b8b; font-size:0.8rem; display:none; }
+  .lgpd { display:flex; gap:10px; align-items:flex-start; font-size:0.78rem; font-weight:400; color:var(--muted); cursor:pointer; }
+  .lgpd input { width:auto; margin-top:3px; accent-color:var(--em); flex-shrink:0; }
+  .lgpd a { color:var(--em-light); text-decoration:underline; }
+  /* falha honesta */
+  #falha { display:none; text-align:center; padding:20px 0; }
+  #falha .big { font-size:3rem; margin-bottom:12px; }
+  #falha h2 { font-family:var(--serif); font-weight:500; font-size:1.6rem; margin-bottom:10px; }
+  #falha p { color:var(--muted); margin-bottom:24px; }
   /* obrigado */
   #obrigado { display:none; text-align:center; padding:20px 0; }
   #obrigado .big { font-size:3rem; margin-bottom:12px; }
@@ -105,6 +113,9 @@
           <option>Acima de R$ 80 mil</option>
         </select>
       </label>
+      <label class="lgpd"><input type="checkbox" id="lgpd">
+        <span>Li e concordo com a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a> e autorizo o uso dos meus dados para receber o diagnóstico e contato sobre o MedGroth (LGPD).</span>
+      </label>
       <div class="erro" id="erro">Preencha nome e WhatsApp para continuar.</div>
       <button class="btn" type="submit" id="enviar">Receber meu diagnóstico gratuito →</button>
       <div class="priv">🔒 Seus dados ficam com a gente. Nada de spam — só o diagnóstico e, se você quiser, uma conversa.</div>
@@ -119,6 +130,14 @@
     <a class="btn btn-ghost" id="zap" href="#" target="_blank" rel="noopener">Prefiro falar no WhatsApp</a>
   </div>
 
+  <div id="falha">
+    <div class="big">📡</div>
+    <h2>Não conseguimos registrar agora</h2>
+    <p>Seu cadastro não chegou ao nosso sistema neste momento. Guardamos uma cópia neste navegador, mas para garantir seu diagnóstico fale direto com a gente no WhatsApp — ou tente de novo em instantes.</p>
+    <a class="btn" id="zap-falha" href="#" target="_blank" rel="noopener">Falar no WhatsApp agora →</a>
+    <a class="btn btn-ghost" id="tentar" href="#">Tentar novamente</a>
+  </div>
+
   <div class="selo">MedGroth · Zetheon · dados protegidos por design</div>
 </div>
 
@@ -128,12 +147,38 @@
   var params = new URLSearchParams(location.search);
   var plano = params.get('plano') || '';
 
+  function zapLink(nome, sufixo){
+    var msg = 'Olá! ' + sufixo + ' no MedGroth' + (plano ? (' (interesse no plano ' + plano + ')') : '') + '. Meu nome é ' + nome + '.';
+    return 'https://wa.me/' + MEDGROTH.whatsapp + '?text=' + encodeURIComponent(msg);
+  }
+  function mostrar(id){
+    ['captura','obrigado','falha'].forEach(function(x){
+      document.getElementById(x).style.display = (x===id) ? 'block' : 'none';
+    });
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  document.getElementById('tentar').addEventListener('click', function(e){
+    e.preventDefault();
+    var btn = document.getElementById('enviar');
+    btn.disabled = false; btn.textContent = 'Receber meu diagnóstico gratuito →';
+    mostrar('captura');
+  });
+
   document.getElementById('form').addEventListener('submit', function(e){
     e.preventDefault();
     var nome = document.getElementById('nome').value.trim();
     var zap  = document.getElementById('whatsapp').value.trim();
+    var lgpd = document.getElementById('lgpd').checked;
     var erro = document.getElementById('erro');
-    if(!nome || zap.replace(/\D/g,'').length < 10){ erro.style.display='block'; return; }
+    if(!nome || zap.replace(/\D/g,'').length < 10){
+      erro.textContent = 'Preencha nome e WhatsApp para continuar.';
+      erro.style.display='block'; return;
+    }
+    if(!lgpd){
+      erro.textContent = 'Para continuar, é preciso concordar com a Política de Privacidade (LGPD).';
+      erro.style.display='block'; return;
+    }
     erro.style.display='none';
     var btn = document.getElementById('enviar');
     btn.disabled = true; btn.textContent = 'Enviando…';
@@ -144,18 +189,20 @@
       email: document.getElementById('email').value.trim(),
       especialidade: document.getElementById('especialidade').value,
       faturamento: document.getElementById('faturamento').value,
+      consentimento_lgpd: true,
       origem: plano ? ('site-plano-' + plano) : 'pagina-captura'
     };
     /* pré-preenche o diagnóstico no app */
     localStorage.setItem('medgroth_prefill', JSON.stringify(lead));
 
-    MEDGROTH.saveLead(lead).then(function(){
-      document.getElementById('captura').style.display = 'none';
-      var ob = document.getElementById('obrigado');
-      ob.style.display = 'block';
-      var msg = 'Olá! Acabei de fazer meu cadastro no MedGroth' + (plano ? (' (interesse no plano ' + plano + ')') : '') + '. Meu nome é ' + nome + '.';
-      document.getElementById('zap').href = 'https://wa.me/' + MEDGROTH.whatsapp + '?text=' + encodeURIComponent(msg);
-      window.scrollTo({top:0, behavior:'smooth'});
+    MEDGROTH.saveLead(lead).then(function(res){
+      if(res && res.remote){
+        document.getElementById('zap').href = zapLink(nome, 'Acabei de fazer meu cadastro');
+        mostrar('obrigado');
+      } else {
+        document.getElementById('zap-falha').href = zapLink(nome, 'Tentei me cadastrar');
+        mostrar('falha');
+      }
     });
   });
 })();
