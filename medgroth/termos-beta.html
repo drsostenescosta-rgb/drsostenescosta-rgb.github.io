@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Termos de Uso — MedGroth Beta Fundador</title>
+<meta name="description" content="Termos de Uso do MedGroth Beta Fundador: o que você contrata, preço de fundador, cancelamento sem multa, sem promessa de resultado, seus dados são seus." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#04080a; --bg-2:#071013; --card:rgba(13,26,26,0.6); --card-solid:#0b1518;
+    --em:#19c37d; --em-light:#3ddc97; --em-dark:#0e9f63;
+    --gold:#c9a227; --gold-light:#e2c464;
+    --text:#e8efea; --muted:#8fa39a; --border:rgba(232,239,234,0.09); --border-strong:rgba(232,239,234,0.18);
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.65; overflow-x:hidden; }
+  a { color:var(--em-light); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  h1,h2,h3 { font-family:var(--serif); font-weight:500; line-height:1.2; }
+  em { font-style:italic; color:var(--em-light); }
+  .wrap { max-width:820px; margin:0 auto; padding:0 24px; position:relative; z-index:2; }
+  .orb { position:fixed; border-radius:50%; filter:blur(110px); opacity:0.35; z-index:-1; pointer-events:none; }
+  .o1 { width:560px; height:560px; top:-15%; left:-10%; background:radial-gradient(circle,rgba(25,195,125,0.32),transparent 70%); }
+  .o2 { width:480px; height:480px; bottom:-18%; right:-12%; background:radial-gradient(circle,rgba(201,162,39,0.18),transparent 70%); }
+  .eyebrow { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--em-light); font-weight:600; display:inline-flex; align-items:center; gap:10px; }
+  .eyebrow::before { content:''; width:26px; height:1px; background:linear-gradient(90deg,var(--em),transparent); }
+  .grad { background:linear-gradient(115deg,#fff 0%,#d9f5e6 45%,var(--em-light) 75%,var(--em) 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+
+  header.nav { position:fixed; top:0; left:0; right:0; z-index:100; backdrop-filter:blur(18px); background:rgba(4,8,10,0.65); border-bottom:1px solid var(--border); }
+  .nav-inner { display:flex; align-items:center; justify-content:space-between; padding:13px 24px; max-width:1120px; margin:0 auto; gap:14px; }
+  .brand { display:flex; align-items:center; gap:11px; color:var(--text); }
+  .brand:hover { text-decoration:none; }
+  .logo { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:1.05rem; color:var(--em-light); background:linear-gradient(145deg,rgba(25,195,125,0.16),rgba(25,195,125,0.03)); border:1px solid rgba(25,195,125,0.45); box-shadow:0 0 18px rgba(25,195,125,0.18); }
+  .brand-name { font-family:var(--serif); font-size:1.05rem; }
+  .brand-sub { font-family:var(--mono); font-size:0.56rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase; }
+  .back { font-size:0.85rem; color:var(--muted); }
+  .back:hover { color:var(--em-light); text-decoration:none; }
+
+  .hero { padding:140px 0 30px; }
+  .hero h1 { font-size:clamp(2rem,4.4vw,3rem); margin:18px 0 14px; letter-spacing:-0.01em; }
+  .hero p { color:var(--muted); max-width:62ch; }
+  .meta { font-family:var(--mono); font-size:0.72rem; color:var(--muted); margin-top:16px; }
+
+  .toc { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 24px; margin:34px 0; }
+  .toc h2 { font-size:0.95rem; margin-bottom:10px; font-family:var(--mono); text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); }
+  .toc ol { margin-left:20px; display:grid; gap:5px; font-size:0.9rem; }
+  .toc a { color:var(--text); }
+  .toc a:hover { color:var(--em-light); }
+
+  section.pol { padding:26px 0; border-top:1px solid var(--border); }
+  section.pol h2 { font-size:1.4rem; margin-bottom:14px; }
+  section.pol h3 { font-size:1.05rem; margin:20px 0 8px; color:var(--em-light); }
+  section.pol p, section.pol li { color:var(--muted); font-size:0.95rem; }
+  section.pol p { margin-bottom:12px; }
+  section.pol strong { color:var(--text); }
+  section.pol ul, section.pol ol { margin:0 0 14px 20px; display:grid; gap:7px; }
+  .legal { font-family:var(--mono); font-size:0.72rem; color:rgba(143,163,154,0.85); background:rgba(25,195,125,0.05); border-left:2px solid var(--em); padding:8px 12px; border-radius:0 8px 8px 0; margin:10px 0 16px; }
+  .card-box { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 22px; margin:14px 0; }
+  .card-box h3 { margin-top:0; }
+  .warn { border-color:rgba(201,162,39,0.4); }
+  .warn h3 { color:var(--gold-light); }
+
+  footer { border-top:1px solid var(--border); padding:34px 0; margin-top:40px; }
+  .foot { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center; color:var(--muted); font-size:0.82rem; }
+  .foot a { color:var(--muted); }
+  .foot a:hover { color:var(--em-light); }
+  .disclaimer { margin-top:14px; font-size:0.72rem; color:rgba(143,163,154,0.7); max-width:75ch; }
+</style>
+</head>
+<body>
+<div class="orb o1"></div><div class="orb o2"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">Mg</span>
+      <span><span class="brand-name">MedGroth</span><br><span class="brand-sub">máquina de crescimento médico</span></span>
+    </a>
+    <a class="back" href="index.html">← voltar ao site</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <span class="eyebrow">Termos de Uso · Beta Fundador</span>
+    <h1><span class="grad">Termos de Uso</span></h1>
+    <p>O combinado não sai caro. Aqui está, em português claro, o que você contrata no MedGroth Beta Fundador, o que garantimos, o que não prometemos e como sair quando quiser. Dúvidas: <a href="mailto:drsostenescosta@gmail.com">drsostenescosta@gmail.com</a>.</p>
+    <div class="meta">Versão 1.0 · jul/2026 · leia junto com a <a href="privacidade.html">Política de Privacidade</a></div>
+  </div>
+
+  <div class="toc">
+    <h2>Nesta página</h2>
+    <ol>
+      <li><a href="#oque">O que é o MedGroth (e o que ele não é)</a></li>
+      <li><a href="#beta">Beta fundador: o que você está contratando</a></li>
+      <li><a href="#pagamento">Pagamento, cancelamento e reembolso</a></li>
+      <li><a href="#resultado">Sem promessa de resultado</a></li>
+      <li><a href="#obrigacoes">Suas obrigações</a></li>
+      <li><a href="#pi">Propriedade intelectual</a></li>
+      <li><a href="#responsabilidade">Limitação de responsabilidade</a></li>
+      <li><a href="#suspensao">Suspensão e encerramento</a></li>
+      <li><a href="#foro">Lei aplicável e foro</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ol>
+  </div>
+
+  <section class="pol" id="oque">
+    <h2>1. O que é o MedGroth (e o que ele não é)</h2>
+    <p>1.1. O MedGroth é um software de <strong>estratégia e gestão de crescimento</strong> para médicos e clínicas: diagnóstico de negócio, plano de 4 semanas, funil de leads e metas.</p>
+    <p>1.2. O MedGroth <strong>não presta serviço médico, não dá orientação clínica e não é prontuário eletrônico</strong>. Todo ato médico, conteúdo publicitário e decisão clínica ou comercial é de responsabilidade exclusiva do usuário, inclusive perante CFM/CRMs.</p>
+    <div class="legal">Base: Código de Ética Médica — Resolução CFM nº 2.217/2018; publicidade médica — Resolução CFM nº 2.336/2023.</div>
+  </section>
+
+  <section class="pol" id="beta">
+    <h2>2. Beta fundador: o que você está contratando</h2>
+    <p>2.1. Você contrata o acesso ao plano escolhido (Start, Pro ou Aceleração) em <strong>assinatura mensal</strong>, na condição de <strong>beta fundador</strong>: produto em evolução, com recursos sendo lançados e ajustados.</p>
+    <p>2.2. <strong>Preço de fundador:</strong> o valor contratado fica garantido enquanto a assinatura permanecer ativa e sem inadimplência. Cancelou e voltou depois, vale o preço vigente na volta.</p>
+    <p>2.3. Por ser beta, podem ocorrer instabilidades e mudanças de funcionalidade. Avisaremos sobre mudanças relevantes com antecedência razoável.</p>
+  </section>
+
+  <section class="pol" id="pagamento">
+    <h2>3. Pagamento, cancelamento e reembolso</h2>
+    <p>3.1. Cobrança mensal antecipada, renovada automaticamente até o cancelamento.</p>
+    <p>3.2. <strong>Cancelamento a qualquer momento, sem multa, sem fidelidade e sem "ligação de retenção" obrigatória</strong> — direto no produto ou por mensagem ao suporte. O acesso permanece até o fim do período já pago; não há reembolso proporcional do mês em curso, salvo o item 3.3.</p>
+    <p>3.3. <strong>Arrependimento em contratação online:</strong> em até 7 dias corridos da primeira contratação, você pode desistir e receber reembolso integral.</p>
+    <div class="legal">Base: CDC — Lei nº 8.078/1990, art. 49 (direito de arrependimento). Regra clara.</div>
+    <p>3.4. Podemos reajustar preços de novos ciclos para não-fundadores; para fundadores vale o item 2.2.</p>
+  </section>
+
+  <section class="pol" id="resultado">
+    <h2>4. Sem promessa de resultado</h2>
+    <p>4.1. Projeções de receita, tickets sugeridos e planos gerados pelo MedGroth são <strong>estimativas baseadas nas respostas que você fornece</strong> — ferramentas de planejamento, não garantia de faturamento, de captação de pacientes ou de qualquer resultado.</p>
+    <p>4.2. O sucesso depende de fatores fora do nosso controle (execução, mercado, especialidade, região, regulação). Nenhuma comunicação do MedGroth deve ser lida como promessa de resultado.</p>
+    <div class="legal">Base: CDC, art. 30 — a oferta vincula; por isso deixamos claro o que NÃO estamos ofertando.</div>
+  </section>
+
+  <section class="pol" id="obrigacoes">
+    <h2>5. Suas obrigações</h2>
+    <p>5.1. Fornecer dados verdadeiros; manter sigilo do acesso à sua conta; usar o produto de forma lícita.</p>
+    <p>5.2. Cumprir as normas do seu conselho profissional, em especial as de <strong>publicidade médica</strong> (Resolução CFM nº 2.336/2023), ao usar qualquer sugestão de comunicação, protocolo ou script gerada pelo MedGroth. As sugestões são material de apoio de negócio — a adequação regulatória final é sua.</p>
+    <p>5.3. Sobre dados de pacientes/leads registrados no CRM: você atua como <strong>controlador</strong> e o MedGroth como <strong>operador</strong>, nos termos da <a href="privacidade.html">Política de Privacidade</a>. <strong>Não insira dados clínicos</strong> (diagnósticos, exames, prescrições) no CRM.</p>
+    <div class="legal">Base: LGPD, art. 5º, VI (controlador) e VII (operador).</div>
+  </section>
+
+  <section class="pol" id="pi">
+    <h2>6. Propriedade intelectual</h2>
+    <p>6.1. O software, a marca MedGroth, os textos e o método são de titularidade do MedGroth/Zetheon. Você recebe uma licença de uso pessoal, não exclusiva e intransferível, vigente enquanto durar a assinatura.</p>
+    <div class="legal">Base: Lei nº 9.610/1998 (direitos autorais) e Lei nº 9.279/1996 (propriedade industrial).</div>
+    <p>6.2. <strong>Seus dados são seus.</strong> Os dados que você insere (diagnóstico, leads, tarefas) pertencem a você; ao encerrar a conta pode solicitá-los (portabilidade — LGPD, art. 18, V).</p>
+  </section>
+
+  <section class="pol" id="responsabilidade">
+    <h2>7. Limitação de responsabilidade</h2>
+    <p>7.1. O MedGroth é fornecido "no estado em que se encontra" durante o beta. Na máxima extensão permitida em lei, nossa responsabilidade total por danos relacionados ao serviço fica limitada ao <strong>valor pago por você nos 12 meses anteriores ao evento</strong>.</p>
+    <p>7.2. Não respondemos por lucros cessantes, perda de dados armazenados apenas no seu navegador (localStorage — ver Política de Privacidade, seção 4.2), atos de terceiros (ex.: instabilidade do WhatsApp/Supabase) ou por decisões clínicas, comerciais ou publicitárias suas.</p>
+    <div class="card-box warn">
+      <h3>7.3. Nota de transparência</h3>
+      <p style="margin:0">Cláusulas de limitação de responsabilidade têm eficácia reduzida quando o assinante for enquadrado como consumidor (CDC, arts. 25 e 51, I — nulidade de cláusula que impossibilite/atenue indenização em relação de consumo). Em relação B2B (clínica CNPJ), a limitação tende a prevalecer (Código Civil, art. 421-A). Mantemos a cláusula com essa ressalva expressa para não induzir você a erro — isso é interpretação, não regra pacificada.</p>
+    </div>
+  </section>
+
+  <section class="pol" id="suspensao">
+    <h2>8. Suspensão e encerramento</h2>
+    <p>8.1. Podemos suspender contas por inadimplência (após aviso), fraude ou uso ilícito. Você pode encerrar quando quiser (item 3.2).</p>
+    <p>8.2. Se o MedGroth for descontinuado, avisaremos com ao menos 30 dias e disponibilizaremos exportação dos dados hospedados por nós.</p>
+  </section>
+
+  <section class="pol" id="foro">
+    <h2>9. Lei aplicável e foro</h2>
+    <p>9.1. Aplica-se a lei brasileira.</p>
+    <p>9.2. <strong>Foro:</strong> para assinantes consumidores, o foro do domicílio do consumidor (CDC, art. 101, I — regra clara). Nos demais casos, fica eleito o foro da comarca de Natal/RN, com renúncia a qualquer outro. Antes de litigar, as partes se comprometem a tentar solução amigável por 30 dias.</p>
+  </section>
+
+  <section class="pol" id="contato">
+    <h2>10. Contato</h2>
+    <p><strong>Sóstenes Costa Paiva</strong> · MedGroth/Zetheon<br>
+    <strong>E-mail:</strong> <a href="mailto:drsostenescosta@gmail.com">drsostenescosta@gmail.com</a><br>
+    <strong>WhatsApp:</strong> <a href="https://wa.me/5584999869468" target="_blank" rel="noopener">+55 84 99986-9468</a></p>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <div>© 2026 MedGroth · Zetheon · <a href="../index.html">Sóstenes Costa Paiva</a></div>
+    <div style="display:flex; gap:18px; flex-wrap:wrap">
+      <a href="index.html">Início</a>
+      <a href="captura.html">Diagnóstico</a>
+      <a href="privacidade.html">Privacidade</a>
+      <a href="app.html">Entrar</a>
+    </div>
+  </div>
+  <div class="wrap disclaimer">Documento gerado por IA — exige revisão de advogado humano licenciado antes de uso real. O MedGroth é ferramenta de estratégia e gestão; não presta orientação clínica nem substitui a responsabilidade profissional e regulatória (CFM/conselhos) de cada usuário.</div>
+</footer>
+</body>
+</html>
