@@ -58,13 +58,16 @@ test('honeypot preenchido (bot): descartado em silêncio, nenhuma chamada de red
   expect(backup.length).toBe(0);
 });
 
-test('contrato do payload: POST leva consentimento_lgpd, politica_versao e o id retornado é guardado', async ({ page }) => {
+test('contrato do payload: POST leva consentimento_lgpd, politica_versao e id gerado no cliente', async ({ page }) => {
   // Este é o teste que teria pego o defeito "consentimento nunca chega ao banco":
   // não basta o app mostrar sucesso — o BODY enviado precisa conter o consentimento.
+  // O id é UUID gerado no cliente com Prefer: return=minimal — a RLS permite INSERT
+  // anon mas nega SELECT, então return=representation falharia com 42501 em produção
+  // (defeito real pego pelo smoke test L1 contra o banco).
   let req = null;
   await page.route(SUPABASE, r => {
     req = { headers: r.request().headers(), body: r.request().postDataJSON() };
-    r.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify([{ id: 4242 }]) });
+    r.fulfill({ status: 201, contentType: 'application/json', body: '' });
   });
   await page.goto('captura.html');
   await preencheBasico(page);
@@ -79,12 +82,13 @@ test('contrato do payload: POST leva consentimento_lgpd, politica_versao e o id 
   expect(req.body.consentimento_lgpd).toBe(true);
   expect(req.body.politica_versao).toBe('1.0-2026-07');
   expect(req.body.origem).toBe('pagina-captura');
-  expect(req.headers['prefer']).toBe('return=representation');
+  expect(req.headers['prefer']).toBe('return=minimal');
+  expect(req.body.id).toMatch(/^[0-9a-f-]{36}$/i);
 
-  // id devolvido pelo banco gravado no backup local (correlação lead → plano → e-mail)
+  // o MESMO id vai para o backup local (correlação lead → plano → e-mail)
   const backup = await page.evaluate(() => JSON.parse(localStorage.getItem('medgroth_leads') || '[]'));
   expect(backup.length).toBe(1);
-  expect(backup[0].id).toBe(4242);
+  expect(backup[0].id).toBe(req.body.id);
 });
 
 test('LGPD: checkbox obrigatório com link para privacidade.html; desmarcado bloqueia o envio', async ({ page }) => {

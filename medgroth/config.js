@@ -14,22 +14,32 @@ window.MEDGROTH = {
   /* Versão vigente da Política de Privacidade — manter em sincronia com o
      identificador exibido em privacidade.html. */
   politicaVersao: '1.0-2026-07',
+  /* Gera UUID no cliente: a RLS permite INSERT anon mas (corretamente) nega
+     SELECT — logo `return=representation` falharia com 42501. O id nasce aqui,
+     vai no body com `return=minimal`, e a correlação lead → plano → e-mail
+     fica garantida sem expor leitura pública da tabela. */
+  uuid: function () {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+  },
   /* Salva um lead: guarda uma cópia local (backup, nunca perde lead) e tenta
      o banco real. O resultado é HONESTO: ok=true só quando o insert remoto
      confirmou. Falha remota devolve {ok:false, remote:false} — quem chama
-     decide o que mostrar ao usuário. Com `Prefer: return=representation` o
-     banco devolve a linha criada: o `id` volta no resultado e é gravado no
-     backup local (correlação futura lead → plano → e-mail). */
+     decide o que mostrar ao usuário. */
   saveLead: function (lead) {
     var self = this;
     lead = Object.assign({ origem: 'site', criado_em: new Date().toISOString() }, lead);
+    if (!lead.id) lead.id = self.uuid();
     var local = JSON.parse(localStorage.getItem('medgroth_leads') || '[]');
     local.push(lead);
     localStorage.setItem('medgroth_leads', JSON.stringify(local));
     return fetch(self.rest('medgroth_leads'), {
       method: 'POST',
-      headers: self.headers({ 'Prefer': 'return=representation' }),
+      headers: self.headers({ 'Prefer': 'return=minimal' }),
       body: JSON.stringify({
+        id: lead.id,
         nome: lead.nome, whatsapp: lead.whatsapp, email: lead.email || null,
         especialidade: lead.especialidade || null, faturamento: lead.faturamento || null,
         origem: lead.origem, respostas: lead.respostas || null,
@@ -38,15 +48,7 @@ window.MEDGROTH = {
       })
     }).then(function (r) {
       if (!r.ok) return { ok: false, remote: false };
-      return r.json().then(function (rows) {
-        var id = (rows && rows[0] && rows[0].id !== undefined) ? rows[0].id : null;
-        if (id !== null) {
-          lead.id = id;
-          local[local.length - 1] = lead;
-          localStorage.setItem('medgroth_leads', JSON.stringify(local));
-        }
-        return { ok: true, remote: true, id: id };
-      }).catch(function () { return { ok: true, remote: true, id: null }; });
+      return { ok: true, remote: true, id: lead.id };
     }).catch(function () { return { ok: false, remote: false }; });
   }
 };
