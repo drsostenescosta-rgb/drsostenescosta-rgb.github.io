@@ -61,7 +61,7 @@
   </div>
 
   <div id="captura">
-    <span class="eyebrow">Vagas de fundador · entrada por aplicação</span>
+    <span class="eyebrow" id="vagas-eyebrow">Vagas de fundador · entrada por aplicação</span>
     <h1>Aplique para uma das <em>20 vagas</em> de fundador</h1>
     <p class="sub">O DocGrow não é para todo mundo — as primeiras vagas são curadas para médicos que vão implantar de verdade. Quem entra como fundador trava o preço para sempre.</p>
     <div class="bullets">
@@ -125,6 +125,13 @@
 <script src="../medgroth/config.js"></script>
 <script>
 (function(){
+  /* contador real de vagas (RPC agregado — nenhum lead é exposto) */
+  fetch(MEDGROTH.url + '/rest/v1/rpc/docgrow_vagas_restantes', {
+    method: 'POST', headers: MEDGROTH.headers(), body: '{}'
+  }).then(function(r){ return r.json(); }).then(function(n){
+    if (typeof n === 'number' && n >= 0) document.getElementById('vagas-eyebrow').textContent = (n > 0 ? n + ' de 20 vagas restantes · entrada por aplicação' : 'Vagas esgotadas · aplique para a lista de espera');
+  }).catch(function(){});
+
   document.getElementById('form').addEventListener('submit', function(e){
     e.preventDefault();
     var nome = document.getElementById('nome').value.trim();
