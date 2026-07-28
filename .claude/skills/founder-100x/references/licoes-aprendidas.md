@@ -37,3 +37,7 @@ Formato: **L# — lição → mecanismo do erro que a originou → regra operant
 **L8 — A cadeia de conversão precisa de artefato em TODAS as juntas — a do caixa primeiro.**
 *Origem:* o funil tinha 5 roteiros de topo e 5 e-mails de meio, e zero roteiro para a conversa de 15 minutos onde a venda acontece; instrumentamos tudo menos o caixa.
 *Regra:* ao montar um funil, começar o design pela junta onde o dinheiro troca de mãos e trabalhar para trás ([B7] working backwards aplicado a vendas).
+
+**L9 — Naming e qualquer escolha de identidade: gerar e verificar colisão no MESMO ciclo; votar antes da due diligence desperdiça a rodada.**
+*Origem (assembleia de naming):* o Conselho votou às cegas em 91 nomes e os 6 mais votados morreram na checagem de colisão (Prax era homônimo de concorrente direto financiado; Healix, de gigante global com marca USPTO). A rodada seguinte, com verificação embutida na geração, produziu finalistas limpos em uma passada.
+*Regra:* toda proposta de identidade (nome, domínio, handle, marca) chega à votação já com verificação de colisão anexada; candidato sem evidência de busca não entra na cédula. Verificação formal (INPI/USPTO/registro.br) antes de qualquer registro ou anúncio público.
