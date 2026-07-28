@@ -1,7 +1,7 @@
-/* MedGroth · configuração do backend (Supabase — mesmo projeto do SosMed)
+/* ClinicNow · configuração do backend (Supabase — mesmo projeto do SosMed)
    A chave abaixo é PUBLISHABLE (segura para o navegador): o que cada pessoa
    pode ler/gravar é controlado por Row Level Security no banco. */
-window.MEDGROTH = {
+window.CLINICNOW = {
   url: 'https://yaqphldowpshhrtvvfaq.supabase.co',
   key: 'sb_publishable_V64ejsDNKclPdFlqymghnQ_jUr5ivj1',
   whatsapp: '5584999869468',
@@ -13,7 +13,7 @@ window.MEDGROTH = {
   },
   /* Versão vigente da Política de Privacidade — manter em sincronia com o
      identificador exibido em privacidade.html. */
-  politicaVersao: '1.0-2026-07',
+  politicaVersao: '1.1-2026-07',
   /* Gera UUID no cliente: a RLS permite INSERT anon mas (corretamente) nega
      SELECT — logo `return=representation` falharia com 42501. O id nasce aqui,
      vai no body com `return=minimal`, e a correlação lead → plano → e-mail
@@ -32,10 +32,10 @@ window.MEDGROTH = {
     var self = this;
     lead = Object.assign({ origem: 'site', criado_em: new Date().toISOString() }, lead);
     if (!lead.id) lead.id = self.uuid();
-    var local = JSON.parse(localStorage.getItem('medgroth_leads') || '[]');
+    var local = JSON.parse(localStorage.getItem('clinicnow_leads') || '[]');
     local.push(lead);
-    localStorage.setItem('medgroth_leads', JSON.stringify(local));
-    return fetch(self.rest('medgroth_leads'), {
+    localStorage.setItem('clinicnow_leads', JSON.stringify(local));
+    return fetch(self.rest('clinicnow_leads'), {
       method: 'POST',
       headers: self.headers({ 'Prefer': 'return=minimal' }),
       body: JSON.stringify({

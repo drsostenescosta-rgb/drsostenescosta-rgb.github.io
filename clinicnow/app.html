@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>MedGroth — Cockpit de Crescimento</title>
+<title>ClinicNow — Cockpit de Crescimento</title>
 <meta name="description" content="Diagnóstico, plano de 4 semanas, CRM de leads e metas de receita. O cockpit de crescimento para profissionais da saúde e donos de clínica." />
 <meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -115,7 +115,7 @@
 
 <div id="auth" style="display:none">
   <div style="text-align:center; margin-bottom:26px">
-    <a class="brand" href="index.html" style="justify-content:center; display:inline-flex"><span class="logo">Mg</span>&nbsp; MedGroth</a>
+    <a class="brand" href="index.html" style="justify-content:center; display:inline-flex"><span class="logo">CN</span>&nbsp; ClinicNow</a>
   </div>
   <div class="card">
     <h1 class="grad">Criar minha conta</h1>
@@ -125,10 +125,10 @@
     <label>E-mail<input id="a-email" type="email" placeholder="voce@clinica.com.br"></label>
     <label>Nome da clínica / consultório<input id="a-clinica" placeholder="Clínica Vida Plena"></label>
     <label class="lgpd" style="margin-bottom:12px"><input type="checkbox" id="a-lgpd">
-      <span>Li e concordo com a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a> e autorizo o uso dos meus dados de cadastro para criar a conta e receber contato sobre o MedGroth (LGPD).</span>
+      <span>Li e concordo com a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a> e autorizo o uso dos meus dados de cadastro para criar a conta e receber contato sobre o ClinicNow (LGPD).</span>
     </label>
     <div class="erro" id="a-erro" style="color:var(--red-light); font-size:0.8rem; display:none; margin-bottom:10px">Preencha nome e WhatsApp.</div>
-    <button class="btn btn-em" style="width:100%; justify-content:center" onclick="App.signup()">Entrar no MedGroth →</button>
+    <button class="btn btn-em" style="width:100%; justify-content:center" onclick="App.signup()">Entrar no ClinicNow →</button>
     <div style="text-align:center; margin-top:12px"><a href="index.html" style="font-size:0.78rem; color:var(--muted)">← voltar para o site</a></div>
   </div>
 </div>
@@ -136,7 +136,7 @@
 <div id="shell" style="display:none">
   <header>
     <div class="top">
-      <a class="brand" href="index.html"><span class="logo">Mg</span> MedGroth <span class="pill" style="margin-left:6px">beta fundador</span></a>
+      <a class="brand" href="index.html"><span class="logo">CN</span> ClinicNow <span class="pill" style="margin-left:6px">beta fundador</span></a>
       <div class="user"><span id="u-nome"></span><button onclick="App.logout()">sair</button></div>
     </div>
     <nav class="tabs" id="tabs"></nav>
@@ -147,7 +147,7 @@
 <script src="config.js"></script>
 <script>
 /* ============================ dados ============================ */
-const KEY='medgroth_db';
+const KEY='clinicnow_db';
 let DB = JSON.parse(localStorage.getItem(KEY) || 'null') || { user:null, diagnostico:null, checks:{}, leads:[], tarefas:[] };
 const save = () => localStorage.setItem(KEY, JSON.stringify(DB));
 const BRL = n => (n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
@@ -269,7 +269,7 @@ PAGES.painel = function(){
 
 PAGES.diagnostico = function(){
   const d = DB.diagnostico || {};
-  const pre = JSON.parse(localStorage.getItem('medgroth_prefill')||'{}');
+  const pre = JSON.parse(localStorage.getItem('clinicnow_prefill')||'{}');
   const nicho = d.nicho || pre.especialidade || '';
   const opt = (list, sel) => list.map(o=>`<option ${o===sel?'selected':''}>${o}</option>`).join('');
   return `
@@ -345,7 +345,7 @@ PAGES.plano = function(){
 
 const FUNIL = [ ['novo','Novo'], ['conversando','Conversando'], ['avaliacao','Avaliação agendada'], ['fechado','Fechado ✓'], ['perdido','Perdido'] ];
 PAGES.leads = function(){
-  const importaveis = JSON.parse(localStorage.getItem('medgroth_leads')||'[]').filter(c => !DB.leads.some(l=>l.whatsapp===c.whatsapp && l.nome===c.nome));
+  const importaveis = JSON.parse(localStorage.getItem('clinicnow_leads')||'[]').filter(c => !DB.leads.some(l=>l.whatsapp===c.whatsapp && l.nome===c.nome));
   return `
   <div class="card">
     <h3>👥 Funil de leads</h3>
@@ -409,7 +409,7 @@ const App = {
     erro.style.display='none';
     DB.user={ nome, whatsapp:zap, email:document.getElementById('a-email').value.trim(), clinica:document.getElementById('a-clinica').value.trim(), criadoEm:new Date().toISOString() };
     save();
-    MEDGROTH.saveLead({ nome, whatsapp:zap, email:DB.user.email, origem:'cadastro-app', consentimento_lgpd:true, politica_versao:MEDGROTH.politicaVersao });
+    CLINICNOW.saveLead({ nome, whatsapp:zap, email:DB.user.email, origem:'cadastro-app', consentimento_lgpd:true, politica_versao:CLINICNOW.politicaVersao });
     boot();
   },
   logout(){ if(confirm('Sair da conta? Seus dados continuam salvos neste navegador.')){ DB.user=null; save(); boot(); } },
@@ -426,7 +426,7 @@ const App = {
     save(); render();
   },
   importLeads(){
-    const caps=JSON.parse(localStorage.getItem('medgroth_leads')||'[]');
+    const caps=JSON.parse(localStorage.getItem('clinicnow_leads')||'[]');
     caps.forEach(c=>{ if(!DB.leads.some(l=>l.whatsapp===c.whatsapp && l.nome===c.nome)) DB.leads.push({ id:uid(), nome:c.nome, whatsapp:c.whatsapp, origem:'Página de captura', st:'novo', criadoEm:c.criado_em }); });
     save(); render();
   },
@@ -468,7 +468,7 @@ function boot(){
     render();
   } else {
     /* pré-preenche cadastro com dados da captura */
-    const pre=JSON.parse(localStorage.getItem('medgroth_prefill')||'{}');
+    const pre=JSON.parse(localStorage.getItem('clinicnow_prefill')||'{}');
     if(pre.nome) document.getElementById('a-nome').value=pre.nome;
     if(pre.whatsapp) document.getElementById('a-zap').value=pre.whatsapp;
     if(pre.email) document.getElementById('a-email').value=pre.email;

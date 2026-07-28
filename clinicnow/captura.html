@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Diagnóstico gratuito de crescimento — MedGroth</title>
+<title>Diagnóstico gratuito de crescimento — ClinicNow</title>
 <meta name="description" content="Descubra em 3 minutos o que está travando o crescimento da sua clínica e receba um plano de 4 semanas na hora. Gratuito, sem cartão." />
 <meta property="og:title" content="Diagnóstico gratuito de crescimento da sua clínica" />
 <meta property="og:description" content="7 perguntas, 3 minutos, plano de crescimento de 4 semanas na hora." />
@@ -67,7 +67,7 @@
 <div class="orb o1"></div><div class="orb o2"></div>
 <div class="wrap">
   <div class="top">
-    <a class="brand" href="index.html"><span class="logo">Mg</span> MedGroth</a>
+    <a class="brand" href="index.html"><span class="logo">CN</span> ClinicNow</a>
     <a class="back" href="index.html">← voltar ao site</a>
   </div>
 
@@ -124,7 +124,7 @@
         </select>
       </label>
       <label class="lgpd"><input type="checkbox" id="lgpd">
-        <span>Li e concordo com a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a> e autorizo o uso dos meus dados para receber o diagnóstico e contato sobre o MedGroth (LGPD).</span>
+        <span>Li e concordo com a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a> e autorizo o uso dos meus dados para receber o diagnóstico e contato sobre o ClinicNow (LGPD).</span>
       </label>
       <div class="erro" id="erro">Preencha nome e WhatsApp para continuar.</div>
       <button class="btn" type="submit" id="enviar">Receber meu diagnóstico gratuito →</button>
@@ -148,7 +148,7 @@
     <a class="btn btn-ghost" id="tentar" href="#">Tentar novamente</a>
   </div>
 
-  <div class="selo">MedGroth · Zetheon · dados protegidos por design</div>
+  <div class="selo">ClinicNow · Zetheon · dados protegidos por design</div>
 </div>
 
 <script src="config.js"></script>
@@ -158,8 +158,8 @@
   var plano = params.get('plano') || '';
 
   function zapLink(nome, sufixo){
-    var msg = 'Olá! ' + sufixo + ' no MedGroth' + (plano ? (' (interesse no plano ' + plano + ')') : '') + '. Meu nome é ' + nome + '.';
-    return 'https://wa.me/' + MEDGROTH.whatsapp + '?text=' + encodeURIComponent(msg);
+    var msg = 'Olá! ' + sufixo + ' no ClinicNow' + (plano ? (' (interesse no plano ' + plano + ')') : '') + '. Meu nome é ' + nome + '.';
+    return 'https://wa.me/' + CLINICNOW.whatsapp + '?text=' + encodeURIComponent(msg);
   }
   function mostrar(id){
     ['captura','obrigado','falha'].forEach(function(x){
@@ -207,13 +207,13 @@
       especialidade: document.getElementById('especialidade').value,
       faturamento: document.getElementById('faturamento').value,
       consentimento_lgpd: true,
-      politica_versao: MEDGROTH.politicaVersao,
+      politica_versao: CLINICNOW.politicaVersao,
       origem: plano ? ('site-plano-' + plano) : 'pagina-captura'
     };
     /* pré-preenche o diagnóstico no app */
-    localStorage.setItem('medgroth_prefill', JSON.stringify(lead));
+    localStorage.setItem('clinicnow_prefill', JSON.stringify(lead));
 
-    MEDGROTH.saveLead(lead).then(function(res){
+    CLINICNOW.saveLead(lead).then(function(res){
       if(res && res.remote){
         document.getElementById('zap').href = zapLink(nome, 'Acabei de fazer meu cadastro');
         mostrar('obrigado');
