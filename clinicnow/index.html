@@ -4,9 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ClinicNow — A máquina de crescimento para profissionais da saúde e donos de clínica</title>
-<meta name="description" content="ClinicNow diagnostica sua clínica, monta seu plano de crescimento em 4 semanas, organiza seus leads e transforma atendimentos avulsos em protocolos e receita recorrente. Para médicos, dentistas, fisioterapeutas, nutricionistas, biomédicos, enfermeiros e esteticistas. Do ecossistema de Sóstenes Costa Paiva." />
+<meta name="description" content="ClinicNow diagnostica sua clínica, monta seu plano de crescimento em 4 semanas, organiza seus leads e transforma atendimentos avulsos em protocolos e receita recorrente — com mentoria de implementação e suporte durante todo o ano em todos os planos. Para médicos, dentistas, fisioterapeutas, nutricionistas, biomédicos, enfermeiros e esteticistas." />
 <meta property="og:title" content="ClinicNow — A máquina de crescimento para profissionais da saúde e donos de clínica" />
-<meta property="og:description" content="Diagnóstico, plano de crescimento, CRM de pacientes e metas. Pare de depender de indicação: construa uma máquina previsível de pacientes." />
+<meta property="og:description" content="Diagnóstico, plano de crescimento, CRM de pacientes e metas — com mentoria de implementação e suporte o ano inteiro. Pare de depender de indicação: construa uma máquina previsível de pacientes." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,12 +89,33 @@
   .card p { color:var(--muted); font-size:0.92rem; }
   .card ul { margin:12px 0 0 18px; color:var(--muted); font-size:0.9rem; display:grid; gap:6px; }
 
+  .verts { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:34px; }
+  @media (max-width:760px){ .verts{grid-template-columns:1fr} }
+  .vert { display:flex; gap:14px; align-items:flex-start; background:var(--card); border:1px solid var(--border); border-radius:13px; padding:16px 18px; }
+  .vert .who { font-family:var(--mono); font-size:0.66rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--em-light); flex-shrink:0; padding-top:3px; min-width:118px; }
+  .vert p { color:var(--muted); font-size:0.88rem; }
+
   .steps { display:grid; gap:14px; counter-reset:st; }
   .step { display:flex; gap:18px; align-items:flex-start; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 22px; }
   .step .n { counter-increment:st; flex-shrink:0; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-weight:600; color:var(--em-light); background:rgba(25,195,125,0.1); border:1px solid rgba(25,195,125,0.4); }
   .step .n::before { content:counter(st); }
   .step h3 { font-size:1.02rem; margin-bottom:4px; }
   .step p { color:var(--muted); font-size:0.9rem; }
+
+  .recebe-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  @media (max-width:860px){ .recebe-grid{grid-template-columns:1fr} }
+  .recebe-grid .card ul { list-style:none; margin-left:0; }
+  .recebe-grid .card li { padding-left:22px; position:relative; }
+  .recebe-grid .card li::before { content:'✓'; position:absolute; left:0; color:var(--em-light); font-weight:700; }
+  .recebe-note { margin-top:22px; font-size:0.82rem; color:var(--muted); max-width:78ch; }
+
+  .fit { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:760px){ .fit{grid-template-columns:1fr} }
+  .fit .card ul { list-style:none; margin-left:0; }
+  .fit .card li { padding-left:24px; position:relative; font-size:0.92rem; }
+  .fit .yes li::before { content:'✓'; position:absolute; left:0; color:var(--em-light); font-weight:700; }
+  .fit .not li::before { content:'✕'; position:absolute; left:0; color:var(--gold-light); font-weight:700; }
+  .fit .not { border-color:rgba(201,162,39,0.35); }
 
   .plans { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:stretch; }
   @media (max-width:900px){ .plans{grid-template-columns:1fr} }
@@ -105,19 +126,29 @@
   .plan .for { color:var(--muted); font-size:0.82rem; margin:4px 0 16px; }
   .price { font-family:var(--serif); font-size:2.2rem; }
   .price small { font-size:0.85rem; color:var(--muted); font-family:var(--sans); }
-  .equiv { font-size:0.78rem; color:var(--muted); margin-top:2px; }
+  .equiv { font-size:0.8rem; color:var(--muted); margin-top:2px; }
+  .equiv strong { color:var(--text); font-weight:600; }
   .plan ul { list-style:none; margin:18px 0 24px; display:grid; gap:9px; flex:1; }
   .plan li { font-size:0.89rem; color:var(--muted); padding-left:24px; position:relative; }
   .plan li::before { content:'✓'; position:absolute; left:0; color:var(--em-light); font-weight:700; }
   .plan li.no::before { content:'—'; color:rgba(232,239,234,0.25); }
   .plan li.soon { color:rgba(143,163,154,0.75); }
   .plan li.soon::before { content:'◷'; color:var(--gold-light); font-weight:400; }
+  .plan li.hl { color:var(--text); }
   .soon-tag { display:inline-block; font-family:var(--mono); font-size:0.58rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-light); border:1px solid rgba(201,162,39,0.4); border-radius:99px; padding:1px 8px; margin-left:6px; vertical-align:middle; }
   .plan .btn { justify-content:center; }
   .founder { margin-top:22px; text-align:center; font-size:0.85rem; color:var(--gold-light); font-family:var(--mono); }
 
+  .guarantee { display:flex; gap:24px; align-items:flex-start; background:var(--card); border:1px solid rgba(25,195,125,0.4); border-radius:18px; padding:30px 32px; max-width:820px; }
+  .guarantee .seal { flex-shrink:0; width:74px; height:74px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:1.5rem; color:var(--em-light); background:rgba(25,195,125,0.08); border:1px dashed rgba(25,195,125,0.5); }
+  .guarantee h3 { font-size:1.25rem; margin-bottom:8px; }
+  .guarantee p { color:var(--muted); font-size:0.95rem; }
+  @media (max-width:640px){ .guarantee{flex-direction:column} }
+
   .quote { background:var(--card); border:1px solid var(--border); border-left:3px solid var(--em); border-radius:0 16px 16px 0; padding:26px 30px; font-family:var(--serif); font-size:1.15rem; font-style:italic; max-width:760px; }
   .quote .who { display:block; margin-top:14px; font-family:var(--mono); font-style:normal; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+  .story { max-width:760px; color:var(--muted); font-size:0.98rem; display:grid; gap:14px; margin-top:26px; }
+  .story strong { color:var(--text); }
 
   details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 22px; margin-bottom:10px; }
   summary { cursor:pointer; font-weight:600; font-size:0.95rem; }
@@ -145,7 +176,7 @@
     </a>
     <nav class="nav-links">
       <a href="#metodo">Método</a>
-      <a href="#produto">Produto</a>
+      <a href="#recebe">O que você recebe</a>
       <a href="#planos">Planos</a>
       <a href="#faq">FAQ</a>
       <a href="investidores.html">Investidores</a>
@@ -154,15 +185,16 @@
   </div>
 </header>
 
+<!-- (1) HERO — promessa + assinatura + CTA -->
 <section class="hero" id="top">
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow">Clinic. Up. Now. · para quem cuida e quer crescer</span>
       <h1><span class="grad">Você aprendeu a cuidar.</span><br>Ninguém te ensinou a <em>crescer</em>.</h1>
-      <p class="hero-sub">O ClinicNow diagnostica sua clínica em 3 minutos, monta seu plano de crescimento de 4 semanas, organiza seus leads num funil simples e transforma atendimento avulso em <strong>protocolo e receita recorrente</strong> — sem depender só de indicação. Para médicos, dentistas, fisioterapeutas, nutricionistas, biomédicos, enfermeiros, esteticistas e quem gere clínica.</p>
+      <p class="hero-sub">O ClinicNow diagnostica sua clínica em 3 minutos, monta seu plano de crescimento de 4 semanas, organiza seus leads num funil simples e transforma atendimento avulso em <strong>protocolo e receita recorrente</strong> — e você não implementa sozinho: <strong>todos os planos incluem mentoria de implementação e suporte para dúvidas e ajustes durante todo o ano</strong>.</p>
       <div class="hero-ctas">
         <a class="btn btn-em btn-lg" href="captura.html">Fazer meu diagnóstico gratuito →</a>
-        <a class="btn btn-ghost btn-lg" href="app.html">Entrar no ClinicNow</a>
+        <a class="btn btn-ghost btn-lg" href="#planos">Ver planos e preços</a>
       </div>
       <div class="hero-note">3 minutos · sem cartão · plano na hora</div>
     </div>
@@ -183,6 +215,7 @@
   </div>
 </section>
 
+<!-- (2) A DOR — nomeada por vertical -->
 <section id="dor">
   <div class="wrap">
     <div class="sec-head">
@@ -195,44 +228,177 @@
       <div class="card"><div class="ico">🪙</div><h3>Ticket esmagado</h3><p>Consulta ou sessão avulsa barata, sem empacotamento, sem recorrência. O valor entregue é alto; o valor cobrado, não.</p></div>
       <div class="card"><div class="ico">🕳️</div><h3>Leads que evaporam</h3><p>Quem chama no WhatsApp e não fecha na hora simplesmente some. Ninguém acompanha, ninguém faz recall, ninguém vende.</p></div>
     </div>
+    <div class="verts">
+      <div class="vert"><span class="who">Médico(a)</span><p>Agenda tomada por convênio e plantão, enquanto o consultório particular — o que você sonhou — fica parado esperando indicação.</p></div>
+      <div class="vert"><span class="who">Dentista</span><p>Orçamento apresentado na cadeira, paciente que "vai pensar"… e nunca mais responde. O tratamento aprovado que não começa é receita que evaporou.</p></div>
+      <div class="vert"><span class="who">Fisioterapeuta</span><p>O pacote de 10 sessões acaba, a dor melhora — e o paciente some. Sem protocolo de continuidade, cada alta é um cliente perdido.</p></div>
+      <div class="vert"><span class="who">Nutricionista</span><p>O retorno de 30 dias que nunca acontece. Acompanhamento que deveria ser contínuo vira consulta avulsa uma vez por semestre.</p></div>
+      <div class="vert"><span class="who">Estética / Biomedicina</span><p>Concorrência brigando por preço, procedimento avulso sem protocolo âncora — e o cliente que compara você com quem cobra metade.</p></div>
+      <div class="vert"><span class="who">Enfermagem</span><p>Serviço de qualidade, demanda real — e nenhuma oferta clara, empacotada e precificada para vender sem constrangimento.</p></div>
+      <div class="vert"><span class="who">Dono(a) de clínica</span><p>Equipe atendendo o dia inteiro, WhatsApp lotado — e ninguém sabe dizer quantos leads entraram no mês, quantos fecharam e por que os outros sumiram.</p></div>
+      <div class="vert"><span class="who">Esteticista</span><p>Agenda que vive de promoção e repique de rede social: mês bom, mês ruim — nunca um sistema que garanta o próximo mês.</p></div>
+    </div>
   </div>
 </section>
 
+<!-- (3) O MECANISMO — como o sistema funciona -->
 <section id="metodo">
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">O método</span>
       <h2>Diagnóstico → Plano → Execução → <em>Recorrência</em></h2>
-      <p>O ClinicNow não é curso nem promessa de guru. É um sistema que aplica em você o mesmo funil que ensina.</p>
+      <p>O ClinicNow não é curso nem promessa de guru. É um sistema que aplica em você o mesmo funil que ensina — e uma equipe que te acompanha enquanto você implementa.</p>
     </div>
     <div class="steps">
       <div class="step"><span class="n"></span><div><h3>Diagnóstico de crescimento (3 minutos)</h3><p>7 perguntas sobre nicho, ticket, volume, gargalo e objetivo. O sistema identifica seu perfil — especialista sem captação, conversão fraca, preço abaixo do mercado ou operação sobrecarregada.</p></div></div>
       <div class="step"><span class="n"></span><div><h3>Plano de 4 semanas, personalizado</h3><p>Fundação e posicionamento, máquina de captação, roteiro de conversão e retenção/LTV — com ações concretas por semana, checklist executável e protocolos precificados para o seu nicho.</p></div></div>
       <div class="step"><span class="n"></span><div><h3>CRM de leads no funil</h3><p>Todo contato entra num funil visual: novo → conversando → avaliação agendada → fechado. Nada evapora mais no WhatsApp.</p></div></div>
       <div class="step"><span class="n"></span><div><h3>Metas e projeção de receita</h3><p>Receita atual vs. projetada, progresso do plano e evolução do ticket — os números do crescimento na sua frente, toda semana.</p></div></div>
+      <div class="step"><span class="n"></span><div><h3>Mentoria e suporte enquanto você executa</h3><p>Onboarding ao vivo para implementar, encontros de mentoria para destravar e suporte para dúvidas e ajustes durante todo o ano — porque plano sem acompanhamento vira PDF esquecido.</p></div></div>
     </div>
   </div>
 </section>
 
-<section id="produto">
+<!-- (4) O QUE VOCÊ RECEBE -->
+<section id="recebe">
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">O produto</span>
-      <h2>Um cockpit de crescimento, <em>não</em> mais um curso</h2>
-      <p>Você não precisa de mais conteúdo. Precisa de um lugar onde o plano vive, os leads andam e as metas aparecem.</p>
+      <span class="eyebrow">O que você recebe</span>
+      <h2>O sistema, a mentoria e o suporte — <em>o ano inteiro</em></h2>
+      <p>Você não precisa de mais conteúdo. Precisa de um lugar onde o plano vive, os leads andam, as metas aparecem — e de gente do seu lado quando travar.</p>
     </div>
-    <div class="cards3">
-      <div class="card"><div class="ico">🧭</div><h3>Diagnóstico & Plano</h3><ul><li>Perfil de crescimento identificado</li><li>Roadmap de 4 semanas com checklist</li><li>Protocolos precificados por nicho</li><li>Plano imprimível para a equipe</li></ul></div>
-      <div class="card"><div class="ico">📈</div><h3>Funil & Metas</h3><ul><li>CRM kanban de leads</li><li>Origem de cada lead (indicação, Instagram, Google…)</li><li>Meta de receita e projeção automática</li><li>Backlog de execução semanal</li></ul></div>
-      <div class="card"><div class="ico">🧠</div><h3>Ecossistema</h3><ul><li>Integra com o <a href="../medeasy.html" style="color:var(--em-light)">MedEasy</a> (consulta que se documenta sozinha)</li><li>Índice de Saúde como argumento de venda ética</li><li>Perfil no marketplace SosMed</li></ul></div>
+    <div class="recebe-grid">
+      <div class="card"><div class="ico">🧭</div><h3>O produto (cockpit de crescimento)</h3><ul>
+        <li>Diagnóstico de crescimento ilimitado</li>
+        <li>Plano de 4 semanas com checklist executável</li>
+        <li>Protocolos precificados para o seu nicho</li>
+        <li>CRM kanban de leads, com origem de cada um</li>
+        <li>Metas, projeção e acompanhamento de receita</li>
+        <li>Integração com o <a href="../medeasy.html" style="color:var(--em-light)">MedEasy</a> e o ecossistema</li>
+      </ul></div>
+      <div class="card"><div class="ico">🤝</div><h3>Mentoria de implementação</h3><ul>
+        <li>Onboarding de implementação ao vivo, em grupo, em todos os planos</li>
+        <li>No Pro: encontros mensais de mentoria em grupo, ao vivo</li>
+        <li>No Aceleração: sessões mensais 1:1 com o fundador</li>
+        <li>Mediante agendamento, em horário comercial — combinado claro, sem letra miúda</li>
+      </ul></div>
+      <div class="card"><div class="ico">🛟</div><h3>Suporte durante todo o ano</h3><ul>
+        <li>Dúvidas e ajustes por WhatsApp e e-mail, o ano inteiro</li>
+        <li>Horário comercial, em dias úteis</li>
+        <li>Prioridade na fila para Pro e Aceleração</li>
+        <li>No Aceleração: ajustes assistidos na sua operação dentro do ClinicNow</li>
+      </ul></div>
     </div>
-    <div style="margin-top:34px; display:flex; gap:14px; flex-wrap:wrap">
-      <a class="btn btn-em" href="app.html">Abrir o ClinicNow agora →</a>
-      <a class="btn btn-ghost" href="captura.html">Começar pelo diagnóstico gratuito</a>
+    <p class="recebe-note">Combinado honesto: mentoria e suporte tratam do uso do ClinicNow e da execução do seu plano de crescimento — não são orientação clínica, e ajuste assistido não é serviço de agência (não criamos seus anúncios nem gerimos tráfego por você). O detalhe de cada plano está nos <a href="termos-beta.html" style="color:var(--em-light)">termos</a>.</p>
+  </div>
+</section>
+
+<!-- (5) PARA QUEM É / NÃO É -->
+<section id="paraquem">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Para quem é</span>
+      <h2>Feito para quem executa. <em>Não</em> para quem coleciona curso.</h2>
+    </div>
+    <div class="fit">
+      <div class="card yes"><h3>O ClinicNow é para você se…</h3><ul style="margin-top:14px; display:grid; gap:10px">
+        <li>Você é profissional da saúde — médico, dentista, fisioterapeuta, nutricionista, biomédico, enfermeiro, esteticista — ou dono/gestor de clínica</li>
+        <li>Atende bem, mas vive refém de indicação e quer previsibilidade de agenda e receita</li>
+        <li>Topa executar um plano semana a semana, com mentoria e suporte do lado</li>
+        <li>Quer cobrar pelo valor que entrega, com protocolos empacotados — sem virar vendedor agressivo</li>
+        <li>Prefere um combinado claro (assinatura anual, 7 dias de arrependimento, sem multa) a promessa milagrosa</li>
+      </ul></div>
+      <div class="card not"><h3>Não é para você se…</h3><ul style="margin-top:14px; display:grid; gap:10px">
+        <li>Você procura promessa de faturamento garantido — não fazemos, e está escrito nos termos</li>
+        <li>Quer terceirizar tudo: o ClinicNow te acompanha na implementação, mas quem executa a clínica é você</li>
+        <li>Não tem umas 2 horas por semana para trabalhar o próprio crescimento</li>
+        <li>Espera resultado sem mexer em preço, oferta e follow-up — as três coisas que o plano ataca</li>
+      </ul></div>
     </div>
   </div>
 </section>
 
+<!-- (6) PLANOS E PREÇOS -->
+<section id="planos">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Planos</span>
+      <h2>Escolha a velocidade do seu <em>crescimento</em></h2>
+      <p><strong>Todos os planos incluem mentoria de implementação e suporte para dúvidas e ajustes durante todo o ano.</strong> Assinatura anual, sem multa de cancelamento: o acesso vale por todo o período pago e você tem 7 dias de arrependimento com reembolso integral (CDC, art. 49). Estamos em beta fundador: quem entra agora tem acompanhamento direto do fundador e preço de lançamento.</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>ClinicNow Start</h3>
+        <div class="for">Para quem está começando a se organizar</div>
+        <div class="price">R$ 297<small>/mês</small></div>
+        <div class="equiv">cobrado anualmente — total de <strong>R$ 3.564/ano</strong></div>
+        <ul>
+          <li>Diagnóstico de crescimento ilimitado</li>
+          <li>Plano de 4 semanas com checklist</li>
+          <li>Protocolos precificados por nicho</li>
+          <li>CRM de leads (funil visual)</li>
+          <li class="hl">Implementação guiada: onboarding ao vivo, em grupo</li>
+          <li class="hl">Suporte por WhatsApp e e-mail durante todo o ano</li>
+          <li class="no">Metas avançadas e projeção de receita</li>
+          <li class="no">Mentoria mensal (em grupo ou 1:1)</li>
+        </ul>
+        <a class="btn btn-ghost" data-plano="start" data-label-checkout="Assinar o Start agora →" href="captura.html?plano=start">Começar pelo diagnóstico</a>
+      </div>
+      <div class="plan hot">
+        <span class="tag">Mais escolhido</span>
+        <h3>ClinicNow Pro</h3>
+        <div class="for">Para quem quer previsibilidade de verdade</div>
+        <div class="price">R$ 697<small>/mês</small></div>
+        <div class="equiv">cobrado anualmente — total de <strong>R$ 8.364/ano</strong></div>
+        <ul>
+          <li>Tudo do Start (produto, onboarding e suporte anual)</li>
+          <li>Metas, projeção e acompanhamento de receita</li>
+          <li>Backlog de execução semanal</li>
+          <li class="hl">Mentoria de implementação em grupo: encontros mensais ao vivo</li>
+          <li class="hl">Prioridade no suporte</li>
+          <li class="soon">Scripts de conversão e recall prontos <span class="soon-tag">em breve</span></li>
+          <li class="soon">Integração com MedEasy (Índice de Saúde na venda) <span class="soon-tag">em breve</span></li>
+        </ul>
+        <a class="btn btn-em" data-plano="pro" data-label-checkout="Assinar o Pro agora →" href="captura.html?plano=pro">Quero o Pro →</a>
+      </div>
+      <div class="plan">
+        <h3>ClinicNow Aceleração</h3>
+        <div class="for">Implementação lado a lado com o fundador</div>
+        <div class="price">R$ 997<small>/mês</small></div>
+        <div class="equiv">cobrado anualmente — total de <strong>R$ 11.964/ano</strong></div>
+        <ul>
+          <li>Tudo do Pro</li>
+          <li class="hl">Mentoria 1:1 com o fundador: sessão mensal, mediante agendamento</li>
+          <li class="hl">Ajustes assistidos na sua operação dentro do ClinicNow</li>
+          <li>Construção da oferta âncora com você</li>
+          <li>Revisão de posicionamento e precificação</li>
+          <li>Capacidade limitada pela agenda real do fundador — se não houver agenda, o plano sai do ar (nunca vendemos sem a contrapartida)</li>
+        </ul>
+        <a class="btn btn-ghost" data-plano="aceleracao" data-label-checkout="Assinar o Aceleração agora →" href="captura.html?plano=aceleracao">Quero implementação 1:1</a>
+      </div>
+    </div>
+    <div class="founder">★ Beta fundador: acompanhamento direto de quem constrói o produto. Preço de lançamento: ajustes futuros não afetam assinaturas ativas — reajuste, se houver, só a partir da renovação seguinte e com aviso prévio de 30 dias.</div>
+  </div>
+</section>
+
+<!-- (7) GARANTIA -->
+<section id="garantia">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Garantia</span>
+      <h2>7 dias para se arrepender. <em>Sem</em> perguntas constrangedoras.</h2>
+    </div>
+    <div class="guarantee">
+      <div class="seal">7d</div>
+      <div>
+        <h3>Reembolso integral em até 7 dias</h3>
+        <p>Assinou e sentiu que não é para você? Em até 7 dias corridos da contratação, o reembolso é integral — é o direito de arrependimento do CDC (art. 49), e a gente faz questão dele em vez de escondê-lo. Depois disso, você ainda pode cancelar quando quiser, sem multa e sem "ligação de retenção": o acesso continua até o fim do período pago. O combinado completo está nos <a href="termos-beta.html" style="color:var(--em-light)">termos de uso</a> — em português claro, não em juridiquês.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- (8) A HISTÓRIA DO FUNDADOR -->
 <section id="prova">
   <div class="wrap">
     <div class="sec-head">
@@ -243,87 +409,43 @@
       "Tranquei medicina para construir as ferramentas que os meus professores nunca tiveram. O ClinicNow é a parte do ecossistema que responde a pergunta que nenhuma faculdade da saúde responde: <em>como transformar um bom profissional num negócio saudável?</em>"
       <span class="who">Sóstenes Costa Paiva · fundador · Zetheon</span>
     </blockquote>
+    <div class="story">
+      <p>Antes da medicina, Sóstenes passou quase dez anos dentro de clínica — como <strong>fisioterapeuta e biomédico</strong>, tocando protocolos de emagrecimento e estética. Viveu na pele a dor que o ClinicNow ataca: saber cuidar como poucos e nunca ter aprendido a captar, cobrar e crescer.</p>
+      <p>Por isso a mentoria de implementação não é um bônus de página de vendas: é a parte do produto que ele mais gosta de entregar. No beta fundador, quem acompanha a sua implementação é <strong>quem constrói o produto</strong> — e cada travamento seu vira melhoria para a próxima versão.</p>
+    </div>
   </div>
 </section>
 
-<section id="planos">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Planos</span>
-      <h2>Escolha a velocidade do seu <em>crescimento</em></h2>
-      <p>Assinatura anual, sem multa de cancelamento: o acesso vale por todo o período pago e você tem 7 dias de arrependimento com reembolso integral (CDC, art. 49). Estamos em beta fundador: quem entra agora tem acompanhamento direto do fundador e preço de lançamento.</p>
-    </div>
-    <div class="plans">
-      <div class="plan">
-        <h3>ClinicNow Start</h3>
-        <div class="for">Para quem está começando a se organizar</div>
-        <div class="price">R$ 970<small>/ano</small></div>
-        <div class="equiv">equivale a R$ 81/mês</div>
-        <ul>
-          <li>Diagnóstico de crescimento ilimitado</li>
-          <li>Plano de 4 semanas com checklist</li>
-          <li>Protocolos precificados por nicho</li>
-          <li>CRM de leads (funil visual)</li>
-          <li class="no">Metas avançadas e recall</li>
-          <li class="no">Mentoria de implementação</li>
-        </ul>
-        <a class="btn btn-ghost" href="captura.html?plano=start">Começar pelo diagnóstico</a>
-      </div>
-      <div class="plan hot">
-        <span class="tag">Mais escolhido</span>
-        <h3>ClinicNow Pro</h3>
-        <div class="for">Para quem quer previsibilidade de verdade</div>
-        <div class="price">R$ 2.970<small>/ano</small></div>
-        <div class="equiv">equivale a R$ 248/mês</div>
-        <ul>
-          <li>Tudo do Start</li>
-          <li>Metas, projeção e acompanhamento de receita</li>
-          <li>Backlog de execução semanal</li>
-          <li class="soon">Scripts de conversão e recall prontos <span class="soon-tag">em breve</span></li>
-          <li class="soon">Integração com MedEasy (Índice de Saúde na venda) <span class="soon-tag">em breve</span></li>
-          <li class="no">Mentoria de implementação</li>
-        </ul>
-        <a class="btn btn-em" href="captura.html?plano=pro">Quero o Pro →</a>
-      </div>
-      <div class="plan">
-        <h3>ClinicNow Aceleração</h3>
-        <div class="for">Implementação lado a lado, acompanhamento 1:1</div>
-        <div class="price">R$ 9.970<small>/ano</small></div>
-        <div class="equiv">equivale a R$ 831/mês</div>
-        <ul>
-          <li>Tudo do Pro</li>
-          <li>2 encontros mensais de implementação (1:1)</li>
-          <li>Construção da oferta âncora com você</li>
-          <li>Revisão de posicionamento e precificação</li>
-          <li>Prioridade em novos recursos</li>
-        </ul>
-        <a class="btn btn-ghost" href="captura.html?plano=aceleracao">Quero implementação 1:1</a>
-      </div>
-    </div>
-    <div class="founder">★ Beta fundador: acompanhamento direto de quem constrói o produto. Preço de lançamento: ajustes futuros não afetam assinaturas ativas — reajuste, se houver, só a partir da renovação seguinte e com aviso prévio de 30 dias.</div>
-  </div>
-</section>
-
+<!-- (9) FAQ -->
 <section id="faq">
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">FAQ</span>
       <h2>Perguntas diretas, respostas diretas</h2>
     </div>
-    <details><summary>Isso é mais um curso de marketing para a saúde?</summary><p>Não. É um sistema onde o plano vive e é executado: diagnóstico, roadmap com checklist, funil de leads e metas. Conteúdo existe para servir a execução — não o contrário.</p></details>
+    <details><summary>Isso é mais um curso de marketing para a saúde?</summary><p>Não. É um sistema onde o plano vive e é executado: diagnóstico, roadmap com checklist, funil de leads e metas — com mentoria e suporte enquanto você implementa. Conteúdo existe para servir a execução — não o contrário.</p></details>
+    <details><summary>Quanto custa, afinal — é por mês ou por ano?</summary><p>Os preços são apresentados por mês (R$ 297, R$ 697 e R$ 997) e a cobrança é anual, à vista: R$ 3.564/ano no Start, R$ 8.364/ano no Pro e R$ 11.964/ano no Aceleração. O total anual aparece ao lado do valor mensal em todos os planos — sem surpresa no checkout. É preço de lançamento: ajustes futuros não afetam assinaturas ativas.</p></details>
+    <details><summary>Como funciona a mentoria de implementação em cada plano?</summary><p>Todos os planos começam com onboarding de implementação ao vivo, em grupo. No Pro, você entra também nos encontros mensais de mentoria em grupo, ao vivo. No Aceleração, além de tudo isso, você tem sessão mensal 1:1 com o fundador — mediante agendamento, com capacidade limitada pela agenda real dele (quando não há agenda, o plano fica indisponível; não vendemos o que não podemos entregar). Mentorias acontecem em horário comercial e o combinado completo está nos termos.</p></details>
+    <details><summary>E o suporte durante o ano, como funciona?</summary><p>Dúvidas e pedidos de ajuste por WhatsApp e e-mail durante toda a vigência da assinatura, em horário comercial (dias úteis). Alvo de resposta: até 2 dias úteis no Start e até 1 dia útil no Pro e no Aceleração. O suporte cobre o uso do ClinicNow e a execução do seu plano — não é orientação clínica, jurídica ou contábil.</p></details>
     <details><summary>Funciona para a minha profissão e especialidade?</summary><p>Sim: o ClinicNow é para profissionais da saúde em geral — médicos, dentistas, fisioterapeutas, nutricionistas, biomédicos, enfermeiros, esteticistas e gestores de clínica. O plano é gerado a partir do seu nicho (emagrecimento, longevidade, estética, performance, saúde mental, dor/reabilitação, fisioterapia, nutrição, odontologia, enfermagem, clínica geral ou clínica multiprofissional) com protocolos e preços de referência específicos.</p></details>
     <details><summary>E as normas de publicidade do meu conselho (CFM, COFFITO, COREN, CFN, CFO…)?</summary><p>O ClinicNow é desenhado para venda ética: prova de valor clínico (Índice de Saúde, reavaliações), protocolos com entrega real e comunicação pensada para caber nas normas de publicidade do seu conselho profissional — CFM, COFFITO, COREN, CFN, CFO, CFBM e afins. O plano é um guia estratégico — a responsabilidade regulatória final é sempre do profissional.</p></details>
+    <details><summary>Não tenho tempo para mais uma ferramenta. Isso vai ficar parado?</summary><p>O plano pede cerca de 2 horas por semana — e é exatamente para não ficar parado que a mentoria e o suporte existem: o onboarding configura sua operação com você, e os encontros servem para destravar quando a semana apertar. Se mesmo assim você não pretende executar, o honesto é dizer: o ClinicNow não é para você agora (e o diagnóstico gratuito continua seu).</p></details>
     <details><summary>Preciso usar o MedEasy junto?</summary><p>Não precisa, mas eles foram feitos um para o outro: o MedEasy documenta a consulta e gera o Índice de Saúde; o ClinicNow usa esse índice como o argumento de venda mais honesto que existe — resultado clínico medido.</p></details>
     <details><summary>Como funciona a assinatura anual? E se eu quiser cancelar?</summary><p>Os planos são cobrados por ciclo anual, com preço de lançamento. Você pode cancelar quando quiser, sem multa e sem ligação constrangedora: o acesso continua até o fim do período já pago, e nos primeiros 7 dias da contratação o reembolso é integral (CDC, art. 49). Reajuste de preço, se houver, só vale a partir da renovação seguinte, com aviso prévio de 30 dias. Seus dados continuam seus.</p></details>
+    <details><summary>Como é feito o pagamento?</summary><p>Pelo Stripe, uma das maiores plataformas de pagamento do mundo — checkout seguro, no cartão. Enquanto o checkout de um plano não estiver ativo, o botão te leva ao diagnóstico gratuito e a assinatura é fechada direto com o fundador, por WhatsApp. Nada de boleto surpresa nem cobrança escondida.</p></details>
   </div>
 </section>
 
+<!-- (10) CTA FINAL -->
 <section class="cta-final">
   <div class="wrap">
     <span class="eyebrow" style="justify-content:center">Comece agora</span>
     <h2>Seu diagnóstico leva <em>3 minutos</em>.<br>O plano sai na hora.</h2>
-    <p>Sem cartão, sem call de vendas, sem enrolação. Responda 7 perguntas e receba seu plano de crescimento de 4 semanas.</p>
-    <a class="btn btn-em btn-lg" href="captura.html">Fazer meu diagnóstico gratuito →</a>
+    <p>Sem cartão, sem call de vendas, sem enrolação. Responda 7 perguntas, receba seu plano de crescimento de 4 semanas — e, quando fizer sentido, escolha o plano com mentoria e suporte o ano inteiro.</p>
+    <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap">
+      <a class="btn btn-em btn-lg" href="captura.html">Fazer meu diagnóstico gratuito →</a>
+      <a class="btn btn-ghost btn-lg" href="#planos">Ver os planos de novo</a>
+    </div>
   </div>
 </section>
 
@@ -343,5 +465,26 @@
   </div>
   <div class="wrap disclaimer">O ClinicNow é uma ferramenta de estratégia e gestão de crescimento para profissionais da saúde. Não presta orientação clínica nem substitui a responsabilidade profissional e regulatória de cada usuário perante o seu conselho (CFM, COFFITO, COREN, CFN, CFO, CFBM etc.). Projeções são estimativas baseadas nas respostas fornecidas, não garantia de resultado.</div>
 </footer>
+
+<script src="stripe-links.js"></script>
+<script>
+/* CTAs dos planos: se o Payment Link do Stripe estiver preenchido em
+   stripe-links.js, o botão vira checkout direto (e o rótulo diz isso).
+   Se estiver vazio, o botão mantém o fluxo atual de captura/WhatsApp —
+   fallback honesto: o rótulo nunca promete um checkout que não existe. */
+(function () {
+  var links = window.CLINICNOW_STRIPE || {};
+  var botoes = document.querySelectorAll('a[data-plano]');
+  for (var i = 0; i < botoes.length; i++) {
+    var b = botoes[i];
+    var url = (links[b.getAttribute('data-plano')] || '').trim();
+    if (url && url.indexOf('https://') === 0) {
+      b.href = url;
+      b.textContent = b.getAttribute('data-label-checkout') || b.textContent;
+      b.setAttribute('rel', 'noopener');
+    }
+  }
+})();
+</script>
 </body>
 </html>
