@@ -3,9 +3,9 @@
 Exigência do Founder (Fase 2): *"O modelo precisa rodar no mínimo viável, testado, ANTES da primeira venda."*
 Suite end-to-end com **Playwright (Chromium)** cobrindo os fluxos críticos e as regressões dos vetos do Conselho.
 
-**Última execução: 2026-07-29 — 38 testes, 38 verdes (0 falhas).**
+**Última execução: 2026-07-29 — 47 testes, 47 verdes (0 falhas).**
 
-Cobre as decisões do Founder de 2026-07-28 (**ICP ampliado**; cobrança anual) e as ordens de 2026-07-29: **nova oferta** — mentoria de implementação + suporte anual em todos os planos, preços **R$ 297 / R$ 697 / R$ 997 por mês em cobrança anual** (R$ 3.564 / R$ 8.364 / R$ 11.964 por ano), página de vendas long-form e CTAs com Payment Link do Stripe + fallback honesto (`oferta.spec.js`).
+Cobre as decisões do Founder de 2026-07-28 (**ICP ampliado**; cobrança anual) e as ordens de 2026-07-29: **nova oferta** — mentoria de implementação + suporte anual em todos os planos, preços **R$ 297 / R$ 697 / R$ 997 por mês em cobrança anual** (R$ 3.564 / R$ 8.364 / R$ 11.964 por ano), página de vendas long-form e CTAs com Payment Link do Stripe + fallback honesto (`oferta.spec.js`) — e a **remodelagem da página nos padrões dos benchmarks** (mdhub/Emma + Treint) com os pontos cegos travados por teste (`benchmark.spec.js`, spec em `specs/BENCHMARK-PAGINA.md`).
 
 ## Como rodar
 
@@ -78,15 +78,29 @@ Escopo do grep: **apenas `.html` e `.js` no topo de `clinicnow/`** (arquivos ser
 | 33 | **stripe-links.js como fonte única** | Arquivo existe com `window.CLINICNOW_STRIPE` e as 3 chaves; index carrega o script, tem os 3 CTAs `data-plano` com fallback `captura.html?plano=…` e 3 rótulos `data-label-checkout` | VERDE |
 | 34 | **Fallback no navegador (links vazios)** | Página real no Chromium: os 3 botões apontam para captura e o rótulo NÃO promete checkout ("Quero o Pro →", não "Assinar…") | VERDE |
 | 35 | **Checkout no navegador (link preenchido)** | `stripe-links.js` mockado com Payment Link no Pro: o botão vira o link do Stripe e troca o rótulo para "Assinar o Pro agora →"; os demais seguem no fallback | VERDE |
-| 36 | **Estrutura long-form em ordem** | As 10 seções (hero → dor → método → o que você recebe → para quem é → planos → garantia → fundador → FAQ → CTA final) presentes e NA ORDEM; dor nomeada por vertical; garantia cita art. 49; seção "não é para você" existe | VERDE |
+| 36 | **Estrutura remodelada em ordem** | As **16 seções** da página remodelada (hero → fatos → dor → método → demo → recebe → ecossistema → roi → comparativo → para quem é → planos → garantia → conformidade → fundador → FAQ → CTA final) presentes e NA ORDEM; dor nomeada por vertical; garantia cita art. 49; seção "não é para você" existe | VERDE |
 
-(+ os testes 37–38 são os antigos 28–29 renumerados pela ordem de execução do runner.)
+### `benchmark.spec.js` — pontos cegos dos benchmarks travados (remodelagem 2026-07-29)
+
+Spec de origem: `specs/BENCHMARK-PAGINA.md`. Cada teste impede a regressão de um ponto cego ao padrão do mercado (preço escondido, demo com vendedor, percentual sem premissa, selo fake).
+
+| # | Teste | O que trava | Resultado |
+|---|-------|-------------|-----------|
+| B1 | Barra de fatos | Números verificáveis do sistema (3 min, 4 semanas, R$ na página, 7 dias, mentoria+suporte) + declaração explícita de beta sem "logos de clientes alugados" | VERDE |
+| B2 | Produto aberto | Seção `#demo` linka `app.html` e `captura.html`, diz "sem call de vendas"; CTA secundário do hero aponta `#demo` | VERDE |
+| B3 | Ecossistema MedEasy | MedEasy como módulo, Índice de Saúde, resultado "medido"/"nunca prometido", integração "em implantação" com selo `em breve` (L5) | VERDE |
+| B4 | Calculadora honesta (estático) | Inputs `roi-leads/ticket/pontos`, fórmula impressa, "estimativa ilustrativa", "não é projeção nossa nem garantia de resultado", "Premissa sua" | VERDE |
+| B5 | Calculadora no navegador | Defaults 20×10%×250 = R$ 500/mês; mudar premissas recalcula (40×5%×300 = R$ 600/mês, 2 pacientes); entrada absurda não vira NaN | VERDE |
+| B6 | Comparativo | 4 colunas (ClinicNow, agência, curso, sozinho), 5 linhas, e a linha honesta "Quando a agência é a melhor escolha" com "não somos ela" | VERDE |
+| B7 | Conformidade | LGPD + 6 conselhos, links privacidade/termos, art. 49, nota "não exibimos certificações que não temos", e proibição de reivindicar HIPAA/SOC como nossos | VERDE |
+| B8 | Preço como argumento | Microcopy "Por que o preço está na página?" dentro de `#planos` | VERDE |
+| B9 | Keywords PT-BR | "crescimento de clínica", "captação de pacientes", "CRM para clínicas", "receita recorrente" no `<head>` | VERDE |
 
 ## Evidência
 
 ```
-Running 38 tests using 1 worker
-  38 passed (1.1m)
+Running 47 tests using 1 worker
+  47 passed (54.5s)
 ```
 
 ## O que ainda NÃO está coberto (dívida de teste declarada)

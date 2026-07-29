@@ -108,10 +108,12 @@ test('CTA com Payment Link preenchido: botão vira checkout e troca o rótulo', 
   await expect(page.locator('a[data-plano="start"]')).toHaveAttribute('href', /captura\.html\?plano=start$/);
 });
 
-test('página long-form: as 10 seções da estrutura de conversão presentes e na ordem', async () => {
+test('página long-form: as 16 seções da estrutura remodelada (benchmarks) presentes e na ordem', async () => {
   const index = ler('index.html');
-  const ordem = ['class="hero"', 'id="dor"', 'id="metodo"', 'id="recebe"', 'id="paraquem"',
-                 'id="planos"', 'id="garantia"', 'id="prova"', 'id="faq"', 'class="cta-final"'];
+  const ordem = ['class="hero"', 'id="fatos"', 'id="dor"', 'id="metodo"', 'id="demo"',
+                 'id="recebe"', 'id="ecossistema"', 'id="roi"', 'id="comparativo"',
+                 'id="paraquem"', 'id="planos"', 'id="garantia"', 'id="conformidade"',
+                 'id="prova"', 'id="faq"', 'class="cta-final"'];
   let pos = -1;
   for (const marca of ordem) {
     const i = index.indexOf(marca);
