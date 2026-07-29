@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ClinicNow — A máquina de crescimento para profissionais da saúde e donos de clínica</title>
-<meta name="description" content="ClinicNow diagnostica sua clínica, monta seu plano de crescimento em 4 semanas, organiza seus leads e transforma atendimentos avulsos em protocolos e receita recorrente — com mentoria de implementação e suporte durante todo o ano em todos os planos. Para médicos, dentistas, fisioterapeutas, nutricionistas, biomédicos, enfermeiros e esteticistas." />
-<meta property="og:title" content="ClinicNow — A máquina de crescimento para profissionais da saúde e donos de clínica" />
-<meta property="og:description" content="Diagnóstico, plano de crescimento, CRM de pacientes e metas — com mentoria de implementação e suporte o ano inteiro. Pare de depender de indicação: construa uma máquina previsível de pacientes." />
+<title>ClinicNow — Crescimento de clínica e captação de pacientes com método, CRM e mentoria</title>
+<meta name="description" content="ClinicNow: diagnóstico de crescimento em 3 minutos, plano de 4 semanas, CRM de pacientes e metas — captação de pacientes, precificação e receita recorrente para clínicas, com mentoria de implementação e suporte o ano inteiro em todos os planos. Preço na página, produto aberto, LGPD e publicidade em saúde levadas a sério. Para médicos, dentistas, fisioterapeutas, nutricionistas, biomédicos, enfermeiros e esteticistas." />
+<meta name="keywords" content="crescimento de clínica, captação de pacientes, marketing para clínicas, CRM para clínicas, funil de pacientes, agenda previsível, receita recorrente, precificação de consulta, gestão de clínica, marketing médico ético, LGPD" />
+<meta property="og:title" content="ClinicNow — Crescimento de clínica com método, CRM e mentoria o ano inteiro" />
+<meta property="og:description" content="Diagnóstico em 3 minutos, plano de 4 semanas, CRM de pacientes e metas — com mentoria de implementação e suporte o ano inteiro. Preço na página, produto aberto, sem call de vendas. Pare de depender de indicação." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -154,6 +155,50 @@
   summary { cursor:pointer; font-weight:600; font-size:0.95rem; }
   details p { color:var(--muted); font-size:0.9rem; margin-top:10px; }
 
+  /* barra de fatos (substituto honesto da faixa de logos dos benchmarks) */
+  .facts { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; }
+  @media (max-width:900px){ .facts{grid-template-columns:repeat(2,1fr)} }
+  .fact { background:var(--card); border:1px solid var(--border); border-radius:13px; padding:16px 14px; text-align:center; }
+  .fact .num { font-family:var(--serif); font-size:1.45rem; color:var(--em-light); }
+  .fact .lbl { font-size:0.72rem; color:var(--muted); font-family:var(--mono); letter-spacing:0.04em; text-transform:uppercase; margin-top:4px; }
+  .facts-note { margin-top:16px; font-size:0.8rem; color:var(--muted); max-width:78ch; }
+
+  /* produto aberto (demo real) */
+  .demo-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:760px){ .demo-grid{grid-template-columns:1fr} }
+  .demo-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px; display:flex; flex-direction:column; gap:12px; }
+  .demo-card h3 { font-size:1.12rem; }
+  .demo-card p { color:var(--muted); font-size:0.92rem; flex:1; }
+  .demo-card .btn { align-self:flex-start; }
+
+  /* ecossistema */
+  .eco { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:760px){ .eco{grid-template-columns:1fr} }
+  .eco .card h3 { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .eco .mod { font-family:var(--mono); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--em-light); border:1px solid rgba(25,195,125,0.4); border-radius:99px; padding:2px 10px; }
+
+  /* calculadora honesta */
+  .roi-box { background:var(--card); border:1px solid var(--border-strong); border-radius:18px; padding:30px; display:grid; grid-template-columns:1.1fr 0.9fr; gap:30px; }
+  @media (max-width:820px){ .roi-box{grid-template-columns:1fr} }
+  .roi-inputs { display:grid; gap:16px; }
+  .roi-field label { display:block; font-size:0.82rem; color:var(--muted); margin-bottom:6px; }
+  .roi-field input { width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--border-strong); border-radius:10px; color:var(--text); font-family:var(--mono); font-size:1rem; padding:10px 12px; }
+  .roi-field input:focus { outline:none; border-color:var(--em); }
+  .roi-out { border-left:1px solid var(--border); padding-left:30px; display:flex; flex-direction:column; gap:10px; }
+  @media (max-width:820px){ .roi-out{border-left:none; padding-left:0; border-top:1px solid var(--border); padding-top:20px} }
+  .roi-out .big { font-family:var(--serif); font-size:2rem; color:var(--em-light); }
+  .roi-out .formula { font-family:var(--mono); font-size:0.72rem; color:var(--muted); }
+  .roi-note { margin-top:16px; font-size:0.8rem; color:var(--muted); max-width:80ch; }
+
+  /* comparativo */
+  .cmp-wrap { overflow-x:auto; }
+  table.cmp { width:100%; border-collapse:collapse; min-width:760px; font-size:0.88rem; }
+  .cmp th, .cmp td { padding:13px 14px; border:1px solid var(--border); vertical-align:top; text-align:left; color:var(--muted); }
+  .cmp th { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text); background:rgba(255,255,255,0.03); }
+  .cmp td:first-child { color:var(--text); font-weight:600; }
+  .cmp .cn { background:rgba(25,195,125,0.06); color:var(--text); }
+  .cmp-note { margin-top:16px; font-size:0.85rem; color:var(--muted); max-width:82ch; }
+
   .cta-final { text-align:center; padding:90px 0; }
   .cta-final h2 { font-size:clamp(1.8rem,3.6vw,2.6rem); margin-bottom:14px; }
   .cta-final p { color:var(--muted); max-width:52ch; margin:0 auto 30px; }
@@ -176,10 +221,11 @@
     </a>
     <nav class="nav-links">
       <a href="#metodo">Método</a>
-      <a href="#recebe">O que você recebe</a>
+      <a href="#demo">Por dentro</a>
+      <a href="#roi">Calculadora</a>
+      <a href="#comparativo">Comparar</a>
       <a href="#planos">Planos</a>
       <a href="#faq">FAQ</a>
-      <a href="investidores.html">Investidores</a>
     </nav>
     <a class="btn btn-em" href="captura.html">Diagnóstico gratuito</a>
   </div>
@@ -194,9 +240,9 @@
       <p class="hero-sub">O ClinicNow diagnostica sua clínica em 3 minutos, monta seu plano de crescimento de 4 semanas, organiza seus leads num funil simples e transforma atendimento avulso em <strong>protocolo e receita recorrente</strong> — e você não implementa sozinho: <strong>todos os planos incluem mentoria de implementação e suporte para dúvidas e ajustes durante todo o ano</strong>.</p>
       <div class="hero-ctas">
         <a class="btn btn-em btn-lg" href="captura.html">Fazer meu diagnóstico gratuito →</a>
-        <a class="btn btn-ghost btn-lg" href="#planos">Ver planos e preços</a>
+        <a class="btn btn-ghost btn-lg" href="#demo">Ver o produto por dentro</a>
       </div>
-      <div class="hero-note">3 minutos · sem cartão · plano na hora</div>
+      <div class="hero-note">3 minutos · 7 perguntas · sem cartão · sem call de vendas · plano na hora</div>
     </div>
     <div class="mock" aria-hidden="true">
       <div class="mock-bar"><span class="mock-dot e"></span><span class="mock-dot g"></span><span class="mock-dot"></span></div>
@@ -215,7 +261,21 @@
   </div>
 </section>
 
-<!-- (2) A DOR — nomeada por vertical -->
+<!-- (2) BARRA DE FATOS — no lugar da faixa de logos dos benchmarks, fatos verificáveis do sistema -->
+<section id="fatos">
+  <div class="wrap">
+    <div class="facts">
+      <div class="fact"><div class="num">3 min</div><div class="lbl">diagnóstico gratuito</div></div>
+      <div class="fact"><div class="num">4 semanas</div><div class="lbl">plano com checklist</div></div>
+      <div class="fact"><div class="num">R$ na página</div><div class="lbl">preço transparente</div></div>
+      <div class="fact"><div class="num">7 dias</div><div class="lbl">arrependimento · CDC</div></div>
+      <div class="fact"><div class="num">1 ano</div><div class="lbl">mentoria + suporte</div></div>
+    </div>
+    <p class="facts-note">Você não vai ver aqui logos de clientes alugados nem depoimentos fabricados: estamos em beta fundador e dizemos isso na cara. O que temos para mostrar é melhor — <a href="#demo" style="color:var(--em-light)">o produto aberto</a>, o preço na página e o combinado por escrito.</p>
+  </div>
+</section>
+
+<!-- (3) A DOR — nomeada por vertical -->
 <section id="dor">
   <div class="wrap">
     <div class="sec-head">
@@ -241,7 +301,7 @@
   </div>
 </section>
 
-<!-- (3) O MECANISMO — como o sistema funciona -->
+<!-- (4) O MECANISMO — como o sistema funciona -->
 <section id="metodo">
   <div class="wrap">
     <div class="sec-head">
@@ -259,7 +319,32 @@
   </div>
 </section>
 
-<!-- (4) O QUE VOCÊ RECEBE -->
+<!-- (5) PRODUTO ABERTO — ponto cego dos benchmarks: eles agendam demo, nós abrimos o sistema -->
+<section id="demo">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Por dentro do produto</span>
+      <h2>Não agende demo com vendedor. <em>Entre</em> no sistema.</h2>
+      <p>A maioria das plataformas esconde o produto atrás de uma "demonstração agendada". O ClinicNow faz o contrário: o cockpit é aberto — você entra, gera seu plano e mexe no CRM antes de pagar qualquer coisa.</p>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <div class="ico">🩺</div>
+        <h3>Diagnóstico gratuito de crescimento</h3>
+        <p>7 perguntas, 3 minutos. Você recebe o seu perfil de gargalo e o plano de 4 semanas na hora — sem cartão, sem call de vendas, sem "um consultor vai te ligar".</p>
+        <a class="btn btn-em" href="captura.html">Fazer o diagnóstico →</a>
+      </div>
+      <div class="demo-card">
+        <div class="ico">🧭</div>
+        <h3>Cockpit aberto no navegador</h3>
+        <p>Crie sua conta e veja o produto de verdade: diagnóstico, plano com checklist, CRM kanban de leads e metas. O que você vê é o que você assina — nenhuma tela de mentira gravada em vídeo.</p>
+        <a class="btn btn-ghost" href="app.html">Entrar no cockpit →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- (6) O QUE VOCÊ RECEBE -->
 <section id="recebe">
   <div class="wrap">
     <div class="sec-head">
@@ -293,7 +378,90 @@
   </div>
 </section>
 
-<!-- (5) PARA QUEM É / NÃO É -->
+<!-- (7) ECOSSISTEMA — ClinicNow + MedEasy (MedEasy faz parte do ClinicNow; integração em implantação) -->
+<section id="ecossistema">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Ecossistema</span>
+      <h2>Crescimento comercial + prova de valor <em>clínica</em>, na mesma casa</h2>
+      <p>O ClinicNow não é uma ferramenta isolada: é a camada de crescimento de um ecossistema onde o argumento de venda mais forte é o resultado clínico <strong>medido</strong> dos seus próprios pacientes — nunca prometido.</p>
+    </div>
+    <div class="eco">
+      <div class="card">
+        <div class="ico">📈</div>
+        <h3>ClinicNow <span class="mod">disponível hoje</span></h3>
+        <p>A máquina comercial: diagnóstico de crescimento, plano de 4 semanas, protocolos precificados, CRM de leads e metas — com mentoria de implementação e suporte o ano inteiro.</p>
+      </div>
+      <div class="card">
+        <div class="ico">❤️</div>
+        <h3><a href="../medeasy.html" style="color:var(--em-light)">MedEasy</a> <span class="mod">módulo do ecossistema</span></h3>
+        <p>Prova de valor clínica: prontuário leve que calcula o <strong>Índice de Saúde</strong> de cada paciente (clínico + hábitos + mental, nota A–F) e a melhora medida entre avaliações. É o número que vende com ética: evolução real, não promessa. Integração com o ClinicNow em implantação <span class="soon-tag">em breve</span>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- (8) CALCULADORA HONESTA — ponto cego: benchmarks jogam percentuais sem premissa -->
+<section id="roi">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Calculadora honesta</span>
+      <h2>Quanto custa o lead que <em>some</em> no seu WhatsApp?</h2>
+      <p>Plataformas adoram prometer "+40% de receita" sem mostrar a conta. Aqui a conta é sua: mude as premissas para a sua realidade e veja a aritmética — visível, editável e sem mágica.</p>
+    </div>
+    <div class="roi-box">
+      <div class="roi-inputs">
+        <div class="roi-field">
+          <label for="roi-leads">Contatos novos por mês (WhatsApp, Instagram, indicação…)</label>
+          <input id="roi-leads" type="number" min="0" max="10000" value="20" inputmode="numeric">
+        </div>
+        <div class="roi-field">
+          <label for="roi-ticket">Seu ticket médio por paciente fechado (R$)</label>
+          <input id="roi-ticket" type="number" min="0" max="1000000" value="250" inputmode="numeric">
+        </div>
+        <div class="roi-field">
+          <label for="roi-pontos">Premissa sua: quantos pontos de conversão o follow-up organizado recupera? (%)</label>
+          <input id="roi-pontos" type="number" min="0" max="100" value="10" inputmode="numeric">
+        </div>
+      </div>
+      <div class="roi-out" aria-live="polite">
+        <div class="formula">contatos × pontos recuperados × ticket</div>
+        <div class="big" id="roi-total">R$ 500/mês</div>
+        <p style="color:var(--muted); font-size:0.88rem" id="roi-detalhe">≈ 2 pacientes a mais por mês, na sua premissa.</p>
+        <p style="color:var(--muted); font-size:0.82rem">Para comparar: o plano mais escolhido (Pro) custa R$ 697/mês, em cobrança anual.</p>
+      </div>
+    </div>
+    <p class="roi-note">Combinado honesto: isto é uma <strong>estimativa ilustrativa</strong> sobre premissas que <strong>você</strong> digitou — não é projeção nossa nem garantia de resultado. O que o ClinicNow entrega é o sistema e o acompanhamento para o follow-up deixar de depender de memória; a conversão continua dependendo da sua oferta, do seu preço e da sua execução.</p>
+  </div>
+</section>
+
+<!-- (9) COMPARATIVO — ponto cego: nenhum benchmark se compara às alternativas reais -->
+<section id="comparativo">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Comparativo</span>
+      <h2>ClinicNow, agência, curso — ou seguir <em>no improviso</em>?</h2>
+      <p>Comparação de verdade, com a linha que ninguém coloca: quando cada opção é a melhor escolha.</p>
+    </div>
+    <div class="cmp-wrap">
+      <table class="cmp">
+        <thead>
+          <tr><th></th><th class="cn">ClinicNow</th><th>Agência de marketing</th><th>Curso / mentoria gravada</th><th>Sozinho, no improviso</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Investimento típico</td><td class="cn">R$ 297 a R$ 997/mês, em cobrança anual — preço nesta página</td><td>R$ 1.500 a R$ 5.000/mês + verba de anúncios, sob proposta</td><td>R$ 2 mil a R$ 15 mil à vista</td><td>"Grátis" — pago em meses de tentativa e erro</td></tr>
+          <tr><td>Quem executa</td><td class="cn">Você, com mentoria de implementação e suporte o ano inteiro</td><td>A agência roda a mídia; oferta, preço e follow-up continuam com você</td><td>Você, sozinho, depois das aulas</td><td>Você, sozinho</td></tr>
+          <tr><td>Onde o plano vive</td><td class="cn">No sistema: diagnóstico, checklist semanal, CRM e metas</td><td>Em relatórios mensais</td><td>Em PDF e caderno</td><td>Na cabeça</td></tr>
+          <tr><td>Prova de valor clínica</td><td class="cn">Índice de Saúde via MedEasy — módulo do ecossistema, integração em implantação</td><td>Fora do escopo</td><td>Fora do escopo</td><td>—</td></tr>
+          <tr><td>Compromisso</td><td class="cn">Anual, 7 dias de arrependimento (CDC), cancelamento sem multa</td><td>Contratos com fidelidade, em geral de 3 a 6 meses</td><td>Venda única; suporte raro após o lançamento</td><td>Nenhum</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cmp-note"><strong>Quando a agência é a melhor escolha:</strong> se a sua oferta já está validada, o funil já converte e o gargalo é escala de mídia paga, uma boa agência é o passo seguinte — e não somos ela. O ClinicNow arruma a casa antes: oferta, preço, follow-up e recorrência. Quem chega na agência com a casa arrumada gasta menos e cobra melhor.</p>
+  </div>
+</section>
+
+<!-- (10) PARA QUEM É / NÃO É -->
 <section id="paraquem">
   <div class="wrap">
     <div class="sec-head">
@@ -318,13 +486,14 @@
   </div>
 </section>
 
-<!-- (6) PLANOS E PREÇOS -->
+<!-- (11) PLANOS E PREÇOS -->
 <section id="planos">
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">Planos</span>
       <h2>Escolha a velocidade do seu <em>crescimento</em></h2>
       <p><strong>Todos os planos incluem mentoria de implementação e suporte para dúvidas e ajustes durante todo o ano.</strong> Assinatura anual, sem multa de cancelamento: o acesso vale por todo o período pago e você tem 7 dias de arrependimento com reembolso integral (CDC, art. 49). Estamos em beta fundador: quem entra agora tem acompanhamento direto do fundador e preço de lançamento.</p>
+      <p style="margin-top:12px; font-size:0.85rem"><strong>Por que o preço está na página?</strong> Porque "fale com vendas" é como plataforma esconde reajuste sob medida. Aqui o valor mensal, o total anual e as regras de reajuste são públicos — você decide sem ligação de vendedor.</p>
     </div>
     <div class="plans">
       <div class="plan">
@@ -381,7 +550,7 @@
   </div>
 </section>
 
-<!-- (7) GARANTIA -->
+<!-- (12) GARANTIA -->
 <section id="garantia">
   <div class="wrap">
     <div class="sec-head">
@@ -398,7 +567,24 @@
   </div>
 </section>
 
-<!-- (8) A HISTÓRIA DO FUNDADOR -->
+<!-- (13) CONFORMIDADE — a versão BR do bloco HIPAA/SOC2 dos benchmarks, sem selo inventado -->
+<section id="conformidade">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Conformidade e dados</span>
+      <h2>Vender com ética não é slogan. É <em>arquitetura</em>.</h2>
+      <p>Plataformas internacionais exibem selos HIPAA e SOC 2. O nosso mercado tem outras regras — e nós as tratamos como requisito de produto, não como rodapé.</p>
+    </div>
+    <div class="cards3">
+      <div class="card"><div class="ico">🔒</div><h3>LGPD e os seus dados</h3><p>Consentimento explícito e registrado na captura, política de privacidade versionada, dados usados só para operar o produto — nunca vendidos. Você pode pedir exportação ou exclusão quando quiser: os dados da sua clínica são seus. <a href="privacidade.html" style="color:var(--em-light)">Política de privacidade</a>.</p></div>
+      <div class="card"><div class="ico">⚖️</div><h3>Publicidade em saúde, por conselho</h3><p>Comunicação desenhada para caber nas normas de publicidade do seu conselho — CFM, COFFITO, COREN, CFN, CFO, CFBM e afins: sem promessa de resultado, sem antes-e-depois sensacionalista, com prova de valor baseada em resultado medido. A responsabilidade regulatória final é sempre do profissional — e o sistema é construído para facilitar isso, não para te empurrar contra a norma.</p></div>
+      <div class="card"><div class="ico">🧾</div><h3>Pagamento e arrependimento</h3><p>Checkout pelo Stripe, uma das maiores plataformas de pagamento do mundo. Cobrança anual dita antes do clique, 7 dias de arrependimento com reembolso integral (CDC, art. 49) e cancelamento sem multa. O combinado completo está nos <a href="termos-beta.html" style="color:var(--em-light)">termos</a>, em português claro.</p></div>
+    </div>
+    <p class="recebe-note">Nota anti-fachada: não exibimos certificações que não temos nem selos comprados. O que está nesta seção é prática verificável no produto e nos termos — e quando algo ainda não existe, está marcado como "em breve".</p>
+  </div>
+</section>
+
+<!-- (14) A HISTÓRIA DO FUNDADOR -->
 <section id="prova">
   <div class="wrap">
     <div class="sec-head">
@@ -416,7 +602,7 @@
   </div>
 </section>
 
-<!-- (9) FAQ -->
+<!-- (15) FAQ -->
 <section id="faq">
   <div class="wrap">
     <div class="sec-head">
@@ -436,7 +622,7 @@
   </div>
 </section>
 
-<!-- (10) CTA FINAL -->
+<!-- (16) CTA FINAL -->
 <section class="cta-final">
   <div class="wrap">
     <span class="eyebrow" style="justify-content:center">Comece agora</span>
@@ -484,6 +670,34 @@
       b.setAttribute('rel', 'noopener');
     }
   }
+})();
+
+/* Calculadora honesta (#roi): aritmética sobre premissas digitadas pelo usuário.
+   Nenhuma premissa embutida escondida — os três fatores estão nos inputs e a
+   fórmula está impressa na tela. Estimativa ilustrativa, nunca projeção nossa. */
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var leads = $('roi-leads'), ticket = $('roi-ticket'), pontos = $('roi-pontos');
+  var total = $('roi-total'), detalhe = $('roi-detalhe');
+  if (!leads || !ticket || !pontos || !total || !detalhe) return;
+  function num(el, max) {
+    var v = parseFloat(el.value);
+    if (!isFinite(v) || v < 0) v = 0;
+    return Math.min(v, max);
+  }
+  function fmt(v) { return 'R$ ' + Math.round(v).toLocaleString('pt-BR'); }
+  function calc() {
+    var l = num(leads, 10000), t = num(ticket, 1000000), p = num(pontos, 100);
+    var pacientes = l * (p / 100);
+    var receita = pacientes * t;
+    total.textContent = fmt(receita) + '/mês';
+    var pTxt = pacientes.toLocaleString('pt-BR', { maximumFractionDigits: 1 });
+    detalhe.textContent = '≈ ' + pTxt + ' paciente' + (pacientes === 1 ? '' : 's') + ' a mais por mês, na sua premissa.';
+  }
+  ['input', 'change'].forEach(function (ev) {
+    [leads, ticket, pontos].forEach(function (el) { el.addEventListener(ev, calc); });
+  });
+  calc();
 })();
 </script>
 </body>
