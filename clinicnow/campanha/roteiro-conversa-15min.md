@@ -8,7 +8,7 @@
 
 **Postura:** você não é vendedor visitando consultório. Você é alguém que passou 10 anos dentro de clínica — como fisioterapeuta e biomédico — e construiu uma ferramenta. No ICP amplo (esteticista, fisio, nutri, dentista, enfermeira, médico, dono de clínica), você fala como par de fato, não como fornecedor.
 
-**Oferta vigente (decisão do Founder; valores propostos pelo Conselho, ratificáveis):** assinatura ANUAL — Start R$ 970/ano (≈ R$ 81/mês), Pro R$ 2.970/ano (≈ R$ 248/mês), Aceleração R$ 9.970/ano (≈ R$ 831/mês). Preço de lançamento: ajustes futuros não afetam assinaturas ativas. Sem teto de vagas, sem contador — a única urgência citável é a agenda 1:1 real do Sóstenes no beta fundador. **Pendência operacional antes da primeira venda:** definir com o meio de pagamento se haverá parcelamento do anual e qual é a política de arrependimento/reembolso (CDC) — NÃO prometer parcelamento na conversa enquanto isso não estiver resolvido.
+**Oferta vigente (decisão do Founder, 2026-07-29):** todos os planos incluem **mentoria de implementação + suporte para dúvidas e ajustes durante todo o ano**. Preço por mês, **cobrança ANUAL** (dizer sempre o total anual junto — nunca deixar parecer mensalidade avulsa): Start R$ 297/mês (R$ 3.564/ano), Pro R$ 697/mês (R$ 8.364/ano), Aceleração R$ 997/mês (R$ 11.964/ano). Escalonamento honesto: Start = onboarding ao vivo em grupo + suporte WhatsApp/e-mail o ano todo; Pro = + mentoria em grupo mensal + prioridade no suporte; Aceleração = + sessão mensal 1:1 com o Sóstenes (limitada pela agenda real) + ajustes assistidos. Preço de lançamento: ajustes futuros não afetam assinaturas ativas. Sem teto de vagas, sem contador — a única urgência citável é a agenda 1:1 real do Sóstenes. Arrependimento: 7 dias com reembolso integral (CDC art. 49 — está nos termos, pode citar). **Pendência operacional antes da primeira venda:** parcelamento do anual no Stripe ainda não configurado — NÃO prometer parcelamento na conversa enquanto isso não estiver resolvido (ver STRIPE-SETUP.md).
 
 ---
 
@@ -19,7 +19,7 @@
 | 1. Abertura | 0–2 min | Abrir a dor com uma pergunta, não com pitch |
 | 2. Diagnóstico do travamento | 2–6 min | Entender onde o plano parou e por quê |
 | 3. Demonstração de 1 recurso | 6–9 min | Mostrar UMA coisa concreta ligada ao travamento |
-| 4. Planos + ancoragem | 9–12 min | Apresentar os 3 planos anuais com o Pro (R$ 2.970/ano) como referência |
+| 4. Planos + ancoragem | 9–12 min | Apresentar os 3 planos com o Pro (R$ 697/mês em cobrança anual) como referência |
 | 5. Pedido da venda | 12–14 min | Pedir explicitamente, sem rodeio |
 | 6. Fechamento (sim ou não) | 14–15 min | Próximo passo concreto, qualquer que seja a resposta |
 
@@ -54,19 +54,19 @@ Na ordem, deixando a pessoa falar (a proporção certa é ela 70%, você 30%):
 
 Fechar o bloco conectando ao bloco 1: "aquilo que você disse que queria resolver em 30 dias? É exatamente esta tela."
 
-## Bloco 4 — Os 3 planos anuais, com ancoragem no Pro (9–12 min)
+## Bloco 4 — Os 3 planos, com ancoragem no Pro (9–12 min)
 
-Apresentar sempre nesta ordem (Pro primeiro, como referência; Start como redução; Aceleração como intensificação). Sempre o valor anual primeiro e o equivalente mensal como apoio — nunca o contrário (parecer mensalidade e cobrar anual é o tipo de surpresa que mata confiança):
+Apresentar sempre nesta ordem (Pro primeiro, como referência; Start como redução; Aceleração como intensificação). Regra de transparência: falar o valor mensal E o total anual na mesma frase, sempre — parecer mensalidade avulsa e cobrar anual é o tipo de surpresa que mata confiança:
 
-> "Deixa eu te mostrar como funciona o preço — é simples, são três formatos, todos assinatura anual.
+> "Deixa eu te mostrar como funciona o preço — é simples, são três formatos, todos com cobrança anual, e **todos incluem mentoria de implementação e suporte pra dúvidas e ajustes durante o ano inteiro** — você não fica sozinho com a ferramenta.
 >
-> O plano de referência é o **ClinicNow Pro: R$ 2.970 por ano — dá cerca de R$ 248 por mês**: tudo que te mostrei, mais metas, projeção e o backlog de execução semanal. É o formato pra quem quer previsibilidade de verdade — na maioria dos nichos, isso é menos que um atendimento seu por mês pra estruturar todos os outros.
+> O plano de referência é o **ClinicNow Pro: R$ 697 por mês, cobrado anualmente — R$ 8.364 no ano**: tudo que te mostrei, mais metas, projeção, o backlog de execução semanal, e a mentoria de implementação em grupo — um encontro por mês, ao vivo, comigo — além de prioridade no suporte. É o formato pra quem quer previsibilidade de verdade.
 >
-> Se você quer começar mais enxuto, existe o **ClinicNow Start: R$ 970 por ano — cerca de R$ 81 por mês**: diagnóstico, plano de 4 semanas, protocolos precificados e o funil de leads. Sem as metas avançadas.
+> Se você quer começar mais enxuto, existe o **ClinicNow Start: R$ 297 por mês, cobrado anualmente — R$ 3.564 no ano**: diagnóstico, plano de 4 semanas, protocolos precificados, o funil de leads, o onboarding de implementação ao vivo em grupo e o suporte por WhatsApp e e-mail o ano todo. Sem as metas avançadas e sem a mentoria mensal.
 >
-> E se você quer implementação lado a lado, o **ClinicNow Aceleração: R$ 9.970 por ano — cerca de R$ 831 por mês**: tudo do Pro mais dois encontros 1:1 por mês comigo, construção da oferta âncora junto e revisão de posicionamento e precificação.
+> E se você quer implementação lado a lado, o **ClinicNow Aceleração: R$ 997 por mês, cobrado anualmente — R$ 11.964 no ano**: tudo do Pro mais uma sessão 1:1 por mês comigo, ajustes assistidos na sua operação, construção da oferta âncora junto e revisão de posicionamento e precificação. Aviso honesto: o 1:1 depende da minha agenda real — quando ela lota, esse plano sai do ar até abrir espaço.
 >
-> Duas coisas verdadeiras sobre o momento: estamos em beta fundador, então o acompanhamento é direto comigo — e minha agenda 1:1 tem limite físico real. E o preço que você contratar agora é o preço de lançamento: se ele subir no futuro, quem já tem assinatura ativa não é afetado. Está nos termos, não é promessa de conversa. A assinatura é anual — na renovação, a decisão de continuar é sua, sem pegadinha."
+> Duas coisas verdadeiras sobre o momento: estamos em beta fundador, então o acompanhamento é direto comigo. E o preço que você contratar agora é o preço de lançamento: se ele subir no futuro, quem já tem assinatura ativa não é afetado. Está nos termos, não é promessa de conversa. A cobrança é anual, com 7 dias de arrependimento com reembolso integral — na renovação, a decisão de continuar é sua, sem pegadinha."
 
 **Regras do bloco:** nunca esconder o Start (o lead que descobre depois que existia plano mais barato se sente manipulado — e tem razão). Nunca empurrar o Aceleração para quem o travamento é simples. Recomendar UM plano com base no bloco 2, e dizer o porquê: "pro seu caso, eu recomendaria o {plano}, porque o seu travamento é {X}". Não prometer parcelamento nem reembolso enquanto a pendência operacional (topo do arquivo) não estiver resolvida — se perguntarem, responder o que é verdade hoje: "estou fechando isso com o meio de pagamento e te confirmo por escrito antes de você pagar".
 
@@ -90,7 +90,7 @@ E então: **silêncio.** Quem fala primeiro depois do pedido define a conversa. 
 
 ### Objeção 1 — "Está caro / não cabe agora"
 
-> "Justo — assinatura anual é compromisso de verdade, e eu não vou te empurrar pra um que aperta o caixa: isso seria exatamente o problema que eu digo que resolvo. Duas saídas honestas: o Start, a R$ 970 no ano — dá uns R$ 81 por mês — cobre o essencial: diagnóstico, plano e o funil de leads. E você sobe pro Pro quando a conta fechar. Ou, se nem o Start cabe agora, fica no gratuito: o plano de 4 semanas é seu, executa ele, e a gente se fala quando a primeira receita nova aparecer. Prefiro você como cliente daqui a 3 meses do que como arrependimento daqui a 3 semanas."
+> "Justo — cobrança anual é compromisso de verdade, e eu não vou te empurrar pra um que aperta o caixa: isso seria exatamente o problema que eu digo que resolvo. Duas saídas honestas: o Start, a R$ 297 por mês — R$ 3.564 no ano — cobre o essencial: diagnóstico, plano, funil de leads, o onboarding ao vivo e o suporte o ano todo. E você sobe pro Pro quando a conta fechar. Ou, se nem o Start cabe agora, fica no gratuito: o plano de 4 semanas é seu, executa ele, e a gente se fala quando a primeira receita nova aparecer. Prefiro você como cliente daqui a 3 meses do que como arrependimento daqui a 3 semanas."
 
 (Nunca dar desconto improvisado na conversa — desconto fora de regra quebra a promessa de preço justo para quem já assinou. A objeção de caixa tende a aparecer MAIS no ICP amplo — esteticista e nutri em início de clínica têm caixa mais curto que médico estabelecido; a resposta é descer de plano ou ficar no gratuito, nunca desconto.)
 
@@ -117,5 +117,5 @@ Se a dúvida for legítima, combinar data concreta: "te chamo {dia} pra você me
 | Conversa → cliente | ≥ 30% | < 15% após 20 conversas → o problema é oferta/preço, voltar ao Conselho (mesmo gatilho do canal WhatsApp) |
 | Duração real | ≤ 20 min | conversas passando de 25 min sistematicamente → o bloco 3 está virando tour; cortar |
 | Motivo de cada "não" | 100% registrado | 3 "nãos" pelo mesmo motivo → tratar como bug de oferta, não como azar |
-| Plano escolhido | registrar | se ninguém escolhe o Pro, a ancoragem no anual de R$ 2.970 não está funcionando — revisar bloco 4 |
+| Plano escolhido | registrar | se ninguém escolhe o Pro, a ancoragem no Pro (R$ 697/mês, R$ 8.364/ano) não está funcionando — revisar bloco 4 |
 | Vertical do lead ({especialidade}) | 100% registrada | se um vertical acumula "não" por "está caro", levar ao Conselho a hipótese de o anual ser barreira nesse vertical — com dado, não com achismo |
