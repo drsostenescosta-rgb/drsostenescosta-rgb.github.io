@@ -3,9 +3,9 @@
 Exigência do Founder (Fase 2): *"O modelo precisa rodar no mínimo viável, testado, ANTES da primeira venda."*
 Suite end-to-end com **Playwright (Chromium)** cobrindo os fluxos críticos e as regressões dos vetos do Conselho.
 
-**Última execução: 2026-07-28 — 29 testes, 29 verdes (0 falhas).**
+**Última execução: 2026-07-29 — 38 testes, 38 verdes (0 falhas).**
 
-Cobre também as duas decisões do Founder de 2026-07-28: **ICP ampliado** (profissionais da saúde e donos de clínica, não só médicos) e **assinatura anual** (R$ 970 / R$ 2.970 / R$ 9.970 por ano).
+Cobre as decisões do Founder de 2026-07-28 (**ICP ampliado**; cobrança anual) e as ordens de 2026-07-29: **nova oferta** — mentoria de implementação + suporte anual em todos os planos, preços **R$ 297 / R$ 697 / R$ 997 por mês em cobrança anual** (R$ 3.564 / R$ 8.364 / R$ 11.964 por ano), página de vendas long-form e CTAs com Payment Link do Stripe + fallback honesto (`oferta.spec.js`).
 
 ## Como rodar
 
@@ -64,21 +64,35 @@ Escopo do grep: **apenas `.html` e `.js` no topo de `clinicnow/`** (arquivos ser
 | 24 | **ICP ampliado no index** | `index.html` contém "profissionais da saúde" e "COFFITO" (FAQ generalizada para os conselhos); headline/eyebrow restritos a médicos ("máquina de crescimento para médicos", "Para médicos e clínicas que querem crescer") não podem renascer | VERDE |
 | 25 | **ICP ampliado na captura** | Select de especialidade contém os 6 novos nichos: Fisioterapia, Nutrição, Odontologia, Enfermagem / Clínica de enfermagem, Estética avançada / Biomedicina, Clínica multiprofissional (dono/gestor) | VERDE |
 | 26 | **ICP ampliado no app** | `PROTOCOLOS` tem entrada para cada novo nicho, todas com campo `proposta:` (nunca `promessa:`); guarda-corpo cita COFFITO (regra generalizada para todos os conselhos) | VERDE |
-| 27 | **Preços anuais no index** | Os 3 valores anuais (`R$ 970/ano`, `R$ 2.970/ano`, `R$ 9.970/ano`) presentes; 3 linhas "equivale a R$ X/mês" como apoio; nota "Preço de lançamento … não afetam assinaturas ativas"; os preços mensais antigos (`R$ 97/mês`, `R$ 297/mês`, `R$ 997/mês`) não podem renascer | VERDE |
+| 27 | **Oferta antiga banida** | Os valores da oferta anterior (`R$ 970`, `R$ 2.970`, `R$ 9.970`, "equivale a R$") banidos de TODO `.html`/`.js` servido; nota "Preço de lançamento … não afetam assinaturas ativas" mantida no index. (Os valores novos são cobertos em `oferta.spec.js`.) | VERDE |
 | 28 | **Termos em ciclo anual** | `termos-beta.html` contém "assinatura anual" e "Cobrança anual antecipada" (e não contém mais "assinatura mensal"/"Cobrança mensal"); reajuste só na renovação com "pelo menos 30 dias de antecedência"; vigentes "mantêm o preço contratado até a renovação seguinte"; arrependimento CDC "art. 49" mantido | VERDE |
 | 29 | Termos publicados e linkados | `termos-beta.html` existe e está linkado nos footers de `index.html` e `privacidade.html`, junto da Privacidade | VERDE |
+
+### `oferta.spec.js` — nova oferta (ordens do Founder, 2026-07-29)
+
+| # | Teste | O que cobre | Resultado |
+|---|-------|-------------|-----------|
+| 30 | **Preço mensal + total anual por plano (CDC art. 31)** | `R$ 297/697/997<small>/mês</small>` presentes; totais `R$ 3.564/8.364/11.964/ano` presentes; "cobrado anualmente — total de" aparece exatamente 3 vezes (uma por plano) | VERDE |
+| 31 | **Mentoria/suporte escalonados com honestidade** | Frase da oferta anual no index; Start tem onboarding em grupo + suporte anual e marca a mentoria mensal como NÃO incluída; Pro tem mentoria em grupo + prioridade e não promete 1:1; Aceleração tem 1:1 com o fundador limitado pela "agenda real" + ajustes assistidos | VERDE |
+| 32 | **Termos como fonte vinculante (L5)** | `termos-beta.html` v1.2 com os 6 valores (mensais e anuais), cláusula de mentoria/suporte, "horário comercial", "mediante agendamento", "agenda real", "não é serviço de agência", CDC art. 31 | VERDE |
+| 33 | **stripe-links.js como fonte única** | Arquivo existe com `window.CLINICNOW_STRIPE` e as 3 chaves; index carrega o script, tem os 3 CTAs `data-plano` com fallback `captura.html?plano=…` e 3 rótulos `data-label-checkout` | VERDE |
+| 34 | **Fallback no navegador (links vazios)** | Página real no Chromium: os 3 botões apontam para captura e o rótulo NÃO promete checkout ("Quero o Pro →", não "Assinar…") | VERDE |
+| 35 | **Checkout no navegador (link preenchido)** | `stripe-links.js` mockado com Payment Link no Pro: o botão vira o link do Stripe e troca o rótulo para "Assinar o Pro agora →"; os demais seguem no fallback | VERDE |
+| 36 | **Estrutura long-form em ordem** | As 10 seções (hero → dor → método → o que você recebe → para quem é → planos → garantia → fundador → FAQ → CTA final) presentes e NA ORDEM; dor nomeada por vertical; garantia cita art. 49; seção "não é para você" existe | VERDE |
+
+(+ os testes 37–38 são os antigos 28–29 renumerados pela ordem de execução do runner.)
 
 ## Evidência
 
 ```
-Running 29 tests using 1 worker
-  29 passed (7.4s)
+Running 38 tests using 1 worker
+  38 passed (1.1m)
 ```
 
 ## O que ainda NÃO está coberto (dívida de teste declarada)
 
-- **DIVERGÊNCIA DE OFERTA (L5):** `investidores.html` ainda exibe os preços mensais antigos (R$ 97/297/997) e ICP só-médicos — fora do escopo da decisão do Founder nesta rodada; pendente de decisão do Conselho. A `campanha/` foi atualizada para o anual pelo Marketing na mesma rodada (working tree, com os mesmos equivalentes mensais R$ 81/248/831 — coerente com a landing); o grep de preços (teste 27) cobre só `index.html` por enquanto — ampliar o escopo para a campanha quando ela for integrada, conforme L3/L5.
-- `investidores.html` (documento interno para investidores) não passa pelo grep de escassez — ainda menciona "vagas limitadas"; decisão pendente do Conselho sobre escopo.
+- **DIVERGÊNCIA DE OFERTA (L5), AINDA ABERTA:** `investidores.html` segue exibindo a tabela de preços antiga-antiga (R$ 97/297/997 **mensais**), "vagas limitadas" e ICP só-médicos — permanece fora do escopo (decisão anterior do Conselho pendente), agora **duas** gerações de oferta atrás. Atenção redobrada: o novo Start custa R$ 297/mês, mesmo número que o antigo Pro — confusão fácil para quem ler os dois documentos. Recomendação da Engenharia: Conselho decidir na próxima fiscalização (atualizar ou tirar o link do ar).
+- O grep de preços antigos (teste 27) e a oferta nova (`oferta.spec.js`) cobrem os artefatos servidos de `clinicnow/`; a `campanha/` (docs internos `.md`) foi atualizada na mesma rodada, mas segue fora do grep por design.
 - Import de leads da captura para o CRM (`⤵ Importar N da página de captura`) não tem teste dedicado.
 - A fila local de backup não é reenviada automaticamente ao banco quando a conexão volta (comportamento ainda não existe — ver BACKLOG).
 - Nenhum teste roda contra o Supabase real (por design: testes herméticos). O smoke test da seção abaixo cobriu o esquema/RLS uma vez; não é contínuo.

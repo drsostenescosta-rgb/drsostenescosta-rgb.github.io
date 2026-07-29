@@ -141,21 +141,21 @@ test('ICP ampliado: app tem PROTOCOLOS e opção de diagnóstico para cada novo 
   for (const bloco of novos) expect(bloco).toContain('proposta:');
 });
 
-/* ---- Decisão do Founder (2026-07-28): assinatura anual ---- */
+/* ---- Ordem do Founder (2026-07-29): nova oferta — R$/mês em cobrança anual ----
+   Os preços antigos (R$ 970 / R$ 2.970 / R$ 9.970 por ano) foram substituídos por
+   R$ 297 / R$ 697 / R$ 997 por mês em cobrança anual (R$ 3.564 / 8.364 / 11.964/ano).
+   Detalhe da nova oferta coberto em oferta.spec.js; aqui fica o banimento. */
 
-test('preços anuais: os 3 valores (R$ 970, R$ 2.970, R$ 9.970) por ano no index, sem os mensais antigos', async () => {
-  const index = fs.readFileSync(path.join(DIR, 'index.html'), 'utf8');
-  for (const preco of ['R$ 970<small>/ano</small>', 'R$ 2.970<small>/ano</small>', 'R$ 9.970<small>/ano</small>']) {
-    expect(index.includes(preco), `preço anual "${preco}" ausente de index.html`).toBe(true);
+test('preços: os valores da oferta antiga (R$ 970 / R$ 2.970 / R$ 9.970) banidos de todo artefato servido', async () => {
+  for (const f of ARTEFATOS) {
+    const txt = fs.readFileSync(path.join(DIR, f), 'utf8');
+    for (const antigo of ['R$ 970', 'R$ 2.970', 'R$ 9.970', 'equivale a R$']) {
+      expect(txt.includes(antigo), `oferta antiga "${antigo}" encontrada em clinicnow/${f}`).toBe(false);
+    }
   }
-  // equivalente mensal como apoio + nota honesta de preço de lançamento
-  expect((index.match(/equivale a R\$ \d+\/mês/g) || []).length).toBe(3);
+  const index = fs.readFileSync(path.join(DIR, 'index.html'), 'utf8');
   expect(index).toContain('Preço de lançamento');
   expect(index).toContain('não afetam assinaturas ativas');
-  // os preços mensais antigos não podem renascer na página de venda
-  for (const antigo of ['R$ 97<small>/mês</small>', 'R$ 297<small>/mês</small>', 'R$ 997<small>/mês</small>']) {
-    expect(index.includes(antigo), `preço mensal antigo "${antigo}" reapareceu em index.html`).toBe(false);
-  }
 });
 
 test('termos: ciclo anual, reajuste só na renovação com aviso de 30 dias, CDC art. 49 mantido', async () => {
