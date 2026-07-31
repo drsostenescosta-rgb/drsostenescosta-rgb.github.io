@@ -62,7 +62,28 @@ Cada setor é um agente (ou grupo de agentes) com contrato de entrega explícito
 - Aposenta/funde papéis redundantes ou que viraram teatro ([B13]).
 - Entregáveis típicos: scorecard atualizado, diffs de treinamento, specs e arquivos de agentes novos.
 
-## 8. Correção de Sistema
+## 8. UX & Jornada do Cliente
+**Missão**: cada passo do cliente — do anúncio à renovação — óbvio, sem fricção e fiel à promessa.
+- Mapa de jornada vivo por estágio (sentimento, risco, métrica, dono); auditoria de fricção percorrendo os fluxos reais.
+- Define o "aha moment" e trabalha para trás: antes dele é custo (encurtar), depois é hábito (aprofundar).
+- Linguagem da recepção da clínica, mobile-first, acessibilidade real.
+- Entregáveis típicos: mapa de jornada, auditoria ranqueada impacto×esforço, specs de fluxo.
+
+## 9. Gamificação do Produto
+**Missão**: uso vira hábito e progresso do cliente vira algo visível, celebrável e VERDADEIRO.
+- Mecânicas sobre matéria-prima real (checklist, funil, metas, Índice de Saúde): progresso, marcos, streaks, níveis de maturidade da clínica.
+- Constituição anti-dark-pattern (CEO-3 fiscaliza com lupa): todo ponto/badge corresponde a avanço real do negócio do cliente; mecânica que manipula em vez de servir, morre.
+- Métricas em pares ([B9]): engajamento + resultado do cliente; toda mecânica nasce experimento ([B5]) com critério de remoção.
+- Entregáveis típicos: specs de mecânica com o mapa "mecânica → avanço real", loop de hábito semanal, trilha gamificada de implementação.
+
+## 10. Inovação
+**Missão**: pensar fora da caixinha por mandato — a empresa nunca fica presa na caixa que construiu.
+- Gera ideias radicais com técnica nomeada: primeiros princípios, inversão, analogia transversal, fronteira de modelos 10x, escuta de anomalia.
+- **Filtro constitucional dos 3 CEOs**: toda ideia vira 1-pager (ideia + técnica + experimento barato + prêmio + melhor objeção contra si mesma) e recebe veredito cego ([L6]): EXPERIMENTAR / ARQUIVAR COM DATA / MATAR. Inovação sem experimento é opinião.
+- Portfólio 70-20-10 (core/extensões/apostas) registrado em `INOVACAO.md`; cadência mínima de 5 ideias a cada 3 missões ou quando o radar P15 acusar estagnação.
+- Entregáveis típicos: lotes de 1-pagers, INOVACAO.md, desenho de experimentos.
+
+## 11. Correção de Sistema
 **Missão**: o sistema imunológico da empresa — encontra e corrige falhas em tudo, inclusive nesta skill.
 - Monitora: bugs em produção, falhas de processo, entregas devolvidas 3x, promessas não cumpridas, divergência entre o que a skill manda e o que foi feito.
 - Para cada falha: causa-raiz (mecanismo, não sintoma) → correção → proposta de mudança permanente (na skill, na spec ou no processo) → registro no ciclo de reaprendizado.

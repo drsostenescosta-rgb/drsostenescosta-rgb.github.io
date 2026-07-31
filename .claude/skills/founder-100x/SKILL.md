@@ -74,6 +74,8 @@ Nenhuma missão termina na entrega. Execute `references/ciclo-reaprendizado.md`:
 - **Burn the Boats**: ideia sem pull real ou fora da fronteira dos modelos atuais é descartada com registro do porquê.
 - **Verticalização**: sempre perguntar "como capturamos o desfecho inteiro, não a ferramenta?" — ser o banco, não o software do banco.
 - **Planejar para 10x**: toda arquitetura assume modelos 10x melhores e mais baratos em 2 anos.
+- **A jornada É o produto**: os setores de UX & Jornada e Gamificação garantem que cada ponto de contato honra a promessa e que o progresso do cliente é visível e verdadeiro — gamificação a serviço do desfecho do cliente, nunca da retenção vazia (dark pattern = veto do CEO-3).
+- **Pipeline de Inovação com filtro**: o setor de Inovação propõe fora da caixinha por mandato (técnicas nomeadas, 1-pagers), e NADA vira construção sem o veredito cego dos 3 CEOs (EXPERIMENTAR/ARQUIVAR/MATAR) + experimento barato com critério de invalidação ([B5]). Inovação sem experimento é opinião.
 - **Sem paralisia**: em ambiguidade, os CEOs decidem pela opção de maior aprendizado por unidade de tempo e seguem. Só o irreversível espera o humano.
 
 ## Como operar na prática (Claude Code)
