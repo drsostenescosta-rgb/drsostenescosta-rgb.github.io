@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>DocGrow — O cockpit de crescimento e operação do médico</title>
-<meta name="description" content="DocGrow é a evolução do MedGroth: diagnóstico e plano de crescimento, CRM de leads, agenda inteligente, follow-up automático no WhatsApp e telemedicina integrada — o médico dono da própria demanda. Do ecossistema Zatheon." />
-<meta property="og:title" content="DocGrow — O cockpit de crescimento e operação do médico" />
+<title>ClinicNow — O cockpit de crescimento e operação do médico</title>
+<meta name="description" content="ClinicNow é a evolução do MedGroth: diagnóstico e plano de crescimento, CRM de leads, agenda inteligente, follow-up automático no WhatsApp e telemedicina integrada — o médico dono da própria demanda. Do ecossistema Zatheon." />
+<meta property="og:title" content="ClinicNow — O cockpit de crescimento e operação do médico" />
 <meta property="og:description" content="Marketing, organização e telemedicina num só lugar: diagnóstico em 3 minutos, plano de 4 semanas, agenda unificada, follow-up automático e teleconsulta com um clique." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,8 +43,8 @@
   .brand { display:flex; align-items:center; gap:11px; }
   .logo { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:1.05rem; color:var(--em-light); background:linear-gradient(145deg,rgba(25,195,125,0.16),rgba(139,92,246,0.10)); border:1px solid rgba(25,195,125,0.45); box-shadow:0 0 18px rgba(139,92,246,0.20); }
   .brand-name { font-family:var(--serif); font-size:1.05rem; }
-  .brand-sub { font-family:var(--mono); font-size:0.56rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase; }
-  .badge-z { font-family:var(--mono); font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--vi-light); border:1px solid rgba(139,92,246,0.45); background:rgba(139,92,246,0.10); padding:3px 10px; border-radius:999px; white-space:nowrap; }
+  .brand-sub { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase; }
+  .badge-z { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--vi-light); border:1px solid rgba(139,92,246,0.45); background:rgba(139,92,246,0.10); padding:3px 10px; border-radius:999px; white-space:nowrap; }
   .nav-note { font-size:0.72rem; color:var(--muted); font-family:var(--mono); white-space:nowrap; }
   .nav-links { display:flex; gap:20px; }
   .nav-links a { font-size:0.85rem; color:var(--muted); transition:color .2s; }
@@ -66,7 +66,7 @@
   .hero-sub { color:var(--muted); font-size:1.08rem; max-width:52ch; margin-bottom:30px; }
   .hero-ctas { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:22px; }
   .hero-note { font-size:0.78rem; color:var(--muted); font-family:var(--mono); }
-  .selo { display:inline-flex; align-items:center; gap:8px; margin-top:14px; font-family:var(--mono); font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); border:1px solid var(--border); border-radius:999px; padding:6px 14px; background:rgba(255,255,255,0.02); }
+  .selo { display:inline-flex; align-items:center; gap:8px; margin-top:14px; font-family:var(--mono); font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); border:1px solid var(--border); border-radius:999px; padding:6px 14px; background:rgba(255,255,255,0.02); }
   .selo::before { content:'🔒'; font-size:0.8rem; }
 
   .mock { border-radius:20px; border:1px solid var(--border-strong); background:linear-gradient(160deg,rgba(13,26,26,0.92),rgba(6,12,13,0.92)); box-shadow:0 30px 80px rgba(0,0,0,0.55); overflow:hidden; }
@@ -95,7 +95,7 @@
   .card h3 { font-size:1.1rem; margin-bottom:8px; }
   .card p { color:var(--muted); font-size:0.92rem; }
   .card ul { margin:12px 0 0 18px; color:var(--muted); font-size:0.9rem; display:grid; gap:6px; }
-  .card .pill { display:inline-block; font-family:var(--mono); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--vi-light); border:1px solid rgba(139,92,246,0.4); background:rgba(139,92,246,0.08); padding:3px 10px; border-radius:999px; margin-bottom:12px; }
+  .card .pill { display:inline-block; font-family:var(--mono); font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--vi-light); border:1px solid rgba(139,92,246,0.4); background:rgba(139,92,246,0.08); padding:3px 10px; border-radius:999px; margin-bottom:12px; }
 
   .steps { display:grid; gap:14px; counter-reset:st; }
   .step { display:flex; gap:18px; align-items:flex-start; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 22px; }
@@ -108,7 +108,7 @@
   @media (max-width:900px){ .plans{grid-template-columns:1fr} }
   .plan { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:30px 26px; display:flex; flex-direction:column; position:relative; }
   .plan.hot { border-color:rgba(25,195,125,0.55); box-shadow:0 0 40px rgba(139,92,246,0.14); }
-  .plan .tag { position:absolute; top:-12px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; background:linear-gradient(135deg,var(--em-light),var(--vi)); color:#03130b; font-weight:700; padding:5px 14px; border-radius:999px; }
+  .plan .tag { position:absolute; top:-12px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; background:linear-gradient(135deg,var(--em-light),var(--vi)); color:#03130b; font-weight:700; padding:5px 14px; border-radius:999px; }
   .plan h3 { font-size:1.15rem; }
   .plan .for { color:var(--muted); font-size:0.82rem; margin:4px 0 16px; }
   .price { font-family:var(--serif); font-size:2.2rem; }
@@ -144,8 +144,8 @@
 <header class="nav">
   <div class="nav-inner">
     <a class="brand" href="#top">
-      <span class="logo">Dg</span>
-      <span><span class="brand-name">DocGrow</span> <span class="badge-z">por Zatheon</span><br><span class="brand-sub">crescimento + operação médica</span></span>
+      <span class="logo">Cn</span>
+      <span><span class="brand-name">ClinicNow</span> <span class="badge-z">por Zatheon</span><br><span class="brand-sub">crescimento + operação médica</span></span>
     </a>
     <span class="nav-note">evolução do MedGroth</span>
     <nav class="nav-links">
@@ -165,10 +165,10 @@
     <div>
       <span class="eyebrow">Marketing · Organização · Telemedicina</span>
       <h1><span class="grad">O médico dono</span><br>da própria <em>demanda</em>.</h1>
-      <p class="hero-sub">O DocGrow diagnostica sua clínica em 3 minutos e monta seu plano de crescimento — e depois <strong>opera o seu dia</strong>: agenda inteligente, leads num funil visual, follow-up automático de pacientes no WhatsApp e teleconsulta integrada com um clique. A máquina de crescimento que também opera o seu dia.</p>
+      <p class="hero-sub">O ClinicNow diagnostica sua clínica em 3 minutos e monta seu plano de crescimento — e depois <strong>opera o seu dia</strong>: agenda inteligente, leads num funil visual, follow-up automático de pacientes no WhatsApp e teleconsulta integrada com um clique. A máquina de crescimento que também opera o seu dia.</p>
       <div class="hero-ctas">
         <a class="btn btn-em btn-lg" href="#demo">Fazer meu diagnóstico gratuito →</a>
-        <a class="btn btn-ghost btn-lg" href="app.html">Entrar no DocGrow</a>
+        <a class="btn btn-ghost btn-lg" href="app.html">Entrar no ClinicNow</a>
       </div>
       <div class="hero-note">3 minutos · sem cartão · plano na hora</div>
       <br>
@@ -210,7 +210,7 @@
     <div class="sec-head">
       <span class="eyebrow">Experimente agora</span>
       <h2>Descreva sua clínica em <em>1 frase</em></h2>
-      <p>A inteligência do DocGrow devolve na hora um raio-X parcial do seu crescimento. Sem cadastro, sem cartão.</p>
+      <p>A inteligência do ClinicNow devolve na hora um raio-X parcial do seu crescimento. Sem cadastro, sem cartão.</p>
     </div>
     <div style="background:var(--card, rgba(13,26,26,0.6)); border:1px solid rgba(232,239,234,0.12); border-radius:16px; padding:26px">
       <input id="demo-input" placeholder="Ex.: Sou endocrinologista, atendo 60 consultas/mês, dependo de indicação e não faço acompanhamento contínuo…" style="width:100%; background:rgba(4,8,10,0.7); border:1px solid rgba(232,239,234,0.15); border-radius:10px; padding:14px 16px; color:inherit; font-size:0.95rem; font-family:inherit">
@@ -221,7 +221,7 @@
       </div>
       <div id="demo-out" style="display:none; margin-top:16px; border-top:1px dashed rgba(232,239,234,0.15); padding-top:16px; font-size:0.9rem; line-height:1.7"></div>
     </div>
-    <p style="text-align:center; margin-top:14px; font-size:0.78rem; opacity:0.7">Demonstração parcial gerada por regras — a análise completa e personalizada vive dentro do DocGrow. Nada aqui é orientação clínica.</p>
+    <p style="text-align:center; margin-top:14px; font-size:0.78rem; opacity:0.7">Demonstração parcial gerada por regras — a análise completa e personalizada vive dentro do ClinicNow. Nada aqui é orientação clínica.</p>
   </div>
 </section>
 <script>
@@ -258,7 +258,7 @@ function demoRun(tipo) {
   var out = {
     diagnostico: '<b>🩺 Diagnóstico parcial — ' + nicho + ':</b><br>' + dores.map(function(d){return '• ' + d;}).join('<br>') + '<br><br><b>O que o raio-X completo mede:</b> origem de cada lead, taxa lead→consulta, receita por hora de agenda e potencial de recorrência do seu nicho.',
     plano: '<b>🗺️ Semana 1 do seu plano (amostra):</b><br>• Mapear as 3 origens dos seus últimos 20 pacientes<br>• Definir sua oferta âncora de acompanhamento contínuo<br>• Ativar confirmação de consulta via WhatsApp (anti no-show)<br><br>As semanas 2–4 (funil, protocolo por assinatura e metas) são geradas no seu diagnóstico completo.',
-    script: '<b>💬 Script de conversão (amostra — dentro da publicidade médica CFM):</b><br>"O seu tratamento funciona melhor com acompanhamento contínuo. Em vez de consultas soltas, posso te oferecer um plano de acompanhamento com consultas programadas, revisão de exames e canal de dúvidas — com valor mensal e cancelamento livre. Quer que eu detalhe?"<br><br>Scripts completos por nicho e por objeção vivem no DocGrow.'
+    script: '<b>💬 Script de conversão (amostra — dentro da publicidade médica CFM):</b><br>"O seu tratamento funciona melhor com acompanhamento contínuo. Em vez de consultas soltas, posso te oferecer um plano de acompanhamento com consultas programadas, revisão de exames e canal de dúvidas — com valor mensal e cancelamento livre. Quer que eu detalhe?"<br><br>Scripts completos por nicho e por objeção vivem no ClinicNow.'
   };
   var el = document.getElementById('demo-out');
   el.style.display = '';
@@ -271,7 +271,7 @@ function demoRun(tipo) {
     <div class="sec-head">
       <span class="eyebrow">Como funciona</span>
       <h2>Diagnóstico → Plano → Cockpit → <em>Teleconsulta</em></h2>
-      <p>O DocGrow não é curso nem promessa de guru. É um sistema que primeiro entende sua clínica — e depois trabalha nela todos os dias.</p>
+      <p>O ClinicNow não é curso nem promessa de guru. É um sistema que primeiro entende sua clínica — e depois trabalha nela todos os dias.</p>
     </div>
     <div class="steps">
       <div class="step"><span class="n"></span><div><h3>Diagnóstico em 3 minutos</h3><p>Perguntas diretas sobre nicho, ticket, volume, gargalo e objetivo. O sistema identifica seu perfil de crescimento: captação fraca, conversão travada, operação sobrecarregada ou retenção baixa.</p></div></div>
@@ -298,8 +298,8 @@ function demoRun(tipo) {
       <div class="card"><div class="ico">🎯</div><h3>Painel de metas + relatório mensal</h3><p>Meta de receita, funil da semana e o relatório "sua clínica este mês": leads, conversão, comparecimento e receita vs. meta — os números do crescimento na sua frente.</p></div>
     </div>
     <div style="margin-top:34px; display:flex; gap:14px; flex-wrap:wrap">
-      <a class="btn btn-em" href="https://wa.me/5584999869468?text=Quero%20come%C3%A7ar%20no%20DocGrow" target="_blank" rel="noopener">Quero o DocGrow →</a>
-      <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Quero%20fazer%20o%20diagn%C3%B3stico%20do%20DocGrow" target="_blank" rel="noopener">Começar pelo diagnóstico gratuito</a>
+      <a class="btn btn-em" href="https://wa.me/5584999869468?text=Quero%20come%C3%A7ar%20no%20ClinicNow" target="_blank" rel="noopener">Quero o ClinicNow →</a>
+      <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Quero%20fazer%20o%20diagn%C3%B3stico%20do%20ClinicNow" target="_blank" rel="noopener">Começar pelo diagnóstico gratuito</a>
     </div>
   </div>
 </section>
@@ -308,12 +308,12 @@ function demoRun(tipo) {
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">Ecossistema Zatheon</span>
-      <h2>O DocGrow não trabalha <em>sozinho</em></h2>
+      <h2>O ClinicNow não trabalha <em>sozinho</em></h2>
       <p>Cada produto do ecossistema cobre uma parte da vida do médico — e todos conversam entre si.</p>
     </div>
     <div class="cards3">
       <div class="card"><span class="pill">Recorrência</span><h3>CareLoop</h3><p>Transforme o retorno em assinatura: acompanhamento contínuo do paciente entre as consultas, com receita previsível para a clínica.</p><p style="margin-top:12px"><a href="../careloop/" style="color:var(--em-light)">Conhecer o CareLoop →</a></p></div>
-      <div class="card"><span class="pill">Clínico</span><h3>SosMed</h3><p>Prontuário inteligente com a Lia, a assistente que documenta a consulta. É nele que a teleconsulta do DocGrow registra o atendimento.</p><p style="margin-top:12px"><a href="../sosmed/" style="color:var(--em-light)">Conhecer o SosMed →</a></p></div>
+      <div class="card"><span class="pill">Clínico</span><h3>SosMed</h3><p>Prontuário inteligente com a Lia, a assistente que documenta a consulta. É nele que a teleconsulta do ClinicNow registra o atendimento.</p><p style="margin-top:12px"><a href="../sosmed/" style="color:var(--em-light)">Conhecer o SosMed →</a></p></div>
       <div class="card"><span class="pill">Educação</span><h3>MedVerse</h3><p>A camada de educação do ecossistema: aprendizado contínuo para o médico que quer dominar tanto a clínica quanto o negócio.</p><p style="margin-top:12px"><a href="../medverse/" style="color:var(--em-light)">Conhecer o MedVerse →</a></p></div>
     </div>
   </div>
@@ -324,12 +324,12 @@ function demoRun(tipo) {
     <div class="sec-head">
       <span class="eyebrow">Planos</span>
       <h2>Escolha a velocidade do seu <em>crescimento</em></h2>
-      <p>Sem fidelidade. Cancele quando quiser. Assinantes do MedGroth migram para o DocGrow sem custo — com o preço de fundador preservado.</p>
+      <p>Sem fidelidade. Cancele quando quiser. Assinantes do MedGroth migram para o ClinicNow sem custo — com o preço de fundador preservado.</p>
       <p style="margin-top:10px; font-family:var(--mono); font-size:0.78rem; color:var(--muted)">Preço internacional em dólar, abaixo do menor concorrente global — Vezeeta US$ 43/mês, Tebra a partir de US$ 49/mês, Doctolib ~US$ 120/mês. No Brasil, a cobrança é em reais pelo câmbio do dia.</p>
     </div>
     <div class="plans">
       <div class="plan">
-        <h3>Grow Start</h3>
+        <h3>Start</h3>
         <div class="for">Para quem está começando a se organizar</div>
         <div class="price">US$ 39<small>/mês</small></div>
         <ul>
@@ -340,11 +340,11 @@ function demoRun(tipo) {
           <li class="no">Follow-up automático no WhatsApp</li>
           <li class="no">Sala de telemedicina integrada</li>
         </ul>
-        <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Quero%20o%20plano%20Start%20do%20DocGrow" target="_blank" rel="noopener">Começar pelo diagnóstico</a>
+        <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Quero%20o%20plano%20Start%20do%20ClinicNow" target="_blank" rel="noopener">Começar pelo diagnóstico</a>
       </div>
       <div class="plan hot">
         <span class="tag">Recomendado</span>
-        <h3>Grow Pro</h3>
+        <h3>Pro</h3>
         <div class="for">Para quem quer o cockpit completo</div>
         <div class="price">US$ 99<small>/mês</small></div>
         <ul>
@@ -355,10 +355,10 @@ function demoRun(tipo) {
           <li>Painel de metas + relatório "sua clínica este mês"</li>
           <li class="no">Mentoria de implantação</li>
         </ul>
-        <a class="btn btn-em" href="https://wa.me/5584999869468?text=Quero%20o%20plano%20Pro%20do%20DocGrow" target="_blank" rel="noopener">Quero o Pro →</a>
+        <a class="btn btn-em" href="https://wa.me/5584999869468?text=Quero%20o%20plano%20Pro%20do%20ClinicNow" target="_blank" rel="noopener">Quero o Pro →</a>
       </div>
       <div class="plan">
-        <h3>Grow Aceleração</h3>
+        <h3>Aceleração</h3>
         <div class="for">Implantação lado a lado, vagas limitadas</div>
         <div class="price">US$ 299<small>/mês</small></div>
         <ul>
@@ -382,7 +382,7 @@ function demoRun(tipo) {
       <h2>Construído por quem <em>vive</em> os dois mundos</h2>
     </div>
     <blockquote class="quote">
-      "O DocGrow nasceu de uma convicção simples: médico cresce com <em>método</em>, não com promessa. Diagnóstico honesto, plano executável, operação organizada e o paciente bem acompanhado — o resto é consequência. Nenhuma ferramenta séria promete resultado; ela constrói as condições para ele."
+      "O ClinicNow nasceu de uma convicção simples: médico cresce com <em>método</em>, não com promessa. Diagnóstico honesto, plano executável, operação organizada e o paciente bem acompanhado — o resto é consequência. Nenhuma ferramenta séria promete resultado; ela constrói as condições para ele."
       <span class="who">Sóstenes Costa Paiva · fundador · Zatheon</span>
     </blockquote>
   </div>
@@ -394,13 +394,13 @@ function demoRun(tipo) {
       <span class="eyebrow">FAQ</span>
       <h2>Perguntas diretas, respostas diretas</h2>
     </div>
-    <details><summary>Qual a diferença para o MedGroth?</summary><p>O DocGrow é a evolução do MedGroth. Tudo que o MedGroth fazia — diagnóstico, plano de 4 semanas, CRM de leads e metas — continua aqui, e ganhou a camada de operação: agenda inteligente unificada, follow-up automático de pacientes no WhatsApp e telemedicina integrada. Assinantes do MedGroth migram sem custo, com o preço de fundador preservado.</p></details>
-    <details><summary>A telemedicina é regulamentada?</summary><p>Sim. A telemedicina no Brasil é regulamentada pela Resolução CFM nº 2.314/2022, e a sala de vídeo do DocGrow foi desenhada para operar em conformidade com ela: consentimento do paciente, identificação das partes e registro do atendimento no prontuário (SosMed). A decisão sobre quando a teleconsulta é adequada permanece, como sempre, do médico.</p></details>
-    <details><summary>Preciso trocar de agenda?</summary><p>A proposta é justamente parar de ter várias. A agenda do DocGrow unifica presencial e tele num lugar só, com follow-ups e leads ao lado. Você pode migrar aos poucos: comece marcando as teles nela e traga o restante quando fizer sentido.</p></details>
+    <details><summary>Qual a diferença para o MedGroth?</summary><p>O ClinicNow é a evolução do MedGroth. Tudo que o MedGroth fazia — diagnóstico, plano de 4 semanas, CRM de leads e metas — continua aqui, e ganhou a camada de operação: agenda inteligente unificada, follow-up automático de pacientes no WhatsApp e telemedicina integrada. Assinantes do MedGroth migram sem custo, com o preço de fundador preservado.</p></details>
+    <details><summary>A telemedicina é regulamentada?</summary><p>Sim. A telemedicina no Brasil é regulamentada pela Resolução CFM nº 2.314/2022, e a sala de vídeo do ClinicNow foi desenhada para operar em conformidade com ela: consentimento do paciente, identificação das partes e registro do atendimento no prontuário (SosMed). A decisão sobre quando a teleconsulta é adequada permanece, como sempre, do médico.</p></details>
+    <details><summary>Preciso trocar de agenda?</summary><p>A proposta é justamente parar de ter várias. A agenda do ClinicNow unifica presencial e tele num lugar só, com follow-ups e leads ao lado. Você pode migrar aos poucos: comece marcando as teles nela e traga o restante quando fizer sentido.</p></details>
     <details><summary>Funciona para a minha especialidade?</summary><p>O diagnóstico gera o plano a partir do seu nicho — emagrecimento, longevidade, estética, performance, saúde mental, dor/reabilitação ou clínica geral — com scripts e referências específicos. A agenda, o follow-up e a telemedicina funcionam para qualquer especialidade que atenda em consultório ou a distância.</p></details>
     <details><summary>E os meus dados e os dos meus pacientes?</summary><p>Ficam no Brasil: infraestrutura Supabase na região de São Paulo, tratamento conforme a LGPD, e os dados são seus — do médico e dos seus pacientes. Não vendemos, não compartilhamos e você pode exportar tudo quando quiser.</p></details>
     <details><summary>Posso cancelar quando quiser?</summary><p>Sim. Sem fidelidade, sem multa e sem ligação constrangedora. Cancelou, seus dados continuam disponíveis para exportação.</p></details>
-    <details><summary>Por que o preço é em dólar?</summary><p>O DocGrow é a versão internacional do ecossistema, e o preço foi ancorado abaixo do menor concorrente global da categoria (Vezeeta US$ 43, Tebra US$ 49, Doctolib ~US$ 120). No Brasil, a cobrança é feita em reais pela conversão do dia — e quem veio do MedGroth mantém o preço original em reais, travado para sempre.</p></details>
+    <details><summary>Por que o preço é em dólar?</summary><p>O ClinicNow é a versão internacional do ecossistema, e o preço foi ancorado abaixo do menor concorrente global da categoria (Vezeeta US$ 43, Tebra US$ 49, Doctolib ~US$ 120). No Brasil, a cobrança é feita em reais pela conversão do dia — e quem veio do MedGroth mantém o preço original em reais, travado para sempre.</p></details>
   </div>
 </section>
 
@@ -410,23 +410,23 @@ function demoRun(tipo) {
     <h2>Seu diagnóstico leva <em>3 minutos</em>.<br>O cockpit assume o resto do dia.</h2>
     <p>Sem cartão, sem call de vendas, sem enrolação. Responda as perguntas, receba seu plano de 4 semanas e veja a agenda, os leads e os follow-ups num só lugar.</p>
     <a class="btn btn-em btn-lg" href="#demo">Fazer meu diagnóstico gratuito →</a>
-    <a class="btn btn-ghost btn-lg" href="app.html">Entrar no DocGrow</a>
+    <a class="btn btn-ghost btn-lg" href="app.html">Entrar no ClinicNow</a>
   </div>
 </section>
 
 <footer>
   <div class="wrap foot">
-    <div>© 2026 DocGrow · Zatheon · <a href="../index.html">Sóstenes Costa Paiva</a></div>
+    <div>© 2026 ClinicNow · Zatheon · <a href="../index.html">Sóstenes Costa Paiva</a></div>
     <div style="display:flex; gap:18px; flex-wrap:wrap">
       <a href="../medgroth/index.html">MedGroth</a>
       <a href="../careloop/">CareLoop</a>
       <a href="../sosmed/">SosMed</a>
       <a href="../medverse/">MedVerse</a>
-      <a href="https://wa.me/5584999869468?text=Quero%20conhecer%20o%20DocGrow" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://wa.me/5584999869468?text=Quero%20conhecer%20o%20ClinicNow" target="_blank" rel="noopener">WhatsApp</a>
       <a href="../sosmed/privacidade.html">Política de Privacidade</a>
     </div>
   </div>
-  <div class="wrap disclaimer">🔒 Dados no Brasil · LGPD · Supabase São Paulo. O DocGrow é uma ferramenta de estratégia, gestão e operação. Não presta orientação clínica nem substitui a responsabilidade profissional e regulatória (CFM/conselhos) de cada usuário. A telemedicina opera em conformidade com a Resolução CFM nº 2.314/2022. Projeções são estimativas baseadas nas respostas fornecidas — nunca promessa ou garantia de resultado.</div>
+  <div class="wrap disclaimer">🔒 Dados no Brasil · LGPD · Supabase São Paulo. O ClinicNow é uma ferramenta de estratégia, gestão e operação. Não presta orientação clínica nem substitui a responsabilidade profissional e regulatória (CFM/conselhos) de cada usuário. A telemedicina opera em conformidade com a Resolução CFM nº 2.314/2022. Projeções são estimativas baseadas nas respostas fornecidas — nunca promessa ou garantia de resultado.</div>
 </footer>
 </body>
 </html>

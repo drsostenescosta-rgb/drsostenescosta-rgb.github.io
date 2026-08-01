@@ -16,7 +16,7 @@
 Fonte: `../ideias/2026-07-comite-aprovacao.md`. Este bloco prevalece sobre qualquer meta anterior deste arquivo. Revisão: primeira quinzena de outubro/2026.
 
 ### Regra de frente única
-- DocGrow/MedGroth é O produto até outubro/2026. Nenhuma linha de código de CareLoop ou MedVerse antes de 5 médicos reais percorrerem o funil completo (Sprint 1 é bloqueador absoluto; zero mídia paga antes disso).
+- ClinicNow/MedGroth é O produto até outubro/2026. Nenhuma linha de código de CareLoop ou MedVerse antes de 5 médicos reais percorrerem o funil completo (Sprint 1 é bloqueador absoluto; zero mídia paga antes disso).
 
 ### Metas revisadas (substituem as anteriores)
 - Marketing 90 dias: **1.500 seguidores qualificados** e **30 diagnósticos/mês**.
@@ -27,10 +27,10 @@ Fonte: `../ideias/2026-07-comite-aprovacao.md`. Este bloco prevalece sobre qualq
 ### Adições obrigatórias por sprint
 - **Sprint 2:** dashboard "quanto o produto te gerou em R$ este mês" como **tela inicial** do app (lição Zocdoc). Views `docgrow_health_score` e `docgrow_cofre_recuperado` já criadas no Supabase (28/07).
 - **Sprint 3:** confirmação de consulta anti no-show via WhatsApp + coleta ativa de reviews Google (ROI comprovado — Doctolib/Tebra). Filtro CFM no `/api/groth`: veto a promessa de resultado, superlativos e antes/depois fora das hipóteses da Res. 2.336/2023.
-- **Sprint 4:** landing internacional DocGrow **somente após 2 casos documentados** (a página `../docgrow/` já existe com preço em US$; tráfego só após o gatilho).
+- **Sprint 4:** landing internacional ClinicNow **somente após 2 casos documentados** (a página `../docgrow/` já existe com preço em US$; tráfego só após o gatilho).
 
 ### Gatilhos de expansão (nada anda sem a métrica)
-- **CareLoop módulo-piloto (3–5 fundadoras):** liberar com 10 clientes pagantes DocGrow + parecer jurídico ANS entregue. As 5 condições do advogado são vinculantes.
+- **CareLoop módulo-piloto (3–5 fundadoras):** liberar com 10 clientes pagantes ClinicNow + parecer jurídico ANS entregue. As 5 condições do advogado são vinculantes.
 - **CareLoop standalone:** 5 médicos com ≥5 pacientes assinantes ativos cada.
 - **MedVerse:** ADIADO. Desbloqueio: MRR ≥ R$ 30 mil e churn < 3% por 2 meses, OU cofundador dedicado. Autorizado desde já só o teste de fumaça (bot "questão do dia": 500 usuários, D30 > 40%).
 
@@ -86,7 +86,7 @@ create policy "leitura autenticada" on public.medgroth_leads
 ## Sprint 2 — Conta na nuvem e cobrança
 
 - [x] Login real no app (Supabase Auth e-mail/senha) mantendo o modo local como fallback — `../docgrow/app.html` "Conectar à nuvem" (28/07)
-- [x] Sincronizar o banco local do DocGrow (pacientes, consultas, follow-ups, protocolos, assinaturas, pagamentos, eventos) por usuário via upsert com RLS (28/07)
+- [x] Sincronizar o banco local do ClinicNow (pacientes, consultas, follow-ups, protocolos, assinaturas, pagamentos, eventos) por usuário via upsert com RLS (28/07)
 - [ ] Assinatura dos planos (Stripe Billing ou Mercado Pago Assinaturas) + tabela `assinaturas` compartilhada
 - [ ] Bloqueio suave por plano: Start (diagnóstico+plano+CRM) vs Pro (metas, scripts, integração MedEasy)
 - [x] Contador real de vagas de fundador (20) lendo do banco — RPC `docgrow_vagas_restantes` na landing e na aplicação (28/07)

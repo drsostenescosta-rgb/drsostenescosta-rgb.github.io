@@ -1,4 +1,4 @@
-# DocGrow — Kit de vendas do fundador (28/07/2026)
+# ClinicNow — Kit de vendas do fundador (28/07/2026)
 
 Tudo que você precisa para vender HOJE, sem gateway e sem tráfego pago. A régua é a do comitê: 5 médicos no funil → 10 clientes pagantes. O pipeline vive no painel (`painel.html`): **novo → conversando → proposta → cliente** — cada etapa tem o botão "WhatsApp da etapa" com a mensagem certa já pronta.
 
@@ -17,7 +17,7 @@ Tudo que você precisa para vender HOJE, sem gateway e sem tráfego pago. A rég
 4. Em 48h, chame para a conversa de proposta. Meta do comitê: lead→conversa ≥ 40%.
 
 **Mensagem de abertura (rede pessoal):**
-> Oi, [nome]! Estou lançando o DocGrow — um cockpit que organiza a agenda do consultório, faz o follow-up dos pacientes no WhatsApp e mede quanto isso devolve em receita. Estou escolhendo 20 fundadores com preço travado para sempre, e queria você entre os primeiros. Topa testar? Leva 3 minutos: drsostenescosta-rgb.github.io/docgrow/
+> Oi, [nome]! Estou lançando o ClinicNow — um cockpit que organiza a agenda do consultório, faz o follow-up dos pacientes no WhatsApp e mede quanto isso devolve em receita. Estou escolhendo 20 fundadores com preço travado para sempre, e queria você entre os primeiros. Topa testar? Leva 3 minutos: drsostenescosta-rgb.github.io/docgrow/
 
 ## 3. A demonstração de 10 minutos (por vídeo ou presencial)
 
@@ -32,7 +32,7 @@ Tudo que você precisa para vender HOJE, sem gateway e sem tráfego pago. A rég
 
 | Objeção | Resposta |
 |---|---|
-| "Já uso agenda/planilha" | "Agenda marca hora. O DocGrow devolve receita: confirmação anti no-show, recall de sumido e assinatura de acompanhamento — e mede quanto isso gerou no Cofre." |
+| "Já uso agenda/planilha" | "Agenda marca hora. O ClinicNow devolve receita: confirmação anti no-show, recall de sumido e assinatura de acompanhamento — e mede quanto isso gerou no Cofre." |
 | "Quanto rende?" | "Não prometo número — isso inclusive é vedado pela publicidade médica. O que faço é medir: o Cofre mostra em R$ o que o app recuperou para você. Se em 60 dias não fizer sentido, cancela sem multa." |
 | "Tá caro" | "Um único paciente que o recall trouxer de volta paga o mês. E seu preço de fundador nunca sobe." |
 | "Não tenho tempo de implantar" | "A implantação é comigo, lado a lado — é exatamente o que a vaga de fundador inclui. Seus primeiros 5 pacientes eu cadastro com você na chamada." |
