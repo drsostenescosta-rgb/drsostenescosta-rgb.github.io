@@ -3,7 +3,17 @@
 Exigência do Founder (Fase 2): *"O modelo precisa rodar no mínimo viável, testado, ANTES da primeira venda."*
 Suite end-to-end com **Playwright (Chromium)** cobrindo os fluxos críticos e as regressões dos vetos do Conselho.
 
-**Última execução: 2026-07-29 — 47 testes, 47 verdes (0 falhas).**
+**Última execução: 2026-08-01 — 76 testes, 76 verdes (0 falhas).**
+
+Novidade de 2026-08-01: `agente.spec.js` — 29 testes herméticos do **Agente de Vendas
+WhatsApp (F1)**, cobrindo a Definition of Done da spec (`specs/SPEC-AGENTE-WHATSAPP.md`)
+com payloads no formato oficial da Meta Cloud API e mocks injetados para
+Supabase/Anthropic/Graph (L1: o artefato executável — `processWebhookBody` e o handler —
+é o que roda no teste). Inclui: verificação do webhook, gravação de conversa+mensagem com
+`intent` em 100% das entradas, `latency_ms` medida, aviso LGPD + transparência de IA na
+primeira resposta, takeover (`ai_paused` cala a IA de verdade e despausar retoma), dedup
+de retries, zero link de agendamento em baixa intenção, greps anti-segredo, lib sem env,
+migração RLS service-role-only e sincronia prompt ↔ oferta canônica (L5).
 
 Cobre as decisões do Founder de 2026-07-28 (**ICP ampliado**; cobrança anual) e as ordens de 2026-07-29: **nova oferta** — mentoria de implementação + suporte anual em todos os planos, preços **R$ 297 / R$ 697 / R$ 997 por mês em cobrança anual** (R$ 3.564 / R$ 8.364 / R$ 11.964 por ano), página de vendas long-form e CTAs com Payment Link do Stripe + fallback honesto (`oferta.spec.js`) — e a **remodelagem da página nos padrões dos benchmarks** (mdhub/Emma + Treint) com os pontos cegos travados por teste (`benchmark.spec.js`, spec em `specs/BENCHMARK-PAGINA.md`).
 
