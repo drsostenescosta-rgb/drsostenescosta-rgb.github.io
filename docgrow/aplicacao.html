@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Aplicar para uma vaga de fundador — DocGrow</title>
-<meta name="description" content="O DocGrow entra por aplicação: 20 vagas de fundador com preço travado para sempre. Aplique em 3 minutos." />
+<title>Aplicar para uma vaga de fundador — ClinicNow</title>
+<meta name="description" content="O ClinicNow entra por aplicação: 20 vagas de fundador com preço travado para sempre. Aplique em 3 minutos." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -49,21 +49,21 @@
   #obrigado .big { font-size:3rem; margin-bottom:12px; }
   #obrigado h2 { font-family:var(--serif); font-weight:500; font-size:1.6rem; margin-bottom:10px; }
   #obrigado p { color:var(--muted); margin-bottom:24px; }
-  .selo { margin-top:26px; font-family:var(--mono); font-size:0.68rem; color:var(--muted); text-align:center; letter-spacing:0.08em; }
+  .selo { margin-top:26px; font-family:var(--mono); font-size:0.75rem; color:var(--muted); text-align:center; letter-spacing:0.08em; }
 </style>
 </head>
 <body>
 <div class="orb o1"></div><div class="orb o2"></div>
 <div class="wrap">
   <div class="top">
-    <a class="brand" href="index.html"><span class="logo">Dg</span> DocGrow</a>
+    <a class="brand" href="index.html"><span class="logo">Cn</span> ClinicNow</a>
     <a class="back" href="index.html">← voltar ao site</a>
   </div>
 
   <div id="captura">
     <span class="eyebrow" id="vagas-eyebrow">Vagas de fundador · entrada por aplicação</span>
     <h1>Aplique para uma das <em>20 vagas</em> de fundador</h1>
-    <p class="sub">O DocGrow não é para todo mundo — as primeiras vagas são curadas para médicos que vão implantar de verdade. Quem entra como fundador trava o preço para sempre.</p>
+    <p class="sub">O ClinicNow não é para todo mundo — as primeiras vagas são curadas para médicos que vão implantar de verdade. Quem entra como fundador trava o preço para sempre.</p>
     <div class="bullets">
       <div>Preço de fundador travado — para sempre</div>
       <div>Implantação acompanhada de perto (você não fica sozinho)</div>
@@ -119,7 +119,7 @@
     <a class="btn btn-ghost" id="zap" href="#" target="_blank" rel="noopener">Acelerar minha aplicação no WhatsApp</a>
   </div>
 
-  <div class="selo">DocGrow · Zatheon · dados protegidos por design</div>
+  <div class="selo">ClinicNow · Zatheon · dados protegidos por design</div>
 </div>
 
 <script src="../medgroth/config.js"></script>
@@ -158,7 +158,7 @@
     MEDGROTH.saveLead(lead).then(function(){
       document.getElementById('captura').style.display = 'none';
       document.getElementById('obrigado').style.display = 'block';
-      var msg = 'Olá! Acabei de aplicar para uma vaga de fundador do DocGrow. Meu nome é ' + nome + '.' + (motivo ? ' Motivo: ' + motivo : '');
+      var msg = 'Olá! Acabei de aplicar para uma vaga de fundador do ClinicNow. Meu nome é ' + nome + '.' + (motivo ? ' Motivo: ' + motivo : '');
       document.getElementById('zap').href = 'https://wa.me/' + MEDGROTH.whatsapp + '?text=' + encodeURIComponent(msg);
       window.scrollTo({top:0, behavior:'smooth'});
     });

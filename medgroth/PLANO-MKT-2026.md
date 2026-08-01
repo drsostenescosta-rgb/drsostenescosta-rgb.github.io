@@ -1,4 +1,4 @@
-# Plano de Marketing MedGroth/DocGrow · 2º semestre 2026
+# Plano de Marketing MedGroth/ClinicNow · 2º semestre 2026
 
 **Base:** benchmark Treint (`BENCHMARK-TREINT.md`). Princípio: copiar o que funciona no funil deles (founder-led + landing por produto + curadoria), corrigindo as fraquezas (sem preço público, sem compliance visível, promessas infláveis).
 
@@ -35,7 +35,7 @@ Diferença deliberada vs Treint: **preço público sempre** (confiança + CAC me
 - **Ago/2026:** rodar SQL dos leads (Sprint 1), reposicionar captura como "aplicação", publicar selo LGPD nas páginas, iniciar cadência de conteúdo do fundador.
 - **Set/2026:** 5 médicos beta percorrendo o funil completo; programa de indicação no ar; inscrição nos programas de startup.
 - **Out/2026:** primeiros 2 casos documentados (antes/depois com consentimento); teste de Meta Ads com verba mínima (R$ 500) em 1 especialidade.
-- **Nov-Dez/2026:** dobrar no canal vencedor; relatório mensal "sua clínica este mês" como isca de retenção; preparar landing internacional DocGrow.
+- **Nov-Dez/2026:** dobrar no canal vencedor; relatório mensal "sua clínica este mês" como isca de retenção; preparar landing internacional ClinicNow.
 
 ## 5. Métricas norte
 

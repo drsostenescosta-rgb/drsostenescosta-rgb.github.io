@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Painel do fundador — DocGrow</title>
+<title>Painel do fundador — ClinicNow</title>
 <meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,10 +34,10 @@
   @media (max-width:640px){ .stats{grid-template-columns:1fr 1fr} }
   .stat { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px 16px; }
   .stat .n { font-family:var(--serif); font-size:1.6rem; color:var(--em-light); }
-  .stat .l { font-size:0.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; font-family:var(--mono); }
+  .stat .l { font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; font-family:var(--mono); }
   .row { background:rgba(4,8,10,0.55); border:1px solid var(--border); border-radius:10px; padding:12px 14px; margin-bottom:8px; font-size:0.87rem; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center; }
   .row .m { color:var(--muted); font-size:0.75rem; display:block; }
-  .pill { font-family:var(--mono); font-size:0.62rem; letter-spacing:0.05em; text-transform:uppercase; border-radius:99px; padding:2px 9px; background:rgba(201,162,39,0.12); color:var(--gold-light); border:1px solid rgba(201,162,39,0.3); }
+  .pill { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.05em; text-transform:uppercase; border-radius:99px; padding:2px 9px; background:rgba(201,162,39,0.12); color:var(--gold-light); border:1px solid rgba(201,162,39,0.3); }
   .zap { border:1px solid var(--border); border-radius:8px; padding:5px 12px; font-size:0.76rem; color:var(--muted); }
   .zap:hover { color:var(--em-light); border-color:var(--em); }
   .muted-note { font-size:0.72rem; color:rgba(143,163,154,0.7); margin-top:14px; }
@@ -46,7 +46,7 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="brand"><span class="logo">Dg</span> DocGrow · painel do fundador</div>
+  <div class="brand"><span class="logo">Cn</span> ClinicNow · painel do fundador</div>
 
   <div id="login" class="card" style="max-width:440px">
     <h1>Entrar</h1>
@@ -61,7 +61,7 @@
   <div id="painel" style="display:none">
     <button class="out" onclick="logout()">Sair</button>
     <h1>Leads em tempo real</h1>
-    <p class="sub">Cada linha é um médico que se cadastrou na captura, na aplicação DocGrow ou na demo. Regra de ouro: responder no mesmo dia.</p>
+    <p class="sub">Cada linha é um médico que se cadastrou na captura, na aplicação ClinicNow ou na demo. Regra de ouro: responder no mesmo dia.</p>
     <div class="stats">
       <div class="stat"><div class="l">Total de leads</div><div class="n" id="s-total">—</div></div>
       <div class="stat"><div class="l">Últimos 7 dias</div><div class="n" id="s-7d">—</div></div>
@@ -72,7 +72,7 @@
       <div id="lista">Carregando…</div>
     </div>
     <div class="card">
-      <h1 style="font-size:1.15rem">Funil de páginas</h1>
+      <h2 style="font-size:1.15rem; font-family:var(--serif); font-weight:500">Funil de páginas</h2>
       <p class="sub">Visitas medidas pela analytics primária (sem cookies, sem IP — LGPD by design). Conversão = leads do período ÷ visitas de captura+aplicação.</p>
       <div id="funil">Carregando…</div>
     </div>
@@ -124,8 +124,8 @@ function show() {
 }
 
 var FUNIL_LABELS = {
-  'medgroth-captura': '2 · Captura MedGroth', 'docgrow-landing': '1 · Landing DocGrow',
-  'docgrow-aplicacao': '2 · Aplicação DocGrow', 'docgrow-app': '3 · Cockpit DocGrow', 'medgroth-app': '3 · App MedGroth'
+  'medgroth-captura': '2 · Captura MedGroth', 'docgrow-landing': '1 · Landing ClinicNow',
+  'docgrow-aplicacao': '2 · Aplicação ClinicNow', 'docgrow-app': '3 · Cockpit ClinicNow', 'medgroth-app': '3 · App MedGroth'
 };
 function renderFunil(leads) {
   fetch(MEDGROTH.rest('docgrow_funil_resumo?select=*'), { headers: authHeaders() })
@@ -154,10 +154,10 @@ function msgEtapa(l) {
   var nome = l.nome || '';
   var aplic = (l.origem || '').indexOf('aplicacao') === 0;
   var msgs = {
-    novo: 'Olá, ' + nome + '! Aqui é Sóstenes, do DocGrow. Vi seu cadastro' + (aplic ? ' — e sua aplicação para a vaga de fundador' : '') + '. Posso te fazer 2 perguntas rápidas sobre sua agenda para ver se o DocGrow encaixa no seu momento?',
-    conversando: 'Olá, ' + nome + '! Pensei no que você me contou. O DocGrow organiza exatamente isso: agenda com confirmação automática, pacientes que não somem e acompanhamento contínuo. Quer que eu te mostre o cockpit funcionando em 10 minutos, por vídeo ou aqui mesmo?',
-    proposta: 'Olá, ' + nome + '! Fechando o que combinamos: vaga de fundador do DocGrow com preço travado para sempre — Start R$ 97/mês, Pro R$ 297/mês ou Aceleração R$ 997/mês, sem fidelidade, cancela quando quiser. Pagamento por Pix mensal enquanto ativamos a cobrança automática. Qual plano faz sentido para começar?',
-    cliente: 'Olá, ' + nome + '! Bem-vindo(a) ao DocGrow 🎉 Seu primeiro passo: abra o cockpit (drsostenescosta-rgb.github.io/docgrow/app.html), cadastre seus 5 pacientes mais recentes e me chame aqui quando terminar — eu te acompanho na primeira semana inteira.',
+    novo: 'Olá, ' + nome + '! Aqui é Sóstenes, do ClinicNow. Vi seu cadastro' + (aplic ? ' — e sua aplicação para a vaga de fundador' : '') + '. Posso te fazer 2 perguntas rápidas sobre sua agenda para ver se o ClinicNow encaixa no seu momento?',
+    conversando: 'Olá, ' + nome + '! Pensei no que você me contou. O ClinicNow organiza exatamente isso: agenda com confirmação automática, pacientes que não somem e acompanhamento contínuo. Quer que eu te mostre o cockpit funcionando em 10 minutos, por vídeo ou aqui mesmo?',
+    proposta: 'Olá, ' + nome + '! Fechando o que combinamos: vaga de fundador do ClinicNow com preço travado para sempre — Start R$ 97/mês, Pro R$ 297/mês ou Aceleração R$ 997/mês, sem fidelidade, cancela quando quiser. Pagamento por Pix mensal enquanto ativamos a cobrança automática. Qual plano faz sentido para começar?',
+    cliente: 'Olá, ' + nome + '! Bem-vindo(a) ao ClinicNow 🎉 Seu primeiro passo: abra o cockpit (drsostenescosta-rgb.github.io/docgrow/app.html), cadastre seus 5 pacientes mais recentes e me chame aqui quando terminar — eu te acompanho na primeira semana inteira.',
     perdido: 'Olá, ' + nome + '! Entendo que agora não é o momento. Vou deixar sua vaga aberta por mais um tempo — se a agenda apertar ou quiser retomar, é só me chamar. Obrigado pela conversa!'
   };
   return msgs[l.status || 'novo'] || msgs.novo;

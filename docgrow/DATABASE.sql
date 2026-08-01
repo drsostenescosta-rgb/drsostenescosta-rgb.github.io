@@ -1,5 +1,5 @@
 -- ============================================================
--- DocGrow — Fundação de dados (5 camadas)
+-- ClinicNow (ex-ClinicNow) — Fundação de dados (5 camadas)
 -- Espelho da migração aplicada em 28/07/2026 no Supabase
 -- Projeto: yaqphldowpshhrtvvfaq (São Paulo · LGPD)
 -- Este arquivo é documentação versionada do schema em produção.

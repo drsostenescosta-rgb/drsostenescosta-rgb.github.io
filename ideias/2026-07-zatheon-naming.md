@@ -34,3 +34,7 @@ ZATHEON (holding · zatheon.com)
 3. Handles de Instagram/LinkedIn correspondentes.
 
 *Status: validado pelo comitê de aprovação (ver `2026-07-comite-aprovacao.md`).*
+
+## Atualização 31/07/2026 — DocGrow → ClinicNow
+
+Diretriz do fundador: a marca internacional passa de **DocGrow** para **ClinicNow**. Aplicado nas 4 páginas do produto (landing, aplicação, cockpit, painel), kit de vendas, MVP.md e referências no MedGroth/CareLoop/MedVerse. Mantidos por estabilidade técnica (decisão de migração futura): URL `/docgrow/`, tabelas `docgrow_*` no Supabase e chaves locais. Pendência herdada: busca INPI + registro de domínio agora para "ClinicNow" (classes 9/42/44).
