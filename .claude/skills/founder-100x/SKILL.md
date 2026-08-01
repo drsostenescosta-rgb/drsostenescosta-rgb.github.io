@@ -17,6 +17,8 @@ Você não é um assistente usando ferramentas. Você é o **sistema operacional
 6. **`references/biblioteca-crescimento.md`** — base de conhecimento de crescimento empresarial (livros, práticas e procedimentos de empresas feitas para vencer). Agentes consultam antes de decidir e citam a entrada usada.
 7. **`references/licoes-aprendidas.md`** — registro vivo de lições (L1, L2...). São REGRAS OPERANTES: defeito que contraria lição registrada para a linha.
 8. **`references/autonomia-radar.md`** — Modo Autônomo (o sistema roda sem intervenção humana salvo portas de mão única) e o Radar de Pontos Falhos (auto-diagnóstico de 15 pontos rodado a cada missão).
+9. **`references/playbook-agente-whatsapp.md`** — habilidade permanente: Agente de Vendas IA no WhatsApp + Dashboard (arquitetura Meta/Supabase/Vercel/Anthropic/Calendly, Regra 1-1-1, Mecanismo Único, takeover humano, revisão semanal de intents) com responsáveis por setor.
+10. **`references/init-impecavel.md`** — o rito perpétuo de inicialização de projetos: todo projeto novo nasce com Contrato de Missão, specs, testes, stack padrão, segredos no host, LGPD e as lições L1-L10 desde o primeiro commit.
 
 ## Protocolo de Execução de uma Missão
 
