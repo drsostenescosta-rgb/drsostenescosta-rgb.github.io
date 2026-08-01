@@ -22,7 +22,7 @@ const { chromium } = require('playwright');
   console.log('onboarding OK');
 
   // 2. paciente
-  await page.click('text=🧑‍⚕️ Pacientes');
+  await page.click('.tab[data-t="pacientes"]');
   await page.click('text=+ Novo paciente');
   await page.fill('#p-nome', 'João Paciente');
   await page.fill('#p-zap', '(84) 98888-7777');
@@ -31,7 +31,7 @@ const { chromium } = require('playwright');
   console.log('paciente OK');
 
   // 3. consulta tele sem consentimento deve bloquear
-  await page.click('text=📅 Agenda');
+  await page.click('.tab[data-t="agenda"]');
   await page.click('text=+ Nova consulta');
   await page.fill('#c-inicio', '2026-07-30T10:00');
   await page.fill('#c-valor', '350');
@@ -50,7 +50,7 @@ const { chromium } = require('playwright');
   console.log('pagamento OK');
 
   // 5. protocolo + assinatura
-  await page.click('text=⭐ Assinaturas');
+  await page.click('.tab[data-t="assinaturas"]');
   await page.click('text=+ Novo protocolo');
   await page.fill('#pr-nome', 'Acompanhamento metabólico');
   await page.fill('#pr-inc', 'Consulta trimestral\nRevisão de exames');
@@ -62,17 +62,17 @@ const { chromium } = require('playwright');
   console.log('assinatura OK');
 
   // 6. follow-up pós-consulta existe? converter
-  await page.click('text=🔁 Follow-ups');
+  await page.click('.tab[data-t="followups"]');
   await page.waitForSelector('#fup-list .row');
   const fups = await page.$$eval('#fup-list .row', r => r.length);
   console.log('followups: ' + fups);
-  await page.click('#fup-list button:has-text("Converteu 💰")');
+  await page.click('#fup-list button:has-text("Converteu")');
   await page.fill('#cv-valor', '350');
   await page.click('#d-converte button:has-text("Somar ao Cofre")');
   console.log('conversao OK');
 
   // 7. cockpit final
-  await page.click('text=💰 Cockpit');
+  await page.click('.tab[data-t="cockpit"]');
   const cofre = await page.textContent('#cofre-total');
   const mrr = await page.textContent('#k-mrr');
   const receita = await page.textContent('#k-receita');
@@ -83,7 +83,7 @@ const { chromium } = require('playwright');
   // 8. landing + demo
   await page.goto(base + '/docgrow/index.html');
   await page.fill('#demo-input', 'Sou endocrinologista, dependo de indicação e minha agenda tem buracos');
-  await page.click('text=🩺 Diagnóstico');
+  await page.click('#demo button.btn-em');
   await page.waitForSelector('#demo-out', { state: 'visible' });
   console.log('demo OK');
   await page.screenshot({ path: 'landing.png' });
