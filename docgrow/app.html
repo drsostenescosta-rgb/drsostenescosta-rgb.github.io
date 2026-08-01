@@ -8,31 +8,31 @@
 <meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:#04080a; --bg-2:#071013; --card:rgba(13,26,26,0.6); --card-solid:#0b1518;
-    --em:#19c37d; --em-light:#3ddc97; --em-dark:#0e9f63;
-    --gold:#c9a227; --gold-light:#e2c464; --red:#e05a5a; --red-light:#f18b8b;
-    --blue:#4a9de0; --blue-light:#7fbcf0;
-    --text:#e8efea; --muted:#8fa39a; --border:rgba(232,239,234,0.09); --border-strong:rgba(232,239,234,0.18);
-    --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+    --bg:#f7f6f2; --bg-2:#efede7; --card:#ffffff; --card-solid:#ffffff;
+    --em:#0e7568; --em-light:#0e7568; --em-dark:#0a5a50;
+    --gold:#96690f; --gold-light:#96690f; --red:#b3261e; --red-light:#b3261e;
+    --blue:#1d5fa8; --blue-light:#1d5fa8;
+    --text:#1b2422; --muted:#55635f; --border:#e4e1d8; --border-strong:#cfcabd;
+    --serif:'IBM Plex Serif',serif; --sans:'IBM Plex Sans',sans-serif; --mono:'IBM Plex Mono',monospace;
   }
   * { box-sizing:border-box; margin:0; padding:0; }
   body { background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.55; min-height:100vh; }
   a { color:inherit; text-decoration:none; }
   h1,h2,h3 { font-family:var(--serif); font-weight:500; line-height:1.15; }
-  .grad { background:linear-gradient(115deg,#fff 0%,#d9f5e6 45%,var(--em-light) 80%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
-  .orb { position:fixed; border-radius:50%; filter:blur(110px); opacity:0.35; z-index:-1; pointer-events:none; }
-  .o1 { width:560px; height:560px; top:-15%; left:-8%; background:radial-gradient(circle,rgba(25,195,125,0.32),transparent 70%); }
-  .o2 { width:460px; height:460px; bottom:-16%; right:-10%; background:radial-gradient(circle,rgba(201,162,39,0.18),transparent 70%); }
+  .grad { color:var(--text); }
+  
+  
+  
 
-  header { position:sticky; top:0; z-index:50; backdrop-filter:blur(16px); background:rgba(4,8,10,0.7); border-bottom:1px solid var(--border); }
+  header { position:sticky; top:0; z-index:50; background:#fbfaf7; border-bottom:1px solid var(--border); }
   .top { display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:1180px; margin:0 auto; padding:12px 20px; }
   .brand { display:flex; align-items:center; gap:10px; font-family:var(--serif); font-size:1rem; }
-  .logo { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--em-light); background:rgba(25,195,125,0.12); border:1px solid rgba(25,195,125,0.45); font-size:0.95rem; }
+  .logo { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--em-light); background:rgba(14,117,104,0.12); border:1px solid rgba(14,117,104,0.45); font-size:0.95rem; }
   .user { font-size:0.78rem; color:var(--muted); display:flex; align-items:center; gap:12px; }
-  .user button { background:none; border:1px solid var(--border); color:var(--muted); border-radius:99px; padding:4px 12px; cursor:pointer; font-size:0.72rem; }
+  .user button { background:none; border:1px solid var(--border); color:var(--muted); border-radius:6px; padding:4px 12px; cursor:pointer; font-size:0.72rem; }
   .user button:hover { color:var(--red-light); border-color:var(--red); }
 
   nav.tabs { display:flex; gap:6px; max-width:1180px; margin:0 auto; padding:10px 20px 0; overflow-x:auto; }
@@ -56,21 +56,21 @@
   .stat .l { font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; font-family:var(--mono); }
   .stat .s { font-size:0.74rem; color:var(--muted); margin-top:3px; }
 
-  .btn { display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:999px; font-weight:700; font-size:0.86rem; cursor:pointer; border:1px solid transparent; transition:transform .15s, filter .15s; }
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:8px; font-weight:700; font-size:0.86rem; cursor:pointer; border:1px solid transparent; transition:transform .15s, filter .15s; }
   .btn:hover { transform:translateY(-1px); filter:brightness(1.06); }
-  .btn-em { background:linear-gradient(135deg,var(--em-light),var(--em-dark)); color:#03130b; }
-  .btn-ghost { border-color:var(--border-strong); color:var(--text); background:rgba(255,255,255,0.02); }
+  .btn-em { background:var(--em); color:#ffffff; }
+  .btn-ghost { border-color:var(--border-strong); color:var(--text); background:rgba(27,36,34,0.04); }
   .btn-sm { padding:6px 13px; font-size:0.76rem; }
 
   label { font-size:0.78rem; font-weight:600; display:grid; gap:5px; margin-bottom:12px; }
-  input, select, textarea { background:rgba(4,8,10,0.7); border:1px solid var(--border); border-radius:9px; padding:10px 12px; color:var(--text); font-family:var(--sans); font-size:0.92rem; width:100%; }
-  input:focus, select:focus, textarea:focus { outline:none; border-color:var(--em); box-shadow:0 0 0 3px rgba(25,195,125,0.14); }
+  input, select, textarea { background:rgba(255,255,255,0.7); border:1px solid var(--border); border-radius:9px; padding:10px 12px; color:var(--text); font-family:var(--sans); font-size:0.92rem; width:100%; }
+  input:focus, select:focus, textarea:focus { outline:none; border-color:var(--em); box-shadow:0 0 0 3px rgba(14,117,104,0.14); }
   input[type=checkbox]{ width:auto; accent-color:var(--em); }
 
-  .bar { height:9px; border-radius:99px; background:rgba(255,255,255,0.07); overflow:hidden; }
-  .fill { height:100%; border-radius:99px; background:linear-gradient(90deg,var(--em-dark),var(--em-light)); transition:width .4s; }
+  .bar { height:9px; border-radius:6px; background:rgba(27,36,34,0.04); overflow:hidden; }
+  .fill { height:100%; border-radius:6px; background:var(--em); transition:width .4s; }
 
-  .row { background:rgba(4,8,10,0.55); border:1px solid var(--border); border-radius:10px; padding:11px 13px; margin-bottom:8px; font-size:0.86rem; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center; }
+  .row { background:rgba(255,255,255,0.55); border:1px solid var(--border); border-radius:10px; padding:11px 13px; margin-bottom:8px; font-size:0.86rem; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center; }
   .row b { display:block; }
   .row .m { color:var(--muted); font-size:0.75rem; }
   .row .acts { display:flex; gap:6px; flex-wrap:wrap; }
@@ -78,16 +78,16 @@
   .row .acts button:hover, .row .acts a:hover { color:var(--em-light); border-color:var(--em); }
   .row .acts .warn:hover { color:var(--red-light); border-color:var(--red); }
 
-  .pill { display:inline-block; font-family:var(--mono); font-size:0.7rem; letter-spacing:0.06em; text-transform:uppercase; border-radius:99px; padding:2px 9px; background:rgba(25,195,125,0.1); color:var(--em-light); border:1px solid rgba(25,195,125,0.3); }
-  .pill.gold { background:rgba(201,162,39,0.1); color:var(--gold-light); border-color:rgba(201,162,39,0.35); }
-  .pill.red { background:rgba(224,90,90,0.1); color:var(--red-light); border-color:rgba(224,90,90,0.35); }
-  .pill.blue { background:rgba(74,157,224,0.1); color:var(--blue-light); border-color:rgba(74,157,224,0.35); }
-  .pill.dim { background:rgba(255,255,255,0.04); color:var(--muted); border-color:var(--border); }
+  .pill { display:inline-block; font-family:var(--mono); font-size:0.7rem; letter-spacing:0.06em; text-transform:uppercase; border-radius:6px; padding:2px 9px; background:rgba(14,117,104,0.1); color:var(--em-light); border:1px solid rgba(14,117,104,0.3); }
+  .pill.gold { background:rgba(150,105,15,0.1); color:var(--gold-light); border-color:rgba(150,105,15,0.35); }
+  .pill.red { background:rgba(179,38,30,0.1); color:var(--red-light); border-color:rgba(179,38,30,0.35); }
+  .pill.blue { background:rgba(29,95,168,0.1); color:var(--blue-light); border-color:rgba(29,95,168,0.35); }
+  .pill.dim { background:rgba(27,36,34,0.04); color:var(--muted); border-color:var(--border); }
 
   .empty { text-align:center; color:var(--muted); padding:34px 14px; font-size:0.9rem; }
   .empty .big { font-size:2.1rem; margin-bottom:8px; }
 
-  .disclaimer { font-size:0.75rem; color:rgba(143,163,154,0.7); margin-top:20px; }
+  .disclaimer { font-size:0.75rem; color:var(--muted); margin-top:20px; }
 
   /* health ring */
   .ring-wrap { display:flex; align-items:center; gap:22px; flex-wrap:wrap; }
@@ -104,22 +104,21 @@
   #auth p { color:var(--muted); font-size:0.9rem; margin-bottom:20px; }
 
   dialog { background:var(--card-solid); color:var(--text); border:1px solid var(--border-strong); border-radius:16px; padding:26px; max-width:520px; width:92%; }
-  dialog::backdrop { background:rgba(0,0,0,0.65); backdrop-filter:blur(3px); }
+  dialog::backdrop { background:rgba(0,0,0,0.65);  }
   dialog h3 { margin-bottom:14px; }
 
-  .pedia { background:rgba(4,8,10,0.55); border:1px solid var(--border); border-radius:12px; padding:16px 18px; margin-bottom:12px; }
+  .pedia { background:rgba(255,255,255,0.55); border:1px solid var(--border); border-radius:12px; padding:16px 18px; margin-bottom:12px; }
   .pedia summary { cursor:pointer; font-weight:700; font-size:0.92rem; }
   .pedia p { font-size:0.84rem; color:var(--muted); margin-top:8px; }
-  .pedia .script { font-family:var(--mono); font-size:0.76rem; background:rgba(25,195,125,0.06); border:1px dashed rgba(25,195,125,0.3); border-radius:9px; padding:10px 12px; margin-top:8px; color:var(--text); white-space:pre-wrap; }
+  .pedia .script { font-family:var(--mono); font-size:0.76rem; background:rgba(14,117,104,0.06); border:1px dashed rgba(14,117,104,0.3); border-radius:9px; padding:10px 12px; margin-top:8px; color:var(--text); white-space:pre-wrap; }
 
   @media print {
-    body{background:#fff;color:#111} .orb,header,nav.tabs,.btn,.no-print{display:none!important}
+    body{background:#fff;color:#111} 
     .card,.stat{border-color:#ddd;background:#fff}
   }
 </style>
 </head>
 <body>
-<div class="orb o1"></div><div class="orb o2"></div>
 
 <!-- ── onboarding ─────────────────────────────────────────── -->
 <div id="auth" style="display:none">
@@ -156,22 +155,22 @@
     <div class="user"><span id="u-nome"></span><button onclick="openCloud()" id="cloud-btn">Conectar à nuvem</button><button onclick="exportData()">Exportar dados</button><button onclick="resetAll()">Sair</button></div>
   </div>
   <nav class="tabs">
-    <div class="tab active" data-t="cockpit" onclick="go('cockpit')">💰 Cockpit</div>
-    <div class="tab" data-t="agenda" onclick="go('agenda')">📅 Agenda</div>
-    <div class="tab" data-t="pacientes" onclick="go('pacientes')">🧑‍⚕️ Pacientes</div>
-    <div class="tab" data-t="followups" onclick="go('followups')">🔁 Follow-ups</div>
-    <div class="tab" data-t="assinaturas" onclick="go('assinaturas')">⭐ Assinaturas</div>
-    <div class="tab" data-t="pedia" onclick="go('pedia')">📚 GrothPedia</div>
+    <div class="tab active" data-t="cockpit" onclick="go('cockpit')">Cockpit</div>
+    <div class="tab" data-t="agenda" onclick="go('agenda')">Agenda</div>
+    <div class="tab" data-t="pacientes" onclick="go('pacientes')">‍Pacientes</div>
+    <div class="tab" data-t="followups" onclick="go('followups')">Follow-ups</div>
+    <div class="tab" data-t="assinaturas" onclick="go('assinaturas')">Assinaturas</div>
+    <div class="tab" data-t="pedia" onclick="go('pedia')">GrothPedia</div>
   </nav>
 </header>
 <main>
 
 <!-- ── COCKPIT: quanto o produto te gerou este mês ────────── -->
 <section id="t-cockpit">
-  <div class="card" style="border-color:rgba(201,162,39,0.35)">
+  <div class="card" style="border-color:rgba(150,105,15,0.35)">
     <div style="display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; align-items:flex-start">
       <div>
-        <h3 style="color:var(--gold-light)">🏆 Cofre de Receita Recuperada</h3>
+        <h3 style="color:var(--gold-light)">Cofre de Receita Recuperada</h3>
         <div class="card-sub">Dinheiro que o ClinicNow devolveu ao seu consultório este mês — medido, nunca prometido.</div>
       </div>
       <div style="text-align:right">
@@ -201,7 +200,7 @@
       <h3>Ações de hoje</h3>
       <div class="card-sub">O que move dinheiro agora, em ordem de impacto.</div>
       <div id="today-actions"></div>
-      <div style="margin-top:14px; text-align:right"><button class="btn btn-ghost btn-sm" onclick="relatorioMes()">📄 Relatório do mês</button></div>
+      <div style="margin-top:14px; text-align:right"><button class="btn btn-ghost btn-sm" onclick="relatorioMes()">Relatório do mês</button></div>
     </div>
   </div>
   <div class="disclaimer">Valores do Cofre são atribuídos por você ao marcar um follow-up como convertido — o ClinicNow só soma o que foi medido de verdade. Nenhum número desta tela é projeção.</div>
@@ -327,7 +326,7 @@
 </dialog>
 
 <dialog id="d-cloud">
-  <h3>Conectar à nuvem ☁️</h3>
+  <h3>Conectar à nuvem </h3>
   <p style="color:var(--muted); font-size:0.86rem; margin-bottom:14px">Seus dados continuam neste navegador e passam a sincronizar com o Supabase (São Paulo · LGPD), protegidos por RLS: só você lê o que é seu.</p>
   <label>E-mail<input id="cl-email" type="email" autocomplete="username" placeholder="voce@clinica.com.br"></label>
   <label>Senha<input id="cl-senha" type="password" autocomplete="current-password" placeholder="mínimo 6 caracteres"></label>
@@ -340,7 +339,7 @@
 </dialog>
 
 <dialog id="d-converte">
-  <h3>Follow-up convertido 🎉</h3>
+  <h3>Follow-up convertido </h3>
   <p style="color:var(--muted); font-size:0.86rem; margin-bottom:14px">Quanto este retorno gerou (ou vai gerar) em receita? Esse valor entra no Cofre — só some o que é real.</p>
   <label>Valor (R$)*<input id="cv-valor" type="number" min="0" step="10" placeholder="350"></label>
   <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:6px">
@@ -399,7 +398,7 @@ function setCloud(c) { if (c) localStorage.setItem(CLOUD_KEY, JSON.stringify(c))
 function cloudUi() {
   var c = cloud(), pill = document.getElementById('cloud-pill'), btn = document.getElementById('cloud-btn');
   if (!pill) return;
-  if (c) { pill.textContent = 'nuvem ✓'; pill.className = 'pill'; btn.textContent = 'Sincronizar agora'; btn.onclick = function () { syncAll(true); }; }
+  if (c) { pill.textContent = 'nuvem '; pill.className = 'pill'; btn.textContent = 'Sincronizar agora'; btn.onclick = function () { syncAll(true); }; }
   else { pill.textContent = 'local'; pill.className = 'pill dim'; btn.textContent = 'Conectar à nuvem'; btn.onclick = openCloud; }
 }
 function openCloud() { document.getElementById('d-cloud').showModal(); }
@@ -476,7 +475,7 @@ function syncAll(manual) {
       .then(function (ok) { return ok && upsert(token, 'docgrow_eventos', db.eventos.map(function (r) { return pick(r, SYNC_COLS.docgrow_eventos, u); })); })
       .then(function (ok) {
         syncing = false;
-        if (pill) pill.textContent = ok ? 'nuvem ✓' : 'nuvem ⚠';
+        if (pill) pill.textContent = ok ? 'nuvem ' : 'nuvem ';
         if (manual && ok) alert('Sincronizado! Seus dados estão na nuvem (São Paulo · LGPD).');
         if (manual && !ok) alert('Sincronização parcial — os dados locais estão intactos; tento de novo na próxima alteração.');
       });
@@ -546,7 +545,7 @@ function genRecalls() {
 function fupMsg(f, p) {
   var d = db.profile || {};
   var msgs = {
-    confirmacao: 'Olá, ' + p.nome + '! Aqui é do consultório de ' + d.nome + '. Passando para confirmar sua consulta de amanhã. Podemos confirmar sua presença? Se precisar remarcar, é só avisar por aqui. 😊',
+    confirmacao: 'Olá, ' + p.nome + '! Aqui é do consultório de ' + d.nome + '. Passando para confirmar sua consulta de amanhã. Podemos confirmar sua presença? Se precisar remarcar, é só avisar por aqui. ',
     pos_consulta: 'Olá, ' + p.nome + '! ' + d.nome + ' pediu para saber como você está após a consulta. Alguma dúvida sobre as orientações? Estamos por aqui. Se puder, sua avaliação no Google ajuda outros pacientes a nos encontrar: [link da sua ficha Google]',
     recall: 'Olá, ' + p.nome + '! Sentimos sua falta no consultório de ' + d.nome + '. Que tal agendarmos sua consulta de acompanhamento? Manter a regularidade faz parte do seu cuidado. Respondendo aqui, já vemos o melhor horário.',
     retorno: 'Olá, ' + p.nome + '! Está chegando a época do seu retorno com ' + d.nome + '. Vamos agendar? Temos horários presenciais e por telemedicina.',
@@ -554,7 +553,7 @@ function fupMsg(f, p) {
   };
   return msgs[f.tipo] || msgs.recall;
 }
-var fupLabels = { confirmacao: '✅ Confirmação', pos_consulta: '💬 Pós-consulta', recall: '🔁 Recall 90d', retorno: '📆 Retorno', resgate_noshow: '🚑 Resgate no-show' };
+var fupLabels = { confirmacao: 'Confirmação', pos_consulta: 'Pós-consulta', recall: 'Recall 90d', retorno: 'Retorno', resgate_noshow: 'Resgate no-show' };
 
 /* ── cockpit ─────────────────────────────────────────────── */
 function inMonth(iso) { var d = new Date(iso), n = new Date(); return d.getMonth() === n.getMonth() && d.getFullYear() === n.getFullYear(); }
@@ -605,9 +604,9 @@ function renderCockpit() {
   var hs = healthScore();
   var deg = hs.score * 3.6;
   var ring = document.getElementById('hs-ring');
-  ring.style.background = 'conic-gradient(var(--em-light) ' + deg + 'deg, rgba(255,255,255,0.07) ' + deg + 'deg)';
+  ring.style.background = 'conic-gradient(var(--em-light) ' + deg + 'deg, rgba(27,36,34,0.04) ' + deg + 'deg)';
   ring.style.borderRadius = '50%';
-  ring.innerHTML = '<span style="background:var(--bg); width:96px; height:96px; border-radius:50%; display:flex; align-items:center; justify-content:center"><span class="val">' + hs.score + '<small>/100</small></span></span>';
+  ring.innerHTML = '<span style="background:#ffffff; width:96px; height:96px; border-radius:50%; display:flex; align-items:center; justify-content:center"><span class="val">' + hs.score + '<small>/100</small></span></span>';
   document.getElementById('hs-break').innerHTML = hs.parts.map(function (x) {
     return '<div class="hs-item"><span>' + x[0] + '</span><span class="pt">' + x[1] + '/' + x[2] + '</span></div>';
   }).join('');
@@ -624,7 +623,7 @@ function renderCockpit() {
   });
   if (!db.protocolos.length) acts.push('<div class="row"><div><b>Crie seu 1º protocolo por assinatura</b><span class="m">receita recorrente começa aqui (a ideia mais valiosa do benchmark)</span></div><div class="acts"><button onclick="go(\'assinaturas\')">Criar →</button></div></div>');
   if (db.pacientes.length < 5) acts.push('<div class="row"><div><b>Cadastre seus pacientes atuais</b><span class="m">o recall automático só funciona com a base viva</span></div><div class="acts"><button onclick="go(\'pacientes\')">Cadastrar →</button></div></div>');
-  document.getElementById('today-actions').innerHTML = acts.length ? acts.join('') : '<div class="empty"><div class="big">🌿</div>Nada urgente. Agenda em dia, follow-ups em dia.</div>';
+  document.getElementById('today-actions').innerHTML = acts.length ? acts.join('') : '<div class="empty"><div class="big"></div>Nada urgente. Agenda em dia, follow-ups em dia.</div>';
 }
 
 /* ── relatório mensal "sua clínica este mês" ─────────────── */
@@ -648,7 +647,7 @@ function relatorioMes() {
     '<table>' +
     '<tr><td>Receita paga no mês</td><td>' + fmt(receitaMes) + '</td></tr>' +
     '<tr><td>Receita recorrente mensal (assinaturas ativas)</td><td>' + fmt(mrr) + ' · ' + assAtivas.length + ' assinante(s)</td></tr>' +
-    '<tr><td>💰 Cofre: receita recuperada pelos follow-ups</td><td>' + fmt(c.total) + '</td></tr>' +
+    '<tr><td>Cofre: receita recuperada pelos follow-ups</td><td>' + fmt(c.total) + '</td></tr>' +
     '<tr><td>Consultas realizadas</td><td>' + realizadas + '</td></tr>' +
     '<tr><td>No-shows</td><td>' + noshows + '</td></tr>' +
     '<tr><td>Pacientes novos</td><td>' + novos + '</td></tr>' +
@@ -705,7 +704,7 @@ function pagarConsulta(id) {
 function renderAgenda() {
   var list = db.consultas.slice().sort(function (a, b) { return new Date(b.inicio) - new Date(a.inicio); });
   var el = document.getElementById('agenda-list');
-  if (!list.length) { el.innerHTML = '<div class="empty"><div class="big">📅</div>Nenhuma consulta ainda. Crie a primeira — presencial ou tele.</div>'; return; }
+  if (!list.length) { el.innerHTML = '<div class="empty"><div class="big"></div>Nenhuma consulta ainda. Crie a primeira — presencial ou tele.</div>'; return; }
   var stPill = { agendada: '<span class="pill dim">agendada</span>', confirmada: '<span class="pill blue">confirmada</span>', realizada: '<span class="pill">realizada</span>', no_show: '<span class="pill red">no-show</span>', cancelada: '<span class="pill dim">cancelada</span>' };
   el.innerHTML = list.map(function (co) {
     var p = db.pacientes.find(function (x) { return x.id === co.paciente_id; }) || { nome: '?' };
@@ -713,7 +712,7 @@ function renderAgenda() {
     if (co.status === 'agendada') acts.push('<button onclick="confirmarConsulta(\'' + co.id + '\')">Confirmar via WhatsApp</button>');
     if (['agendada', 'confirmada'].indexOf(co.status) >= 0) { acts.push('<button onclick="setConsulta(\'' + co.id + '\',\'realizada\')">Realizada</button>'); acts.push('<button class="warn" onclick="setConsulta(\'' + co.id + '\',\'no_show\')">No-show</button>'); }
     if (co.valor > 0 && !co.pago && co.status === 'realizada') acts.push('<button onclick="pagarConsulta(\'' + co.id + '\')">Marcar pago ' + fmt(co.valor) + '</button>');
-    return '<div class="row"><div><b>' + esc(p.nome) + ' ' + (co.tipo === 'tele' ? '<span class="pill blue">tele</span>' : '') + '</b><span class="m">' + new Date(co.inicio).toLocaleString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) + (co.valor ? ' · ' + fmt(co.valor) + (co.pago ? ' ✓ pago' : ' pendente') : '') + '</span></div><div>' + (stPill[co.status] || '') + '</div><div class="acts">' + acts.join('') + '</div></div>';
+    return '<div class="row"><div><b>' + esc(p.nome) + ' ' + (co.tipo === 'tele' ? '<span class="pill blue">tele</span>' : '') + '</b><span class="m">' + new Date(co.inicio).toLocaleString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) + (co.valor ? ' · ' + fmt(co.valor) + (co.pago ? ' pago' : ' pendente') : '') + '</span></div><div>' + (stPill[co.status] || '') + '</div><div class="acts">' + acts.join('') + '</div></div>';
   }).join('');
 }
 
@@ -727,7 +726,7 @@ function savePaciente() {
 }
 function renderPacientes() {
   var el = document.getElementById('pac-list');
-  if (!db.pacientes.length) { el.innerHTML = '<div class="empty"><div class="big">🧑‍⚕️</div>Sua base de pacientes começa aqui.</div>'; return; }
+  if (!db.pacientes.length) { el.innerHTML = '<div class="empty"><div class="big">‍</div>Sua base de pacientes começa aqui.</div>'; return; }
   el.innerHTML = db.pacientes.map(function (p) {
     var last = db.consultas.filter(function (c) { return c.paciente_id === p.id && c.status === 'realizada'; }).map(function (c) { return c.inicio; }).sort().pop();
     var ass = db.assinaturas.find(function (a) { return a.paciente_id === p.id && a.status === 'ativa'; });
@@ -741,13 +740,13 @@ var convId = null;
 function renderFups() {
   var el = document.getElementById('fup-list');
   var list = db.followups.slice().sort(function (a, b) { return (a.status === 'pendente' ? 0 : 1) - (b.status === 'pendente' ? 0 : 1) || new Date(a.devido_em) - new Date(b.devido_em); });
-  if (!list.length) { el.innerHTML = '<div class="empty"><div class="big">🔁</div>Follow-ups aparecem sozinhos: confirmação ao confirmar consulta, pós-consulta ao realizar, recall aos 90 dias.</div>'; return; }
+  if (!list.length) { el.innerHTML = '<div class="empty"><div class="big"></div>Follow-ups aparecem sozinhos: confirmação ao confirmar consulta, pós-consulta ao realizar, recall aos 90 dias.</div>'; return; }
   var st = { pendente: '<span class="pill red">pendente</span>', enviado: '<span class="pill blue">enviado</span>', respondido: '<span class="pill">respondido</span>', convertido: '<span class="pill gold">convertido</span>', expirado: '<span class="pill dim">expirado</span>' };
   el.innerHTML = list.map(function (f) {
     var p = db.pacientes.find(function (x) { return x.id === f.paciente_id; }) || { nome: '?', whatsapp: '' };
     var acts = [];
     if (f.status === 'pendente' && p.whatsapp) acts.push('<a href="' + zapLink(p.whatsapp, fupMsg(f, p)) + '" target="_blank" rel="noopener" onclick="marcaEnviado(\'' + f.id + '\')">Enviar WhatsApp</a>');
-    if (['pendente', 'enviado'].indexOf(f.status) >= 0) { acts.push('<button onclick="marcaStatus(\'' + f.id + '\',\'respondido\')">Respondeu</button>'); acts.push('<button onclick="abreConverte(\'' + f.id + '\')">Converteu 💰</button>'); acts.push('<button class="warn" onclick="marcaStatus(\'' + f.id + '\',\'expirado\')">Expirar</button>'); }
+    if (['pendente', 'enviado'].indexOf(f.status) >= 0) { acts.push('<button onclick="marcaStatus(\'' + f.id + '\',\'respondido\')">Respondeu</button>'); acts.push('<button onclick="abreConverte(\'' + f.id + '\')">Converteu </button>'); acts.push('<button class="warn" onclick="marcaStatus(\'' + f.id + '\',\'expirado\')">Expirar</button>'); }
     return '<div class="row"><div><b>' + (fupLabels[f.tipo] || f.tipo) + ' · ' + esc(p.nome) + '</b><span class="m">devido ' + new Date(f.devido_em).toLocaleDateString('pt-BR') + (f.resultado_valor ? ' · gerou ' + fmt(f.resultado_valor) : '') + '</span></div><div>' + (st[f.status] || '') + '</div><div class="acts">' + acts.join('') + '</div></div>';
   }).join('');
 }
@@ -781,7 +780,7 @@ function propostaMsg(pr, pacNome) {
 }
 function renderProt() {
   var el = document.getElementById('prot-list');
-  if (!db.protocolos.length) { el.innerHTML = '<div class="empty"><div class="big">⭐</div>Seu primeiro protocolo por assinatura transforma consulta avulsa em receita previsível.</div>'; return; }
+  if (!db.protocolos.length) { el.innerHTML = '<div class="empty"><div class="big"></div>Seu primeiro protocolo por assinatura transforma consulta avulsa em receita previsível.</div>'; return; }
   el.innerHTML = db.protocolos.filter(function (p) { return p.ativo; }).map(function (pr) {
     var n = db.assinaturas.filter(function (a) { return a.protocolo_id === pr.id && a.status === 'ativa'; }).length;
     return '<div class="row"><div><b>' + esc(pr.nome) + '</b><span class="m">' + fmt(pr.preco_mensal) + '/mês · ' + n + ' assinante' + (n === 1 ? '' : 's') + ' · ' + pr.incluidos.length + ' serviços incluídos</span></div><div class="acts"><button onclick="copiaProposta(\'' + pr.id + '\')">Copiar proposta</button></div></div>';
@@ -820,12 +819,12 @@ function renderAssinaturas() {
   renderProt();
   var el = document.getElementById('ass-list');
   var list = db.assinaturas.filter(function (a) { return a.status === 'ativa'; });
-  if (!list.length) { el.innerHTML = '<div class="empty"><div class="big">🤝</div>Quando um paciente aceitar a proposta, registre aqui — o MRR aparece no cockpit.</div>'; return; }
+  if (!list.length) { el.innerHTML = '<div class="empty"><div class="big"></div>Quando um paciente aceitar a proposta, registre aqui — o MRR aparece no cockpit.</div>'; return; }
   el.innerHTML = list.map(function (a) {
     var p = db.pacientes.find(function (x) { return x.id === a.paciente_id; }) || { nome: '?' };
     var pr = db.protocolos.find(function (x) { return x.id === a.protocolo_id; }) || { nome: '?' };
     var pgMes = db.pagamentos.some(function (g) { return g.assinatura_id === a.id && g.status === 'pago' && inMonth(g.criado_em); });
-    return '<div class="row"><div><b>' + esc(p.nome) + '</b><span class="m">' + esc(pr.nome) + ' · ' + fmt(a.valor) + '/mês · desde ' + new Date(a.iniciada_em).toLocaleDateString('pt-BR') + '</span></div><div>' + (pgMes ? '<span class="pill">mês pago ✓</span>' : '<span class="pill red">mês em aberto</span>') + '</div><div class="acts">' + (pgMes ? '' : '<button onclick="pagarAssinatura(\'' + a.id + '\')">Registrar pagamento</button>') + '<button class="warn" onclick="cancelarAssinatura(\'' + a.id + '\')">Cancelar</button></div></div>';
+    return '<div class="row"><div><b>' + esc(p.nome) + '</b><span class="m">' + esc(pr.nome) + ' · ' + fmt(a.valor) + '/mês · desde ' + new Date(a.iniciada_em).toLocaleDateString('pt-BR') + '</span></div><div>' + (pgMes ? '<span class="pill">mês pago </span>' : '<span class="pill red">mês em aberto</span>') + '</div><div class="acts">' + (pgMes ? '' : '<button onclick="pagarAssinatura(\'' + a.id + '\')">Registrar pagamento</button>') + '<button class="warn" onclick="cancelarAssinatura(\'' + a.id + '\')">Cancelar</button></div></div>';
   }).join('');
 }
 
@@ -844,7 +843,7 @@ function renderPedia() {
     return '<details class="pedia"' + (f.nicho === meu ? ' open' : '') + '><summary>' + f.t + (f.nicho === meu ? ' <span class="pill gold">seu nicho</span>' : '') + '</summary>' +
       '<p><b>Faixa de preço de referência:</b> ' + f.preco + '</p>' +
       '<p><b>Como montar:</b> ' + f.como + '</p>' +
-      '<p><b>⚖️ Regra CFM:</b> ' + f.cfm + '</p>' +
+      '<p><b>Regra CFM:</b> ' + f.cfm + '</p>' +
       '<div class="script">' + f.script + '</div></details>';
   }).join('');
 }
