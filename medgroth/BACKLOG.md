@@ -95,6 +95,7 @@ create policy "leitura autenticada" on public.medgroth_leads
 
 - [ ] `/api/groth`: plano de crescimento reescrito por IA (claude-sonnet-5) a partir do diagnóstico — mais específico que o motor de regras atual, com guarda-corpos (publicidade médica/CFM, sem promessa de resultado)
 - [ ] Scripts de conversão gerados por IA para o nicho do usuário (roteiro da consulta de avaliação, mensagens de recall)
+- [ ] Agente de IA no WhatsApp do funil (Meta Cloud API + função serverless + Supabase): qualifica lead 24/7, oferece agendamento e registra tudo em `docgrow_eventos`; human takeover pelo painel do fundador. Guarda-corpos CFM no prompt. (origem: `../ideias/2026-08-mega-prompt-conversao.md`)
 - [ ] Ponte MedEasy: Índice de Saúde do paciente como argumento na proposta de protocolo
 - [x] Relatório mensal "sua clínica este mês" no cockpit (receita, MRR, Cofre, consultas, no-shows, Health Score — imprimível/PDF) (28/07)
 
