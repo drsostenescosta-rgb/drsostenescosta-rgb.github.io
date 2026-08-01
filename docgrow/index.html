@@ -36,14 +36,12 @@
   .nav-inner { display:flex; align-items:center; justify-content:space-between; padding:13px 24px; max-width:1120px; margin:0 auto; gap:14px; }
   .brand { display:flex; align-items:center; gap:11px; }
   .logo { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:1.05rem; color:var(--em-light); background:rgba(14,117,104,0.08); border:1px solid rgba(14,117,104,0.45);  }
-  .brand-name { font-family:var(--serif); font-size:1.05rem; }
-  .brand-sub { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase; }
-  .badge-z { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--vi-light); border:1px solid rgba(150,105,15,0.45); background:rgba(150,105,15,0.10); padding:3px 10px; border-radius:8px; white-space:nowrap; }
-  .nav-note { font-size:0.72rem; color:var(--muted); font-family:var(--mono); white-space:nowrap; }
-  .nav-links { display:flex; gap:20px; }
-  .nav-links a { font-size:0.85rem; color:var(--muted); transition:color .2s; }
+  .brand-name { font-family:var(--serif); font-size:1.1rem; font-weight:600; white-space:nowrap; }
+  .badge-z { font-family:var(--sans); font-size:0.74rem; color:var(--muted); border:1px solid var(--border-strong); padding:2px 9px; border-radius:6px; white-space:nowrap; }
+  .nav-links { display:flex; gap:22px; align-items:center; }
+  .nav-links a { font-size:0.88rem; font-weight:500; color:var(--muted); transition:color .2s; white-space:nowrap; }
   .nav-links a:hover { color:var(--em-light); }
-  @media (max-width:960px){ .nav-links{display:none} .nav-note{display:none} }
+  @media (max-width:960px){ .nav-links{display:none} }
   @media (max-width:560px){ .badge-z{display:none} }
 
   .btn { display:inline-flex; align-items:center; gap:8px; padding:12px 24px; border-radius:8px; font-weight:700; font-size:0.92rem; cursor:pointer; border:1px solid transparent; white-space:nowrap; transition:transform .2s, box-shadow .3s, filter .2s; }
@@ -138,9 +136,8 @@
   <div class="nav-inner">
     <a class="brand" href="#top">
       <span class="logo">Cn</span>
-      <span><span class="brand-name">ClinicNow</span> <span class="badge-z">por Zatheon</span><br><span class="brand-sub">crescimento + operação médica</span></span>
+      <span class="brand-name">ClinicNow</span> <span class="badge-z">por Zatheon</span>
     </a>
-    <span class="nav-note">evolução do MedGroth</span>
     <nav class="nav-links">
       <a href="#metodo">Como funciona</a>
       <a href="#produto">Funcionalidades</a>
