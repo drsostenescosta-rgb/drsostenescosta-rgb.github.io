@@ -1,0 +1,9 @@
+{
+  "name": "clinicnow-agente-whatsapp",
+  "private": true,
+  "type": "module",
+  "description": "Agente de Vendas IA no WhatsApp do ClinicNow — webhook Vercel (F1). Spec: ../specs/SPEC-AGENTE-WHATSAPP.md",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.110.0"
+  }
+}
