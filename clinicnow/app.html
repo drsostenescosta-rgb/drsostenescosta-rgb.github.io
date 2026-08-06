@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ClinicNow — Cockpit do consultório</title>
+<meta name="description" content="Agenda unificada, follow-ups automáticos, CRM de pacientes, protocolos por assinatura e cockpit de valor. O sistema ClinicNow." />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f7f6f2; --bg-2:#efede7; --card:#ffffff; --card-solid:#ffffff;
+    --em:#0e7568; --em-light:#0e7568; --em-dark:#0a5a50;
+    --gold:#96690f; --gold-light:#96690f; --red:#b3261e; --red-light:#b3261e;
+    --blue:#1d5fa8; --blue-light:#1d5fa8;
+    --text:#1b2422; --muted:#55635f; --border:#e4e1d8; --border-strong:#cfcabd;
+    --serif:'IBM Plex Serif',serif; --sans:'IBM Plex Sans',sans-serif; --mono:'IBM Plex Mono',monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.55; min-height:100vh; }
+  a { color:inherit; text-decoration:none; }
+  h1,h2,h3 { font-family:var(--serif); font-weight:500; line-height:1.15; }
+  .grad { color:var(--text); }
+  
+  
+  
+
+  header { position:sticky; top:0; z-index:50; background:#fbfaf7; border-bottom:1px solid var(--border); }
+  .top { display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:1180px; margin:0 auto; padding:12px 20px; }
+  .brand { display:flex; align-items:center; gap:10px; font-family:var(--serif); font-size:1rem; }
+  .logo { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--em-light); background:rgba(14,117,104,0.12); border:1px solid rgba(14,117,104,0.45); font-size:0.95rem; }
+  .user { font-size:0.78rem; color:var(--muted); display:flex; align-items:center; gap:12px; }
+  .user button { background:none; border:1px solid var(--border); color:var(--muted); border-radius:6px; padding:4px 12px; cursor:pointer; font-size:0.72rem; }
+  .user button:hover { color:var(--red-light); border-color:var(--red); }
+
+  nav.tabs { display:flex; gap:6px; max-width:1180px; margin:0 auto; padding:10px 20px 0; overflow-x:auto; }
+  .tab { padding:9px 16px; border-radius:10px 10px 0 0; font-size:0.85rem; font-weight:600; color:var(--muted); cursor:pointer; border:1px solid transparent; border-bottom:none; white-space:nowrap; }
+  .tab.active { color:var(--em-light); background:var(--card); border-color:var(--border); }
+  main { max-width:1180px; margin:0 auto; padding:22px 20px 80px; }
+
+  .card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 22px; margin-bottom:16px; }
+  .card h3 { font-size:1.02rem; margin-bottom:4px; }
+  .card-sub { color:var(--muted); font-size:0.85rem; margin-bottom:14px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .grid4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  @media (max-width:880px){ .grid2,.grid3,.grid4{grid-template-columns:1fr 1fr} }
+  @media (max-width:560px){ .grid2,.grid3,.grid4{grid-template-columns:1fr} }
+
+  .stat { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px 18px; }
+  .stat .n { font-family:var(--serif); font-size:1.7rem; }
+  .stat .n.up { color:var(--em-light); }
+  .stat .n.gold { color:var(--gold-light); }
+  .stat .l { font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; font-family:var(--mono); }
+  .stat .s { font-size:0.74rem; color:var(--muted); margin-top:3px; }
+
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:8px; font-weight:700; font-size:0.86rem; cursor:pointer; border:1px solid transparent; transition:transform .15s, filter .15s; }
+  .btn:hover { transform:translateY(-1px); filter:brightness(1.06); }
+  .btn-em { background:var(--em); color:#ffffff; }
+  .btn-ghost { border-color:var(--border-strong); color:var(--text); background:rgba(27,36,34,0.04); }
+  .btn-sm { padding:6px 13px; font-size:0.76rem; }
+
+  label { font-size:0.78rem; font-weight:600; display:grid; gap:5px; margin-bottom:12px; }
+  input, select, textarea { background:rgba(255,255,255,0.7); border:1px solid var(--border); border-radius:9px; padding:10px 12px; color:var(--text); font-family:var(--sans); font-size:0.92rem; width:100%; }
+  input:focus, select:focus, textarea:focus { outline:none; border-color:var(--em); box-shadow:0 0 0 3px rgba(14,117,104,0.14); }
+  input[type=checkbox]{ width:auto; accent-color:var(--em); }
+
+  .bar { height:9px; border-radius:6px; background:rgba(27,36,34,0.04); overflow:hidden; }
+  .fill { height:100%; border-radius:6px; background:var(--em); transition:width .4s; }
+
+  .row { background:rgba(255,255,255,0.55); border:1px solid var(--border); border-radius:10px; padding:11px 13px; margin-bottom:8px; font-size:0.86rem; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center; }
+  .row b { display:block; }
+  .row .m { color:var(--muted); font-size:0.75rem; }
+  .row .acts { display:flex; gap:6px; flex-wrap:wrap; }
+  .row .acts button, .row .acts a { background:none; border:1px solid var(--border); color:var(--muted); border-radius:7px; padding:3px 9px; cursor:pointer; font-size:0.72rem; display:inline-block; }
+  .row .acts button:hover, .row .acts a:hover { color:var(--em-light); border-color:var(--em); }
+  .row .acts .warn:hover { color:var(--red-light); border-color:var(--red); }
+
+  .pill { display:inline-block; font-family:var(--mono); font-size:0.7rem; letter-spacing:0.06em; text-transform:uppercase; border-radius:6px; padding:2px 9px; background:rgba(14,117,104,0.1); color:var(--em-light); border:1px solid rgba(14,117,104,0.3); }
+  .pill.gold { background:rgba(150,105,15,0.1); color:var(--gold-light); border-color:rgba(150,105,15,0.35); }
+  .pill.red { background:rgba(179,38,30,0.1); color:var(--red-light); border-color:rgba(179,38,30,0.35); }
+  .pill.blue { background:rgba(29,95,168,0.1); color:var(--blue-light); border-color:rgba(29,95,168,0.35); }
+  .pill.dim { background:rgba(27,36,34,0.04); color:var(--muted); border-color:var(--border); }
+
+  .empty { text-align:center; color:var(--muted); padding:34px 14px; font-size:0.9rem; }
+  .empty .big { font-size:2.1rem; margin-bottom:8px; }
+
+  .disclaimer { font-size:0.75rem; color:var(--muted); margin-top:20px; }
+
+  /* health ring */
+  .ring-wrap { display:flex; align-items:center; gap:22px; flex-wrap:wrap; }
+  .ring { width:120px; height:120px; border-radius:50%; display:flex; align-items:center; justify-content:center; position:relative; flex-shrink:0; }
+  .ring .val { font-family:var(--serif); font-size:2rem; }
+  .ring .val small { font-size:0.8rem; color:var(--muted); }
+  .hs-item { display:flex; justify-content:space-between; gap:12px; font-size:0.8rem; padding:5px 0; border-bottom:1px dashed var(--border); }
+  .hs-item:last-child { border:none; }
+  .hs-item .pt { font-family:var(--mono); color:var(--em-light); }
+
+  #auth { max-width:480px; margin:60px auto; padding:0 20px; }
+  #auth .card { padding:30px 28px; }
+  #auth h1 { font-size:1.7rem; margin-bottom:8px; }
+  #auth p { color:var(--muted); font-size:0.9rem; margin-bottom:20px; }
+
+  dialog { background:var(--card-solid); color:var(--text); border:1px solid var(--border-strong); border-radius:16px; padding:26px; max-width:520px; width:92%; }
+  dialog::backdrop { background:rgba(0,0,0,0.65);  }
+  dialog h3 { margin-bottom:14px; }
+
+  .pedia { background:rgba(255,255,255,0.55); border:1px solid var(--border); border-radius:12px; padding:16px 18px; margin-bottom:12px; }
+  .pedia summary { cursor:pointer; font-weight:700; font-size:0.92rem; }
+  .pedia p { font-size:0.84rem; color:var(--muted); margin-top:8px; }
+  .pedia .script { font-family:var(--mono); font-size:0.76rem; background:rgba(14,117,104,0.06); border:1px dashed rgba(14,117,104,0.3); border-radius:9px; padding:10px 12px; margin-top:8px; color:var(--text); white-space:pre-wrap; }
+
+  @media print {
+    body{background:#fff;color:#111} 
+    .card,.stat{border-color:#ddd;background:#fff}
+  }
+</style>
+</head>
+<body>
+
+<!-- ── onboarding ─────────────────────────────────────────── -->
+<div id="auth" style="display:none">
+  <div style="text-align:center; margin-bottom:26px">
+    <a class="brand" href="index.html" style="justify-content:center; display:inline-flex"><span class="logo">Cn</span>&nbsp; ClinicNow</a>
+  </div>
+  <div class="card">
+    <h1 class="grad">Abrir meu cockpit</h1>
+    <p>Seus dados ficam no seu navegador agora e sincronizam com a nuvem quando o login chegar (Sprint 2). Nada se perde.</p>
+    <label>Nome*<input id="a-nome" placeholder="Dra. Ana Souza"></label>
+    <label>WhatsApp*<input id="a-zap" placeholder="(84) 9 9999-9999"></label>
+    <label>Especialidade<input id="a-esp" placeholder="Endocrinologia"></label>
+    <label>Nicho principal
+      <select id="a-nicho">
+        <option value="emagrecimento">Emagrecimento</option>
+        <option value="longevidade">Longevidade</option>
+        <option value="estetica">Estética</option>
+        <option value="performance">Performance</option>
+        <option value="saude-mental">Saúde mental</option>
+        <option value="dor">Dor / reabilitação</option>
+        <option value="geral">Clínica geral</option>
+      </select>
+    </label>
+    <button class="btn btn-em" style="width:100%; justify-content:center" onclick="createProfile()">Entrar no cockpit →</button>
+    <p style="margin-top:14px; font-size:0.76rem">Veio do MedGroth? Seus leads e diagnóstico são importados automaticamente. Preço de fundador preservado.</p>
+  </div>
+</div>
+
+<!-- ── app ────────────────────────────────────────────────── -->
+<div id="app" style="display:none">
+<header>
+  <div class="top">
+    <a class="brand" href="index.html"><span class="logo">Cn</span>&nbsp; ClinicNow <span class="pill dim" style="margin-left:6px" id="cloud-pill">local</span></a>
+    <div class="user"><span id="u-nome"></span><button onclick="openCloud()" id="cloud-btn">Conectar à nuvem</button><button onclick="exportData()">Exportar dados</button><button onclick="resetAll()">Sair</button></div>
+  </div>
+  <nav class="tabs">
+    <div class="tab active" data-t="cockpit" onclick="go('cockpit')">Cockpit</div>
+    <div class="tab" data-t="agenda" onclick="go('agenda')">Agenda</div>
+    <div class="tab" data-t="pacientes" onclick="go('pacientes')">‍Pacientes</div>
+    <div class="tab" data-t="followups" onclick="go('followups')">Follow-ups</div>
+    <div class="tab" data-t="assinaturas" onclick="go('assinaturas')">Assinaturas</div>
+    <div class="tab" data-t="pedia" onclick="go('pedia')">GrothPedia</div>
+  </nav>
+</header>
+<main>
+
+<!-- ── COCKPIT: quanto o produto te gerou este mês ────────── -->
+<section id="t-cockpit">
+  <div class="card" style="border-color:rgba(150,105,15,0.35)">
+    <div style="display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; align-items:flex-start">
+      <div>
+        <h3 style="color:var(--gold-light)">Cofre de Receita Recuperada</h3>
+        <div class="card-sub">Dinheiro que o ClinicNow devolveu ao seu consultório este mês — medido, nunca prometido.</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-family:var(--serif); font-size:2.4rem; color:var(--gold-light)" id="cofre-total">R$ 0</div>
+        <div class="m" style="font-size:0.72rem; color:var(--muted)" id="cofre-det">0 no-shows evitados · 0 retornos convertidos</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid4">
+    <div class="stat"><div class="l">Receita paga no mês</div><div class="n up" id="k-receita">R$ 0</div><div class="s" id="k-receita-s">consultas + assinaturas</div></div>
+    <div class="stat"><div class="l">MRR de assinaturas</div><div class="n gold" id="k-mrr">R$ 0</div><div class="s" id="k-mrr-s">0 pacientes assinantes</div></div>
+    <div class="stat"><div class="l">Consultas nos próximos 7d</div><div class="n" id="k-consultas">0</div><div class="s" id="k-consultas-s">—</div></div>
+    <div class="stat"><div class="l">Follow-ups devidos</div><div class="n" id="k-fups">0</div><div class="s">resolva-os hoje ↓</div></div>
+  </div>
+
+  <div class="grid2" style="margin-top:16px">
+    <div class="card">
+      <h3>Practice Health Score</h3>
+      <div class="card-sub">A nota viva do seu consultório (0–100). Suba a componente mais fraca primeiro.</div>
+      <div class="ring-wrap">
+        <div class="ring" id="hs-ring"><span class="val" id="hs-val">0<small>/100</small></span></div>
+        <div style="flex:1; min-width:200px" id="hs-break"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Ações de hoje</h3>
+      <div class="card-sub">O que move dinheiro agora, em ordem de impacto.</div>
+      <div id="today-actions"></div>
+      <div style="margin-top:14px; text-align:right"><button class="btn btn-ghost btn-sm" onclick="relatorioMes()">Relatório do mês</button></div>
+    </div>
+  </div>
+  <div class="disclaimer">Valores do Cofre são atribuídos por você ao marcar um follow-up como convertido — o ClinicNow só soma o que foi medido de verdade. Nenhum número desta tela é projeção.</div>
+</section>
+
+<!-- ── AGENDA ─────────────────────────────────────────────── -->
+<section id="t-agenda" style="display:none">
+  <div class="card">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px">
+      <div><h3>Agenda unificada</h3><div class="card-sub">Presencial e telemedicina num lugar só, com status de pagamento (padrão "agenda×pagamento").</div></div>
+      <button class="btn btn-em btn-sm" onclick="openConsulta()">+ Nova consulta</button>
+    </div>
+    <div id="agenda-list"></div>
+  </div>
+  <div class="disclaimer">Teleconsulta exige consentimento registrado do paciente (Res. CFM nº 2.314/2022) — o ClinicNow bloqueia consulta "tele" sem o consentimento marcado. A decisão sobre a adequação da teleconsulta é sempre do médico.</div>
+</section>
+
+<!-- ── PACIENTES ──────────────────────────────────────────── -->
+<section id="t-pacientes" style="display:none">
+  <div class="card">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px">
+      <div><h3>Pacientes</h3><div class="card-sub">Sua base é seu ativo. Pacientes sumidos há 90+ dias entram sozinhos na fila de recall.</div></div>
+      <button class="btn btn-em btn-sm" onclick="openPaciente()">+ Novo paciente</button>
+    </div>
+    <div id="pac-list"></div>
+  </div>
+</section>
+
+<!-- ── FOLLOW-UPS ─────────────────────────────────────────── -->
+<section id="t-followups" style="display:none">
+  <div class="card">
+    <h3>Follow-ups — o motor do Cofre</h3>
+    <div class="card-sub">Confirmação anti no-show, pós-consulta, recall de sumidos e pedido de retorno. Cada conversão vira R$ medido no Cofre.</div>
+    <div id="fup-list"></div>
+  </div>
+  <div class="disclaimer">As mensagens geradas seguem a publicidade médica (Res. CFM 2.336/2023): sem promessa de resultado, sem superlativo, sem urgência artificial. Edite à vontade — mas mantenha a regra.</div>
+</section>
+
+<!-- ── ASSINATURAS (DocX à brasileira) ────────────────────── -->
+<section id="t-assinaturas" style="display:none">
+  <div class="grid2">
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px">
+        <div><h3>Protocolos por assinatura</h3><div class="card-sub">Empacote seu acompanhamento como assinatura de serviços — contrato claro, escopo definido. Nunca "plano de saúde".</div></div>
+        <button class="btn btn-em btn-sm" onclick="openProtocolo()">+ Novo protocolo</button>
+      </div>
+      <div id="prot-list"></div>
+    </div>
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px">
+        <div><h3>Pacientes assinantes</h3><div class="card-sub">Receita previsível: quem contratou acompanhamento contínuo.</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="openAssinatura()">+ Registrar assinatura</button>
+      </div>
+      <div id="ass-list"></div>
+    </div>
+  </div>
+  <div class="disclaimer">Assinatura de cuidado = contrato de prestação de serviços médicos com pagamento recorrente, escopo de serviços incluídos/não incluídos e cancelamento livre. Não é plano de saúde (atividade regulada pela ANS) e o ClinicNow não intermedeia risco assistencial. Cobrança automática (Pix/cartão) chega no Sprint 2; por ora registre os pagamentos recebidos.</div>
+</section>
+
+<!-- ── GROTHPEDIA ─────────────────────────────────────────── -->
+<section id="t-pedia" style="display:none">
+  <div class="card">
+    <h3>GrothPedia — biblioteca de crescimento por nicho</h3>
+    <div class="card-sub">Fichas práticas: como empacotar, precificar e ofertar acompanhamento no seu nicho — dentro das regras do CFM.</div>
+    <div id="pedia-list"></div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- ── diálogos ───────────────────────────────────────────── -->
+<dialog id="d-consulta">
+  <h3 id="d-consulta-t">Nova consulta</h3>
+  <label>Paciente*<select id="c-pac"></select></label>
+  <div class="grid2">
+    <label>Início*<input id="c-inicio" type="datetime-local"></label>
+    <label>Valor (R$)<input id="c-valor" type="number" min="0" step="10" placeholder="350"></label>
+  </div>
+  <div class="grid2">
+    <label>Tipo<select id="c-tipo"><option value="presencial">Presencial</option><option value="tele">Telemedicina</option></select></label>
+    <label style="align-self:end; display:flex; gap:8px; align-items:center"><input type="checkbox" id="c-consent"> Consentimento de teleconsulta registrado</label>
+  </div>
+  <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:6px">
+    <button class="btn btn-ghost btn-sm" onclick="dc('d-consulta')">Cancelar</button>
+    <button class="btn btn-em btn-sm" onclick="saveConsulta()">Salvar</button>
+  </div>
+</dialog>
+
+<dialog id="d-paciente">
+  <h3>Novo paciente</h3>
+  <label>Nome*<input id="p-nome" placeholder="João Lima"></label>
+  <div class="grid2">
+    <label>WhatsApp<input id="p-zap" placeholder="(84) 9 8888-7777"></label>
+    <label>Origem<select id="p-origem"><option value="indicacao">Indicação</option><option value="instagram">Instagram</option><option value="google">Google</option><option value="retorno">Retorno</option><option value="outro">Outro</option></select></label>
+  </div>
+  <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:6px">
+    <button class="btn btn-ghost btn-sm" onclick="dc('d-paciente')">Cancelar</button>
+    <button class="btn btn-em btn-sm" onclick="savePaciente()">Salvar</button>
+  </div>
+</dialog>
+
+<dialog id="d-protocolo">
+  <h3>Novo protocolo por assinatura</h3>
+  <label>Nome*<input id="pr-nome" placeholder="Acompanhamento metabólico"></label>
+  <label>Serviços incluídos (1 por linha)*<textarea id="pr-inc" rows="3" placeholder="1 consulta de acompanhamento por trimestre&#10;Revisão de exames a cada 90 dias&#10;Canal de dúvidas em horário comercial"></textarea></label>
+  <label>Não incluído (transparência protege os dois lados)<textarea id="pr-exc" rows="2" placeholder="Urgências e emergências&#10;Procedimentos e exames (cobrados à parte)"></textarea></label>
+  <label>Valor mensal (R$)*<input id="pr-preco" type="number" min="0" step="10" placeholder="290"></label>
+  <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:6px">
+    <button class="btn btn-ghost btn-sm" onclick="dc('d-protocolo')">Cancelar</button>
+    <button class="btn btn-em btn-sm" onclick="saveProtocolo()">Salvar</button>
+  </div>
+</dialog>
+
+<dialog id="d-assinatura">
+  <h3>Registrar assinatura</h3>
+  <label>Paciente*<select id="as-pac"></select></label>
+  <label>Protocolo*<select id="as-prot"></select></label>
+  <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:6px">
+    <button class="btn btn-ghost btn-sm" onclick="dc('d-assinatura')">Cancelar</button>
+    <button class="btn btn-em btn-sm" onclick="saveAssinatura()">Ativar assinatura</button>
+  </div>
+</dialog>
+
+<dialog id="d-cloud">
+  <h3>Conectar à nuvem </h3>
+  <p style="color:var(--muted); font-size:0.86rem; margin-bottom:14px">Seus dados continuam neste navegador e passam a sincronizar com o Supabase (São Paulo · LGPD), protegidos por RLS: só você lê o que é seu.</p>
+  <label>E-mail<input id="cl-email" type="email" autocomplete="username" placeholder="voce@clinica.com.br"></label>
+  <label>Senha<input id="cl-senha" type="password" autocomplete="current-password" placeholder="mínimo 6 caracteres"></label>
+  <div id="cl-erro" style="color:var(--red-light); font-size:0.8rem; display:none; margin-bottom:8px"></div>
+  <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:6px; flex-wrap:wrap">
+    <button class="btn btn-ghost btn-sm" onclick="dc('d-cloud')">Agora não</button>
+    <button class="btn btn-ghost btn-sm" onclick="cloudAuth(true)">Criar conta</button>
+    <button class="btn btn-em btn-sm" onclick="cloudAuth(false)">Entrar e sincronizar</button>
+  </div>
+</dialog>
+
+<dialog id="d-converte">
+  <h3>Follow-up convertido </h3>
+  <p style="color:var(--muted); font-size:0.86rem; margin-bottom:14px">Quanto este retorno gerou (ou vai gerar) em receita? Esse valor entra no Cofre — só some o que é real.</p>
+  <label>Valor (R$)*<input id="cv-valor" type="number" min="0" step="10" placeholder="350"></label>
+  <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:6px">
+    <button class="btn btn-ghost btn-sm" onclick="dc('d-converte')">Cancelar</button>
+    <button class="btn btn-em btn-sm" onclick="confirmConverte()">Somar ao Cofre</button>
+  </div>
+</dialog>
+
+<script src="../medgroth/config.js"></script>
+<script>
+/* ═══ ClinicNow · sistema local-first ═══
+   Espelha o schema do Supabase (clinicnow/DATABASE.sql). Tudo grava em
+   localStorage na hora; a sincronização autenticada chega no Sprint 2.
+   Regra nº 1: nenhum dado se perde. */
+
+var DB_KEY = 'docgrow_db';
+var db = load();
+MEDGROTH.track('docgrow-app');
+
+function load() {
+  try { var d = JSON.parse(localStorage.getItem(DB_KEY) || 'null'); if (d) return d; } catch (e) {}
+  return { profile: null, pacientes: [], consultas: [], followups: [], protocolos: [], assinaturas: [], pagamentos: [], eventos: [] };
+}
+function save() { localStorage.setItem(DB_KEY, JSON.stringify(db)); scheduleSync(); }
+function uid() {
+  if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) { var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16); });
+}
+var UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+function migrateIds() {
+  /* ids antigos ('dg-…') viram UUID para casar com o schema do Supabase */
+  var map = {}, changed = false;
+  ['pacientes', 'consultas', 'followups', 'protocolos', 'assinaturas', 'pagamentos', 'eventos'].forEach(function (t) {
+    (db[t] || []).forEach(function (r) { if (r.id && !UUID_RE.test(r.id)) { map[r.id] = uid(); r.id = map[r.id]; changed = true; } });
+  });
+  if (db.profile && db.profile.id && !UUID_RE.test(db.profile.id)) { map[db.profile.id] = uid(); db.profile.id = map[db.profile.id]; changed = true; }
+  if (!changed) return;
+  var fix = function (r, k) { if (r[k] && map[r[k]]) r[k] = map[r[k]]; };
+  db.consultas.forEach(function (r) { fix(r, 'paciente_id'); });
+  db.followups.forEach(function (r) { fix(r, 'paciente_id'); });
+  db.assinaturas.forEach(function (r) { fix(r, 'paciente_id'); fix(r, 'protocolo_id'); });
+  db.pagamentos.forEach(function (r) { fix(r, 'assinatura_id'); fix(r, 'consulta_id'); });
+  localStorage.setItem(DB_KEY, JSON.stringify(db));
+}
+function ev(tipo, payload) { db.eventos.push({ id: uid(), tipo: tipo, payload: payload || null, criado_em: new Date().toISOString() }); save(); }
+function fmt(v) { return 'R$ ' + (Math.round(v || 0)).toLocaleString('pt-BR'); }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function zapLink(num, msg) { return 'https://wa.me/55' + String(num || '').replace(/\D/g, '') + '?text=' + encodeURIComponent(msg); }
+function dc(id) { document.getElementById(id).close(); }
+function daysAgo(iso) { return Math.floor((Date.now() - new Date(iso).getTime()) / 864e5); }
+
+/* ── nuvem: auth + sincronização ─────────────────────────── */
+var CLOUD_KEY = 'docgrow_cloud';
+function cloud() { try { return JSON.parse(localStorage.getItem(CLOUD_KEY) || 'null'); } catch (e) { return null; } }
+function setCloud(c) { if (c) localStorage.setItem(CLOUD_KEY, JSON.stringify(c)); else localStorage.removeItem(CLOUD_KEY); cloudUi(); }
+function cloudUi() {
+  var c = cloud(), pill = document.getElementById('cloud-pill'), btn = document.getElementById('cloud-btn');
+  if (!pill) return;
+  if (c) { pill.textContent = 'nuvem '; pill.className = 'pill'; btn.textContent = 'Sincronizar agora'; btn.onclick = function () { syncAll(true); }; }
+  else { pill.textContent = 'local'; pill.className = 'pill dim'; btn.textContent = 'Conectar à nuvem'; btn.onclick = openCloud; }
+}
+function openCloud() { document.getElementById('d-cloud').showModal(); }
+function cloudAuth(signup) {
+  var email = document.getElementById('cl-email').value.trim(), senha = document.getElementById('cl-senha').value;
+  var erro = document.getElementById('cl-erro'); erro.style.display = 'none';
+  if (!email || senha.length < 6) { erro.textContent = 'Informe e-mail e senha (mín. 6 caracteres).'; erro.style.display = 'block'; return; }
+  var path = signup ? '/auth/v1/signup' : '/auth/v1/token?grant_type=password';
+  fetch(MEDGROTH.url + path, { method: 'POST', headers: { 'apikey': MEDGROTH.key, 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, password: senha }) })
+    .then(function (r) { return r.json(); })
+    .then(function (j) {
+      if (j.access_token && j.user) {
+        setCloud({ token: j.access_token, refresh: j.refresh_token, exp: Date.now() + (j.expires_in || 3600) * 1000 - 60000, uid: j.user.id, email: email });
+        /* o perfil passa a usar o id do usuário autenticado (RLS: id = auth.uid()) */
+        if (db.profile) { db.profile.id = j.user.id; localStorage.setItem(DB_KEY, JSON.stringify(db)); }
+        dc('d-cloud'); syncAll(true);
+      } else if (signup && j.user && !j.access_token) {
+        erro.textContent = 'Conta criada! Confirme o e-mail que enviamos e depois clique em "Entrar e sincronizar".'; erro.style.display = 'block';
+      } else {
+        erro.textContent = j.error_description || j.msg || 'Falha na autenticação.'; erro.style.display = 'block';
+      }
+    }).catch(function () { erro.textContent = 'Sem conexão — tente de novo.'; erro.style.display = 'block'; });
+}
+function cloudToken() {
+  var c = cloud();
+  if (!c) return Promise.resolve(null);
+  if (Date.now() < c.exp) return Promise.resolve(c.token);
+  return fetch(MEDGROTH.url + '/auth/v1/token?grant_type=refresh_token', { method: 'POST', headers: { 'apikey': MEDGROTH.key, 'Content-Type': 'application/json' }, body: JSON.stringify({ refresh_token: c.refresh }) })
+    .then(function (r) { return r.json(); })
+    .then(function (j) { if (j.access_token) { setCloud({ token: j.access_token, refresh: j.refresh_token, exp: Date.now() + (j.expires_in || 3600) * 1000 - 60000, uid: c.uid, email: c.email }); return j.access_token; } setCloud(null); return null; })
+    .catch(function () { return null; });
+}
+/* colunas aceitas por tabela (espelho de DATABASE.sql) — nada fora disso vai pro banco */
+var SYNC_COLS = {
+  docgrow_pacientes: ['id', 'profile_id', 'nome', 'whatsapp', 'email', 'origem', 'status', 'criado_em'],
+  docgrow_protocolos: ['id', 'profile_id', 'nome', 'descricao', 'preco_mensal', 'moeda', 'ativo', 'criado_em'],
+  docgrow_consultas: ['id', 'profile_id', 'paciente_id', 'inicio', 'fim', 'tipo', 'consentimento_tele', 'status', 'valor', 'pago', 'criado_em'],
+  docgrow_assinaturas_pacientes: ['id', 'profile_id', 'paciente_id', 'protocolo_id', 'status', 'valor', 'iniciada_em', 'cancelada_em'],
+  docgrow_followups: ['id', 'profile_id', 'paciente_id', 'tipo', 'devido_em', 'enviado_em', 'status', 'resultado_valor', 'criado_em'],
+  docgrow_pagamentos: ['id', 'profile_id', 'assinatura_id', 'consulta_id', 'valor', 'moeda', 'metodo', 'status', 'criado_em'],
+  docgrow_eventos: ['id', 'profile_id', 'tipo', 'payload', 'criado_em']
+};
+function pick(r, cols, uidv) {
+  var o = { profile_id: uidv };
+  cols.forEach(function (k) { if (k !== 'profile_id' && r[k] !== undefined) o[k] = r[k]; });
+  return o;
+}
+function upsert(token, table, rows) {
+  if (!rows.length) return Promise.resolve(true);
+  return fetch(MEDGROTH.rest(table + '?on_conflict=id'), {
+    method: 'POST',
+    headers: { 'apikey': MEDGROTH.key, 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+    body: JSON.stringify(rows)
+  }).then(function (r) { return r.ok; }).catch(function () { return false; });
+}
+var syncTimer = null, syncing = false;
+function scheduleSync() { if (!cloud()) return; clearTimeout(syncTimer); syncTimer = setTimeout(function () { syncAll(false); }, 4000); }
+function syncAll(manual) {
+  if (syncing || !db.profile) return;
+  syncing = true;
+  var pill = document.getElementById('cloud-pill');
+  cloudToken().then(function (token) {
+    if (!token) { syncing = false; if (manual) alert('Sessão expirada — conecte de novo.'); cloudUi(); return; }
+    var u = cloud().uid;
+    var p = db.profile;
+    /* ordem respeita as FKs: profile → pacientes/protocolos → consultas/assinaturas → followups/pagamentos → eventos */
+    upsert(token, 'docgrow_profiles', [{ id: u, nome: p.nome, email: cloud().email, whatsapp: p.whatsapp || null, especialidade: p.especialidade || null, nicho: p.nicho || null, origem: p.origem || 'app', criado_em: p.criado_em }])
+      .then(function (ok) { return ok && upsert(token, 'docgrow_pacientes', db.pacientes.map(function (r) { return pick(r, SYNC_COLS.docgrow_pacientes, u); })); })
+      .then(function (ok) { return ok && upsert(token, 'docgrow_protocolos', db.protocolos.map(function (r) { return pick(r, SYNC_COLS.docgrow_protocolos, u); })); })
+      .then(function (ok) { return ok && upsert(token, 'docgrow_consultas', db.consultas.map(function (r) { return pick(r, SYNC_COLS.docgrow_consultas, u); })); })
+      .then(function (ok) { return ok && upsert(token, 'docgrow_assinaturas_pacientes', db.assinaturas.map(function (r) { return pick(r, SYNC_COLS.docgrow_assinaturas_pacientes, u); })); })
+      .then(function (ok) { return ok && upsert(token, 'docgrow_followups', db.followups.map(function (r) { return pick(r, SYNC_COLS.docgrow_followups, u); })); })
+      .then(function (ok) { return ok && upsert(token, 'docgrow_pagamentos', db.pagamentos.map(function (r) { return pick(r, SYNC_COLS.docgrow_pagamentos, u); })); })
+      .then(function (ok) { return ok && upsert(token, 'docgrow_eventos', db.eventos.map(function (r) { return pick(r, SYNC_COLS.docgrow_eventos, u); })); })
+      .then(function (ok) {
+        syncing = false;
+        if (pill) pill.textContent = ok ? 'nuvem ' : 'nuvem ';
+        if (manual && ok) alert('Sincronizado! Seus dados estão na nuvem (São Paulo · LGPD).');
+        if (manual && !ok) alert('Sincronização parcial — os dados locais estão intactos; tento de novo na próxima alteração.');
+      });
+  });
+}
+
+/* ── boot ─────────────────────────────────────────────────── */
+function boot() {
+  migrateIds();
+  if (!db.profile) {
+    /* importa perfil do MedGroth se existir */
+    try {
+      var mg = JSON.parse(localStorage.getItem('medgroth_db') || 'null');
+      if (mg && mg.user && mg.user.nome) {
+        db.profile = { id: uid(), nome: mg.user.nome, whatsapp: mg.user.whatsapp || '', especialidade: mg.user.especialidade || '', nicho: mg.user.nicho || 'geral', origem: 'migracao-medgroth', criado_em: new Date().toISOString() };
+        ev('migracao_medgroth', { leads: (mg.leads || []).length });
+        save();
+      }
+    } catch (e) {}
+  }
+  if (db.profile) { document.getElementById('app').style.display = ''; document.getElementById('u-nome').textContent = db.profile.nome + ' · ' + (db.profile.nicho || ''); cloudUi(); renderAll(); }
+  else { document.getElementById('auth').style.display = ''; }
+}
+function createProfile() {
+  var nome = document.getElementById('a-nome').value.trim(), zap = document.getElementById('a-zap').value.trim();
+  if (!nome || !zap) { alert('Nome e WhatsApp são obrigatórios.'); return; }
+  db.profile = { id: uid(), nome: nome, whatsapp: zap, especialidade: document.getElementById('a-esp').value.trim(), nicho: document.getElementById('a-nicho').value, origem: 'app', criado_em: new Date().toISOString() };
+  ev('perfil_criado', { nicho: db.profile.nicho }); save();
+  document.getElementById('auth').style.display = 'none'; document.getElementById('app').style.display = '';
+  document.getElementById('u-nome').textContent = nome + ' · ' + db.profile.nicho;
+  renderAll();
+}
+function resetAll() { if (confirm('Sair apaga apenas a sessão visual. Seus dados continuam salvos neste navegador. Exportou um backup?')) { location.reload(); } }
+function exportData() {
+  var blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'docgrow-backup-' + new Date().toISOString().slice(0, 10) + '.json'; a.click();
+}
+
+/* ── navegação ───────────────────────────────────────────── */
+function go(t) {
+  document.querySelectorAll('nav.tabs .tab').forEach(function (el) { el.classList.toggle('active', el.dataset.t === t); });
+  ['cockpit', 'agenda', 'pacientes', 'followups', 'assinaturas', 'pedia'].forEach(function (s) {
+    document.getElementById('t-' + s).style.display = (s === t) ? '' : 'none';
+  });
+}
+function renderAll() { genRecalls(); renderCockpit(); renderAgenda(); renderPacientes(); renderFups(); renderAssinaturas(); renderPedia(); }
+
+/* ── follow-up engine ────────────────────────────────────── */
+function addFup(tipo, pacId, devidoEm, origem) {
+  /* não duplica follow-up pendente do mesmo tipo para o mesmo paciente */
+  var dup = db.followups.some(function (f) { return f.paciente_id === pacId && f.tipo === tipo && f.status === 'pendente'; });
+  if (dup) return;
+  db.followups.push({ id: uid(), paciente_id: pacId, tipo: tipo, devido_em: devidoEm, status: 'pendente', origem: origem || null, resultado_valor: null, criado_em: new Date().toISOString() });
+  save();
+}
+function genRecalls() {
+  /* recall automático: paciente ativo sem consulta há 90+ dias */
+  db.pacientes.forEach(function (p) {
+    if (p.status !== 'ativo') return;
+    var last = db.consultas.filter(function (c) { return c.paciente_id === p.id && c.status === 'realizada'; })
+      .map(function (c) { return c.inicio; }).sort().pop();
+    var ref = last || p.criado_em;
+    if (daysAgo(ref) >= 90) addFup('recall', p.id, new Date().toISOString(), 'auto-90d');
+  });
+}
+function fupMsg(f, p) {
+  var d = db.profile || {};
+  var msgs = {
+    confirmacao: 'Olá, ' + p.nome + '! Aqui é do consultório de ' + d.nome + '. Passando para confirmar sua consulta de amanhã. Podemos confirmar sua presença? Se precisar remarcar, é só avisar por aqui. ',
+    pos_consulta: 'Olá, ' + p.nome + '! ' + d.nome + ' pediu para saber como você está após a consulta. Alguma dúvida sobre as orientações? Estamos por aqui. Se puder, sua avaliação no Google ajuda outros pacientes a nos encontrar: [link da sua ficha Google]',
+    recall: 'Olá, ' + p.nome + '! Sentimos sua falta no consultório de ' + d.nome + '. Que tal agendarmos sua consulta de acompanhamento? Manter a regularidade faz parte do seu cuidado. Respondendo aqui, já vemos o melhor horário.',
+    retorno: 'Olá, ' + p.nome + '! Está chegando a época do seu retorno com ' + d.nome + '. Vamos agendar? Temos horários presenciais e por telemedicina.',
+    resgate_noshow: 'Olá, ' + p.nome + '! Notamos que você não conseguiu comparecer à consulta. Aconteceu tudo bem? Podemos remarcar sem custo — sua continuidade de cuidado é o que importa.'
+  };
+  return msgs[f.tipo] || msgs.recall;
+}
+var fupLabels = { confirmacao: 'Confirmação', pos_consulta: 'Pós-consulta', recall: 'Recall 90d', retorno: 'Retorno', resgate_noshow: 'Resgate no-show' };
+
+/* ── cockpit ─────────────────────────────────────────────── */
+function inMonth(iso) { var d = new Date(iso), n = new Date(); return d.getMonth() === n.getMonth() && d.getFullYear() === n.getFullYear(); }
+function cofre() {
+  var t = 0, ns = 0, rc = 0;
+  db.followups.forEach(function (f) {
+    if (f.status === 'respondido' && f.tipo === 'confirmacao') ns++;
+    if (f.status === 'convertido') { rc++; if (f.resultado_valor && inMonth(f.resolvido_em || f.criado_em)) t += Number(f.resultado_valor); }
+  });
+  return { total: t, noshows: ns, retornos: rc };
+}
+function healthScore() {
+  var p = db.profile || {};
+  var perfil = (p.especialidade && p.whatsapp) ? 20 : 10;
+  var base = Math.min(20, db.pacientes.length * 2);
+  var cons30 = db.consultas.filter(function (c) { return ['confirmada', 'realizada'].indexOf(c.status) >= 0 && daysAgo(c.inicio) <= 30 && daysAgo(c.inicio) >= -30; }).length;
+  var consPts = Math.min(20, cons30 * 4);
+  var pago30 = db.pagamentos.filter(function (g) { return g.status === 'pago' && daysAgo(g.criado_em) <= 30; }).reduce(function (s, g) { return s + Number(g.valor || 0); }, 0);
+  var recPts = Math.min(20, Math.floor(pago30 / 500));
+  var fup30 = db.followups.filter(function (f) { return ['enviado', 'respondido', 'convertido'].indexOf(f.status) >= 0 && daysAgo(f.criado_em) <= 30; }).length;
+  var fupPts = Math.min(20, fup30 * 5);
+  var score = Math.min(100, perfil + base + consPts + recPts + fupPts);
+  return { score: score, parts: [
+    ['Perfil completo', perfil, 20], ['Base de pacientes', base, 20], ['Consultas 30d', consPts, 20],
+    ['Receita paga 30d', recPts, 20], ['Follow-ups ativos 30d', fupPts, 20]
+  ] };
+}
+function renderCockpit() {
+  var c = cofre();
+  document.getElementById('cofre-total').textContent = fmt(c.total);
+  document.getElementById('cofre-det').textContent = c.noshows + ' no-show' + (c.noshows === 1 ? '' : 's') + ' evitado' + (c.noshows === 1 ? '' : 's') + ' · ' + c.retornos + ' retorno' + (c.retornos === 1 ? '' : 's') + ' convertido' + (c.retornos === 1 ? '' : 's');
+
+  var receitaMes = db.pagamentos.filter(function (g) { return g.status === 'pago' && inMonth(g.criado_em); }).reduce(function (s, g) { return s + Number(g.valor || 0); }, 0);
+  document.getElementById('k-receita').textContent = fmt(receitaMes);
+
+  var assAtivas = db.assinaturas.filter(function (a) { return a.status === 'ativa'; });
+  var mrr = assAtivas.reduce(function (s, a) { return s + Number(a.valor || 0); }, 0);
+  document.getElementById('k-mrr').textContent = fmt(mrr);
+  document.getElementById('k-mrr-s').textContent = assAtivas.length + ' paciente' + (assAtivas.length === 1 ? '' : 's') + ' assinante' + (assAtivas.length === 1 ? '' : 's');
+
+  var prox = db.consultas.filter(function (co) { var d = (new Date(co.inicio) - Date.now()) / 864e5; return d >= 0 && d <= 7 && ['agendada', 'confirmada'].indexOf(co.status) >= 0; });
+  document.getElementById('k-consultas').textContent = prox.length;
+  document.getElementById('k-consultas-s').textContent = prox.filter(function (x) { return x.status === 'agendada'; }).length + ' sem confirmação';
+
+  var devidos = db.followups.filter(function (f) { return f.status === 'pendente' && new Date(f.devido_em) <= new Date(Date.now() + 864e5); });
+  document.getElementById('k-fups').textContent = devidos.length;
+
+  var hs = healthScore();
+  var deg = hs.score * 3.6;
+  var ring = document.getElementById('hs-ring');
+  ring.style.background = 'conic-gradient(var(--em-light) ' + deg + 'deg, rgba(27,36,34,0.04) ' + deg + 'deg)';
+  ring.style.borderRadius = '50%';
+  ring.innerHTML = '<span style="background:#ffffff; width:96px; height:96px; border-radius:50%; display:flex; align-items:center; justify-content:center"><span class="val">' + hs.score + '<small>/100</small></span></span>';
+  document.getElementById('hs-break').innerHTML = hs.parts.map(function (x) {
+    return '<div class="hs-item"><span>' + x[0] + '</span><span class="pt">' + x[1] + '/' + x[2] + '</span></div>';
+  }).join('');
+
+  /* ações de hoje: prioridade = follow-ups devidos > consultas sem confirmação > sem protocolo > base pequena */
+  var acts = [];
+  devidos.slice(0, 3).forEach(function (f) {
+    var p = db.pacientes.find(function (x) { return x.id === f.paciente_id; }) || { nome: '?' };
+    acts.push('<div class="row"><div><b>' + (fupLabels[f.tipo] || f.tipo) + ' · ' + esc(p.nome) + '</b><span class="m">devido ' + (daysAgo(f.devido_em) <= 0 ? 'hoje' : 'há ' + daysAgo(f.devido_em) + 'd') + '</span></div><div class="acts"><button onclick="go(\'followups\')">Resolver →</button></div></div>');
+  });
+  prox.filter(function (x) { return x.status === 'agendada'; }).slice(0, 2).forEach(function (co) {
+    var p = db.pacientes.find(function (x) { return x.id === co.paciente_id; }) || { nome: '?' };
+    acts.push('<div class="row"><div><b>Consulta sem confirmação · ' + esc(p.nome) + '</b><span class="m">' + new Date(co.inicio).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) + '</span></div><div class="acts"><button onclick="confirmarConsulta(\'' + co.id + '\')">Enviar confirmação</button></div></div>');
+  });
+  if (!db.protocolos.length) acts.push('<div class="row"><div><b>Crie seu 1º protocolo por assinatura</b><span class="m">receita recorrente começa aqui (a ideia mais valiosa do benchmark)</span></div><div class="acts"><button onclick="go(\'assinaturas\')">Criar →</button></div></div>');
+  if (db.pacientes.length < 5) acts.push('<div class="row"><div><b>Cadastre seus pacientes atuais</b><span class="m">o recall automático só funciona com a base viva</span></div><div class="acts"><button onclick="go(\'pacientes\')">Cadastrar →</button></div></div>');
+  document.getElementById('today-actions').innerHTML = acts.length ? acts.join('') : '<div class="empty"><div class="big"></div>Nada urgente. Agenda em dia, follow-ups em dia.</div>';
+}
+
+/* ── relatório mensal "sua clínica este mês" ─────────────── */
+function relatorioMes() {
+  var c = cofre(), hs = healthScore();
+  var receitaMes = db.pagamentos.filter(function (g) { return g.status === 'pago' && inMonth(g.criado_em); }).reduce(function (s, g) { return s + Number(g.valor || 0); }, 0);
+  var realizadas = db.consultas.filter(function (x) { return x.status === 'realizada' && inMonth(x.inicio); }).length;
+  var noshows = db.consultas.filter(function (x) { return x.status === 'no_show' && inMonth(x.inicio); }).length;
+  var novos = db.pacientes.filter(function (p) { return inMonth(p.criado_em); }).length;
+  var assAtivas = db.assinaturas.filter(function (a) { return a.status === 'ativa'; });
+  var mrr = assAtivas.reduce(function (s, a) { return s + Number(a.valor || 0); }, 0);
+  var fupsConv = db.followups.filter(function (f) { return f.status === 'convertido' && inMonth(f.resolvido_em || f.criado_em); }).length;
+  var meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+  var n = new Date();
+  var w = window.open('', '_blank');
+  if (!w) { alert('Libere pop-ups para gerar o relatório.'); return; }
+  w.document.write('<!doctype html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Sua clínica em ' + meses[n.getMonth()] + '</title>' +
+    '<style>body{font-family:Georgia,serif;max-width:640px;margin:40px auto;padding:0 20px;color:#16211c;line-height:1.6}h1{font-weight:500}table{width:100%;border-collapse:collapse;margin:20px 0}td{padding:10px 6px;border-bottom:1px solid #ddd}td:last-child{text-align:right;font-weight:bold}.foot{font-size:0.75rem;color:#777;margin-top:30px}@media print{.np{display:none}}</style></head><body>' +
+    '<h1>Sua clínica em ' + meses[n.getMonth()] + ' de ' + n.getFullYear() + '</h1>' +
+    '<p>' + esc((db.profile || {}).nome || '') + ' · relatório gerado pelo ClinicNow em ' + n.toLocaleDateString('pt-BR') + '</p>' +
+    '<table>' +
+    '<tr><td>Receita paga no mês</td><td>' + fmt(receitaMes) + '</td></tr>' +
+    '<tr><td>Receita recorrente mensal (assinaturas ativas)</td><td>' + fmt(mrr) + ' · ' + assAtivas.length + ' assinante(s)</td></tr>' +
+    '<tr><td>Cofre: receita recuperada pelos follow-ups</td><td>' + fmt(c.total) + '</td></tr>' +
+    '<tr><td>Consultas realizadas</td><td>' + realizadas + '</td></tr>' +
+    '<tr><td>No-shows</td><td>' + noshows + '</td></tr>' +
+    '<tr><td>Pacientes novos</td><td>' + novos + '</td></tr>' +
+    '<tr><td>Follow-ups convertidos</td><td>' + fupsConv + '</td></tr>' +
+    '<tr><td>Practice Health Score</td><td>' + hs.score + '/100</td></tr>' +
+    '</table>' +
+    '<button class="np" onclick="window.print()" style="padding:10px 22px;font-size:1rem;cursor:pointer">Imprimir / salvar PDF</button>' +
+    '<p class="foot">Números medidos dos seus registros no ClinicNow — nunca projeção. Este relatório é para sua gestão; ao divulgar resultados publicamente, observe a Res. CFM 2.336/2023.</p>' +
+    '</body></html>');
+  w.document.close();
+  ev('relatorio_gerado', { mes: n.getMonth() + 1 });
+}
+
+/* ── agenda ──────────────────────────────────────────────── */
+function openConsulta() {
+  if (!db.pacientes.length) { alert('Cadastre um paciente primeiro.'); go('pacientes'); return; }
+  var sel = document.getElementById('c-pac');
+  sel.innerHTML = db.pacientes.filter(function (p) { return p.status === 'ativo'; }).map(function (p) { return '<option value="' + p.id + '">' + esc(p.nome) + '</option>'; }).join('');
+  document.getElementById('d-consulta').showModal();
+}
+function saveConsulta() {
+  var inicio = document.getElementById('c-inicio').value;
+  if (!inicio) { alert('Defina o início.'); return; }
+  var tipo = document.getElementById('c-tipo').value;
+  var consent = document.getElementById('c-consent').checked;
+  if (tipo === 'tele' && !consent) { alert('Teleconsulta exige consentimento registrado do paciente (Res. CFM 2.314/2022).'); return; }
+  db.consultas.push({ id: uid(), paciente_id: document.getElementById('c-pac').value, inicio: new Date(inicio).toISOString(), tipo: tipo, consentimento_tele: consent, status: 'agendada', valor: Number(document.getElementById('c-valor').value || 0), pago: false, criado_em: new Date().toISOString() });
+  ev('consulta_criada', { tipo: tipo }); save(); dc('d-consulta'); renderAll();
+}
+function confirmarConsulta(id) {
+  var co = db.consultas.find(function (x) { return x.id === id; }); if (!co) return;
+  var p = db.pacientes.find(function (x) { return x.id === co.paciente_id; });
+  addFup('confirmacao', co.paciente_id, new Date().toISOString(), 'consulta:' + id);
+  var f = db.followups.filter(function (x) { return x.paciente_id === co.paciente_id && x.tipo === 'confirmacao'; }).pop();
+  if (p && p.whatsapp) { window.open(zapLink(p.whatsapp, fupMsg(f, p)), '_blank'); f.status = 'enviado'; f.enviado_em = new Date().toISOString(); }
+  co.status = 'confirmada'; ev('consulta_confirmada', {}); save(); renderAll();
+}
+function setConsulta(id, status) {
+  var co = db.consultas.find(function (x) { return x.id === id; }); if (!co) return;
+  co.status = status;
+  if (status === 'realizada') {
+    addFup('pos_consulta', co.paciente_id, new Date(Date.now() + 864e5).toISOString(), 'consulta:' + id);
+    if (co.valor > 0 && !co.pago) { /* deixa o pagamento como ação explícita */ }
+  }
+  if (status === 'no_show') addFup('resgate_noshow', co.paciente_id, new Date().toISOString(), 'consulta:' + id);
+  ev('consulta_' + status, {}); save(); renderAll();
+}
+function pagarConsulta(id) {
+  var co = db.consultas.find(function (x) { return x.id === id; }); if (!co || co.pago) return;
+  co.pago = true;
+  db.pagamentos.push({ id: uid(), consulta_id: id, valor: Number(co.valor || 0), moeda: 'BRL', metodo: 'manual', status: 'pago', criado_em: new Date().toISOString() });
+  ev('pagamento_consulta', { valor: co.valor }); save(); renderAll();
+}
+function renderAgenda() {
+  var list = db.consultas.slice().sort(function (a, b) { return new Date(b.inicio) - new Date(a.inicio); });
+  var el = document.getElementById('agenda-list');
+  if (!list.length) { el.innerHTML = '<div class="empty"><div class="big"></div>Nenhuma consulta ainda. Crie a primeira — presencial ou tele.</div>'; return; }
+  var stPill = { agendada: '<span class="pill dim">agendada</span>', confirmada: '<span class="pill blue">confirmada</span>', realizada: '<span class="pill">realizada</span>', no_show: '<span class="pill red">no-show</span>', cancelada: '<span class="pill dim">cancelada</span>' };
+  el.innerHTML = list.map(function (co) {
+    var p = db.pacientes.find(function (x) { return x.id === co.paciente_id; }) || { nome: '?' };
+    var acts = [];
+    if (co.status === 'agendada') acts.push('<button onclick="confirmarConsulta(\'' + co.id + '\')">Confirmar via WhatsApp</button>');
+    if (['agendada', 'confirmada'].indexOf(co.status) >= 0) { acts.push('<button onclick="setConsulta(\'' + co.id + '\',\'realizada\')">Realizada</button>'); acts.push('<button class="warn" onclick="setConsulta(\'' + co.id + '\',\'no_show\')">No-show</button>'); }
+    if (co.valor > 0 && !co.pago && co.status === 'realizada') acts.push('<button onclick="pagarConsulta(\'' + co.id + '\')">Marcar pago ' + fmt(co.valor) + '</button>');
+    return '<div class="row"><div><b>' + esc(p.nome) + ' ' + (co.tipo === 'tele' ? '<span class="pill blue">tele</span>' : '') + '</b><span class="m">' + new Date(co.inicio).toLocaleString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) + (co.valor ? ' · ' + fmt(co.valor) + (co.pago ? ' pago' : ' pendente') : '') + '</span></div><div>' + (stPill[co.status] || '') + '</div><div class="acts">' + acts.join('') + '</div></div>';
+  }).join('');
+}
+
+/* ── pacientes ───────────────────────────────────────────── */
+function openPaciente() { document.getElementById('d-paciente').showModal(); }
+function savePaciente() {
+  var nome = document.getElementById('p-nome').value.trim();
+  if (!nome) { alert('Nome é obrigatório.'); return; }
+  db.pacientes.push({ id: uid(), nome: nome, whatsapp: document.getElementById('p-zap').value.trim(), origem: document.getElementById('p-origem').value, status: 'ativo', criado_em: new Date().toISOString() });
+  ev('paciente_criado', {}); save(); dc('d-paciente'); document.getElementById('p-nome').value = ''; document.getElementById('p-zap').value = ''; renderAll();
+}
+function renderPacientes() {
+  var el = document.getElementById('pac-list');
+  if (!db.pacientes.length) { el.innerHTML = '<div class="empty"><div class="big">‍</div>Sua base de pacientes começa aqui.</div>'; return; }
+  el.innerHTML = db.pacientes.map(function (p) {
+    var last = db.consultas.filter(function (c) { return c.paciente_id === p.id && c.status === 'realizada'; }).map(function (c) { return c.inicio; }).sort().pop();
+    var ass = db.assinaturas.find(function (a) { return a.paciente_id === p.id && a.status === 'ativa'; });
+    var sumido = last ? daysAgo(last) : daysAgo(p.criado_em);
+    return '<div class="row"><div><b>' + esc(p.nome) + ' ' + (ass ? '<span class="pill gold">assinante</span>' : '') + (sumido >= 90 ? ' <span class="pill red">sumido ' + sumido + 'd</span>' : '') + '</b><span class="m">' + p.origem + (last ? ' · última consulta há ' + daysAgo(last) + 'd' : ' · sem consulta ainda') + '</span></div><div class="acts">' + (p.whatsapp ? '<a href="' + zapLink(p.whatsapp, 'Olá, ' + p.nome + '!') + '" target="_blank" rel="noopener">WhatsApp</a>' : '') + '</div></div>';
+  }).join('');
+}
+
+/* ── follow-ups ──────────────────────────────────────────── */
+var convId = null;
+function renderFups() {
+  var el = document.getElementById('fup-list');
+  var list = db.followups.slice().sort(function (a, b) { return (a.status === 'pendente' ? 0 : 1) - (b.status === 'pendente' ? 0 : 1) || new Date(a.devido_em) - new Date(b.devido_em); });
+  if (!list.length) { el.innerHTML = '<div class="empty"><div class="big"></div>Follow-ups aparecem sozinhos: confirmação ao confirmar consulta, pós-consulta ao realizar, recall aos 90 dias.</div>'; return; }
+  var st = { pendente: '<span class="pill red">pendente</span>', enviado: '<span class="pill blue">enviado</span>', respondido: '<span class="pill">respondido</span>', convertido: '<span class="pill gold">convertido</span>', expirado: '<span class="pill dim">expirado</span>' };
+  el.innerHTML = list.map(function (f) {
+    var p = db.pacientes.find(function (x) { return x.id === f.paciente_id; }) || { nome: '?', whatsapp: '' };
+    var acts = [];
+    if (f.status === 'pendente' && p.whatsapp) acts.push('<a href="' + zapLink(p.whatsapp, fupMsg(f, p)) + '" target="_blank" rel="noopener" onclick="marcaEnviado(\'' + f.id + '\')">Enviar WhatsApp</a>');
+    if (['pendente', 'enviado'].indexOf(f.status) >= 0) { acts.push('<button onclick="marcaStatus(\'' + f.id + '\',\'respondido\')">Respondeu</button>'); acts.push('<button onclick="abreConverte(\'' + f.id + '\')">Converteu </button>'); acts.push('<button class="warn" onclick="marcaStatus(\'' + f.id + '\',\'expirado\')">Expirar</button>'); }
+    return '<div class="row"><div><b>' + (fupLabels[f.tipo] || f.tipo) + ' · ' + esc(p.nome) + '</b><span class="m">devido ' + new Date(f.devido_em).toLocaleDateString('pt-BR') + (f.resultado_valor ? ' · gerou ' + fmt(f.resultado_valor) : '') + '</span></div><div>' + (st[f.status] || '') + '</div><div class="acts">' + acts.join('') + '</div></div>';
+  }).join('');
+}
+function marcaEnviado(id) { var f = db.followups.find(function (x) { return x.id === id; }); if (f && f.status === 'pendente') { f.status = 'enviado'; f.enviado_em = new Date().toISOString(); save(); setTimeout(renderAll, 300); } }
+function marcaStatus(id, s) { var f = db.followups.find(function (x) { return x.id === id; }); if (f) { f.status = s; f.resolvido_em = new Date().toISOString(); ev('followup_' + s, { tipo: f.tipo }); save(); renderAll(); } }
+function abreConverte(id) { convId = id; document.getElementById('cv-valor').value = ''; document.getElementById('d-converte').showModal(); }
+function confirmConverte() {
+  var v = Number(document.getElementById('cv-valor').value || 0);
+  if (!v) { alert('Informe o valor gerado.'); return; }
+  var f = db.followups.find(function (x) { return x.id === convId; }); if (!f) return;
+  f.status = 'convertido'; f.resultado_valor = v; f.resolvido_em = new Date().toISOString();
+  ev('followup_convertido', { tipo: f.tipo, valor: v }); save(); dc('d-converte'); renderAll();
+}
+
+/* ── assinaturas ─────────────────────────────────────────── */
+function openProtocolo() { document.getElementById('d-protocolo').showModal(); }
+function saveProtocolo() {
+  var nome = document.getElementById('pr-nome').value.trim(), preco = Number(document.getElementById('pr-preco').value || 0);
+  var inc = document.getElementById('pr-inc').value.trim();
+  if (!nome || !preco || !inc) { alert('Nome, serviços incluídos e valor são obrigatórios.'); return; }
+  db.protocolos.push({ id: uid(), nome: nome, incluidos: inc.split('\n').filter(Boolean), excluidos: document.getElementById('pr-exc').value.trim().split('\n').filter(Boolean), preco_mensal: preco, moeda: 'BRL', ativo: true, criado_em: new Date().toISOString() });
+  ev('protocolo_criado', { preco: preco }); save(); dc('d-protocolo'); renderAll();
+}
+function propostaMsg(pr, pacNome) {
+  var d = db.profile || {};
+  return 'Olá' + (pacNome ? ', ' + pacNome : '') + '! Aqui é do consultório de ' + d.nome + '.\n\n' +
+    'Preparamos uma proposta de acompanhamento contínuo — a assinatura "' + pr.nome + '" (' + fmt(pr.preco_mensal) + '/mês):\n\n' +
+    'Incluído:\n' + pr.incluidos.map(function (i) { return '• ' + i; }).join('\n') +
+    (pr.excluidos.length ? '\n\nNão incluído (cobrado à parte):\n' + pr.excluidos.map(function (i) { return '• ' + i; }).join('\n') : '') +
+    '\n\nÉ um contrato de prestação de serviços entre você e o consultório, com cancelamento livre — não é plano de saúde. Quer saber mais?';
+}
+function renderProt() {
+  var el = document.getElementById('prot-list');
+  if (!db.protocolos.length) { el.innerHTML = '<div class="empty"><div class="big"></div>Seu primeiro protocolo por assinatura transforma consulta avulsa em receita previsível.</div>'; return; }
+  el.innerHTML = db.protocolos.filter(function (p) { return p.ativo; }).map(function (pr) {
+    var n = db.assinaturas.filter(function (a) { return a.protocolo_id === pr.id && a.status === 'ativa'; }).length;
+    return '<div class="row"><div><b>' + esc(pr.nome) + '</b><span class="m">' + fmt(pr.preco_mensal) + '/mês · ' + n + ' assinante' + (n === 1 ? '' : 's') + ' · ' + pr.incluidos.length + ' serviços incluídos</span></div><div class="acts"><button onclick="copiaProposta(\'' + pr.id + '\')">Copiar proposta</button></div></div>';
+  }).join('');
+}
+function copiaProposta(id) {
+  var pr = db.protocolos.find(function (x) { return x.id === id; }); if (!pr) return;
+  var txt = propostaMsg(pr, '');
+  (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(function () { alert('Proposta copiada! Cole no WhatsApp do paciente.'); }, function () { prompt('Copie a proposta:', txt); });
+  ev('proposta_copiada', { protocolo: pr.nome });
+}
+function openAssinatura() {
+  if (!db.protocolos.length) { alert('Crie um protocolo primeiro.'); return; }
+  if (!db.pacientes.length) { alert('Cadastre o paciente primeiro.'); go('pacientes'); return; }
+  document.getElementById('as-pac').innerHTML = db.pacientes.filter(function (p) { return p.status === 'ativo'; }).map(function (p) { return '<option value="' + p.id + '">' + esc(p.nome) + '</option>'; }).join('');
+  document.getElementById('as-prot').innerHTML = db.protocolos.filter(function (p) { return p.ativo; }).map(function (p) { return '<option value="' + p.id + '">' + esc(p.nome) + ' — ' + fmt(p.preco_mensal) + '/mês</option>'; }).join('');
+  document.getElementById('d-assinatura').showModal();
+}
+function saveAssinatura() {
+  var pacId = document.getElementById('as-pac').value, protId = document.getElementById('as-prot').value;
+  var pr = db.protocolos.find(function (x) { return x.id === protId; }); if (!pr) return;
+  db.assinaturas.push({ id: uid(), paciente_id: pacId, protocolo_id: protId, status: 'ativa', valor: pr.preco_mensal, iniciada_em: new Date().toISOString() });
+  ev('assinatura_ativada', { valor: pr.preco_mensal }); save(); dc('d-assinatura'); renderAll();
+}
+function pagarAssinatura(id) {
+  var a = db.assinaturas.find(function (x) { return x.id === id; }); if (!a) return;
+  db.pagamentos.push({ id: uid(), assinatura_id: id, valor: Number(a.valor || 0), moeda: 'BRL', metodo: 'manual', status: 'pago', criado_em: new Date().toISOString() });
+  ev('pagamento_assinatura', { valor: a.valor }); save(); renderAll();
+}
+function cancelarAssinatura(id) {
+  var a = db.assinaturas.find(function (x) { return x.id === id; }); if (!a) return;
+  if (!confirm('Cancelar esta assinatura? (cancelamento é sempre livre — regra do contrato)')) return;
+  a.status = 'cancelada'; a.cancelada_em = new Date().toISOString(); ev('assinatura_cancelada', {}); save(); renderAll();
+}
+function renderAssinaturas() {
+  renderProt();
+  var el = document.getElementById('ass-list');
+  var list = db.assinaturas.filter(function (a) { return a.status === 'ativa'; });
+  if (!list.length) { el.innerHTML = '<div class="empty"><div class="big"></div>Quando um paciente aceitar a proposta, registre aqui — o MRR aparece no cockpit.</div>'; return; }
+  el.innerHTML = list.map(function (a) {
+    var p = db.pacientes.find(function (x) { return x.id === a.paciente_id; }) || { nome: '?' };
+    var pr = db.protocolos.find(function (x) { return x.id === a.protocolo_id; }) || { nome: '?' };
+    var pgMes = db.pagamentos.some(function (g) { return g.assinatura_id === a.id && g.status === 'pago' && inMonth(g.criado_em); });
+    return '<div class="row"><div><b>' + esc(p.nome) + '</b><span class="m">' + esc(pr.nome) + ' · ' + fmt(a.valor) + '/mês · desde ' + new Date(a.iniciada_em).toLocaleDateString('pt-BR') + '</span></div><div>' + (pgMes ? '<span class="pill">mês pago </span>' : '<span class="pill red">mês em aberto</span>') + '</div><div class="acts">' + (pgMes ? '' : '<button onclick="pagarAssinatura(\'' + a.id + '\')">Registrar pagamento</button>') + '<button class="warn" onclick="cancelarAssinatura(\'' + a.id + '\')">Cancelar</button></div></div>';
+  }).join('');
+}
+
+/* ── GrothPedia ──────────────────────────────────────────── */
+var PEDIA = [
+  { nicho: 'emagrecimento', t: 'Acompanhamento metabólico contínuo', preco: 'R$ 190–390/mês (referência de mercado; defina pelo seu custo/hora)', como: 'Ciclos de 90 dias: consulta mensal ou trimestral + revisão de exames + ajustes de conduta + canal de dúvidas com janela de resposta definida.', cfm: 'Nunca prometa perda de peso em kg ou prazo. Sem antes/depois fora das hipóteses da Res. CFM 2.336/2023.', script: 'Proposta: "Seu tratamento funciona melhor com acompanhamento contínuo. Em vez de consultas soltas, ofereço um plano de acompanhamento com [serviços]. O valor é R$ X/mês, com cancelamento livre."' },
+  { nicho: 'longevidade', t: 'Protocolo de longevidade e prevenção', preco: 'R$ 290–590/mês', como: 'Check-in trimestral + painel de exames periódico + plano de hábitos revisado. O valor está na constância, não no evento.', cfm: 'Não usar "medicina antienvelhecimento" como promessa; comunicar como acompanhamento preventivo baseado em evidência.', script: 'Proposta: "Prevenção não é um evento anual, é um processo. O acompanhamento inclui [serviços], por R$ X/mês."' },
+  { nicho: 'estetica', t: 'Manutenção estética programada', preco: 'R$ 150–450/mês (crédito para procedimentos)', como: 'Assinatura como crédito mensal para procedimentos de manutenção + avaliação periódica. Escopo do que entra/não entra é crítico aqui.', cfm: 'Publicidade de estética é a mais fiscalizada: sem antes/depois sensacionalista, sem "rejuvenesça", sem garantia de resultado.', script: 'Proposta: "Manutenção regular tem resultado melhor que correção pontual. O plano de manutenção inclui [serviços] por R$ X/mês."' },
+  { nicho: 'saude-mental', t: 'Acompanhamento terapêutico contínuo', preco: 'R$ 240–560/mês', como: 'Consultas quinzenais/mensais + canal assíncrono com janela de resposta + revisão de plano terapêutico. Telemedicina encaixa muito bem (Res. 2.314/2022).', cfm: 'Jamais prometer "cura" ou prazos. Sigilo e LGPD são argumento central de venda.', script: 'Proposta: "Constância é parte do tratamento. O acompanhamento contínuo inclui [serviços], por R$ X/mês, presencial ou por telemedicina."' },
+  { nicho: 'dor', t: 'Programa de dor crônica / reabilitação', preco: 'R$ 190–490/mês', como: 'Ciclos de reavaliação mensal + ajuste de conduta + coordenação com fisioterapia. Paciente de dor crônica é o mais aderente a acompanhamento.', cfm: 'Sem promessa de "viver sem dor". Comunicar como manejo contínuo baseado em evidência.', script: 'Proposta: "Dor crônica se maneja com constância. O programa inclui [serviços] por R$ X/mês."' },
+  { nicho: 'geral', t: 'Médico de referência da família', preco: 'R$ 120–290/mês por pessoa (desconto familiar)', como: 'Modelo "direct care à brasileira": consultas incluídas, canal de dúvidas, coordenação de especialistas. O contrato define limites com clareza.', cfm: 'Nunca chamar de "plano de saúde" (ANS). É contrato de serviços médicos com pagamento recorrente.', script: 'Proposta: "Sou o médico de referência da sua família: [serviços] por R$ X/mês por pessoa, cancelamento livre."' }
+];
+function renderPedia() {
+  var meu = (db.profile || {}).nicho;
+  document.getElementById('pedia-list').innerHTML = PEDIA.slice().sort(function (a, b) { return (a.nicho === meu ? -1 : 0) - (b.nicho === meu ? -1 : 0); }).map(function (f) {
+    return '<details class="pedia"' + (f.nicho === meu ? ' open' : '') + '><summary>' + f.t + (f.nicho === meu ? ' <span class="pill gold">seu nicho</span>' : '') + '</summary>' +
+      '<p><b>Faixa de preço de referência:</b> ' + f.preco + '</p>' +
+      '<p><b>Como montar:</b> ' + f.como + '</p>' +
+      '<p><b>Regra CFM:</b> ' + f.cfm + '</p>' +
+      '<div class="script">' + f.script + '</div></details>';
+  }).join('');
+}
+
+boot();
+</script>
+</body>
+</html>
