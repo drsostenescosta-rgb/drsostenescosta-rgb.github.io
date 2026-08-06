@@ -35,8 +35,9 @@
   .loop b { color: var(--accent); }
   .loop .seq { font-family: var(--mono); font-size: 0.74rem; color: var(--ink-soft); display: block; margin-top: 4px; }
   .gaps { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 12px; }
-  .gap { background: #fff; border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 12px; padding: 14px 16px; }
+  .gap { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
   .gap h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+  .gap h3::before { content: '◆ '; color: var(--gold); font-size: 0.7rem; vertical-align: 2px; }
   .gap p { font-size: 0.85rem; color: var(--ink-soft); }
   .gap .acao { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.04em; color: var(--accent); display:block; margin-top: 8px; }
   .bench { display: grid; gap: 12px; }
