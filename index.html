@@ -142,7 +142,13 @@
   .disclaimer strong { color: var(--ink); }
   .mapa-links { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 22px; font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.08em; }
   .mapa-links a { border-bottom: none; }
-  .alicerce { margin-top: 22px; font-size: 0.88rem; color: var(--ink-soft); }
+  /* Portfólio fora do ecossistema */
+  .portfolio { margin-top: 36px; }
+  .grid-port { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 12px; }
+  .card-sec { padding: 16px 18px; gap: 8px; }
+  .card-sec h3 { font-size: 1rem; font-weight: 600; display: inline-block; margin-right: 8px; }
+  .card-sec p { font-size: 0.88rem; }
+  .bastidores { margin-top: 14px; font-size: 0.82rem; color: var(--ink-soft); }
 
   /* Fundador */
   .fundador-grid { display: grid; grid-template-columns: 260px 1fr; gap: 36px; align-items: start; margin-top: 8px; }
@@ -276,8 +282,8 @@
             <span class="badge b-produto"><span class="pt">EM ESTRUTURAÇÃO</span><span class="en">IN STRUCTURING</span></span>
           </div>
         </div>
-        <p class="pt">O motor de crescimento de clínicas: une o Farol (agenda, pacientes, follow-ups) e a Lia (IA de atendimento) num só sistema, para que nenhum lead se perca e a receita da clínica deixe de depender de improviso.</p>
-        <p class="en">The clinic growth engine: it unites Farol (schedule, patients, follow-ups) and Lia (the front-desk AI) in one system, so no lead is lost and clinic revenue stops depending on improvisation.</p>
+        <p class="pt">O motor de crescimento de clínicas: une o Farol (agenda, pacientes, follow-ups) e a Lia (IA de atendimento) num só sistema, para que nenhum lead se perca e a receita da clínica deixe de depender de improviso. Inclui o módulo Radar Criativo — radar de criativos e benchmark do que roda melhor em clínicas de estética e médicas e em programas de outros médicos.</p>
+        <p class="en">The clinic growth engine: it unites Farol (schedule, patients, follow-ups) and Lia (the front-desk AI) in one system, so no lead is lost and clinic revenue stops depending on improvisation. It includes the Radar Criativo module — a creative-ads radar and benchmark of what performs best in aesthetic and medical clinics and in other doctors' programs.</p>
         <a class="card-link" href="docgrow/"><span class="pt">PÁGINA DO PROJETO →</span><span class="en">PROJECT PAGE →</span></a>
       </article>
 
@@ -361,8 +367,8 @@
             <span class="badge b-ideia"><span class="pt">IDEIA MAPEADA</span><span class="en">MAPPED IDEA</span></span>
           </div>
         </div>
-        <p class="pt">Educação médica gamificada — o Atlas de Medicina: atlas interativo, banco de questões e rede de estudo, para formar médicos que entram no ecossistema desde o primeiro ano.</p>
-        <p class="en">Gamified medical education — the Atlas of Medicine: an interactive atlas, question bank and study network, shaping doctors who join the ecosystem from year one.</p>
+        <p class="pt">Educação médica gamificada — o Atlas de Medicina: atlas interativo, banco de questões e rede de estudo, para formar médicos que entram no ecossistema desde o primeiro ano — e que ensina IA para médicos e profissionais de saúde aplicarem na rotina.</p>
+        <p class="en">Gamified medical education — the Atlas of Medicine: an interactive atlas, question bank and study network, shaping doctors who join the ecosystem from year one — and teaching AI to doctors and health professionals so they can apply it in daily practice.</p>
         <a class="card-link" href="medverse/"><span class="pt">PÁGINA DO PROJETO →</span><span class="en">PROJECT PAGE →</span></a>
       </article>
 
@@ -399,10 +405,32 @@
       <a href="projetos/ecossistema.html"><span class="pt">O ECOSSISTEMA — COMO TUDO SE CONECTA →</span><span class="en">THE ECOSYSTEM — HOW IT CONNECTS →</span></a>
     </div>
 
-    <p class="alicerce">
-      <span class="pt">Protótipos que viraram alicerce: <a href="medeasy.html">MedEasy</a>, <a href="sosmed/">SosMed · Lia</a> e <a href="medgroth/">MedGroth</a> estão sendo absorvidos pelo ClinicNow e continuam navegáveis. O <a href="https://drsostenescosta-rgb.github.io/chatgosipt/" target="_blank" rel="noopener">ChatGosipt</a>, primeiro produto lançado (transcrição por IA, 100% local), segue no ar.</span>
-      <span class="en">Prototypes that became foundations: <a href="medeasy.html">MedEasy</a>, <a href="sosmed/">SosMed · Lia</a> and <a href="medgroth/">MedGroth</a> are being absorbed into ClinicNow and remain browsable. <a href="https://drsostenescosta-rgb.github.io/chatgosipt/" target="_blank" rel="noopener">ChatGosipt</a>, the first shipped product (AI transcription, 100% local), is still live.</span>
-    </p>
+    <div class="portfolio">
+      <span class="kicker pt">FORA DO ECOSSISTEMA · PORTFÓLIO</span>
+      <span class="kicker en">BEYOND THE ECOSYSTEM · PORTFOLIO</span>
+      <div class="grid-port">
+        <article class="card card-sec">
+          <div>
+            <h3>Elevo</h3>
+            <span class="badge b-tese"><span class="pt">BETA FECHADO</span><span class="en">CLOSED BETA</span></span>
+          </div>
+          <p class="pt">Rede social de evolução pessoal — o “Strava da evolução pessoal”: gamificação no espírito do Duolingo e uma Bússola de IA para orientar o caminho. Em beta fechado com a turma fundadora.</p>
+          <p class="en">A personal-growth social network — the “Strava of personal evolution”: Duolingo-style gamification and an AI Compass to guide the way. In closed beta with a founding cohort.</p>
+        </article>
+        <article class="card card-sec">
+          <div>
+            <h3><span class="pt">Monitoramento inteligente de e-mails</span><span class="en">Intelligent e-mail monitoring</span></h3>
+            <span class="badge"><span class="pt">EM USO INTERNO</span><span class="en">INTERNAL USE</span></span>
+          </div>
+          <p class="pt">IA que lê e interpreta os e-mails recebidos e devolve um feedback completo ao cliente — o que chegou, o que importa e o que fazer. Em uso interno; produto em estruturação.</p>
+          <p class="en">AI that reads and interprets incoming e-mail and returns complete feedback to the client — what arrived, what matters and what to do next. In internal use; product being structured.</p>
+        </article>
+      </div>
+      <p class="bastidores">
+        <span class="pt">Nos bastidores: o pitch da Zatheon vive organizado num painel 3D de agentes — o Zatheon Pitch App, ferramenta interna.</span>
+        <span class="en">Behind the scenes: Zatheon's pitch lives organized in a 3D agent panel — the Zatheon Pitch App, an internal tool.</span>
+      </p>
+    </div>
   </div>
 </section>
 
