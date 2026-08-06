@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Projetos — Sóstenes Costa Paiva · Zetheon</title>
+<meta name="description" content="O mapa vivo dos projetos de healthcare + IA que Sóstenes Costa Paiva constrói na Zetheon: Clinic Now, Genecys, Atlas de Medicina, Fidelização e o histórico completo." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f3; --bg-soft: #f2efe7; --ink: #1f2421; --ink-soft: #5b615c;
+    --line: #e3ded2; --accent: #1d7a55; --accent-soft: #e7f2ec; --gold: #a07d1c;
+    --serif: 'Fraunces', serif; --sans: 'Inter', sans-serif; --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.7; font-size: 16px; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 22px; }
+  header.nav { position: sticky; top: 0; background: rgba(250,248,243,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); z-index: 10; }
+  .nav-inner { max-width: 860px; margin: 0 auto; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; }
+  .nav-name { font-family: var(--serif); font-weight: 600; color: var(--ink); font-size: 1.02rem; }
+  .nav a.back { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.05em; }
+  .hero { padding: 56px 0 28px; }
+  .kicker { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.18em; color: var(--gold); display: block; margin-bottom: 12px; }
+  h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(1.7rem, 4.5vw, 2.5rem); line-height: 1.2; margin-bottom: 14px; }
+  .hero p { color: var(--ink-soft); max-width: 640px; }
+  .disclaimer { margin-top: 18px; padding: 12px 16px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; font-size: 0.85rem; color: var(--ink-soft); }
+  section.bloco { padding: 26px 0 6px; }
+  h2.sec { font-family: var(--serif); font-weight: 600; font-size: 1.25rem; margin: 18px 0 4px; }
+  .sec-sub { color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 16px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; margin-bottom: 12px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .card-top { display: flex; align-items: center; gap: 12px; }
+  .logo { width: 44px; height: 44px; border-radius: 12px; flex: none; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 600; font-size: 1.05rem; color: #fff; }
+  .card h3 { font-family: var(--serif); font-size: 1.12rem; font-weight: 600; }
+  .badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; padding: 3px 8px; border-radius: 99px; border: 1px solid var(--line); color: var(--ink-soft); white-space: nowrap; }
+  .badge.b-produto { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+  .badge.b-tese { background: #f4ecdc; color: var(--gold); border-color: transparent; }
+  .badge.b-ideia { background: #ece9f5; color: #5b4a9e; border-color: transparent; }
+  .card p.resumo { font-size: 0.92rem; color: var(--ink-soft); flex: 1; }
+  .meta { font-size: 0.8rem; color: var(--ink-soft); }
+  .meta strong { color: var(--ink); font-weight: 600; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .links a { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em; padding: 5px 10px; border: 1px solid var(--line); border-radius: 8px; color: var(--accent); }
+  .links a:hover { border-color: var(--accent); }
+  .refs { font-size: 0.78rem; color: var(--ink-soft); border-top: 1px dashed var(--line); padding-top: 8px; }
+  details.mais summary { cursor: pointer; font-size: 0.8rem; color: var(--accent); font-family: var(--mono); letter-spacing: 0.04em; }
+  details.mais p { font-size: 0.88rem; color: var(--ink-soft); margin-top: 8px; }
+  .cta { margin: 40px 0 56px; padding: 26px; background: var(--ink); border-radius: 16px; color: #f2efe7; }
+  .cta h2 { font-family: var(--serif); font-size: 1.3rem; margin-bottom: 8px; }
+  .cta p { font-size: 0.92rem; opacity: 0.85; margin-bottom: 14px; }
+  .cta a { display: inline-block; background: var(--accent); color: #fff; padding: 10px 20px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; margin-right: 10px; }
+  .cta a.ghost { background: transparent; border: 1px solid rgba(242,239,231,0.4); }
+  footer { border-top: 1px solid var(--line); padding: 28px 22px 40px; text-align: center; color: var(--ink-soft); font-size: 0.76rem; font-family: var(--mono); letter-spacing: 0.06em; }
+  .fonte-dado { text-align:center; font-family: var(--mono); font-size: 0.68rem; color: var(--ink-soft); letter-spacing: 0.06em; margin: 8px 0 30px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-name" href="../index.html">Sóstenes Costa Paiva</a>
+    <a class="back" href="../index.html">← VOLTAR AO BLOG</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <span class="kicker">ZETHEON · MAPA DE PROJETOS</span>
+    <h1>Tudo que estou construindo em saúde + IA, num só lugar.</h1>
+    <p>Este é o mapa vivo do meu trabalho: o produto principal em estruturação, as teses em validação, as ideias mapeadas e os protótipos que me trouxeram até aqui. Construo em público — inclusive os erros e as mudanças de rota.</p>
+    <div class="disclaimer">
+      <strong>Honestidade primeiro:</strong> os selos abaixo dizem o estado real de cada projeto. "Em estruturação" e "tese" significam exatamente isso — ainda não são produtos validados com clientes. Demos usam dados fictícios. Nenhuma ferramenta aqui substitui decisão de um profissional de saúde licenciado.
+    </div>
+  </div>
+
+  <div id="app"></div>
+  <p class="fonte-dado" id="fonte">catálogo estático</p>
+
+  <div class="cta">
+    <h2>Investidor, médico(a) ou co-founder?</h2>
+    <p>Procuro design partners para o Clinic Now e a Genecys: gente que tem o problema de verdade e quer construir a solução junto — antes de qualquer promessa de resultado.</p>
+    <a href="mailto:drsostenescosta@gmail.com?subject=Design%20partner%20—%20projetos%20Zetheon">Quero conversar</a>
+    <a class="ghost" href="https://wa.me/5584999869468" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</div>
+
+<footer>SÓSTENES COSTA PAIVA · ZETHEON · CONSTRUÍDO EM PÚBLICO</footer>
+
+<script>
+/* Catálogo estático (espelho da tabela public.projetos no Supabase).
+   A página tenta atualizar do banco ao vivo; se estiver offline, este espelho garante o conteúdo. */
+var CATALOGO = [
+ {slug:'clinic-now', nome:'Clinic Now', categoria:'produto', status:'em_estruturacao',
+  resumo:'O sistema único da Zetheon para clínicas: crescimento + atendimento + IA, tudo integrado.',
+  descricao:'Evolução do MedGroth (nome que não pôde ser registrado). Une num só sistema: o Farol (console clínico — agenda, pacientes, prontuário SOAP), a Lia (IA de atendimento e vendas) e o motor de crescimento do MedGroth (diagnóstico, plano de 4 semanas, CRM, metas). Vertentes em estudo: Clinic Now Access (circuito fechado de encaminhamento) e Clinic Now Point (cabines de telemedicina com aferição de sinais — pressão arterial, frequência cardíaca — para quem não tem telefone, computador ou internet).',
+  problema:'Clínicas perdem receita e pacientes por operação manual: agenda ociosa, leads sem resposta, documentação que consome o médico.',
+  links:{'ver o console':'../sosmed/app.html','módulo de crescimento':'../medgroth/','landing':'../sosmed/'},
+  origem:'Fusão de MedGroth + Farol + Lia sob um único nome',
+  refs:'Referências: Sesame Care (médico define o preço), Abridge (documentação ambiente), HealthPlix (IA administrativa com ROI), Doctoralia (distribuição).', cor:'#1d7a55', sigla:'CN', ordem:1},
+ {slug:'atlas-medicina', nome:'Atlas de Medicina', categoria:'produto', status:'ideia_mapeada',
+  resumo:'Atlas interativo de Medicina para estudantes — estudo visual guiado por IA.',
+  descricao:'Repositório vivo de conteúdo médico para estudantes: anatomia, fisiopatologia, semiologia e condutas de forma visual e pesquisável, com IA que explica no nível do aluno, gera questões e acompanha o progresso. Nasce também como base do repositório de artigos do ecossistema.',
+  problema:'Estudantes estudam em materiais fragmentados e caros; falta um atlas interativo em português com tutor de IA.',
+  links:{}, origem:'Novo produto mapeado em ago/2026',
+  refs:'Referência: Noora Health (YC W14) — educação em saúde escalável.', cor:'#5b4a9e', sigla:'AM', ordem:2},
+ {slug:'fidelizacao', nome:'Sistema de Fidelização', categoria:'produto', status:'ideia_mapeada',
+  resumo:'Fidelização e recorrência para clínicas: o paciente volta, a receita vira previsível.',
+  descricao:'Módulo de recorrência do Clinic Now: planos de assinatura da clínica, recall automático (retornos, exames, aniversários), benefícios por adesão e reativação conduzida pela Lia.',
+  problema:'Clínicas vivem de consulta avulsa; sem recall e recorrência, a agenda depende de demanda nova e cara.',
+  links:{}, origem:'Novo produto mapeado em ago/2026',
+  refs:'Referência: programas de loyalty comprovados em outros setores de serviço.', cor:'#a07d1c', sigla:'FI', ordem:3},
+ {slug:'genecys', nome:'Genecys', categoria:'tese', status:'tese_em_validacao',
+  resumo:'IA que acompanha o idoso em casa: companhia voluntária e confiabilidade de cuidado, com humano sempre no circuito.',
+  descricao:'Duas formulações em estudo: companhia conversacional voluntária (o idoso escolhe conversar, pode interromper e acionar um contato autorizado) e confiabilidade de cuidado B2B2C (organização registra se a tarefa de cuidado aconteceu; exceções vão para um humano nomeado com SLA). Sem escuta contínua, sem vigilância, sem promessa clínica. Silêncio significa "desconhecido", nunca segurança.',
+  problema:'Famílias e operadoras não sabem, de forma confiável, se o cuidado combinado do idoso em casa aconteceu.',
+  links:{'RFS da YC (aging)':'https://www.ycombinator.com/rfs#ai-for-the-aging-population'},
+  origem:'Última tese criada (ago/2026)',
+  refs:'Referência central: Noora Health (YC W14) — capacita familiares dentro do sistema de saúde; modelo B2B2C.', cor:'#3d6b8e', sigla:'GE', ordem:4},
+ {slug:'medeasy', nome:'MedEasy', categoria:'historico', status:'prototipo',
+  resumo:'A consulta que se documenta sozinha: escuta, transcreve, gera SOAP e um Índice de Saúde A–F.',
+  descricao:'Protótipo de escuta ambiente da consulta com documentação clínica automática e portal do paciente. Componentes sendo absorvidos pelo Clinic Now.',
+  problema:'Médicos gastam boa parte da consulta digitando em vez de olhar para o paciente.',
+  links:{'apresentação':'../medeasy.html','sistema':'../sistema.html','portal do paciente':'../paciente.html'},
+  origem:'Protótipo próprio (2026)', refs:'Categoria validada: Abridge/DAX; trial randomizado UCLA 2025.', cor:'#6e7f5c', sigla:'ME', ordem:5},
+ {slug:'sosmed-lia', nome:'SosMed · Lia (Farol)', categoria:'historico', status:'prototipo',
+  resumo:'Console do consultório + marketplace + teleconsulta, com a Lia como secretária de IA.',
+  descricao:'Ecossistema-protótipo: console do médico (Farol), marketplace de agendamento, avaliação de saúde 0–100, teleconsulta e a Lia — que agenda e nunca dá orientação clínica. Backend real (Supabase + Vercel). Vira a base operacional do Clinic Now.',
+  problema:'Consultórios perdem pacientes fora do horário comercial e não têm operação digital integrada.',
+  links:{'landing':'../sosmed/','console':'../sosmed/app.html','marketplace':'../sosmed/buscar.html','avaliação de saúde':'../sosmed/saude.html'},
+  origem:'Protótipo próprio (2026)', refs:'', cor:'#7a4a72', sigla:'SL', ordem:6},
+ {slug:'medgroth', nome:'MedGroth', categoria:'historico', status:'arquivo',
+  resumo:'A máquina de crescimento para clínicas — virou o Clinic Now.',
+  descricao:'Diagnóstico em 7 perguntas, plano de 4 semanas, CRM de leads, metas e páginas de venda/captura/investidores. O nome não pôde ser registrado; o produto evoluiu para Clinic Now.',
+  problema:'Médicos não sabem transformar atendimento em crescimento de receita.',
+  links:{'página de vendas':'../medgroth/','app':'../medgroth/app.html','memorando investidores':'../medgroth/investidores.html'},
+  origem:'Renomeado para Clinic Now', refs:'', cor:'#8a5a3a', sigla:'MG', ordem:7},
+ {slug:'chatgosipt', nome:'ChatGosipt', categoria:'ferramenta', status:'lancado',
+  resumo:'Transcrição por IA, 100% local e privada — primeiro produto lançado.',
+  descricao:'Ferramenta de transcrição que roda inteiramente no dispositivo, sem enviar áudio para a nuvem.',
+  problema:'Transcrever áudio sem expor dados sensíveis.',
+  links:{'usar':'https://drsostenescosta-rgb.github.io/chatgosipt/','código':'https://github.com/drsostenescosta-rgb/chatgosipt'},
+  origem:'Primeiro produto (2026)', refs:'', cor:'#2f3e46', sigla:'CG', ordem:8},
+ {slug:'acs-painel', nome:'ACS Painel', categoria:'ferramenta', status:'prototipo',
+  resumo:'Painel para Agentes Comunitários de Saúde.',
+  descricao:'Protótipo de painel de acompanhamento para o trabalho de campo dos ACS.',
+  problema:'Organizar o trabalho de campo na atenção primária.',
+  links:{'código':'https://github.com/drsostenescosta-rgb/acs-painel'},
+  origem:'Protótipo (2026)', refs:'', cor:'#4a6b3d', sigla:'AP', ordem:9},
+ {slug:'sales-playbook', nome:'Sales Playbook', categoria:'ferramenta', status:'prototipo',
+  resumo:'Playbook de vendas consultivas construído com IA.',
+  descricao:'Repositório de playbook comercial gerado e mantido com agentes de IA.',
+  problema:'Padronizar discovery e vendas consultivas.',
+  links:{'código':'https://github.com/drsostenescosta-rgb/deploymentco-sales-playbook'},
+  origem:'Estudo (2026)', refs:'', cor:'#5b615c', sigla:'SP', ordem:10}
+];
+
+var BADGES = {
+  em_estruturacao:{t:'EM ESTRUTURAÇÃO', c:'b-produto'},
+  tese_em_validacao:{t:'TESE EM VALIDAÇÃO', c:'b-tese'},
+  ideia_mapeada:{t:'IDEIA MAPEADA', c:'b-ideia'},
+  prototipo:{t:'PROTÓTIPO', c:''},
+  arquivo:{t:'ARQUIVO → CLINIC NOW', c:''},
+  lancado:{t:'LANÇADO', c:'b-produto'}
+};
+var SECOES = [
+  {cat:'produto', titulo:'O que estou construindo agora', sub:'Clinic Now é a oferta principal; Atlas e Fidelização são os próximos produtos mapeados.'},
+  {cat:'tese', titulo:'Teses em validação', sub:'Ideias com estudo sério por trás, procurando design partner — sem promessa antes da evidência.'},
+  {cat:'historico', titulo:'Protótipos que viraram alicerce', sub:'Cada um destes ensinou algo e está sendo absorvido pelo Clinic Now. Continuam navegáveis.'},
+  {cat:'ferramenta', titulo:'Ferramentas & estudos', sub:'Coisas menores, lançadas ou em teste, que compõem o caminho.'}
+];
+
+function esc(s){ var d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
+function render(lista){
+  var app = document.getElementById('app'); app.innerHTML='';
+  SECOES.forEach(function(sec){
+    var itens = lista.filter(function(p){ return p.categoria===sec.cat; }).sort(function(a,b){ return (a.ordem||99)-(b.ordem||99); });
+    if(!itens.length) return;
+    var bloco = document.createElement('section'); bloco.className='bloco';
+    bloco.innerHTML = '<h2 class="sec">'+esc(sec.titulo)+'</h2><p class="sec-sub">'+esc(sec.sub)+'</p>';
+    var grid = document.createElement('div'); grid.className='grid';
+    itens.forEach(function(p){
+      var b = BADGES[p.status] || {t:esc(p.status).toUpperCase(), c:''};
+      var links = '';
+      var ls = p.links || {};
+      Object.keys(ls).forEach(function(k){ links += '<a href="'+esc(ls[k])+'"'+(/^https?:/.test(ls[k])?' target="_blank" rel="noopener"':'')+'>'+esc(k)+'</a>'; });
+      var card = document.createElement('div'); card.className='card';
+      card.innerHTML =
+        '<div class="card-top">'+
+          '<div class="logo" style="background:'+esc(p.cor||'#1d7a55')+'">'+esc(p.sigla||p.nome.slice(0,2).toUpperCase())+'</div>'+
+          '<div><h3>'+esc(p.nome)+'</h3><span class="badge '+b.c+'">'+b.t+'</span></div>'+
+        '</div>'+
+        '<p class="resumo">'+esc(p.resumo)+'</p>'+
+        '<p class="meta"><strong>Problema:</strong> '+esc(p.problema)+'</p>'+
+        '<details class="mais"><summary>mais detalhes</summary><p>'+esc(p.descricao)+'</p>'+
+          (p.origem?'<p><strong>Origem:</strong> '+esc(p.origem)+'</p>':'')+
+          (p.refs?'<p class="refs">'+esc(p.refs)+'</p>':'')+'</details>'+
+        (links?'<div class="links">'+links+'</div>':'');
+      grid.appendChild(card);
+    });
+    bloco.appendChild(grid);
+    app.appendChild(bloco);
+  });
+}
+render(CATALOGO);
+
+/* Atualização ao vivo a partir do banco (tabela public.projetos) — o espelho local continua como fallback */
+(function(){
+  var URL_DB='https://yaqphldowpshhrtvvfaq.supabase.co/rest/v1/projetos?select=*&order=ordem.asc';
+  var KEY='sb_publishable_V64ejsDNKclPdFlqymghnQ_jUr5ivj1';
+  fetch(URL_DB,{headers:{apikey:KEY,Authorization:'Bearer '+KEY}}).then(function(r){ return r.ok?r.json():null; }).then(function(rows){
+    if(!rows||!rows.length) return;
+    var porSlug={}; CATALOGO.forEach(function(p){ porSlug[p.slug]=p; });
+    var lista = rows.map(function(r){
+      var local = porSlug[r.slug]||{};
+      var links = local.links||{};
+      var refs = '';
+      try{ (r.referencias||[]).forEach(function(x){ refs += (refs?' · ':'')+x.nome+(x.por_que?' ('+x.por_que+')':''); }); if(refs) refs='Referências: '+refs+'.'; }catch(e){ refs=local.refs||''; }
+      return { slug:r.slug, nome:r.nome, categoria:r.categoria, status:r.status, resumo:r.resumo,
+               descricao:r.descricao, problema:r.problema, links:links, origem:r.origem,
+               refs:refs||local.refs||'', cor:local.cor||'#1d7a55', sigla:local.sigla||r.nome.slice(0,2).toUpperCase(), ordem:r.ordem };
+    });
+    render(lista);
+    document.getElementById('fonte').textContent='catálogo sincronizado com o banco · '+rows.length+' projetos';
+  }).catch(function(){});
+})();
+</script>
+</body>
+</html>
