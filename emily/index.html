@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Emily — a secretária de IA que vende pela clínica · Zatheon</title>
+<meta name="description" content="Tese em estruturação: Emily atende por voz e WhatsApp como se fosse a secretária do próprio médico — responde, agenda, converte, faz follow-up e alimenta o CRM do ClinicNow. Protótipo interno; buscando clínicas parceiras de design." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f3; --bg-soft: #f2efe7; --ink: #1f2421; --ink-soft: #5b615c;
+    --line: #e3ded2; --accent: #1d7a55; --accent-soft: #e7f2ec; --gold: #a07d1c; --gold-soft: #f4ecdc;
+    --serif: 'Fraunces', serif; --sans: 'Inter', sans-serif; --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.7; font-size: 16px; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 22px; }
+  header.nav { position: sticky; top: 0; background: rgba(250,248,243,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); z-index: 10; }
+  .nav-inner { max-width: 860px; margin: 0 auto; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .brand { font-family: var(--serif); font-weight: 600; color: var(--ink); font-size: 1.02rem; }
+  .brand small { display: block; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; color: var(--gold); font-weight: 500; }
+  .nav a.back { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.05em; white-space: nowrap; }
+
+  .hero { padding: 56px 0 24px; }
+  .kicker { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.18em; color: var(--gold); display: block; margin-bottom: 12px; }
+  h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(1.7rem, 4.5vw, 2.5rem); line-height: 1.2; margin-bottom: 14px; }
+  h1 em { color: var(--accent); font-style: italic; }
+  .hero p.lead { color: var(--ink-soft); max-width: 660px; font-size: 1.04rem; }
+  .selo { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; color: var(--accent); background: var(--accent-soft); border: 1px solid rgba(29,122,85,0.25); border-radius: 999px; padding: 6px 14px; }
+  .aviso { margin: 20px 0 0; padding: 13px 16px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; font-size: 0.85rem; color: var(--ink-soft); max-width: 700px; }
+  .aviso strong { color: var(--ink); }
+
+  section { padding: 34px 0 8px; }
+  h2 { font-family: var(--serif); font-weight: 600; font-size: 1.35rem; margin-bottom: 8px; }
+  .sub { color: var(--ink-soft); font-size: 0.92rem; margin-bottom: 18px; max-width: 660px; }
+
+  .vertentes { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .vert { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 10px; }
+  .vert.clinica { border-top: 3px solid var(--accent); }
+  .vert.pessoal { border-top: 3px solid var(--gold); }
+  .vert .tag { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; padding: 3px 9px; border-radius: 99px; align-self: flex-start; }
+  .vert.clinica .tag { background: var(--accent-soft); color: var(--accent); }
+  .vert.pessoal .tag { background: var(--gold-soft); color: var(--gold); }
+  .vert h3 { font-family: var(--serif); font-size: 1.14rem; font-weight: 600; }
+  .vert p.desc { font-size: 0.9rem; color: var(--ink-soft); }
+  .vert ul { list-style: none; display: grid; gap: 7px; margin-top: 2px; }
+  .vert li { font-size: 0.88rem; color: var(--ink-soft); padding-left: 20px; position: relative; }
+  .vert.clinica li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
+  .vert.pessoal li::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
+  .vert li strong { color: var(--ink); font-weight: 600; }
+  .uso-interno { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; color: var(--gold); border-top: 1px dashed var(--line); padding-top: 10px; margin-top: 4px; }
+
+  .diagrama { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-top: 6px; overflow-x: auto; }
+  .diagrama svg { display: block; width: 100%; height: auto; min-width: 560px; }
+  .diagrama-nota { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.06em; color: var(--ink-soft); text-align: center; margin-top: 10px; }
+
+  .mercado { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .fato { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  .fato h3 { font-family: var(--serif); font-size: 1.02rem; font-weight: 600; margin-bottom: 6px; }
+  .fato p { font-size: 0.86rem; color: var(--ink-soft); }
+  .fato p strong { color: var(--ink); font-weight: 600; }
+  .fonte { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.05em; color: var(--ink-soft); margin-top: 12px; max-width: 700px; }
+
+  ul.status-lista { list-style: none; display: grid; gap: 8px; max-width: 660px; }
+  ul.status-lista li { font-size: 0.9rem; color: var(--ink-soft); padding-left: 22px; position: relative; }
+  ul.status-lista li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
+  ul.status-lista li strong { color: var(--ink); font-weight: 600; }
+
+  .cta { margin: 40px 0 56px; padding: 26px; background: var(--ink); border-radius: 16px; color: #f2efe7; }
+  .cta h2 { color: #f2efe7; margin-bottom: 8px; }
+  .cta p { font-size: 0.92rem; opacity: 0.85; margin-bottom: 16px; max-width: 620px; }
+  .cta a.b { display: inline-block; background: var(--accent); color: #fff; padding: 11px 22px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; margin: 0 10px 10px 0; }
+  .cta a.g { display: inline-block; border: 1px solid rgba(242,239,231,0.4); color: #f2efe7; padding: 11px 22px; border-radius: 10px; font-size: 0.9rem; }
+
+  footer { border-top: 1px solid var(--line); padding: 26px 22px 40px; text-align: center; color: var(--ink-soft); font-size: 0.74rem; font-family: var(--mono); letter-spacing: 0.06em; }
+  footer .eco-links { margin-bottom: 10px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; font-family: var(--sans); font-size: 0.82rem; letter-spacing: 0; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">Emily <small>ECOSSISTEMA CLINICNOW · ZATHEON</small></div>
+    <a class="back" href="../">← VOLTAR</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="hero">
+    <span class="kicker">EMILY · EM ESTRUTURAÇÃO · PROTÓTIPO INTERNO</span>
+    <h1>A secretária de IA que <em>vende pela clínica</em>.</h1>
+    <p class="lead">A Emily atende por voz e WhatsApp como se fosse a secretária do próprio médico: responde, agenda, converte, faz follow-up e alimenta o CRM do ClinicNow.</p>
+    <span class="selo">EM ESTRUTURAÇÃO — PROTÓTIPO INTERNO · BUSCANDO CLÍNICAS PARCEIRAS DE DESIGN</span>
+    <div class="aviso">
+      <strong>O que esta página é (e não é):</strong> uma tese em estruturação, apresentada a quem quiser construí-la junto. Não há produto lançado, preço, SLA ou clientes — e nada aqui promete resultado. Demonstrações usam apenas casos sintéticos. A vertente de secretária executiva pessoal é o sistema real em uso interno pelo fundador.
+    </div>
+  </div>
+
+  <section>
+    <h2>Duas vertentes, uma mesma secretária</h2>
+    <p class="sub">A Emily nasce de dois lados do mesmo problema: a clínica que perde o lead no primeiro contato — e o fundador que precisa de um gabinete que funcione sozinho.</p>
+    <div class="vertentes">
+      <div class="vert clinica">
+        <span class="tag">SELLING FOR CLINICS · CLINIC NEGOTIATION</span>
+        <h3>A vendedora da clínica</h3>
+        <p class="desc">A recepção não é treinada para vender. A Emily é — com ética e com o tom do próprio consultório.</p>
+        <ul>
+          <li><strong>Entende a demanda</strong> do paciente antes de responder, por voz ou WhatsApp</li>
+          <li><strong>Conecta-se emocionalmente</strong> — conversa como gente, no tom da clínica, não como robô de menu</li>
+          <li><strong>Interpreta oportunidades</strong> — retorno vencido, exame pendente, procedimento relacionado à queixa</li>
+          <li><strong>Converte</strong> — conduz do primeiro contato até o agendamento confirmado</li>
+          <li><strong>Registra tudo no CRM do ClinicNow</strong> — cada conversa vira dado acionável, não histórico perdido</li>
+        </ul>
+      </div>
+      <div class="vert pessoal">
+        <span class="tag">SECRETÁRIA EXECUTIVA PESSOAL</span>
+        <h3>A chefe de gabinete do fundador</h3>
+        <p class="desc">O mesmo motor, voltado para dentro: uma secretária executiva que organiza o dia de quem constrói.</p>
+        <ul>
+          <li><strong>Agenda e compromissos</strong> centralizados, com contexto de cada item</li>
+          <li><strong>Follow-ups</strong> que não caem — pessoas, pagamentos, decisões pendentes</li>
+          <li><strong>Pesquisa diária</strong> sobre os temas que importam para o trabalho</li>
+          <li><strong>Boletim matinal</strong> com o plano do dia e <strong>fechamento do dia</strong> com o que ficou</li>
+        </ul>
+        <div class="uso-interno">EM USO INTERNO PELO FUNDADOR — É O SISTEMA REAL QUE OPERA HOJE</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>O circuito com o ecossistema</h2>
+    <p class="sub">A Emily não é um chatbot avulso: é o fio de conversa que liga venda, relação e recorrência dentro do ecossistema ClinicNow.</p>
+    <div class="diagrama">
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama do circuito: Emily conversa e converte, alimenta o CRM do ClinicNow, que abre a oferta de assinatura do CareLoop; a própria Emily faz o follow-up de renovação, fechando o ciclo.">
+        <defs>
+          <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#1d7a55" />
+          </marker>
+        </defs>
+        <!-- nós superiores -->
+        <g font-family="Inter, sans-serif">
+          <rect x="20" y="36" width="200" height="76" rx="12" fill="#e7f2ec" stroke="#1d7a55" stroke-width="1.5" />
+          <text x="120" y="68" text-anchor="middle" font-size="16" font-weight="600" fill="#1f2421" font-family="Fraunces, serif">Emily</text>
+          <text x="120" y="90" text-anchor="middle" font-size="11" fill="#5b615c">voz + WhatsApp · responde e converte</text>
+
+          <rect x="280" y="36" width="200" height="76" rx="12" fill="#ffffff" stroke="#e3ded2" stroke-width="1.5" />
+          <text x="380" y="68" text-anchor="middle" font-size="16" font-weight="600" fill="#1f2421" font-family="Fraunces, serif">CRM ClinicNow</text>
+          <text x="380" y="90" text-anchor="middle" font-size="11" fill="#5b615c">cada conversa vira registro</text>
+
+          <rect x="540" y="36" width="200" height="76" rx="12" fill="#ffffff" stroke="#a07d1c" stroke-width="1.5" />
+          <text x="640" y="68" text-anchor="middle" font-size="16" font-weight="600" fill="#1f2421" font-family="Fraunces, serif">CareLoop</text>
+          <text x="640" y="90" text-anchor="middle" font-size="11" fill="#5b615c">oferta de assinatura na conversa</text>
+
+          <!-- nó inferior -->
+          <rect x="280" y="170" width="200" height="66" rx="12" fill="#f4ecdc" stroke="#a07d1c" stroke-width="1.5" />
+          <text x="380" y="198" text-anchor="middle" font-size="14" font-weight="600" fill="#1f2421" font-family="Fraunces, serif">Follow-up de renovação</text>
+          <text x="380" y="218" text-anchor="middle" font-size="11" fill="#5b615c">feito pela própria Emily</text>
+        </g>
+        <!-- setas -->
+        <g stroke="#1d7a55" stroke-width="1.6" fill="none" marker-end="url(#seta)">
+          <line x1="220" y1="74" x2="276" y2="74" />
+          <line x1="480" y1="74" x2="536" y2="74" />
+          <path d="M 640 112 C 640 150, 520 200, 484 202" />
+          <path d="M 280 202 C 160 200, 120 160, 120 116" />
+        </g>
+        <g font-family="'JetBrains Mono', monospace" font-size="9.5" fill="#5b615c">
+          <text x="248" y="62" text-anchor="middle">alimenta</text>
+          <text x="508" y="62" text-anchor="middle">abre a oferta</text>
+          <text x="583" y="172" text-anchor="middle">assinou</text>
+          <text x="163" y="172" text-anchor="middle">o ciclo recomeça</text>
+        </g>
+      </svg>
+      <div class="diagrama-nota">CIRCUITO EM VALIDAÇÃO · FLUXO DE CONCEITO, NÃO DE PRODUTO IMPLANTADO</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Contexto de mercado</h2>
+    <p class="sub">Fatos públicos e verificáveis — sem números próprios, porque ainda não os temos.</p>
+    <div class="mercado">
+      <div class="fato">
+        <h3>A categoria é real lá fora</h3>
+        <p>Agentes de voz por IA para clínicas e sistemas de saúde captaram <strong>centenas de milhões de dólares em 2025</strong>, em rodadas anunciadas publicamente por empresas como <strong>Assort Health</strong>, <strong>Hyro</strong> e <strong>Infinitus</strong>.</p>
+      </div>
+      <div class="fato">
+        <h3>No Brasil, o jogo é outro</h3>
+        <p>O incumbente local é <strong>chatbot-first</strong> — a <strong>Cloudia</strong> lidera na conversa por texto — e o segmento enterprise tem a <strong>Carecode</strong>, investida da <strong>a16z</strong>.</p>
+      </div>
+      <div class="fato">
+        <h3>O espaço aberto</h3>
+        <p>O <strong>médio mercado de clínicas brasileiras</strong>, com voz + vendas + CRM integrado, segue sem dono. É exatamente onde a Emily mira.</p>
+      </div>
+    </div>
+    <p class="fonte">FONTES: ANÚNCIOS PÚBLICOS DE CAPTAÇÃO DAS PRÓPRIAS EMPRESAS CITADAS (ASSORT HEALTH, HYRO, INFINITUS, CARECODE/A16Z) E MATERIAL PÚBLICO DA CLOUDIA. NENHUM NÚMERO PRÓPRIO DE TRAÇÃO É DECLARADO NESTA PÁGINA.</p>
+  </section>
+
+  <section>
+    <h2>Status honesto</h2>
+    <ul class="status-lista">
+      <li><strong>Em estruturação:</strong> protótipo interno — a vertente de secretária executiva pessoal já opera no dia a dia do fundador; a vertente de vendas para clínicas está em prototipagem.</li>
+      <li><strong>Guardrails desde o primeiro dia:</strong> consentimento explícito, opt-out vence sempre, handoff humano quando a conversa exige, preço nunca inventado pela IA.</li>
+      <li><strong>O que não existe ainda:</strong> produto lançado, preço definido, SLA, clientes ou resultados a apresentar — e esta página não afirma nada disso.</li>
+      <li><strong>Próximo passo:</strong> clínicas parceiras de design para desenhar a vendedora com quem vive o problema, antes de qualquer promessa.</li>
+    </ul>
+  </section>
+
+  <div class="cta">
+    <h2>Vamos conversar?</h2>
+    <p>Se você tem uma clínica que perde lead no primeiro contato — ou quer acompanhar a construção da Emily de perto — a conversa começa simples: sem compromisso, sem venda, só o problema real na mesa.</p>
+    <a class="b" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20conversar%20sobre%20a%20Emily%20%E2%80%94%20a%20secret%C3%A1ria%20de%20IA%20do%20ecossistema%20ClinicNow." target="_blank" rel="noopener">Conversar no WhatsApp</a>
+    <a class="g" href="mailto:drsostenescosta@gmail.com?subject=Parceiro%20de%20design%20%E2%80%94%20Emily">Tornar-me parceiro de design</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="eco-links">
+    <a href="../clinicnow/">ClinicNow</a>
+    <a href="../careloop/">CareLoop</a>
+    <a href="../medverse/">MedVerse</a>
+    <a href="../projetos/">Mapa de projetos</a>
+  </div>
+  ZATHEON · EMILY — EM ESTRUTURAÇÃO · PROTÓTIPO INTERNO · SEM PREÇO, SLA, CLIENTES OU PROMESSA DE RESULTADO
+</footer>
+
+</body>
+</html>

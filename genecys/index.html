@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Genecys — Cuidado de idosos com inteligência artificial · Tese em validação · Zatheon</title>
+<meta name="description" content="Tese em validação: Genecys — monitoramento, companhia e coordenação com a família para o idoso envelhecer em casa com segurança e acompanhamento. Quando algo exige cuidado, o alerta vira teleconsulta no ClinicNow Cabin com próximo passo documentado. Não é um serviço de saúde em operação." />
+<meta name="robots" content="noindex" /><!-- tese em validação — indexar apenas após gatilho definido pelo comitê -->
+<meta property="og:title" content="Genecys — Cuidado de idosos com inteligência artificial" />
+<meta property="og:description" content="Tese em validação do ecossistema Zatheon: monitoramento por IA, quadro completo para a família e desfecho clínico documentado via ClinicNow Cabin. Buscando parceiros de design." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f3; --bg-soft: #f2efe7; --ink: #1f2421; --ink-soft: #5b615c;
+    --line: #e3ded2; --accent: #1d7a55; --accent-soft: #e7f2ec; --gold: #a07d1c; --gold-soft: #f4ecdc;
+    --serif: 'Fraunces', serif; --sans: 'Inter', sans-serif; --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.7; font-size: 16px; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  .wrap { max-width: 840px; margin: 0 auto; padding: 0 22px; }
+  header.nav { position: sticky; top: 0; background: rgba(250,248,243,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); z-index: 10; }
+  .nav-inner { max-width: 840px; margin: 0 auto; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .brand { font-family: var(--serif); font-weight: 600; color: var(--ink); font-size: 1.02rem; }
+  .brand small { color: var(--gold); font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; display: block; }
+  .nav a.back { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--ink-soft); white-space: nowrap; }
+  .nav a.back:hover { color: var(--accent); }
+
+  .hero { padding: 56px 0 26px; }
+  .kicker { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--gold); display: block; margin-bottom: 14px; }
+  h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(1.8rem, 5vw, 2.7rem); line-height: 1.18; margin-bottom: 16px; }
+  h1 em { color: var(--accent); font-style: normal; }
+  .hero p.lead { color: var(--ink-soft); max-width: 660px; font-size: 1.05rem; }
+  .selo { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(160,125,28,0.4); border-radius: 99px; padding: 5px 14px; background: var(--gold-soft); }
+  .aviso { margin: 22px 0 0; padding: 14px 18px; border: 1px solid rgba(160,125,28,0.35); border-radius: 10px; font-size: 0.86rem; color: var(--ink-soft); background: var(--bg-soft); }
+  .aviso strong { color: var(--ink); }
+
+  section { padding: 36px 0 8px; }
+  h2 { font-family: var(--serif); font-weight: 600; font-size: 1.35rem; margin-bottom: 10px; }
+  .sub { color: var(--ink-soft); font-size: 0.92rem; margin-bottom: 18px; max-width: 660px; }
+
+  .passos { display: grid; gap: 12px; counter-reset: p; }
+  .passo { display: flex; gap: 14px; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+  .passo::before { counter-increment: p; content: counter(p); font-family: var(--mono); color: var(--accent); font-size: 0.85rem; border: 1px solid var(--line); border-radius: 8px; padding: 2px 9px; flex: none; margin-top: 2px; background: var(--accent-soft); }
+  .passo p { font-size: 0.92rem; color: var(--ink-soft); }
+  .passo strong { color: var(--ink); }
+
+  .fatos { display: grid; gap: 12px; }
+  .fato { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+  .fato .fonte { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 6px; }
+  .fato p { font-size: 0.92rem; color: var(--ink-soft); }
+  .fato strong { color: var(--ink); }
+
+  .eco { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; }
+  .eco p { font-size: 0.92rem; color: var(--ink-soft); }
+  .eco strong { color: var(--ink); }
+  .eco-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .eco-links a { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em; padding: 5px 10px; border: 1px solid var(--line); border-radius: 8px; color: var(--accent); }
+  .eco-links a:hover { border-color: var(--accent); }
+
+  ul.limites { list-style: none; display: grid; gap: 8px; }
+  ul.limites li { font-size: 0.9rem; color: var(--ink-soft); padding-left: 22px; position: relative; }
+  ul.limites li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
+  ul.limites li strong { color: var(--ink); }
+
+  .status-box { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 99px; }
+  .badge.b-ideia { background: #ece9f5; color: #5b4a9e; }
+  .badge.b-tese { background: var(--gold-soft); color: var(--gold); }
+  .status-box p { font-size: 0.9rem; color: var(--ink-soft); }
+  .status-box strong { color: var(--ink); }
+
+  .cta { margin: 44px 0 60px; padding: 26px; background: var(--ink); border-radius: 16px; color: #f2efe7; }
+  .cta h2 { font-family: var(--serif); font-size: 1.3rem; margin-bottom: 8px; }
+  .cta p { font-size: 0.92rem; opacity: 0.85; margin-bottom: 16px; max-width: 620px; }
+  .cta a.b { display: inline-block; background: var(--accent); color: #fff; padding: 11px 22px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; margin: 0 10px 10px 0; }
+  .cta a.g { display: inline-block; border: 1px solid rgba(242,239,231,0.4); color: #f2efe7; padding: 11px 22px; border-radius: 10px; font-size: 0.9rem; }
+
+  footer { border-top: 1px solid var(--line); padding: 26px 22px 42px; text-align: center; color: var(--ink-soft); font-size: 0.72rem; font-family: var(--mono); letter-spacing: 0.08em; }
+  footer .foot-links { margin-top: 10px; display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; font-family: var(--sans); letter-spacing: 0; font-size: 0.78rem; }
+  footer .foot-links a { color: var(--ink-soft); }
+  footer .foot-links a:hover { color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  @media (prefers-reduced-motion: no-preference) { .fade { animation: f 0.7s ease both; } @keyframes f { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } } }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">Genecys <small>ECOSSISTEMA ZATHEON</small></div>
+    <a class="back" href="../">← VOLTAR</a>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <div class="hero fade">
+    <span class="kicker">GENECYS · TESE EM VALIDAÇÃO · IDEIA MAPEADA</span>
+    <h1>Cuidado de idosos com <em>inteligência artificial</em>.</h1>
+    <p class="lead">Monitoramento, companhia e coordenação com a família para envelhecer em casa com segurança e acompanhamento — e, quando algo exige cuidado, um caminho clínico documentado até o desfecho.</p>
+    <span class="selo">TESE EM VALIDAÇÃO — NÃO É UM SERVIÇO EM OPERAÇÃO</span>
+    <div class="aviso"><strong>O que esta página é (e não é):</strong> uma tese em validação do ecossistema Zatheon. Não presta atendimento, não recebe dados de pacientes e não afirma existir produto implantado, rede de médicos, parceiro, tração ou resultado clínico. Nada aqui substitui a decisão de um profissional de saúde licenciado.</div>
+  </div>
+
+  <section class="fade">
+    <h2>O mecanismo em 3 passos</h2>
+    <p class="sub">O que estamos desenhando — do sinal precoce ao desfecho clínico documentado, com humanos no circuito em todo passo com consequência.</p>
+    <div class="passos">
+      <div class="passo"><p><strong>A IA acompanha o dia a dia do idoso e detecta sinais precoces.</strong> Rotina, adesão ao cuidado combinado e mudanças sutis de padrão — antes que virem crise.</p></div>
+      <div class="passo"><p><strong>A família recebe o quadro completo, sem sobrecarga.</strong> Não é uma enxurrada de notificações: é o essencial, organizado, para quem cuida à distância saber o que de fato importa.</p></div>
+      <div class="passo"><p><strong>Quando algo exige cuidado, o alerta vira teleconsulta no ClinicNow Cabin, com próximo passo documentado.</strong> É o desfecho clínico que diferencia o Genecys de monitoramento puro: o sinal não morre num aviso — ele é acompanhado até a conduta de um profissional licenciado.</p></div>
+    </div>
+  </section>
+
+  <section class="fade">
+    <h2>Por que agora</h2>
+    <p class="sub">Fatos do mercado — com o nome da fonte, sem números próprios.</p>
+    <div class="fatos">
+      <div class="fato">
+        <span class="fonte">CASO PAPA · EUA</span>
+        <p>A trajetória da Papa, startup americana de companhia para idosos, mostrou que <strong>companhia sem desfecho clínico não se sustenta</strong>. Conversa e visita aliviam a solidão, mas sem fechar o circuito de cuidado o valor não se comprova para quem paga.</p>
+      </div>
+      <div class="fato">
+        <span class="fonte">SENSI.AI · ELLIQ</span>
+        <p>Sensi.AI e ElliQ provaram duas coisas: <strong>monitoramento de idosos por IA funciona</strong> e existe <strong>canal por governo e pagador</strong> — a ElliQ chegou a idosos por meio de agências públicas de envelhecimento nos EUA. A categoria é real; a pergunta é quem fecha o circuito.</p>
+      </div>
+      <div class="fato">
+        <span class="fonte">SEBRAE · BRASIL</span>
+        <p>No Brasil, o mercado de cuidadores de idosos cresceu <strong>cerca de 74% em 5 anos</strong>, segundo o Sebrae — e envelhecemos rápido. Ainda assim, <strong>não há player que feche o circuito clínico</strong>: do sinal em casa ao próximo passo documentado por um profissional.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="fade">
+    <h2>Conexão com o ecossistema Zatheon</h2>
+    <div class="eco">
+      <p>O Genecys traz <strong>a família inteira para o circuito de cuidado</strong>. O médico opera no <strong>ClinicNow</strong>; o acesso de quem não tem canal digital passa pelo <strong>ClinicNow Cabin</strong>; o acompanhamento contínuo vira recorrência ética no <strong>CareLoop</strong>. O Genecys é a porta de entrada da família nesse mesmo circuito — o idoso em casa, os filhos informados e o profissional de saúde com o próximo passo documentado.</p>
+      <div class="eco-links">
+        <a href="../clinicnow/">ClinicNow</a>
+        <a href="../clinicnow/cabin.html">ClinicNow Cabin</a>
+        <a href="../careloop/">CareLoop</a>
+        <a href="../projetos/">Mapa de projetos</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="fade">
+    <h2>Limites que não se negociam</h2>
+    <ul class="limites">
+      <li><strong>Nenhum diagnóstico, prescrição ou triagem autônoma pela IA</strong> — autoridade clínica humana explícita em todo passo com consequência.</li>
+      <li><strong>Sem escuta contínua e sem vigilância.</strong> Silêncio significa "desconhecido", nunca segurança.</li>
+      <li><strong>Nenhum dado de saúde identificável</strong> antes de contratos, governança e revisão clínica.</li>
+      <li><strong>Nenhuma promessa</strong> de disponibilidade, resultado clínico, redução de custo ou de fila.</li>
+    </ul>
+  </section>
+
+  <section class="fade">
+    <h2>Status honesto</h2>
+    <div class="status-box">
+      <div class="badges">
+        <span class="badge b-ideia">IDEIA MAPEADA</span>
+        <span class="badge b-tese">TESE EM VALIDAÇÃO</span>
+      </div>
+      <p>O Genecys está na fase de validação de tese: estudo do problema, das referências e do desenho do circuito. <strong>Buscamos parceiros para validar junto</strong> — operadoras de saúde, prefeituras e agências de home care que vivem esse problema por dentro. Sem promessa antes da evidência.</p>
+    </div>
+  </section>
+
+  <div class="cta fade">
+    <h2>Vamos conversar?</h2>
+    <p>Se você é operadora, prefeitura, agência de home care — ou família que conhece esse problema de perto — queremos ouvir como o cuidado acontece hoje e construir a solução junto, como parceiro de design.</p>
+    <a class="b" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20conversar%20sobre%20a%20tese%20Genecys." target="_blank" rel="noopener">Conversar no WhatsApp</a>
+    <a class="g" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20ser%20parceiro%20de%20design%20da%20tese%20Genecys." target="_blank" rel="noopener">Tornar-se parceiro de design</a>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  ZATHEON · GENECYS — NOME DE TRABALHO, SEM REGISTRO FORMAL · TESE EM VALIDAÇÃO · SEM PRODUTO EM OPERAÇÃO
+  <div class="foot-links">
+    <a href="../index.html">Sóstenes Costa Paiva</a>
+    <a href="../projetos/">Mapa de projetos</a>
+    <a href="../clinicnow/">ClinicNow</a>
+    <a href="../careloop/">CareLoop</a>
+    <a href="../medverse/">MedVerse</a>
+  </div>
+</footer>
+
+</body>
+</html>

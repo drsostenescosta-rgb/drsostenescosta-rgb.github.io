@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ClinicNow Cabin — O acesso começa aqui. O cuidado continua humano.</title>
+<meta name="description" content="Tese em validação: um corredor de acesso fechado — da solicitação não-urgente ao próximo passo documentado — com canal assistido por cabine onde a evidência mostrar necessidade. Protótipo; não é um serviço de saúde." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#04080a; --panel:rgba(255,255,255,0.04); --line:rgba(255,255,255,0.1);
+    --ink:#eef4f0; --ink-soft:#9fb0a7; --green:#19c37d; --gold:#c9a227;
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
+  a{color:var(--green);text-decoration:none}
+  .wrap{max-width:840px;margin:0 auto;padding:0 22px}
+  .orb{position:fixed;border-radius:50%;filter:blur(90px);opacity:.16;pointer-events:none;z-index:0}
+  .o1{width:420px;height:420px;background:var(--green);top:-120px;right:-80px}
+  .o2{width:360px;height:360px;background:var(--gold);bottom:-140px;left:-100px}
+  main{position:relative;z-index:1}
+  header.nav{position:sticky;top:0;background:rgba(4,8,10,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:10}
+  .nav-inner{max-width:840px;margin:0 auto;padding:14px 22px;display:flex;justify-content:space-between;align-items:center}
+  .brand{font-family:var(--serif);font-weight:600}
+  .brand small{color:var(--gold);font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;display:block}
+  .nav a.back{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--ink-soft)}
+  .hero{padding:64px 0 30px}
+  .kicker{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--gold);display:block;margin-bottom:14px}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(1.8rem,5vw,2.7rem);line-height:1.18;margin-bottom:16px}
+  h1 em{color:var(--green);font-style:normal}
+  .hero p{color:var(--ink-soft);max-width:640px}
+  .aviso{margin:22px 0;padding:14px 18px;border:1px solid rgba(201,162,39,.35);border-radius:10px;font-size:.86rem;color:var(--ink-soft);background:var(--panel)}
+  section{padding:34px 0 8px}
+  h2{font-family:var(--serif);font-weight:600;font-size:1.35rem;margin-bottom:10px}
+  .sub{color:var(--ink-soft);font-size:.92rem;margin-bottom:18px;max-width:640px}
+  .passos{display:grid;gap:10px;counter-reset:p}
+  .passo{display:flex;gap:14px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .passo::before{counter-increment:p;content:counter(p);font-family:var(--mono);color:var(--green);font-size:.85rem;border:1px solid var(--line);border-radius:8px;padding:2px 9px;flex:none;margin-top:2px}
+  .passo p{font-size:.92rem;color:var(--ink-soft)}
+  .passo strong{color:var(--ink)}
+  .canais{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:8px}
+  .canal{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .canal .tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;color:var(--gold);border:1px solid rgba(201,162,39,.4);border-radius:99px;padding:3px 9px}
+  .canal h3{font-family:var(--serif);font-size:1.1rem;margin:10px 0 6px}
+  .canal p{font-size:.88rem;color:var(--ink-soft)}
+  ul.limites{list-style:none;display:grid;gap:8px}
+  ul.limites li{font-size:.9rem;color:var(--ink-soft);padding-left:22px;position:relative}
+  ul.limites li::before{content:'—';position:absolute;left:0;color:var(--green)}
+  .cta{margin:44px 0 60px;padding:28px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(160deg,rgba(25,195,125,.08),rgba(201,162,39,.05))}
+  .cta h2{margin-bottom:8px}
+  .cta p{color:var(--ink-soft);font-size:.92rem;margin-bottom:16px;max-width:600px}
+  .cta a.b{display:inline-block;background:var(--green);color:#04231a;font-weight:600;padding:11px 22px;border-radius:10px;font-size:.9rem;margin:0 10px 10px 0}
+  .cta a.g{display:inline-block;border:1px solid var(--line);color:var(--ink);padding:11px 22px;border-radius:10px;font-size:.9rem}
+  footer{border-top:1px solid var(--line);padding:26px 22px 42px;text-align:center;color:var(--ink-soft);font-size:.72rem;font-family:var(--mono);letter-spacing:.08em}
+  :focus-visible{outline:2px solid var(--green);outline-offset:3px}
+  @media (prefers-reduced-motion:no-preference){ .fade{animation:f .7s ease both} @keyframes f{from{opacity:0;transform:translateY(10px)}to{opacity:1}} }
+</style>
+</head>
+<body>
+<div class="orb o1"></div><div class="orb o2"></div>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">ClinicNow <small>FAMÍLIA CLINIC NOW · ZATHEON</small></div>
+    <a class="back" href="../projetos/">← MAPA DE PROJETOS</a>
+  </div>
+</header>
+<main>
+<div class="wrap">
+
+  <div class="hero fade">
+    <span class="kicker">CLINICNOW CABIN · TESE EM VALIDAÇÃO · PROTÓTIPO DE HACKATHON</span>
+    <h1>O acesso começa aqui. <em>O cuidado continua humano.</em></h1>
+    <p>Um corredor de acesso fechado: da solicitação de cuidado não-urgente até o <strong style="color:var(--ink)">próximo passo documentado</strong> — preparado por IA, decidido sempre por profissionais licenciados, acompanhado até o desfecho. Não é mais um marketplace de vídeo-chamada: é o circuito inteiro se fechando.</p>
+    <div class="aviso"><strong>O que esta página é (e não é):</strong> uma tese em validação e um protótipo de apresentação. Não presta atendimento, não recebe dados de pacientes e não afirma existir produto implantado, rede de médicos, parceiro, tração ou resultado clínico. Demonstrações usam apenas casos sintéticos. As imagens de cabine são visualização de conceito, não fotografia de produto.</div>
+  </div>
+
+  <section class="fade">
+    <h2>O circuito mínimo</h2>
+    <p class="sub">O que estamos testando — primeiro em modo sombra, com casos sintéticos ou retrospectivos desidentificados e autorizados:</p>
+    <div class="passos">
+      <div class="passo"><p><strong>O operador escolhe a linha de serviço</strong> com dados reais (volume de encaminhamentos, fila, espera).</p></div>
+      <div class="passo"><p><strong>A pessoa permanece no fluxo e no prontuário existentes</strong> — nada de sistema paralelo.</p></div>
+      <div class="passo"><p><strong>A IA prepara o pacote</strong>: consentimento, fonte, tradução, lacunas apontadas e anexos — sem decidir nada clínico.</p></div>
+      <div class="passo"><p><strong>Clínico assistente e especialista mantêm os papéis clínicos</strong> exigidos em cada passo.</p></div>
+      <div class="passo"><p><strong>O especialista revisa de forma assíncrona</strong> (modelo eConsult).</p></div>
+      <div class="passo"><p><strong>O profissional resolve, pede mais informação, recomenda vídeo ou avaliação presencial.</strong></p></div>
+      <div class="passo"><p><strong>Um dono operacional acompanha até o próximo passo ser concluído.</strong></p></div>
+      <div class="passo"><p><strong>O painel mede solicitação → desfecho</strong>, não apenas "consulta realizada".</p></div>
+    </div>
+  </section>
+
+  <section class="fade">
+    <h2>Dois canais, uma regra</h2>
+    <p class="sub">Acessibilidade é decisão de canal: digital quando possível, assistido quando a evidência exigir.</p>
+    <div class="canais">
+      <div class="canal">
+        <span class="tag">CANAL FUTURO</span>
+        <h3>ClinicNow App</h3>
+        <p>A experiência web/app para quem tem celular e conexão: acompanha a solicitação, recebe o próximo passo e mantém tudo documentado.</p>
+      </div>
+      <div class="canal">
+        <span class="tag">CONCEITO · SÓ SE A EVIDÊNCIA PEDIR</span>
+        <h3>ClinicNow Cabin (ponto assistido)</h3>
+        <p>Cabine assistida em espaços amplos — mercados, rodoviárias, farmácias, unidades de trabalho — para quem não tem telefone, computador, internet ou privacidade. Com suporte à aferição de sinais como pressão arterial e frequência cardíaca, quando o protocolo do parceiro exigir instrumento. Entra no roadmap apenas se os dados do piloto mostrarem falha por conectividade, privacidade, letramento ou instrumento.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="fade">
+    <h2>Limites que não se negociam</h2>
+    <ul class="limites">
+      <li>Nenhum diagnóstico, prescrição, exclusão de urgência ou escolha autônoma de especialidade pela IA.</li>
+      <li>Nenhum dado de saúde identificável antes de contratos, governança e revisão clínica.</li>
+      <li>Nenhuma promessa de médicos disponíveis, preço, SLA, 24/7, redução de fila ou de custo.</li>
+      <li>Autoridade clínica humana explícita em todo passo com consequência.</li>
+      <li>Validar o corredor antes da plataforma; o software antes do hardware dedicado.</li>
+    </ul>
+  </section>
+
+  <div class="cta fade">
+    <h2>Seja design partner</h2>
+    <p>Procuramos uma operadora integrada, autogestão ou rede com um corredor real de encaminhamentos (≥50/mês, espera mediana ≥30 dias) disposta a testar em modo sombra — 90 dias, 50 casos, 100% de revisão humana. Se você conhece esse fluxo por dentro, compartilhe seu caminho de acesso.</p>
+    <a class="b" href="mailto:drsostenescosta@gmail.com?subject=Design%20partner%20—%20ClinicNow%20Cabin">Quero ser design partner</a>
+    <a class="g" href="mailto:drsostenescosta@gmail.com?subject=Meu%20fluxo%20de%20acesso%20—%20ClinicNow%20Cabin">Compartilhar meu fluxo de acesso</a>
+  </div>
+
+</div>
+</main>
+<footer>ZATHEON · CLINICNOW CABIN — NOME DE TRABALHO, SEM REGISTRO FORMAL · PROTÓTIPO · CONTEÚDO SINTÉTICO</footer>
+</body>
+</html>
