@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Painel do fundador — ClinicNow</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f7f6f2; --card:#ffffff; --em:#0e7568; --em-light:#0e7568; --em-dark:#0a5a50;
+    --gold-light:#96690f; --red-light:#b3261e; --text:#1b2422; --muted:#55635f; --border:rgba(27,36,34,0.1);
+    --serif:'IBM Plex Serif',serif; --sans:'IBM Plex Sans',sans-serif; --mono:'IBM Plex Mono',monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.55; min-height:100vh; }
+  a { color:inherit; text-decoration:none; }
+  .wrap { max-width:860px; margin:0 auto; padding:40px 20px 80px; }
+  .brand { display:flex; align-items:center; gap:10px; font-family:var(--serif); margin-bottom:30px; }
+  .logo { width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center; color:var(--em-light); background:rgba(14,117,104,0.12); border:1px solid rgba(14,117,104,0.45); }
+  h1 { font-family:var(--serif); font-weight:500; font-size:1.6rem; margin-bottom:6px; }
+  .sub { color:var(--muted); font-size:0.9rem; margin-bottom:22px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:16px; }
+  label { font-size:0.8rem; font-weight:600; display:grid; gap:6px; margin-bottom:14px; }
+  input, select { background:rgba(255,255,255,0.7); border:1px solid var(--border); border-radius:10px; padding:12px 14px; color:var(--text); font-size:0.95rem; width:100%; font-family:var(--sans); }
+  input:focus { outline:none; border-color:var(--em); box-shadow:0 0 0 3px rgba(14,117,104,0.15); }
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:12px 24px; border-radius:8px; font-weight:700; font-size:0.9rem; cursor:pointer; border:none;
+    background:var(--em); color:#ffffff; }
+  .btn:disabled { opacity:0.6; cursor:wait; }
+  .erro { color:var(--red-light); font-size:0.82rem; margin-top:10px; display:none; }
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; }
+  @media (max-width:640px){ .stats{grid-template-columns:1fr 1fr} }
+  .stat { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px 16px; }
+  .stat .n { font-family:var(--serif); font-size:1.6rem; color:var(--em-light); }
+  .stat .l { font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; font-family:var(--mono); }
+  .row { background:rgba(255,255,255,0.55); border:1px solid var(--border); border-radius:10px; padding:12px 14px; margin-bottom:8px; font-size:0.87rem; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center; }
+  .row .m { color:var(--muted); font-size:0.75rem; display:block; }
+  .pill { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.05em; text-transform:uppercase; border-radius:6px; padding:2px 9px; background:rgba(150,105,15,0.12); color:var(--gold-light); border:1px solid rgba(150,105,15,0.3); }
+  .zap { border:1px solid var(--border); border-radius:8px; padding:5px 12px; font-size:0.76rem; color:var(--muted); }
+  .zap:hover { color:var(--em-light); border-color:var(--em); }
+  .muted-note { font-size:0.72rem; color:var(--muted); margin-top:14px; }
+  .out { background:none; border:1px solid var(--border); color:var(--muted); border-radius:6px; padding:5px 14px; cursor:pointer; font-size:0.74rem; float:right; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><span class="logo">Cn</span> ClinicNow · painel do fundador</div>
+
+  <div id="login" class="card" style="max-width:440px">
+    <h1>Entrar</h1>
+    <p class="sub">Acesso restrito ao fundador. Use o usuário criado no Supabase (Authentication → Users).</p>
+    <label>E-mail<input id="l-email" type="email" autocomplete="username" placeholder="drsostenescosta@gmail.com"></label>
+    <label>Senha<input id="l-senha" type="password" autocomplete="current-password"></label>
+    <button class="btn" id="l-btn" onclick="login()">Entrar no painel →</button>
+    <div class="erro" id="l-erro"></div>
+    <div class="muted-note">A sessão fica só neste navegador. RLS no banco garante que apenas usuários autenticados leem os leads.</div>
+  </div>
+
+  <div id="painel" style="display:none">
+    <button class="out" onclick="logout()">Sair</button>
+    <h1>Leads em tempo real</h1>
+    <p class="sub">Cada linha é um médico que se cadastrou na captura, na aplicação ClinicNow ou na demo. Regra de ouro: responder no mesmo dia.</p>
+    <div class="stats">
+      <div class="stat"><div class="l">Total de leads</div><div class="n" id="s-total">—</div></div>
+      <div class="stat"><div class="l">Últimos 7 dias</div><div class="n" id="s-7d">—</div></div>
+      <div class="stat"><div class="l">Em conversa/proposta</div><div class="n" id="s-pipe">—</div></div>
+      <div class="stat"><div class="l">Clientes fechados</div><div class="n" id="s-cli">—</div></div>
+    </div>
+    <div class="card">
+      <div id="lista">Carregando…</div>
+    </div>
+    <div class="card">
+      <h2 style="font-size:1.15rem; font-family:var(--serif); font-weight:500">Funil de páginas</h2>
+      <p class="sub">Visitas medidas pela analytics primária (sem cookies, sem IP — LGPD by design). Conversão = leads do período ÷ visitas de captura+aplicação.</p>
+      <div id="funil">Carregando…</div>
+    </div>
+    <div class="muted-note">Dados no Brasil · Supabase São Paulo · LGPD. Leads são dados pessoais: use-os apenas para o contato que a pessoa pediu.</div>
+  </div>
+</div>
+
+<script src="../medgroth/config.js"></script>
+<script>
+var TOKEN_KEY = 'docgrow_founder_token';
+
+function authHeaders() {
+  var t = sessionStorage.getItem(TOKEN_KEY);
+  return { 'apikey': MEDGROTH.key, 'Authorization': 'Bearer ' + t, 'Content-Type': 'application/json' };
+}
+
+function login() {
+  var email = document.getElementById('l-email').value.trim();
+  var senha = document.getElementById('l-senha').value;
+  var erro = document.getElementById('l-erro');
+  erro.style.display = 'none';
+  if (!email || !senha) { erro.textContent = 'Informe e-mail e senha.'; erro.style.display = 'block'; return; }
+  var btn = document.getElementById('l-btn'); btn.disabled = true;
+  fetch(MEDGROTH.url + '/auth/v1/token?grant_type=password', {
+    method: 'POST',
+    headers: { 'apikey': MEDGROTH.key, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, password: senha })
+  }).then(function (r) { return r.json(); }).then(function (j) {
+    btn.disabled = false;
+    if (j.access_token) {
+      sessionStorage.setItem(TOKEN_KEY, j.access_token);
+      show();
+    } else {
+      erro.textContent = (j.error_description || j.msg || 'Login inválido. Crie o usuário no Supabase: Authentication → Users → Add user.');
+      erro.style.display = 'block';
+    }
+  }).catch(function () { btn.disabled = false; erro.textContent = 'Sem conexão. Tente de novo.'; erro.style.display = 'block'; });
+}
+
+function logout() { sessionStorage.removeItem(TOKEN_KEY); location.reload(); }
+
+function show() {
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('painel').style.display = '';
+  fetch(MEDGROTH.rest('medgroth_leads?select=*&order=criado_em.desc&limit=200'), { headers: authHeaders() })
+    .then(function (r) { if (r.status === 401) { logout(); return []; } return r.json(); })
+    .then(function (leads) { render(leads); renderFunil(leads); })
+    .catch(function () { document.getElementById('lista').textContent = 'Erro ao carregar. Recarregue a página.'; });
+}
+
+var FUNIL_LABELS = {
+  'medgroth-captura': '2 · Captura MedGroth', 'docgrow-landing': '1 · Landing ClinicNow',
+  'docgrow-aplicacao': '2 · Aplicação ClinicNow', 'docgrow-app': '3 · Cockpit ClinicNow', 'medgroth-app': '3 · App MedGroth'
+};
+function renderFunil(leads) {
+  fetch(MEDGROTH.rest('docgrow_funil_resumo?select=*'), { headers: authHeaders() })
+    .then(function (r) { return r.json(); })
+    .then(function (rows) {
+      var el = document.getElementById('funil');
+      if (!Array.isArray(rows) || !rows.length) { el.innerHTML = '<div style="color:var(--muted); font-size:0.85rem">Sem visitas registradas ainda — a medição começou hoje (28/07). Divulgue as páginas e acompanhe aqui.</div>'; return; }
+      rows.sort(function (a, b) { return (FUNIL_LABELS[a.pagina] || a.pagina) < (FUNIL_LABELS[b.pagina] || b.pagina) ? -1 : 1; });
+      var topoD30 = rows.filter(function (x) { return x.pagina === 'medgroth-captura' || x.pagina === 'docgrow-aplicacao'; })
+        .reduce(function (s, x) { return s + Number(x.d30 || 0); }, 0);
+      var leadsD30 = (leads || []).filter(function (l) { return Date.now() - new Date(l.criado_em).getTime() < 30 * 864e5; }).length;
+      var conv = topoD30 ? Math.round(100 * leadsD30 / topoD30) : null;
+      el.innerHTML = rows.map(function (x) {
+        return '<div class="row"><div><b>' + (FUNIL_LABELS[x.pagina] || x.pagina) + '</b><span class="m">' + x.d7 + ' visitas em 7d · ' + x.d30 + ' em 30d · ' + x.total + ' no total</span></div></div>';
+      }).join('') + (conv !== null ? '<div class="row" style="border-color:rgba(150,105,15,0.35)"><div><b>Conversão visita→lead (30d)</b><span class="m">' + leadsD30 + ' leads ÷ ' + topoD30 + ' visitas de captura/aplicação</span></div><div class="pill">' + conv + '%</div></div>' : '');
+    })
+    .catch(function () { document.getElementById('funil').textContent = 'Erro ao carregar o funil.'; });
+}
+
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+/* pipeline de vendas: cada etapa tem a mensagem certa (compliance CFM: sem promessa) */
+var ETAPAS = ['novo', 'conversando', 'proposta', 'cliente', 'perdido'];
+var ETAPA_COR = { novo: 'rgba(179,38,30,0.35)', conversando: 'rgba(29,95,168,0.35)', proposta: 'rgba(150,105,15,0.4)', cliente: 'rgba(14,117,104,0.45)', perdido: 'rgba(143,163,154,0.25)' };
+function msgEtapa(l) {
+  var nome = l.nome || '';
+  var aplic = (l.origem || '').indexOf('aplicacao') === 0;
+  var msgs = {
+    novo: 'Olá, ' + nome + '! Aqui é Sóstenes, do ClinicNow. Vi seu cadastro' + (aplic ? ' — e sua aplicação para a vaga de fundador' : '') + '. Posso te fazer 2 perguntas rápidas sobre sua agenda para ver se o ClinicNow encaixa no seu momento?',
+    conversando: 'Olá, ' + nome + '! Pensei no que você me contou. O ClinicNow organiza exatamente isso: agenda com confirmação automática, pacientes que não somem e acompanhamento contínuo. Quer que eu te mostre o cockpit funcionando em 10 minutos, por vídeo ou aqui mesmo?',
+    proposta: 'Olá, ' + nome + '! Fechando o que combinamos: vaga de fundador do ClinicNow com preço travado para sempre — Start R$ 97/mês, Pro R$ 297/mês ou Aceleração R$ 997/mês, sem fidelidade, cancela quando quiser. Pagamento por Pix mensal enquanto ativamos a cobrança automática. Qual plano faz sentido para começar?',
+    cliente: 'Olá, ' + nome + '! Bem-vindo(a) ao ClinicNow Seu primeiro passo: abra o cockpit (drsostenescosta-rgb.github.io/docgrow/app.html), cadastre seus 5 pacientes mais recentes e me chame aqui quando terminar — eu te acompanho na primeira semana inteira.',
+    perdido: 'Olá, ' + nome + '! Entendo que agora não é o momento. Vou deixar sua vaga aberta por mais um tempo — se a agenda apertar ou quiser retomar, é só me chamar. Obrigado pela conversa!'
+  };
+  return msgs[l.status || 'novo'] || msgs.novo;
+}
+function setEtapa(id, status) {
+  fetch(MEDGROTH.rest('medgroth_leads?id=eq.' + id), { method: 'PATCH', headers: authHeaders(), body: JSON.stringify({ status: status }) })
+    .then(function (r) { if (r.ok) show(); else alert('Não consegui salvar — recarregue e tente de novo.'); });
+}
+function setNota(id) {
+  var nota = prompt('Nota sobre este lead (só você vê):');
+  if (nota === null) return;
+  fetch(MEDGROTH.rest('medgroth_leads?id=eq.' + id), { method: 'PATCH', headers: authHeaders(), body: JSON.stringify({ nota: nota }) })
+    .then(function (r) { if (r.ok) show(); });
+}
+
+function render(leads) {
+  if (!Array.isArray(leads)) leads = [];
+  var agora = Date.now();
+  var d7 = leads.filter(function (l) { return agora - new Date(l.criado_em).getTime() < 7 * 864e5; }).length;
+  var pipe = leads.filter(function (l) { return l.status === 'conversando' || l.status === 'proposta'; }).length;
+  var cli = leads.filter(function (l) { return l.status === 'cliente'; }).length;
+  document.getElementById('s-total').textContent = leads.length;
+  document.getElementById('s-7d').textContent = d7;
+  document.getElementById('s-pipe').textContent = pipe;
+  document.getElementById('s-cli').textContent = cli + '/10';
+
+  var el = document.getElementById('lista');
+  if (!leads.length) { el.innerHTML = '<div style="text-align:center; color:var(--muted); padding:30px">Nenhum lead ainda. Divulgue a captura e a aplicação — cada lead aparece aqui na hora.</div>'; return; }
+  var ordem = { novo: 0, conversando: 1, proposta: 2, cliente: 3, perdido: 4 };
+  leads.sort(function (a, b) { return (ordem[a.status || 'novo'] - ordem[b.status || 'novo']) || (new Date(b.criado_em) - new Date(a.criado_em)); });
+  el.innerHTML = leads.map(function (l) {
+    var st = l.status || 'novo';
+    var motivo = l.respostas && l.respostas.motivo ? ' · "' + esc(l.respostas.motivo) + '"' : '';
+    var nota = l.nota ? '<span class="m">' + esc(l.nota) + '</span>' : '';
+    var sel = '<select onchange="setEtapa(\'' + l.id + '\', this.value)" style="width:auto; padding:4px 8px; font-size:0.74rem; border-radius:8px; border-color:' + (ETAPA_COR[st] || 'var(--border)') + '">' +
+      ETAPAS.map(function (e) { return '<option value="' + e + '"' + (e === st ? ' selected' : '') + '>' + e + '</option>'; }).join('') + '</select>';
+    return '<div class="row" style="border-color:' + (ETAPA_COR[st] || 'var(--border)') + '"><div><b>' + esc(l.nome) + '</b> ' + ((l.origem || '').indexOf('aplicacao') === 0 ? '<span class="pill">aplicação</span>' : '') +
+      '<span class="m">' + esc(l.especialidade || '—') + ' · ' + esc(l.faturamento || 'faturamento n/d') + ' · ' + new Date(l.criado_em).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) + motivo + '</span>' + nota + '</div>' +
+      '<div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap">' + sel +
+      '<a class="zap" target="_blank" rel="noopener" href="https://wa.me/55' + String(l.whatsapp || '').replace(/\D/g, '') + '?text=' + encodeURIComponent(msgEtapa(l)) + '">WhatsApp da etapa →</a>' +
+      '<button class="zap" style="background:none; cursor:pointer" onclick="setNota(\'' + l.id + '\')">nota</button></div></div>';
+  }).join('');
+}
+
+if (sessionStorage.getItem(TOKEN_KEY)) show();
+</script>
+</body>
+</html>

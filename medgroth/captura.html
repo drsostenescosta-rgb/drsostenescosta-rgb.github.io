@@ -119,12 +119,13 @@
     <a class="btn btn-ghost" id="zap" href="#" target="_blank" rel="noopener">Prefiro falar no WhatsApp</a>
   </div>
 
-  <div class="selo">MedGroth · Zetheon · dados protegidos por design</div>
+  <div class="selo">MedGroth · Zatheon · dados protegidos por design</div>
 </div>
 
 <script src="config.js"></script>
 <script>
 (function(){
+  MEDGROTH.track('medgroth-captura');
   var params = new URLSearchParams(location.search);
   var plano = params.get('plano') || '';
 

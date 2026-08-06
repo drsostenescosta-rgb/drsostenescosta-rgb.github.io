@@ -11,12 +11,43 @@
 - [x] **Config de backend** (`medgroth/config.js`) — Supabase compartilhado com o SosMed, gravação de leads com fallback local (nunca perde lead)
 - [x] Card do MedGroth no site pessoal (seção "no que trabalho")
 
+## Decisões do comitê — 28/07/2026
+
+Fonte: `../ideias/2026-07-comite-aprovacao.md`. Este bloco prevalece sobre qualquer meta anterior deste arquivo. Revisão: primeira quinzena de outubro/2026.
+
+### Regra de frente única
+- ClinicNow/MedGroth é O produto até outubro/2026. Nenhuma linha de código de CareLoop ou MedVerse antes de 5 médicos reais percorrerem o funil completo (Sprint 1 é bloqueador absoluto; zero mídia paga antes disso).
+
+### Metas revisadas (substituem as anteriores)
+- Marketing 90 dias: **1.500 seguidores qualificados** e **30 diagnósticos/mês**.
+- WhatsApp: **janelas fixas de resposta + primeira resposta automatizada** (o SLA "<1h" foi reprovado).
+- Meta 2026: **40–60 clientes / MRR R$ 12–18 mil**; se dezembro fechar abaixo de 30 clientes, replanejar a curva 2027+.
+- Métricas exigidas até outubro: ≥30 diagnósticos/mês gravados no Supabase com lead→conversa ≥40%; ≥10 clientes pagantes com cobrança recorrente ativa; 100% das fundadoras ativas na semana 4 e churn zero no trimestre (cancelamento exige post-mortem escrito).
+
+### Adições obrigatórias por sprint
+- **Sprint 2:** dashboard "quanto o produto te gerou em R$ este mês" como **tela inicial** do app (lição Zocdoc). Views `docgrow_health_score` e `docgrow_cofre_recuperado` já criadas no Supabase (28/07).
+- **Sprint 3:** confirmação de consulta anti no-show via WhatsApp + coleta ativa de reviews Google (ROI comprovado — Doctolib/Tebra). Filtro CFM no `/api/groth`: veto a promessa de resultado, superlativos e antes/depois fora das hipóteses da Res. 2.336/2023.
+- **Sprint 4:** landing internacional ClinicNow **somente após 2 casos documentados** (a página `../docgrow/` já existe com preço em US$; tráfego só após o gatilho).
+
+### Gatilhos de expansão (nada anda sem a métrica)
+- **CareLoop módulo-piloto (3–5 fundadoras):** liberar com 10 clientes pagantes ClinicNow + parecer jurídico ANS entregue. As 5 condições do advogado são vinculantes.
+- **CareLoop standalone:** 5 médicos com ≥5 pacientes assinantes ativos cada.
+- **MedVerse:** ADIADO. Desbloqueio: MRR ≥ R$ 30 mil e churn < 3% por 2 meses, OU cofundador dedicado. Autorizado desde já só o teste de fumaça (bot "questão do dia": 500 usuários, D30 > 40%).
+
+### Pendências com prazo (até 31/ago/2026)
+- [ ] Registrar domínios disponíveis das 4 marcas (esta semana)
+- [ ] Buscas INPI (classes 9/42/44) antes de material público — obrigatório para MedVerse
+- [ ] Encomendar o parecer jurídico ANS do CareLoop
+- [ ] Teste de pricing por resultado (take rate) com 2–3 fundadoras
+- [ ] Fluxo de consentimento de telemedicina (Res. 2.314/2022) antes do 1º vídeo
+- [ ] Inscrição em 2 programas de startup (NVIDIA Inception, Google/Microsoft for Startups, AWS Activate)
+
 ## Hospedagens & infraestrutura
 
 | Camada | Onde | Status |
 |---|---|---|
 | Site + páginas (vendas, captura, app, investidores) | **GitHub Pages** — `drsostenescosta-rgb.github.io/medgroth/` | ✅ no ar com o push |
-| Banco (leads, futuras assinaturas) | **Supabase** projeto `sosmed` (`yaqphldowpshhrtvvfaq`, região São Paulo) | ✅ tabela `medgroth_leads` criada com RLS (insert anônimo, leitura autenticada) |
+| Banco (leads, futuras assinaturas) | **Supabase** projeto `sosmed` (`yaqphldowpshhrtvvfaq`, região São Paulo) | ✅ `medgroth_leads` com RLS + 10 tabelas `docgrow_*` (28/07) |
 | Funções serverless (IA, webhooks de pagamento) | **Vercel** time `sosmedai` (mesmo deploy do SosMed) | ⏳ próximo ciclo |
 | Domínio próprio (`medgroth.com.br` ou `medgroth.app`) | Registro.br / Vercel Domains | ⏳ decidir e apontar |
 | E-mail transacional (boas-vindas, recuperação de lead) | Resend ou Brevo (camada gratuita) | ⏳ próximo ciclo |
@@ -47,25 +78,25 @@ create policy "leitura autenticada" on public.medgroth_leads
 ## Sprint 1 — Funil vivo (destrava a venda)
 
 - [x] Rodar o SQL acima → captura gravando 100% no banco real
-- [ ] Painel do fundador: página simples que lista `medgroth_leads` (login Supabase) com botão "chamar no WhatsApp"
+- [x] Painel do fundador: `../docgrow/painel.html` lista `medgroth_leads` (login Supabase) com botão "chamar no WhatsApp" (28/07 — falta criar o usuário no dashboard Supabase)
 - [ ] Notificação de lead novo no WhatsApp/e-mail do fundador (função Vercel + webhook do Supabase)
-- [ ] Pixel/analytics (Umami ou Plausible) nas 4 páginas para medir captura → diagnóstico → conversa
+- [x] Analytics primária LGPD-friendly (tabela `docgrow_pageviews`, sem cookies/IP) nas 5 páginas do funil + visão de funil com conversão no painel do fundador (28/07)
 - [ ] Teste do funil completo com 5 médicos reais da rede do fundador
 
 ## Sprint 2 — Conta na nuvem e cobrança
 
-- [ ] Login real no app (Supabase Auth, mesmo padrão do SosMed) mantendo o modo local como fallback
-- [ ] Sincronizar `medgroth_db` (diagnóstico, checks, leads, tarefas) com o banco por usuário
+- [x] Login real no app (Supabase Auth e-mail/senha) mantendo o modo local como fallback — `../docgrow/app.html` "Conectar à nuvem" (28/07)
+- [x] Sincronizar o banco local do ClinicNow (pacientes, consultas, follow-ups, protocolos, assinaturas, pagamentos, eventos) por usuário via upsert com RLS (28/07)
 - [ ] Assinatura dos planos (Stripe Billing ou Mercado Pago Assinaturas) + tabela `assinaturas` compartilhada
 - [ ] Bloqueio suave por plano: Start (diagnóstico+plano+CRM) vs Pro (metas, scripts, integração MedEasy)
-- [ ] Contador real de vagas de fundador (20) lendo do banco
+- [x] Contador real de vagas de fundador (20) lendo do banco — RPC `docgrow_vagas_restantes` na landing e na aplicação (28/07)
 
 ## Sprint 3 — Diferencial de IA e ecossistema
 
 - [ ] `/api/groth`: plano de crescimento reescrito por IA (claude-sonnet-5) a partir do diagnóstico — mais específico que o motor de regras atual, com guarda-corpos (publicidade médica/CFM, sem promessa de resultado)
 - [ ] Scripts de conversão gerados por IA para o nicho do usuário (roteiro da consulta de avaliação, mensagens de recall)
 - [ ] Ponte MedEasy: Índice de Saúde do paciente como argumento na proposta de protocolo
-- [ ] Relatório mensal automático: "sua clínica este mês" (leads, conversão, receita vs meta)
+- [x] Relatório mensal "sua clínica este mês" no cockpit (receita, MRR, Cofre, consultas, no-shows, Health Score — imprimível/PDF) (28/07)
 
 ## Sprint 4 — Escala de vendas
 
@@ -78,6 +109,6 @@ create policy "leitura autenticada" on public.medgroth_leads
 ## Regras que não mudam
 
 1. **Nenhum lead se perde** — fallback local sempre ativo; banco é espelho, não gargalo.
-2. **Venda ética** — tudo que o produto recomenda respeita publicidade médica (CFM); prova de valor = resultado clínico medido, nunca promessa.
+2. **Venda ética** — tudo que o produto recomenda respeita publicidade médica (CFM); prova de valor = resultado medido de receita/gestão do consultório, nunca promessa e jamais resultado clínico de pacientes (Res. CFM 2.336/2023).
 3. **Chave de API nunca no frontend** — IA e pagamentos só via funções serverless.
 4. **Preço de fundador é sagrado** — quem entrar nas 20 primeiras mantém o preço para sempre.

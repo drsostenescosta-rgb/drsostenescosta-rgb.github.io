@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MedVerse — Estude medicina como quem joga. Pratique como quem pesquisa.</title>
+<meta name="description" content="MedVerse é a plataforma de ensino médico do ecossistema Zatheon: trilhas gamificadas de questões, revisão espaçada, rede social médica de estudo, protocolos atualizados de fontes seguras e o Laboratório de Artigos com integridade acadêmica." />
+<meta property="og:title" content="MedVerse — Estude medicina como quem joga. Pratique como quem pesquisa." />
+<meta property="og:description" content="Trilhas gamificadas, revisão espaçada, rede de estudo com validação por referência, protocolos revisados continuamente a partir de bases reconhecidas e escrita científica acelerada — sem atalhos éticos." />
+<meta name="robots" content="noindex" /><!-- produto adiado pelo comitê 28/07/2026 — indexar apenas após gatilho de lançamento e busca INPI -->
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#06050c; --bg-2:#0a0815; --card:rgba(21,16,38,0.6); --card-solid:#130f22;
+    --em:#8b5cf6; --em-light:#a78bfa; --em-dark:#6d28d9;
+    --gold:#c9a227; --gold-light:#e2c464;
+    --text:#ece9f4; --muted:#9b93b0; --border:rgba(236,233,244,0.09); --border-strong:rgba(236,233,244,0.18);
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.6; overflow-x:hidden; }
+  a { color:inherit; text-decoration:none; }
+  h1,h2,h3 { font-family:var(--serif); font-weight:500; line-height:1.15; }
+  em { font-style:italic; color:var(--em-light); }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 24px; position:relative; z-index:2; }
+  .bg-orbs { position:fixed; inset:0; z-index:-2; overflow:hidden; pointer-events:none; }
+  .orb { position:absolute; border-radius:50%; filter:blur(100px); opacity:0.45; }
+  .orb-a { width:620px; height:620px; top:-14%; left:-10%; background:radial-gradient(circle,rgba(139,92,246,0.30),transparent 70%); animation:d1 26s ease-in-out infinite; }
+  .orb-b { width:540px; height:540px; bottom:-16%; right:-10%; background:radial-gradient(circle,rgba(201,162,39,0.20),transparent 70%); animation:d2 32s ease-in-out infinite; }
+  @keyframes d1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(60px,50px)} }
+  @keyframes d2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-50px,-40px)} }
+  @media (prefers-reduced-motion:reduce){ .orb{animation:none} }
+  .eyebrow { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--em-light); font-weight:600; display:inline-flex; align-items:center; gap:10px; }
+  .eyebrow::before { content:''; width:26px; height:1px; background:linear-gradient(90deg,var(--em),transparent); }
+  .grad { background:linear-gradient(115deg,#fff 0%,#e6ddfb 45%,var(--em-light) 75%,var(--em) 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+
+  header.nav { position:fixed; top:0; left:0; right:0; z-index:100; backdrop-filter:blur(18px); background:rgba(6,5,12,0.65); border-bottom:1px solid var(--border); }
+  .nav-inner { display:flex; align-items:center; justify-content:space-between; padding:13px 24px; max-width:1120px; margin:0 auto; gap:14px; }
+  .brand { display:flex; align-items:center; gap:11px; }
+  .logo { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:1.05rem; color:var(--em-light); background:linear-gradient(145deg,rgba(139,92,246,0.16),rgba(139,92,246,0.03)); border:1px solid rgba(139,92,246,0.45); box-shadow:0 0 18px rgba(139,92,246,0.18); }
+  .brand-name { font-family:var(--serif); font-size:1.05rem; }
+  .brand-sub { font-family:var(--mono); font-size:0.56rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase; }
+  .nav-links { display:flex; gap:20px; }
+  .nav-links a { font-size:0.85rem; color:var(--muted); transition:color .2s; }
+  .nav-links a:hover { color:var(--em-light); }
+  @media (max-width:820px){ .nav-links{display:none} }
+
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:12px 24px; border-radius:999px; font-weight:700; font-size:0.92rem; cursor:pointer; border:1px solid transparent; white-space:nowrap; transition:transform .2s, box-shadow .3s, filter .2s; }
+  .btn-em { background:linear-gradient(135deg,var(--em-light),var(--em-dark)); color:#0d0518; box-shadow:0 4px 22px rgba(139,92,246,0.3); }
+  .btn-em:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(139,92,246,0.5); filter:brightness(1.05); }
+  .btn-ghost { border-color:var(--border-strong); color:var(--text); background:rgba(255,255,255,0.02); }
+  .btn-ghost:hover { border-color:var(--em); color:var(--em-light); transform:translateY(-2px); }
+  .btn-lg { padding:15px 30px; font-size:1rem; }
+
+  .hero { padding:150px 0 70px; }
+  .hero-grid { display:grid; grid-template-columns:1.05fr 0.95fr; gap:52px; align-items:center; }
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr} }
+  .hero h1 { font-size:clamp(2.3rem,4.8vw,3.6rem); margin:20px 0; letter-spacing:-0.01em; }
+  .hero-sub { color:var(--muted); font-size:1.08rem; max-width:50ch; margin-bottom:30px; }
+  .hero-ctas { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:22px; }
+  .hero-note { font-size:0.78rem; color:var(--muted); font-family:var(--mono); }
+
+  .mock { border-radius:20px; border:1px solid var(--border-strong); background:linear-gradient(160deg,rgba(21,16,38,0.92),rgba(9,7,17,0.92)); box-shadow:0 30px 80px rgba(0,0,0,0.55); overflow:hidden; }
+  .mock-bar { display:flex; gap:7px; padding:12px 16px; border-bottom:1px solid var(--border); }
+  .mock-dot { width:10px; height:10px; border-radius:50%; background:rgba(236,233,244,0.16); }
+  .mock-dot.e { background:var(--em); } .mock-dot.g { background:var(--gold); }
+  .mock-body { padding:20px; display:grid; gap:10px; }
+  .m-row { display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:11px; background:rgba(255,255,255,0.025); border:1px solid var(--border); }
+  .m-label { font-size:0.82rem; color:var(--muted); }
+  .m-val { font-family:var(--mono); font-weight:600; font-size:0.95rem; }
+  .m-val.up { color:var(--em-light); }
+  .m-val.gd { color:var(--gold-light); }
+  .m-bar { height:8px; border-radius:99px; background:rgba(255,255,255,0.06); overflow:hidden; }
+  .m-fill { height:100%; border-radius:99px; background:linear-gradient(90deg,var(--em-dark),var(--em-light)); }
+
+  section { padding:74px 0; }
+  section + section { border-top:1px solid var(--border); }
+  .sec-head { max-width:640px; margin-bottom:44px; }
+  .sec-head h2 { font-size:clamp(1.7rem,3.4vw,2.4rem); margin:16px 0 14px; }
+  .sec-head p { color:var(--muted); }
+
+  .cards3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  @media (max-width:860px){ .cards3{grid-template-columns:1fr} }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:26px; }
+  .card .ico { font-size:1.5rem; margin-bottom:12px; }
+  .card h3 { font-size:1.1rem; margin-bottom:8px; }
+  .card p { color:var(--muted); font-size:0.92rem; }
+  .card ul { margin:12px 0 0 18px; color:var(--muted); font-size:0.9rem; display:grid; gap:6px; }
+
+  .modes { display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:stretch; }
+  @media (max-width:860px){ .modes{grid-template-columns:1fr} }
+  .mode { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:32px 28px; display:flex; flex-direction:column; }
+  .mode.stu { border-color:rgba(139,92,246,0.45); box-shadow:0 0 40px rgba(139,92,246,0.10); }
+  .mode.doc { border-color:rgba(201,162,39,0.4); box-shadow:0 0 40px rgba(201,162,39,0.08); }
+  .mode .mode-tag { font-family:var(--mono); font-size:0.66rem; letter-spacing:0.16em; text-transform:uppercase; font-weight:600; margin-bottom:12px; }
+  .mode.stu .mode-tag { color:var(--em-light); }
+  .mode.doc .mode-tag { color:var(--gold-light); }
+  .mode h3 { font-size:1.4rem; margin-bottom:6px; }
+  .mode .mode-sub { color:var(--muted); font-size:0.9rem; margin-bottom:18px; }
+  .mode ul { list-style:none; display:grid; gap:10px; }
+  .mode li { font-size:0.9rem; color:var(--muted); padding-left:24px; position:relative; }
+  .mode.stu li::before { content:'✦'; position:absolute; left:0; color:var(--em-light); font-weight:700; }
+  .mode.doc li::before { content:'✦'; position:absolute; left:0; color:var(--gold-light); font-weight:700; }
+  .mode li strong { color:var(--text); }
+
+  .steps { display:grid; gap:14px; counter-reset:st; }
+  .step { display:flex; gap:18px; align-items:flex-start; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 22px; }
+  .step .n { counter-increment:st; flex-shrink:0; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-weight:600; color:var(--em-light); background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.4); }
+  .step .n::before { content:counter(st); }
+  .step h3 { font-size:1.02rem; margin-bottom:4px; }
+  .step p { color:var(--muted); font-size:0.9rem; }
+
+  .game-chips { display:flex; gap:12px; flex-wrap:wrap; margin-top:24px; }
+  .chip { font-family:var(--mono); font-size:0.8rem; font-weight:600; padding:10px 18px; border-radius:999px; background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.4); color:var(--em-light); }
+  .chip.gd { background:rgba(201,162,39,0.1); border-color:rgba(201,162,39,0.4); color:var(--gold-light); }
+
+  .integrity { background:var(--card); border:1px solid rgba(201,162,39,0.4); border-radius:18px; padding:34px 32px; box-shadow:0 0 40px rgba(201,162,39,0.08); max-width:820px; }
+  .integrity h3 { font-size:1.3rem; margin:12px 0 12px; }
+  .integrity p { color:var(--muted); font-size:0.95rem; }
+  .integrity ul { list-style:none; margin-top:16px; display:grid; gap:9px; }
+  .integrity li { font-size:0.9rem; color:var(--muted); padding-left:24px; position:relative; }
+  .integrity li::before { content:'✓'; position:absolute; left:0; color:var(--gold-light); font-weight:700; }
+  .integrity li strong { color:var(--text); }
+
+  .plans { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:stretch; }
+  @media (max-width:900px){ .plans{grid-template-columns:1fr} }
+  .plan { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:30px 26px; display:flex; flex-direction:column; position:relative; }
+  .plan.hot { border-color:rgba(139,92,246,0.55); box-shadow:0 0 40px rgba(139,92,246,0.12); }
+  .plan .tag { position:absolute; top:-12px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; background:linear-gradient(135deg,var(--em-light),var(--em-dark)); color:#0d0518; font-weight:700; padding:5px 14px; border-radius:999px; }
+  .plan h3 { font-size:1.15rem; }
+  .plan .for { color:var(--muted); font-size:0.82rem; margin:4px 0 16px; }
+  .price { font-family:var(--serif); font-size:2.2rem; }
+  .price small { font-size:0.85rem; color:var(--muted); font-family:var(--sans); }
+  .plan ul { list-style:none; margin:18px 0 24px; display:grid; gap:9px; flex:1; }
+  .plan li { font-size:0.89rem; color:var(--muted); padding-left:24px; position:relative; }
+  .plan li::before { content:'✓'; position:absolute; left:0; color:var(--em-light); font-weight:700; }
+  .plan li.no::before { content:'—'; color:rgba(236,233,244,0.25); }
+  .plan .btn { justify-content:center; }
+  .founder { margin-top:22px; text-align:center; font-size:0.85rem; color:var(--gold-light); font-family:var(--mono); }
+
+  .quote { background:var(--card); border:1px solid var(--border); border-left:3px solid var(--em); border-radius:0 16px 16px 0; padding:26px 30px; font-family:var(--serif); font-size:1.15rem; font-style:italic; max-width:760px; }
+  .quote .who { display:block; margin-top:14px; font-family:var(--mono); font-style:normal; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+
+  details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 22px; margin-bottom:10px; }
+  summary { cursor:pointer; font-weight:600; font-size:0.95rem; }
+  details p { color:var(--muted); font-size:0.9rem; margin-top:10px; }
+
+  .cta-final { text-align:center; padding:90px 0; }
+  .cta-final h2 { font-size:clamp(1.8rem,3.6vw,2.6rem); margin-bottom:14px; }
+  .cta-final p { color:var(--muted); max-width:52ch; margin:0 auto 30px; }
+
+  footer { border-top:1px solid var(--border); padding:34px 0; }
+  .foot { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center; color:var(--muted); font-size:0.82rem; }
+  .foot a { color:var(--muted); border-bottom:1px solid transparent; }
+  .foot a:hover { color:var(--em-light); }
+  .seal { font-family:var(--mono); font-size:0.72rem; color:var(--gold-light); }
+  .disclaimer { margin-top:14px; font-size:0.72rem; color:rgba(155,147,176,0.7); max-width:70ch; }
+</style>
+</head>
+<body>
+<div class="bg-orbs"><div class="orb orb-a"></div><div class="orb orb-b"></div></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <span class="logo">Mv</span>
+      <span><span class="brand-name">MedVerse</span><br><span class="brand-sub">por Zatheon · ensino médico</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#modos">Modos</a>
+      <a href="#metodo">Como funciona</a>
+      <a href="#gamificacao">Gamificação</a>
+      <a href="#planos">Planos</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-em" href="https://wa.me/5584999869468?text=Ol%C3%A1!%20Quero%20entrar%20na%20lista%20fundadora%20do%20MedVerse." target="_blank" rel="noopener">Entrar na lista fundadora</a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Do primeiro período à primeira publicação</span>
+      <h1><span class="grad">Estude medicina como quem joga.</span><br>Pratique como quem <em>pesquisa</em>.</h1>
+      <p class="hero-sub">O MedVerse junta sua vida acadêmica num só lugar: trilhas de questões gamificadas com revisão espaçada, rede social médica de estudo com validação por referência — e, quando você se forma, <strong>protocolos revisados continuamente a partir de bases reconhecidas e um laboratório de escrita científica</strong> que respeita a ciência.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-em btn-lg" href="https://wa.me/5584999869468?text=Ol%C3%A1!%20Quero%20entrar%20na%20lista%20fundadora%20do%20MedVerse." target="_blank" rel="noopener">Entrar na lista fundadora →</a>
+        <a class="btn btn-ghost btn-lg" href="#modos">Conhecer os módulos</a>
+      </div>
+      <div class="hero-note">lista fundadora · 50 vagas · 50% para sempre</div>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-bar"><span class="mock-dot e"></span><span class="mock-dot g"></span><span class="mock-dot"></span></div>
+      <div class="mock-body">
+        <div class="m-row"><span class="m-label">Ofensiva</span><span class="m-val up">🔥 23 dias</span></div>
+        <div class="m-row" style="display:block">
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px"><span class="m-label">XP da semana</span><span class="m-val up">1.240 / 1.500</span></div>
+          <div class="m-bar"><div class="m-fill" style="width:83%"></div></div>
+        </div>
+        <div class="m-row"><span class="m-label">Liga semanal</span><span class="m-val gd">Ouro · 4º lugar</span></div>
+        <div class="m-row"><span class="m-label">Próxima revisão espaçada</span><span class="m-val">Cardio · em 2h</span></div>
+        <div class="m-row"><span class="m-label">Questão do dia</span><span class="m-val up">IAM sem supra ▸</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="dor">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">O problema</span>
+      <h2>Muito conteúdo. Pouco <em>sistema</em>.</h2>
+      <p>Da graduação à residência, todo mundo estuda muito. Quase ninguém estuda com método, constância e fontes em que dá para confiar.</p>
+    </div>
+    <div class="cards3">
+      <div class="card"><div class="ico">🗂️</div><h3>Conteúdo em 10 lugares</h3><p>PDF no drive, resumo no grupo, questão num app, protocolo num site — e metade já está desatualizada quando você abre. Ninguém sabe qual versão vale.</p></div>
+      <div class="card"><div class="ico">🏝️</div><h3>Estudar sozinho, sem método</h3><p>Sem revisão espaçada, sem constância, sem ninguém para validar o que você entendeu. A motivação dura duas semanas e o conteúdo evapora antes da prova.</p></div>
+      <div class="card"><div class="ico">⏳</div><h3>Meses no processo, não na ciência</h3><p>Escrever um artigo vira uma maratona de formatação, referência e burocracia de submissão. O tempo vai para o processo — não para a pergunta científica.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="modos">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Dois modos, uma jornada</span>
+      <h2>Do <em>Modo Estudante</em> ao <em>Modo Médico</em> — sem trocar de plataforma</h2>
+      <p>O MedVerse cresce com você: começa organizando sua vida universitária e termina acelerando sua produção científica.</p>
+    </div>
+    <div class="modes">
+      <div class="mode stu">
+        <span class="mode-tag">Modo Estudante</span>
+        <h3>Para quem está na graduação</h3>
+        <div class="mode-sub">Sua vida acadêmica inteira, com a constância de um jogo.</div>
+        <ul>
+          <li><strong>Perfil acadêmico completo</strong> — com foto, imagens, conquistas e histórico de evolução</li>
+          <li><strong>Integração com a vida universitária</strong> — notas, materiais, planos de ensino, agenda de aulas e provas</li>
+          <li><strong>Banco de questões gamificado</strong> — trilhas por disciplina, XP, ofensiva, ligas semanais e revisão espaçada</li>
+          <li><strong>Oportunidades reais</strong> — estágios, ligas acadêmicas e projetos de extensão</li>
+          <li><strong>Grupos de estudo via WhatsApp</strong> — metas coletivas e constância em bando</li>
+          <li><strong>Rede social médica de estudo</strong> — resumos, flashcards e casos comentados, sempre com validação por referência</li>
+        </ul>
+      </div>
+      <div class="mode doc">
+        <span class="mode-tag">Modo Médico</span>
+        <h3>Para quem já está na prática</h3>
+        <div class="mode-sub">Atualização confiável, preparação para provas e ciência acelerada.</div>
+        <ul>
+          <li><strong>Procedimentos, técnicas e protocolos</strong> revisados continuamente a partir de bases reconhecidas — PubMed, SciELO, Cochrane e diretrizes de sociedades — com data da última revisão visível</li>
+          <li><strong>Preparação para provas</strong> — residência, títulos de especialista e USMLE, com trilhas dirigidas por desempenho</li>
+          <li><strong>Laboratório de Artigos</strong> — assistente de escrita científica que acelera revisão de literatura, estrutura, formatação e submissão</li>
+          <li><strong>Integridade acadêmica explícita</strong> — a IA organiza e revisa; nunca fabrica dados ou referências. Toda citação é verificável na fonte</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="metodo">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Como funciona</span>
+      <h2>Perfil → Trilhas → Rede → <em>Pesquisa</em></h2>
+      <p>Uma jornada única, do calouro que quer passar em anatomia ao médico que quer publicar.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="n"></span><div><h3>Monte seu perfil e conecte sua rotina acadêmica</h3><p>Foto, universidade, período, disciplinas. Notas, materiais, planos de ensino e agenda de aulas e provas entram na plataforma — o semestre inteiro num só painel.</p></div></div>
+      <div class="step"><span class="n"></span><div><h3>Estude em trilhas gamificadas com revisão espaçada</h3><p>Cada disciplina vira uma trilha de questões comentadas. XP, ofensiva e ligas semanais mantêm a constância; a revisão espaçada decide o que você revê e quando — antes de esquecer.</p></div></div>
+      <div class="step"><span class="n"></span><div><h3>Compartilhe e valide conhecimento na rede de estudo</h3><p>Publique resumos, flashcards e casos comentados. A comunidade e as referências validam cada material — o que circula na rede tem fonte, não achismo.</p></div></div>
+      <div class="step"><span class="n"></span><div><h3>Evolua para pesquisa com o Laboratório de Artigos</h3><p>Da revisão de literatura à submissão: estrutura, formatação e checklist de periódico acelerados por IA — com você no comando da ciência e toda citação verificável.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="gamificacao">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Gamificação</span>
+      <h2>A constância de um jogo, a seriedade de um <em>banco de questões</em></h2>
+      <p>A mesma mecânica que faz milhões de pessoas praticarem um idioma todo dia — aplicada a questões de medicina com explicação comentada em cada alternativa. Meta diária curta, progresso visível, e a revisão espaçada trabalhando nos bastidores para que o que você acertou hoje ainda esteja lá na prova.</p>
+    </div>
+    <div class="game-chips">
+      <span class="chip">🔥 Ofensiva diária</span>
+      <span class="chip">⚡ XP por questão</span>
+      <span class="chip gd">🏆 Ligas semanais</span>
+      <span class="chip">🎯 Metas diárias</span>
+      <span class="chip">🧠 Revisão espaçada</span>
+      <span class="chip gd">💬 Explicação comentada</span>
+    </div>
+  </div>
+</section>
+
+<section id="integridade">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Integridade acadêmica</span>
+      <h2>IA que <em>acelera</em> a ciência — nunca a inventa</h2>
+    </div>
+    <div class="integrity">
+      <span class="eyebrow" style="color:var(--gold-light)">Compromisso MedVerse</span>
+      <h3>Fontes validadas. Citações verificáveis. Zero atalho ético.</h3>
+      <p>Todo conteúdo clínico do MedVerse nasce de bases seguras — PubMed, SciELO, Cochrane e diretrizes de sociedades — e carrega a referência junto. No Laboratório de Artigos, o compromisso é explícito:</p>
+      <ul>
+        <li><strong>A IA organiza, estrutura e revisa</strong> — a autoria, a análise e as conclusões são suas</li>
+        <li><strong>Nunca fabrica dados, resultados ou referências</strong> — nem para "completar" um rascunho</li>
+        <li><strong>Toda citação é verificável na fonte</strong> — com link direto para o trabalho original</li>
+        <li><strong>Sem atalhos éticos em trabalhos acadêmicos</strong> — a plataforma foi desenhada para acelerar o processo, não para substituir o pesquisador</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="planos">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Planos</span>
+      <h2>Um preço para cada fase da sua <em>jornada</em></h2>
+      <p>Sem fidelidade. Cancele quando quiser. E as 50 primeiras vagas da lista fundadora levam 50% de desconto — para sempre.</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Estudante</h3>
+        <div class="for">Do 1º ao 8º período — construa a base</div>
+        <div class="price">R$ 39<small>/mês</small></div>
+        <ul>
+          <li>Perfil acadêmico completo</li>
+          <li>Notas, materiais e agenda de aulas e provas</li>
+          <li>Trilhas gamificadas por disciplina</li>
+          <li>XP, ofensiva e revisão espaçada</li>
+          <li>Grupos de estudo via WhatsApp</li>
+          <li class="no">Banco de questões completo e ligas</li>
+          <li class="no">Laboratório de Artigos</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Ol%C3%A1!%20Quero%20o%20plano%20Estudante%20do%20MedVerse%20na%20lista%20fundadora." target="_blank" rel="noopener">Quero o Estudante</a>
+      </div>
+      <div class="plan hot">
+        <span class="tag">Recomendado para o internato</span>
+        <h3>Interno</h3>
+        <div class="for">Internato e reta final — hora de acelerar</div>
+        <div class="price">R$ 79<small>/mês</small></div>
+        <ul>
+          <li>Tudo do Estudante</li>
+          <li>Banco de questões completo com ligas semanais</li>
+          <li>Rede social médica de estudo (resumos, flashcards, casos)</li>
+          <li>Integrações completas com a vida universitária</li>
+          <li>Oportunidades de estágio, ligas acadêmicas e extensão</li>
+          <li class="no">Protocolos atualizados e USMLE</li>
+          <li class="no">Laboratório de Artigos</li>
+        </ul>
+        <a class="btn btn-em" href="https://wa.me/5584999869468?text=Ol%C3%A1!%20Quero%20o%20plano%20Interno%20do%20MedVerse%20na%20lista%20fundadora." target="_blank" rel="noopener">Quero o Interno →</a>
+      </div>
+      <div class="plan">
+        <h3>Residente / Médico</h3>
+        <div class="for">Prática, provas e publicação</div>
+        <div class="price">R$ 129<small>/mês</small></div>
+        <ul>
+          <li>Tudo do Interno</li>
+          <li>Protocolos, técnicas e procedimentos revisados continuamente</li>
+          <li>Preparação para residência, títulos e USMLE</li>
+          <li>Laboratório de Artigos com integridade acadêmica</li>
+          <li>Citações verificáveis em PubMed, SciELO e Cochrane</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Ol%C3%A1!%20Quero%20o%20plano%20Residente%2FM%C3%A9dico%20do%20MedVerse%20na%20lista%20fundadora." target="_blank" rel="noopener">Quero o Residente/Médico</a>
+      </div>
+    </div>
+    <div class="founder">★ Lista fundadora: as 50 primeiras vagas garantem 50% de desconto para sempre.</div>
+  </div>
+</section>
+
+<section id="prova">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Por que existe</span>
+      <h2>Feito por quem ensina — e <em>nunca parou</em> de estudar</h2>
+    </div>
+    <blockquote class="quote">
+      "Passei anos vendo alunos brilhantes estudarem do jeito mais difícil: sozinhos, sem método e com material espalhado. O MedVerse nasce de uma tese simples: <em>conhecimento médico cresce quando é compartilhado com método</em> — com fonte, com constância e com gente junto."
+      <span class="who">Sóstenes Costa Paiva · educador e fundador · Zatheon</span>
+    </blockquote>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">FAQ</span>
+      <h2>Perguntas diretas, respostas diretas</h2>
+    </div>
+    <details><summary>O MedVerse substitui meus livros e as aulas da faculdade?</summary><p>Não — e nem quer. Livro e aula continuam sendo a base. O MedVerse é o sistema em volta: organiza o semestre, transforma o conteúdo em questões com revisão espaçada e garante que o que você aprendeu não evapore até a prova.</p></details>
+    <details><summary>As questões são validadas?</summary><p>Sim. Cada questão tem explicação comentada e referência rastreável a fontes seguras (livros-texto, diretrizes, PubMed, SciELO, Cochrane). Na rede de estudo, resumos e flashcards da comunidade passam por validação por referência antes de ganhar o selo de verificado.</p></details>
+    <details><summary>A IA escreve meu artigo por mim?</summary><p>Não — e isso é inegociável. O Laboratório de Artigos acelera a parte operacional: revisão de literatura, estrutura, formatação e checklist de submissão. A análise, os dados e as conclusões são seus. A IA nunca fabrica dados nem referências, e toda citação sugerida é verificável na fonte original.</p></details>
+    <details><summary>Funciona na minha universidade?</summary><p>Sim. Você cadastra suas disciplinas, notas e agenda manualmente ou importa os materiais — o MedVerse se adapta a qualquer grade. As integrações automáticas com sistemas acadêmicos estão sendo expandidas universidade a universidade, e membros da lista fundadora votam nas próximas.</p></details>
+    <details><summary>Tem versão gratuita?</summary><p>Tem um período de teste gratuito para você conhecer as trilhas e a rede de estudo. Depois, os planos começam em R$ 39/mês — e quem entrar na lista fundadora (50 vagas) paga metade disso para sempre.</p></details>
+    <details><summary>E meus dados acadêmicos? (LGPD)</summary><p>Seus dados são seus. Ficam hospedados no Brasil, tratados conforme a LGPD, nunca são vendidos e você pode exportar ou apagar tudo quando quiser. Notas e desempenho só aparecem para quem você autorizar.</p></details>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="wrap">
+    <span class="eyebrow" style="justify-content:center">Lista fundadora aberta</span>
+    <h2>50 vagas. <em>50% para sempre.</em><br>Sua ofensiva começa hoje.</h2>
+    <p>Entre na lista fundadora pelo WhatsApp, garanta o preço de fundador e ajude a decidir quais universidades e integrações vêm primeiro.</p>
+    <a class="btn btn-em btn-lg" href="https://wa.me/5584999869468?text=Ol%C3%A1!%20Quero%20entrar%20na%20lista%20fundadora%20do%20MedVerse." target="_blank" rel="noopener">Entrar na lista fundadora →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>© 2026 MedVerse · Zatheon · <a href="../index.html">Sóstenes Costa Paiva</a></div>
+    <div style="display:flex; gap:18px; flex-wrap:wrap; align-items:center">
+      <a href="../medgroth/">MedGroth</a>
+      <a href="../docgrow/">ClinicNow</a>
+      <a href="../careloop/">CareLoop</a>
+      <a href="../sosmed/">SosMed</a>
+      <a href="https://wa.me/5584999869468?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20MedVerse." target="_blank" rel="noopener">WhatsApp</a>
+      <a href="../sosmed/privacidade.html">Política de Privacidade</a>
+      <span class="seal">🇧🇷 Dados no Brasil · LGPD</span>
+    </div>
+  </div>
+  <div class="wrap disclaimer">O MedVerse é uma plataforma de ensino e apoio ao estudo. Não substitui a formação médica formal, a supervisão docente nem a responsabilidade profissional e regulatória de cada usuário. Conteúdos clínicos referenciam fontes públicas reconhecidas; a conduta final é sempre decisão do profissional habilitado.</div>
+</footer>
+</body>
+</html>

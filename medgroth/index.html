@@ -6,7 +6,7 @@
 <title>MedGroth — A máquina de crescimento para médicos e clínicas</title>
 <meta name="description" content="MedGroth diagnostica sua clínica, monta seu plano de crescimento em 4 semanas, organiza seus leads e transforma consultas avulsas em protocolos e receita recorrente. Do ecossistema de Sóstenes Costa Paiva." />
 <meta property="og:title" content="MedGroth — A máquina de crescimento para médicos e clínicas" />
-<meta property="og:description" content="Diagnóstico, plano de crescimento, CRM de pacientes e metas. Pare de depender de indicação: construa uma máquina previsível de pacientes." />
+<meta property="og:description" content="Diagnóstico, plano de crescimento, CRM e metas para organizar a captação da sua clínica — sem depender só de indicação." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -100,7 +100,7 @@
   @media (max-width:900px){ .plans{grid-template-columns:1fr} }
   .plan { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:30px 26px; display:flex; flex-direction:column; position:relative; }
   .plan.hot { border-color:rgba(25,195,125,0.55); box-shadow:0 0 40px rgba(25,195,125,0.12); }
-  .plan .tag { position:absolute; top:-12px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; background:linear-gradient(135deg,var(--em-light),var(--em-dark)); color:#03130b; font-weight:700; padding:5px 14px; border-radius:999px; }
+  .plan .tag { position:absolute; top:-12px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; background:linear-gradient(135deg,var(--em-light),var(--em-dark)); color:#03130b; font-weight:700; padding:5px 14px; border-radius:999px; }
   .plan h3 { font-size:1.15rem; }
   .plan .for { color:var(--muted); font-size:0.82rem; margin:4px 0 16px; }
   .price { font-family:var(--serif); font-size:2.2rem; }
@@ -137,7 +137,7 @@
   <div class="nav-inner">
     <a class="brand" href="#top">
       <span class="logo">Mg</span>
-      <span><span class="brand-name">MedGroth</span><br><span class="brand-sub">máquina de crescimento médico</span></span>
+      <span><span class="brand-name">MedGroth</span><br><span class="brand-sub">por Zatheon · evoluindo para ClinicNow</span></span>
     </a>
     <nav class="nav-links">
       <a href="#metodo">Método</a>
@@ -172,7 +172,8 @@
           <div class="m-bar"><div class="m-fill" style="width:62%"></div></div>
         </div>
         <div class="m-row"><span class="m-label">Leads no funil</span><span class="m-val">14 · 5 em avaliação</span></div>
-        <div class="m-row"><span class="m-label">Protocolo âncora</span><span class="m-val up">Emagrecimento 90d</span></div>
+        <div class="m-row"><span class="m-label">Protocolo âncora</span><span class="m-val up">Acompanhamento (ciclo 90d)</span></div>
+        <div style="font-family:var(--mono); font-size:0.7rem; color:var(--muted); text-align:center; padding-top:4px">Simulação ilustrativa — não é promessa nem garantia de resultado</div>
       </div>
     </div>
   </div>
@@ -236,7 +237,7 @@
     </div>
     <blockquote class="quote">
       "Tranquei medicina para construir as ferramentas que os meus professores nunca tiveram. O MedGroth é a parte do ecossistema que responde a pergunta que nenhuma faculdade responde: <em>como transformar um bom médico num negócio saudável?</em>"
-      <span class="who">Sóstenes Costa Paiva · fundador · Zetheon</span>
+      <span class="who">Sóstenes Costa Paiva · fundador · Zatheon</span>
     </blockquote>
   </div>
 </section>
@@ -321,17 +322,21 @@
 
 <footer>
   <div class="wrap foot">
-    <div>© 2026 MedGroth · Zetheon · <a href="../index.html">Sóstenes Costa Paiva</a></div>
+    <div>© 2026 MedGroth · Zatheon · <a href="../index.html">Sóstenes Costa Paiva</a></div>
     <div style="display:flex; gap:18px; flex-wrap:wrap">
       <a href="app.html">Entrar</a>
       <a href="captura.html">Diagnóstico</a>
       <a href="investidores.html">Investidores</a>
+      <a href="../docgrow/">ClinicNow</a>
+      <a href="../careloop/">CareLoop</a>
+      <a href="../medverse/">MedVerse</a>
       <a href="../medeasy.html">MedEasy</a>
       <a href="../sosmed/index.html">SosMed</a>
-      <a href="https://wa.me/5584999869468" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="../sosmed/privacidade.html">Política de Privacidade</a>
+      <a href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20saber%20mais%20sobre%20o%20MedGroth" target="_blank" rel="noopener">WhatsApp</a>
     </div>
   </div>
-  <div class="wrap disclaimer">O MedGroth é uma ferramenta de estratégia e gestão de crescimento. Não presta orientação clínica nem substitui a responsabilidade profissional e regulatória (CFM/conselhos) de cada usuário. Projeções são estimativas baseadas nas respostas fornecidas, não garantia de resultado.</div>
+  <div class="wrap disclaimer">🔒 Dados no Brasil · LGPD · Supabase São Paulo — seus dados de cadastro são usados apenas para gerar seu diagnóstico e para o contato comercial. O MedGroth é uma ferramenta de estratégia e gestão de crescimento; está evoluindo para o <a href="../docgrow/">ClinicNow</a>, e assinantes migram sem custo com preço preservado. Não presta orientação clínica nem substitui a responsabilidade profissional e regulatória (CFM/conselhos) de cada usuário. A comunicação de protocolos ao paciente deve seguir a Res. CFM 2.336/2023 — sem promessa de resultado ou prazo. Projeções são estimativas baseadas nas respostas fornecidas, não garantia de resultado.</div>
 </footer>
 </body>
 </html>

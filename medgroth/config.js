@@ -11,6 +11,19 @@ window.MEDGROTH = {
     for (var k in (extra || {})) h[k] = extra[k];
     return h;
   },
+  /* Analytics primária (LGPD by design): registra só página + domínio de origem.
+     Sem cookie, sem IP armazenado pela aplicação, sem identificador de pessoa. */
+  track: function (pagina) {
+    try {
+      var ref = '';
+      try { ref = document.referrer ? new URL(document.referrer).hostname : ''; } catch (e) {}
+      fetch(this.rest('docgrow_pageviews'), {
+        method: 'POST',
+        headers: this.headers({ 'Prefer': 'return=minimal' }),
+        body: JSON.stringify({ pagina: pagina, ref: ref || null })
+      }).catch(function () {});
+    } catch (e) {}
+  },
   /* Salva um lead: tenta o banco real; se falhar (offline / tabela ainda não
      publicada), guarda na fila local e devolve {ok, remote}. Nunca perde lead. */
   saveLead: function (lead) {

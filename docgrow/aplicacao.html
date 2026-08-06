@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aplicar para uma vaga de fundador — ClinicNow</title>
+<meta name="description" content="O ClinicNow entra por aplicação: 20 vagas de fundador com preço travado para sempre. Aplique em 3 minutos." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f7f6f2; --card:#ffffff; --em:#0e7568; --em-light:#0e7568; --em-dark:#0a5a50;
+    --gold-light:#96690f; --text:#1b2422; --muted:#55635f; --border:rgba(27,36,34,0.1);
+    --serif:'IBM Plex Serif',serif; --sans:'IBM Plex Sans',sans-serif; --mono:'IBM Plex Mono',monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.6; min-height:100vh; }
+  a { color:inherit; text-decoration:none; }
+  
+  
+  
+  .wrap { max-width:560px; margin:0 auto; padding:40px 22px 60px; }
+  .top { display:flex; align-items:center; justify-content:space-between; margin-bottom:40px; }
+  .brand { display:flex; align-items:center; gap:10px; font-family:var(--serif); }
+  .logo { width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center; color:var(--em-light); background:rgba(14,117,104,0.12); border:1px solid rgba(14,117,104,0.45); }
+  .back { font-size:0.8rem; color:var(--muted); }
+  .back:hover { color:var(--em-light); }
+  .eyebrow { font-family:var(--sans); font-size:0.85rem; color:var(--em-dark); font-weight:600; display:inline-flex; align-items:center; gap:10px; }
+  h1 { font-family:var(--serif); font-weight:500; font-size:clamp(1.7rem,5vw,2.3rem); line-height:1.15; margin:14px 0 12px; }
+  h1 em { font-style:italic; color:var(--em-light); }
+  .sub { color:var(--muted); font-size:0.98rem; margin-bottom:28px; }
+  .bullets { display:grid; gap:8px; margin-bottom:30px; }
+  .bullets div { font-size:0.88rem; color:var(--muted); padding-left:24px; position:relative; }
+  .bullets div::before { content:''; position:absolute; left:0; color:var(--gold-light); font-weight:700; }
+  form { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:28px 26px; display:grid; gap:16px;  }
+  label { font-size:0.8rem; font-weight:600; display:grid; gap:6px; }
+  input, select, textarea { background:rgba(255,255,255,0.7); border:1px solid var(--border); border-radius:10px; padding:12px 14px; color:var(--text); font-family:var(--sans); font-size:0.95rem; width:100%; }
+  input:focus, select:focus, textarea:focus { outline:none; border-color:var(--em); box-shadow:0 0 0 3px rgba(14,117,104,0.15); }
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:15px 26px; border-radius:8px; font-weight:700; font-size:1rem; cursor:pointer; border:none; width:100%;
+    background:var(--em); color:#ffffff; box-shadow:0 1px 2px rgba(20,24,23,0.12); transition:transform .2s, box-shadow .3s; }
+  .btn:hover { transform:translateY(-2px); box-shadow:0 3px 10px rgba(20,24,23,0.14); }
+  .btn:disabled { opacity:0.6; cursor:wait; transform:none; }
+  .btn-ghost { background:transparent; border:1px solid var(--border); color:var(--text); box-shadow:none; margin-top:12px; }
+  .btn-ghost:hover { border-color:var(--em); color:var(--em-light); box-shadow:none; }
+  .priv { font-size:0.7rem; color:var(--muted); text-align:center; }
+  .erro { color:#b3261e; font-size:0.8rem; display:none; }
+  #obrigado { display:none; text-align:center; padding:20px 0; }
+  #obrigado .big { font-size:3rem; margin-bottom:12px; }
+  #obrigado h2 { font-family:var(--serif); font-weight:500; font-size:1.6rem; margin-bottom:10px; }
+  #obrigado p { color:var(--muted); margin-bottom:24px; }
+  .selo { margin-top:26px; font-family:var(--mono); font-size:0.75rem; color:var(--muted); text-align:center; letter-spacing:0.08em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="index.html"><span class="logo">Cn</span> ClinicNow</a>
+    <a class="back" href="index.html">← voltar ao site</a>
+  </div>
+
+  <div id="captura">
+    <span class="eyebrow" id="vagas-eyebrow">Vagas de fundador · entrada por aplicação</span>
+    <h1>Aplique para uma das <em>20 vagas</em> de fundador</h1>
+    <p class="sub">O ClinicNow não é para todo mundo — as primeiras vagas são curadas para médicos que vão implantar de verdade. Quem entra como fundador trava o preço para sempre.</p>
+    <div class="bullets">
+      <div>Preço de fundador travado — para sempre</div>
+      <div>Implantação acompanhada de perto (você não fica sozinho)</div>
+      <div>Comunidade fechada dos fundadores</div>
+      <div>Sua aplicação já gera seu diagnóstico gratuito de crescimento</div>
+    </div>
+    <form id="form" novalidate>
+      <label>Seu nome*
+        <input type="text" id="nome" placeholder="Dra. Ana Souza" autocomplete="name" required>
+      </label>
+      <label>WhatsApp* (com DDD)
+        <input type="tel" id="whatsapp" placeholder="(84) 99999-0000" autocomplete="tel" required>
+      </label>
+      <label>E-mail
+        <input type="email" id="email" placeholder="voce@clinica.com.br" autocomplete="email">
+      </label>
+      <label>Especialidade / nicho
+        <select id="especialidade">
+          <option value="">Selecionar…</option>
+          <option>Emagrecimento</option>
+          <option>Metabólico / Longevidade</option>
+          <option>Estética</option>
+          <option>Performance / Esporte</option>
+          <option>Saúde mental / Sono</option>
+          <option>Dor / Reabilitação</option>
+          <option>Clínica geral</option>
+          <option>Outra</option>
+        </select>
+      </label>
+      <label>Faturamento mensal aproximado
+        <select id="faturamento">
+          <option value="">Prefiro não dizer</option>
+          <option>Até R$ 10 mil</option>
+          <option>R$ 10–30 mil</option>
+          <option>R$ 30–80 mil</option>
+          <option>Acima de R$ 80 mil</option>
+        </select>
+      </label>
+      <label>Por que você quer uma vaga? (1 frase)
+        <textarea id="motivo" rows="2" placeholder="Ex.: dependo 100% de indicação e quero previsibilidade de agenda"></textarea>
+      </label>
+      <div class="erro" id="erro">Preencha nome e WhatsApp para continuar.</div>
+      <button class="btn" type="submit" id="enviar">Enviar minha aplicação →</button>
+      <div class="priv">Dados no Brasil (LGPD). Usamos suas respostas só para avaliar a aplicação e gerar seu diagnóstico.</div>
+    </form>
+  </div>
+
+  <div id="obrigado">
+    <div class="big"></div>
+    <h2>Aplicação recebida!</h2>
+    <p>Enquanto avaliamos sua vaga, seu diagnóstico já está liberado — e o cockpit também. Quem aplica sai na frente.</p>
+    <a class="btn" href="app.html">Abrir meu cockpit agora →</a>
+    <a class="btn btn-ghost" id="zap" href="#" target="_blank" rel="noopener">Acelerar minha aplicação no WhatsApp</a>
+  </div>
+
+  <div class="selo">ClinicNow · Zatheon · dados protegidos por design</div>
+</div>
+
+<script src="../medgroth/config.js"></script>
+<script>
+(function(){
+  MEDGROTH.track('docgrow-aplicacao');
+  /* contador real de vagas (RPC agregado — nenhum lead é exposto) */
+  fetch(MEDGROTH.url + '/rest/v1/rpc/docgrow_vagas_restantes', {
+    method: 'POST', headers: MEDGROTH.headers(), body: '{}'
+  }).then(function(r){ return r.json(); }).then(function(n){
+    if (typeof n === 'number' && n >= 0) document.getElementById('vagas-eyebrow').textContent = (n > 0 ? n + ' de 20 vagas restantes · entrada por aplicação' : 'Vagas esgotadas · aplique para a lista de espera');
+  }).catch(function(){});
+
+  document.getElementById('form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var nome = document.getElementById('nome').value.trim();
+    var zap  = document.getElementById('whatsapp').value.trim();
+    var erro = document.getElementById('erro');
+    if(!nome || zap.replace(/\D/g,'').length < 10){ erro.style.display='block'; return; }
+    erro.style.display='none';
+    var btn = document.getElementById('enviar');
+    btn.disabled = true; btn.textContent = 'Enviando…';
+
+    var motivo = document.getElementById('motivo').value.trim();
+    var lead = {
+      nome: nome,
+      whatsapp: zap,
+      email: document.getElementById('email').value.trim(),
+      especialidade: document.getElementById('especialidade').value,
+      faturamento: document.getElementById('faturamento').value,
+      origem: 'aplicacao-docgrow',
+      respostas: motivo ? { motivo: motivo } : null
+    };
+    localStorage.setItem('medgroth_prefill', JSON.stringify(lead));
+
+    MEDGROTH.saveLead(lead).then(function(){
+      document.getElementById('captura').style.display = 'none';
+      document.getElementById('obrigado').style.display = 'block';
+      var msg = 'Olá! Acabei de aplicar para uma vaga de fundador do ClinicNow. Meu nome é ' + nome + '.' + (motivo ? ' Motivo: ' + motivo : '');
+      document.getElementById('zap').href = 'https://wa.me/' + MEDGROTH.whatsapp + '?text=' + encodeURIComponent(msg);
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+})();
+</script>
+</body>
+</html>
