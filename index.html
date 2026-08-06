@@ -1,416 +1,1831 @@
 <!doctype html>
 <html lang="pt-BR" data-lang="pt">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sóstenes Costa Paiva — cuidar, explorar, construir</title>
-<meta name="description" content="Cuidar sempre foi meu chamado. Construir virou meu caminho. Blog pessoal de um jovem empreendedor brasileiro no Vale do Silício, criando ferramentas de IA para a saúde." />
-<meta property="og:title" content="Sóstenes Costa Paiva — cuidar, explorar, construir" />
-<meta property="og:description" content="Cuidar sempre foi meu chamado. Construir virou meu caminho. Minha história, meus medos e o que estou criando na Zetheon." />
-<meta property="og:type" content="website" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #faf8f3;
-    --bg-soft: #f2efe7;
-    --ink: #1f2421;
-    --ink-soft: #5b615c;
-    --line: #e3ded2;
-    --accent: #1d7a55;
-    --accent-soft: #e7f2ec;
-    --gold: #a07d1c;
-    --serif: 'Fraunces', serif;
-    --sans: 'Inter', sans-serif;
-    --mono: 'JetBrains Mono', monospace;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sóstenes Costa Paiva — saúde, negócios e IA aplicada</title>
+  <meta name="description" content="Trajetória de Sóstenes Costa Paiva: fisioterapia, biomedicina, operações de saúde, vendas, educação e uma fase de aprofundamento em inteligência artificial aplicada." />
+  <meta name="author" content="Sóstenes Costa Paiva" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#12352c" />
+  <link rel="canonical" href="https://sostenes-costa-paiva.vercel.app/" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%231a3b32'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-size='56' fill='%23f7f4ed'%3ES%3C/text%3E%3C/svg%3E" />
+
+  <meta property="og:title" content="Sóstenes Costa Paiva — saúde, negócios e IA aplicada" />
+  <meta property="og:description" content="Uma trajetória construída entre cuidado, operação, vendas, educação e aprendizado profundo em IA aplicada." />
+  <meta property="og:type" content="profile" />
+  <meta property="og:url" content="https://sostenes-costa-paiva.vercel.app/" />
+  <meta property="og:image" content="https://sostenes-costa-paiva.vercel.app/assets/sostenes-brooklyn-portrait.jpeg" />
+  <meta property="og:image:alt" content="Retrato de Sóstenes Costa Paiva em Brooklyn, Nova York" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sóstenes Costa Paiva — saúde, negócios e IA aplicada" />
+  <meta name="twitter:description" content="Fisioterapia, biomedicina, negócios de saúde e uma nova fase em IA aplicada." />
+  <meta name="twitter:image" content="https://sostenes-costa-paiva.vercel.app/assets/sostenes-brooklyn-portrait.jpeg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": "https://sostenes-costa-paiva.vercel.app/#person",
+    "name": "Sóstenes Costa Paiva",
+    "url": "https://sostenes-costa-paiva.vercel.app/",
+    "image": "https://sostenes-costa-paiva.vercel.app/assets/sostenes-brooklyn-portrait.jpeg",
+    "jobTitle": "Founder, Learning & Prototyping at Zatheon",
+    "description": "Physiotherapist, biomedical scientist, entrepreneur and founder learning and building at the intersection of healthcare operations and applied AI.",
+    "sameAs": [
+      "https://www.linkedin.com/in/s%C3%B3stenes-costa-paiva-184137165/",
+      "https://www.instagram.com/drsostenes/",
+      "https://www.youtube.com/channel/UC2d-BgBasNZ1nldwCLJ9zGw"
+    ],
+    "alumniOf": [
+      {"@type": "CollegeOrUniversity", "name": "Universidade Potiguar"},
+      {"@type": "CollegeOrUniversity", "name": "UNIBTA - Centro Universitário"},
+      {"@type": "CollegeOrUniversity", "name": "Unyleya"}
+    ],
+    "knowsAbout": [
+      "Healthcare operations",
+      "Physiotherapy",
+      "Biomedical science",
+      "Sales",
+      "Business development",
+      "Applied artificial intelligence"
+    ]
   }
+  </script>
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg); color: var(--ink);
-    font-family: var(--sans); line-height: 1.75; font-size: 16.5px;
-    -webkit-font-smoothing: antialiased;
-  }
-  img { display: block; max-width: 100%; }
-  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(29,122,85,0.3); }
-  a:hover { border-bottom-color: var(--accent); }
+  <style>
+    :root {
+      --paper: #f4f0e8;
+      --paper-deep: #e8e1d5;
+      --white: #fffdf8;
+      --ink: #17211d;
+      --ink-soft: #5a625e;
+      --forest: #12352c;
+      --forest-deep: #0a241d;
+      --moss: #2d7259;
+      --clay: #a84f3a;
+      --gold: #b1873b;
+      --line: rgba(23, 33, 29, 0.16);
+      --line-dark: rgba(255, 253, 248, 0.2);
+      --serif: "Alegreya", Georgia, serif;
+      --sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --page: min(1180px, calc(100vw - 48px));
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-  .wrap { max-width: 720px; margin: 0 auto; padding: 0 22px; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  [data-lang="pt"] .en { display: none; }
-  [data-lang="en"] .pt { display: none; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 92px;
+      max-width: 100%;
+      overflow-x: clip;
+    }
 
-  h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.2; }
-  h2 { font-size: 1.7rem; margin: 0 0 18px; }
-  em { font-style: italic; color: var(--accent); }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      max-width: 100%;
+      overflow-x: clip;
+    }
 
-  .kicker {
-    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 12px;
-  }
+    body.menu-open {
+      overflow: hidden;
+    }
 
-  /* Nav */
-  header.nav { border-bottom: 1px solid var(--line); background: rgba(250,248,243,0.9); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 50; }
-  .nav-inner { max-width: 720px; margin: 0 auto; padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  .nav-name { font-family: var(--serif); font-size: 1rem; color: var(--ink); border: none; }
-  .lang-toggle { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
-  .lang-toggle button {
-    background: transparent; border: none; color: var(--ink-soft); padding: 5px 12px;
-    cursor: pointer; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.06em;
-  }
-  .lang-toggle button.active { background: var(--ink); color: var(--bg); }
+    img {
+      display: block;
+      max-width: 100%;
+    }
 
-  /* Sections */
-  section { padding: 56px 0; }
-  section + section { border-top: 1px solid var(--line); }
+    a {
+      color: inherit;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.25em;
+    }
 
-  .intro { padding-top: 64px; }
-  .intro h1 { font-size: clamp(1.9rem, 4.6vw, 2.7rem); margin-bottom: 20px; letter-spacing: -0.01em; }
-  .intro p, .prose p { color: var(--ink-soft); margin-bottom: 16px; }
-  .intro p strong, .prose p strong { color: var(--ink); font-weight: 600; }
-  .foto {
-    width: 124px; height: 124px; border-radius: 50%; object-fit: cover; object-position: center;
-    border: 3px solid #fff; box-shadow: 0 6px 24px rgba(31,36,33,0.14); margin-bottom: 26px;
-    filter: grayscale(1);
-  }
-  .agora {
-    display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; margin-bottom: 22px;
-    background: var(--accent-soft); color: var(--accent); border-radius: 999px;
-    padding: 6px 14px; font-size: 0.8rem; font-weight: 600;
-  }
-  .agora .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s ease-in-out infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+    button {
+      color: inherit;
+      font: inherit;
+    }
 
-  /* Timeline */
-  .story { border-left: 2px solid var(--line); margin-left: 6px; padding-left: 26px; display: grid; gap: 30px; }
-  .story-item { position: relative; }
-  .story-item::before {
-    content: ''; position: absolute; left: -33px; top: 7px; width: 12px; height: 12px;
-    border-radius: 50%; background: var(--bg); border: 3px solid var(--accent);
-  }
-  .story-when { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
-  .story-item h3 { font-size: 1.12rem; margin: 4px 0 6px; }
-  .story-item p { color: var(--ink-soft); font-size: 0.95rem; }
+    h1,
+    h2,
+    h3 {
+      font-family: var(--serif);
+      font-weight: 500;
+      line-height: 1.06;
+      text-wrap: balance;
+    }
 
-  /* Skills */
-  .skills { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
-  .skill { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
-  .skill h3 { font-size: 1rem; margin-bottom: 6px; }
-  .skill p { color: var(--ink-soft); font-size: 0.9rem; }
-  @media (max-width: 640px) { .skills { grid-template-columns: 1fr; } }
+    p {
+      text-wrap: pretty;
+    }
 
-  /* Projects */
-  .proj { display: grid; gap: 14px; }
-  .proj-card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; display: block; color: inherit; border-bottom: 1px solid var(--line); transition: box-shadow .2s ease, transform .2s ease; }
-  .proj-card:hover { box-shadow: 0 8px 26px rgba(31,36,33,0.09); transform: translateY(-2px); border-bottom-color: var(--line); }
-  .proj-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-  .proj-card h3 { font-size: 1.08rem; }
-  .proj-tag { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 3px 10px; }
-  .proj-tag.quiet { color: var(--ink-soft); background: var(--bg-soft); }
-  .proj-card p { color: var(--ink-soft); font-size: 0.92rem; margin-top: 6px; }
+    [data-lang="pt"] .en,
+    [data-lang="en"] .pt {
+      display: none !important;
+    }
 
-  blockquote {
-    border-left: 3px solid var(--accent); background: var(--accent-soft);
-    padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 22px 0;
-    font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: var(--ink);
-  }
+    .skip-link {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 200;
+      padding: 10px 14px;
+      background: var(--white);
+      color: var(--forest);
+      transform: translateY(-150%);
+      transition: transform 180ms var(--ease);
+    }
 
-  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px;
-    border-radius: 999px; font-weight: 600; font-size: 0.92rem; border-bottom: none;
-  }
-  .btn-solid { background: var(--ink); color: var(--bg); }
-  .btn-solid:hover { background: #000; }
-  .btn-line { border: 1px solid var(--line); color: var(--ink); background: #fff; }
-  .btn-line:hover { border-color: var(--ink); }
+    .skip-link:focus {
+      transform: translateY(0);
+    }
 
-  footer { border-top: 1px solid var(--line); padding: 30px 22px 40px; text-align: center; color: var(--ink-soft); font-size: 0.78rem; font-family: var(--mono); letter-spacing: 0.06em; }
+    :focus-visible {
+      outline: 3px solid #d6bd63;
+      outline-offset: 4px;
+    }
 
-  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
-  .reveal.is-visible { opacity: 1; transform: none; }
-  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .agora .dot { animation: none; } }
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-</style>
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(244, 240, 232, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav-shell {
+      width: var(--page);
+      min-height: 76px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand {
+      border: 0;
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #39433e;
+      font-size: 0.86rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 160ms ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--moss);
+    }
+
+    .nav-tools {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      padding: 3px;
+      background: rgba(23, 33, 29, 0.06);
+      border-radius: 999px;
+    }
+
+    .lang-toggle button {
+      min-width: 38px;
+      padding: 6px 9px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink-soft);
+      cursor: pointer;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .lang-toggle button[aria-pressed="true"] {
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .nav-contact {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 18px;
+      border: 1px solid var(--forest);
+      border-radius: 999px;
+      background: var(--forest);
+      color: var(--white);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 160ms ease, transform 160ms ease;
+    }
+
+    .nav-contact:hover {
+      background: var(--forest-deep);
+      transform: translateY(-1px);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .menu-toggle svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+    }
+
+    main {
+      overflow: clip;
+    }
+
+    .hero {
+      min-height: calc(100svh - 76px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(360px, 0.94fr);
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(64px, 8vw, 118px) max(40px, calc((100vw - 1180px) / 2));
+      padding-right: clamp(48px, 7vw, 110px);
+    }
+
+    .hero h1 {
+      max-width: 800px;
+      font-size: clamp(3.25rem, 6.6vw, 6rem);
+      letter-spacing: -0.035em;
+    }
+
+    .hero h1 strong {
+      color: #d9bd6d;
+      font-weight: 500;
+    }
+
+    .hero-lede {
+      max-width: 670px;
+      margin-top: 32px;
+      color: #d5dfda;
+      font-size: clamp(1rem, 1.3vw, 1.16rem);
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 38px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 21px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-size: 0.87rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-light {
+      background: var(--white);
+      color: var(--forest);
+    }
+
+    .button-ghost {
+      border-color: var(--line-dark);
+      color: var(--white);
+    }
+
+    .button-ghost:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-roles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px 20px;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line-dark);
+      color: #afc0b8;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .hero-photo {
+      position: relative;
+      min-height: 720px;
+      overflow: hidden;
+      background: #0d1915;
+      isolation: isolate;
+    }
+
+    .hero-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(90deg, rgba(18, 53, 44, 0.32), transparent 42%),
+        linear-gradient(0deg, rgba(5, 15, 12, 0.25), transparent 38%);
+      pointer-events: none;
+    }
+
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 31%;
+      animation: hero-arrival 1.2s var(--ease) both;
+    }
+
+    @keyframes hero-arrival {
+      from {
+        transform: scale(1.045);
+        filter: saturate(0.72) brightness(0.82);
+      }
+      to {
+        transform: scale(1);
+        filter: saturate(0.9) brightness(0.92);
+      }
+    }
+
+    .section {
+      padding: clamp(84px, 10vw, 148px) 0;
+    }
+
+    .section-shell {
+      width: var(--page);
+      margin: 0 auto;
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.78fr) minmax(320px, 1.22fr);
+      gap: clamp(42px, 8vw, 120px);
+      align-items: start;
+      margin-bottom: clamp(54px, 7vw, 94px);
+    }
+
+    .section-heading h2 {
+      max-width: 700px;
+      font-size: clamp(2.6rem, 5vw, 4.8rem);
+      letter-spacing: -0.03em;
+    }
+
+    .section-heading p {
+      max-width: 660px;
+      color: var(--ink-soft);
+      font-size: 1.02rem;
+      line-height: 1.85;
+    }
+
+    .section-heading p + p {
+      margin-top: 18px;
+    }
+
+    .about {
+      background: var(--white);
+    }
+
+    .about-statement {
+      max-width: 1010px;
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4.2vw, 4.15rem);
+      font-weight: 400;
+      line-height: 1.14;
+      letter-spacing: -0.025em;
+    }
+
+    .about-statement em {
+      color: var(--clay);
+      font-style: normal;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(44px, 8vw, 116px);
+      margin-top: clamp(54px, 7vw, 92px);
+      padding-top: 34px;
+      border-top: 1px solid var(--line);
+    }
+
+    .about-grid p {
+      max-width: 64ch;
+      color: var(--ink-soft);
+      line-height: 1.86;
+    }
+
+    .about-grid strong {
+      color: var(--ink);
+    }
+
+    .trajectory {
+      background: var(--paper);
+    }
+
+    .trajectory-intro {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 36px;
+      margin-bottom: 62px;
+    }
+
+    .trajectory-intro h2 {
+      max-width: 800px;
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      letter-spacing: -0.03em;
+    }
+
+    .trajectory-intro a {
+      flex: 0 0 auto;
+      color: var(--moss);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .timeline {
+      position: relative;
+      list-style: none;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: 166px;
+      width: 1px;
+      background: var(--line);
+    }
+
+    .timeline-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 138px minmax(0, 1fr);
+      gap: 58px;
+      padding: 0 0 54px;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      top: 7px;
+      left: 160px;
+      width: 13px;
+      height: 13px;
+      border: 3px solid var(--paper);
+      border-radius: 50%;
+      background: var(--clay);
+      box-shadow: 0 0 0 1px var(--clay);
+    }
+
+    .timeline-period {
+      padding-top: 2px;
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .timeline-content {
+      max-width: 830px;
+      padding-bottom: 34px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .timeline-item:last-child .timeline-content {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .timeline-type {
+      display: inline-block;
+      margin-bottom: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(45, 114, 89, 0.1);
+      color: var(--moss);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .timeline-type.work {
+      background: rgba(168, 79, 58, 0.1);
+      color: var(--clay);
+    }
+
+    .timeline-type.certificate {
+      background: rgba(177, 135, 59, 0.13);
+      color: #795817;
+    }
+
+    .timeline-content h3 {
+      font-size: clamp(1.55rem, 2.7vw, 2.35rem);
+      letter-spacing: -0.02em;
+    }
+
+    .timeline-org {
+      margin-top: 8px;
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .timeline-description {
+      max-width: 66ch;
+      margin-top: 10px;
+      color: var(--ink-soft);
+      font-size: 0.94rem;
+      line-height: 1.75;
+    }
+
+    .timeline-note {
+      max-width: 720px;
+      margin: 62px 0 0 196px;
+      color: var(--ink-soft);
+      font-size: 0.78rem;
+    }
+
+    .timeline-note a {
+      color: var(--moss);
+      font-weight: 700;
+    }
+
+    .capabilities {
+      background: var(--forest-deep);
+      color: var(--white);
+    }
+
+    .capabilities h2 {
+      max-width: 850px;
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      letter-spacing: -0.03em;
+    }
+
+    .capability-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 70px;
+      border-top: 1px solid var(--line-dark);
+      border-bottom: 1px solid var(--line-dark);
+    }
+
+    .capability {
+      min-height: 280px;
+      padding: 32px 28px 38px 0;
+    }
+
+    .capability + .capability {
+      padding-left: 28px;
+      border-left: 1px solid var(--line-dark);
+    }
+
+    .capability h3 {
+      font-size: 1.55rem;
+      line-height: 1.18;
+    }
+
+    .capability p {
+      margin-top: 18px;
+      color: #bdccc5;
+      font-size: 0.9rem;
+      line-height: 1.76;
+    }
+
+    .visual-story {
+      background: var(--white);
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: minmax(0, 1.24fr) minmax(280px, 0.76fr);
+      grid-template-rows: repeat(2, minmax(310px, 400px));
+      gap: 18px;
+    }
+
+    .gallery figure {
+      position: relative;
+      overflow: hidden;
+      background: var(--paper-deep);
+    }
+
+    .gallery-main {
+      grid-row: 1 / span 2;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 800ms var(--ease);
+    }
+
+    .gallery figure:hover img {
+      transform: scale(1.015);
+    }
+
+    .gallery-main img {
+      object-position: center 30%;
+    }
+
+    .gallery-palms img {
+      object-position: center 33%;
+    }
+
+    .gallery-arcade img {
+      object-position: center 47%;
+    }
+
+    .gallery figcaption {
+      position: absolute;
+      right: 18px;
+      bottom: 16px;
+      left: 18px;
+      width: fit-content;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(10, 25, 20, 0.84);
+      color: var(--white);
+      font-size: 0.73rem;
+      font-weight: 600;
+      backdrop-filter: blur(6px);
+    }
+
+    .now {
+      background: var(--paper-deep);
+    }
+
+    .now-layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.84fr) minmax(360px, 1.16fr);
+      gap: clamp(54px, 9vw, 132px);
+      align-items: start;
+    }
+
+    .now h2 {
+      font-size: clamp(2.8rem, 5.3vw, 4.8rem);
+      letter-spacing: -0.03em;
+    }
+
+    .now-copy {
+      max-width: 690px;
+    }
+
+    .now-copy p {
+      color: var(--ink-soft);
+      font-size: 1rem;
+      line-height: 1.88;
+    }
+
+    .now-copy p + p {
+      margin-top: 20px;
+    }
+
+    .now-copy strong {
+      color: var(--ink);
+    }
+
+    .venture-map {
+      margin: 38px 0 46px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .venture {
+      display: grid;
+      grid-template-columns: minmax(190px, 0.58fr) minmax(0, 1.42fr);
+      gap: 30px;
+      align-items: center;
+      padding: 28px 0;
+    }
+
+    .venture + .venture {
+      border-top: 1px solid var(--line);
+    }
+
+    .venture-identity {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .venture-mark {
+      width: 48px;
+      height: 48px;
+      flex: 0 0 48px;
+      color: var(--forest);
+    }
+
+    .venture-project .venture-mark {
+      color: var(--clay);
+    }
+
+    .venture-mark svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .venture h3 {
+      color: var(--ink);
+      font-size: 1.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .venture-kind {
+      margin-top: 2px;
+      color: var(--ink-soft);
+      font-size: 0.72rem !important;
+      font-weight: 700;
+      letter-spacing: 0.045em;
+      line-height: 1.5 !important;
+      text-transform: uppercase;
+    }
+
+    .venture-description {
+      font-size: 0.92rem !important;
+      line-height: 1.72 !important;
+    }
+
+    .workstreams {
+      margin-top: 6px;
+    }
+
+    .workstreams > h3 {
+      max-width: 560px;
+      color: var(--ink);
+      font-size: clamp(2rem, 3.6vw, 2.8rem);
+      letter-spacing: -0.025em;
+    }
+
+    .workstream-list {
+      margin-top: 25px;
+      border-top: 1px solid var(--line);
+    }
+
+    .workstream {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.62fr) minmax(0, 1.38fr);
+      gap: 30px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .workstream-title {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .workstream h4 {
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .workstream-status {
+      color: var(--moss);
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .workstream > p {
+      font-size: 0.88rem;
+      line-height: 1.72;
+    }
+
+    .workstream a {
+      color: var(--forest);
+      font-weight: 700;
+    }
+
+    .now-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .button-forest {
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .button-forest:hover {
+      background: var(--forest-deep);
+    }
+
+    .button-outline {
+      border-color: rgba(18, 53, 44, 0.42);
+      color: var(--forest);
+    }
+
+    .button-outline:hover {
+      background: rgba(18, 53, 44, 0.06);
+    }
+
+    .now-principle {
+      margin-top: 34px;
+      padding-top: 26px;
+      border-top: 1px solid var(--line);
+      color: var(--forest);
+      font-family: var(--serif);
+      font-size: clamp(1.45rem, 2.6vw, 2.2rem);
+      line-height: 1.3;
+    }
+
+    .contact {
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.16fr) minmax(280px, 0.84fr);
+      gap: clamp(54px, 9vw, 130px);
+      align-items: end;
+    }
+
+    .contact h2 {
+      max-width: 780px;
+      font-size: clamp(3rem, 6vw, 5.6rem);
+      letter-spacing: -0.035em;
+    }
+
+    .contact p {
+      max-width: 600px;
+      margin-top: 26px;
+      color: #c8d5cf;
+      line-height: 1.8;
+    }
+
+    .contact-links {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid var(--line-dark);
+    }
+
+    .contact-links a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 62px;
+      border-bottom: 1px solid var(--line-dark);
+      color: var(--white);
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 180ms var(--ease), color 180ms ease;
+    }
+
+    .contact-links a:hover {
+      transform: translateX(6px);
+      color: #e1c675;
+    }
+
+    .contact-meta {
+      color: #a9bbb3;
+      font-size: 0.76rem;
+      font-weight: 500;
+    }
+
+    footer {
+      background: var(--forest-deep);
+      color: #9fb1a9;
+    }
+
+    .footer-shell {
+      width: var(--page);
+      min-height: 98px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      font-size: 0.76rem;
+    }
+
+    .footer-shell a {
+      color: #d7e0dc;
+    }
+
+    @media (max-width: 980px) {
+      :root {
+        --page: min(100% - 36px, 760px);
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .nav-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        z-index: 90;
+        width: 100%;
+        height: calc(100svh - 76px);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 34px;
+        padding: 46px 24px;
+        background: var(--paper);
+        overflow-y: auto;
+        transform: translateX(105%);
+        visibility: hidden;
+        transition: transform 300ms var(--ease), visibility 300ms;
+      }
+
+      .menu-open .nav-menu {
+        transform: translateX(0);
+        visibility: visible;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+      }
+
+      .nav-links li {
+        width: 100%;
+      }
+
+      .nav-links a {
+        display: block;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--line);
+        font-family: var(--serif);
+        font-size: 1.65rem;
+        font-weight: 500;
+      }
+
+      .nav-tools {
+        flex-wrap: wrap;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        min-height: 680px;
+        padding: 82px max(24px, calc((100vw - 760px) / 2));
+      }
+
+      .hero-photo {
+        min-height: 760px;
+      }
+
+      .section-heading,
+      .now-layout,
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading {
+        gap: 32px;
+      }
+
+      .now-copy {
+        max-width: none;
+      }
+
+      .capability-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .capability:nth-child(3) {
+        border-left: 0;
+        border-top: 1px solid var(--line-dark);
+      }
+
+      .capability:nth-child(4) {
+        border-top: 1px solid var(--line-dark);
+      }
+
+      .gallery {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 620px 340px;
+      }
+
+      .gallery-main {
+        grid-column: 1 / -1;
+        grid-row: 1;
+      }
+
+      .gallery-palms,
+      .gallery-arcade {
+        grid-row: 2;
+      }
+    }
+
+    @media (max-width: 720px) {
+      :root {
+        --page: calc(100% - 32px);
+      }
+
+      html {
+        scroll-padding-top: 74px;
+      }
+
+      .nav-shell {
+        min-height: 68px;
+      }
+
+      .brand {
+        font-size: 0.94rem;
+      }
+
+      .nav-menu {
+        top: 100%;
+        height: calc(100svh - 68px);
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-copy {
+        min-height: auto;
+        padding: 68px 20px 64px;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.85rem, 13.8vw, 4.2rem);
+      }
+
+      .hero-lede {
+        margin-top: 26px;
+      }
+
+      .hero-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .venture,
+      .workstream {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .venture {
+        align-items: start;
+      }
+
+      .venture-description,
+      .workstream > p {
+        max-width: 66ch;
+      }
+
+      .hero-roles {
+        margin-top: 38px;
+      }
+
+      .hero-photo {
+        min-height: min(126vw, 660px);
+      }
+
+      .section {
+        padding: 78px 0;
+      }
+
+      .section-heading,
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading {
+        margin-bottom: 52px;
+      }
+
+      .about-grid {
+        gap: 26px;
+      }
+
+      .trajectory-intro {
+        display: grid;
+        align-items: start;
+      }
+
+      .timeline::before {
+        left: 6px;
+      }
+
+      .timeline-item {
+        display: block;
+        padding: 0 0 48px 34px;
+      }
+
+      .timeline-item::before {
+        top: 6px;
+        left: 0;
+      }
+
+      .timeline-period {
+        margin-bottom: 12px;
+      }
+
+      .timeline-content {
+        padding-bottom: 28px;
+      }
+
+      .timeline-note {
+        margin: 46px 0 0 34px;
+      }
+
+      .capability-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .capability {
+        min-height: 0;
+        padding: 28px 0 34px;
+      }
+
+      .capability + .capability {
+        padding-left: 0;
+        border-top: 1px solid var(--line-dark);
+        border-left: 0;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 550px 420px 420px;
+      }
+
+      .gallery-main,
+      .gallery-palms,
+      .gallery-arcade {
+        grid-column: 1;
+      }
+
+      .gallery-main {
+        grid-row: 1;
+      }
+
+      .gallery-palms {
+        grid-row: 2;
+      }
+
+      .gallery-arcade {
+        grid-row: 3;
+      }
+
+      .contact-layout {
+        align-items: start;
+      }
+
+      .footer-shell {
+        min-height: 120px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 10px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .hero-photo img {
+        animation: none;
+      }
+
+      .nav-menu,
+      .nav-contact,
+      .button,
+      .gallery img,
+      .contact-links a,
+      .skip-link {
+        transition: none;
+      }
+    }
+  </style>
 </head>
 <body>
+  <a class="skip-link pt" href="#conteudo">Pular para o conteúdo</a>
+  <a class="skip-link en" href="#conteudo">Skip to content</a>
 
-<header class="nav">
-  <div class="nav-inner">
-    <a class="nav-name" href="#">Sóstenes Costa Paiva</a>
-    <div style="display:flex; align-items:center; gap:12px;">
-      <div class="lang-toggle" role="group" aria-label="Language toggle">
-        <button type="button" data-set-lang="pt" class="active">PT</button>
-        <button type="button" data-set-lang="en">EN</button>
-      </div>
-      <a class="btn btn-solid" style="padding:8px 16px; font-size:0.82rem;" href="https://wa.me/5584999869468" target="_blank" rel="noopener">
-        <span class="pt">Conversar</span><span class="en">Say hi</span>
-      </a>
-    </div>
-  </div>
-</header>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="#top" aria-label="Sóstenes Costa Paiva — início">Sóstenes Costa Paiva</a>
 
-<!-- INTRO -->
-<section class="intro">
-  <div class="wrap reveal">
-    <img class="foto" src="assets/insta-perfil.jpg" alt="Sóstenes Costa Paiva" />
-    <span class="kicker pt">BLOG PESSOAL</span>
-    <span class="kicker en">PERSONAL BLOG</span>
-    <h1>
-      <span class="pt">Cuidar sempre foi meu chamado. <em>Construir</em> virou meu caminho.</span>
-      <span class="en">Caring was always my calling. <em>Building</em> became my path.</span>
-    </h1>
-    <div class="agora"><span class="dot"></span>
-      <span class="pt">Agora: aprendendo e construindo no ecossistema do Vale do Silício</span>
-      <span class="en">Now: learning and building in the Silicon Valley ecosystem</span>
-    </div>
-    <p class="pt">Oi, eu sou o Sóstenes — um jovem empreendedor do interior do Brasil. Passei quase dez anos cuidando de gente dentro da saúde, como fisioterapeuta e biomédico. Hoje estou do outro lado do mundo, no ecossistema do Vale do Silício, aprendendo a transformar esse cuidado em <strong>ferramentas de tecnologia e IA que alcançam muito mais pessoas</strong>.</p>
-    <p class="en">Hi, I'm Sóstenes — a young entrepreneur from the Brazilian countryside. I spent almost ten years caring for people in healthcare, as a physiotherapist and biomedical scientist. Today I'm on the other side of the world, in the Silicon Valley ecosystem, learning to turn that care into <strong>technology and AI tools that reach far more people</strong>.</p>
-    <p class="pt">No meio desse caminho, tomei uma decisão difícil — pausar a faculdade de medicina para me dedicar a isso por inteiro. Se eu tivesse que me resumir em três palavras, seriam estas: <strong>cuidar, explorar, construir</strong>.</p>
-    <p class="en">Along the way, I made a hard decision — pausing med school to give this my whole self. If I had to sum myself up in three words, they would be: <strong>care, explore, build</strong>.</p>
-    <p class="pt">Não foi um abandono. Foi uma aposta: como médico, eu cuidaria de um paciente por vez. Construindo boas ferramentas, posso ajudar quem cuida — e quem é cuidado — em uma escala que o consultório sozinho nunca alcançaria.</p>
-    <p class="en">It wasn't quitting. It was a bet: as a doctor, I would care for one patient at a time. By building good tools, I can help those who care — and those being cared for — at a scale a single practice could never reach.</p>
-    <p class="pt">E vou ser honesto desde a primeira linha: <strong>eu tive medo</strong>. Ainda tenho, alguns dias. Este blog existe para contar essa história como ela é — com as dúvidas dentro.</p>
-    <p class="en">And I'll be honest from the very first line: <strong>I was afraid</strong>. Some days I still am. This blog exists to tell that story as it is — doubts included.</p>
-  </div>
-</section>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" aria-label="Abrir menu de navegação">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke-width="1.8" stroke-linecap="round" />
+        </svg>
+      </button>
 
-<!-- A DECISAO -->
-<section>
-  <div class="wrap prose reveal">
-    <span class="kicker pt">A DECISÃO</span>
-    <span class="kicker en">THE DECISION</span>
-    <h2>
-      <span class="pt">A conta que não fechava</span>
-      <span class="en">The math that didn't add up</span>
-    </h2>
-    <p class="pt">Eu amo a medicina. Mas dentro dela eu via todos os dias os mesmos problemas: profissionais afogados em burocracia, pacientes sem acompanhamento entre consultas, clínicas boas que não sabiam se comunicar. E via a inteligência artificial resolvendo problemas assim em outras indústrias — só que quase ninguém estava trazendo isso, de verdade, para a ponta: o consultório, a clínica, o paciente.</p>
-    <p class="en">I love medicine. But inside it I saw the same problems every day: professionals drowning in paperwork, patients with no follow-up between visits, good clinics that didn't know how to communicate. Meanwhile, AI was solving problems like these in other industries — but almost nobody was truly bringing it to the edge: the practice, the clinic, the patient.</p>
-    <p class="pt">Trancar não foi fácil. Medicina é status, é orgulho da família, é o caminho que todo mundo entende. Quando contei minha decisão, ouvi silêncios que doeram mais que críticas. À noite vinham as perguntas: <em>e se eu estiver errado? E se eu estiver jogando fora anos de esforço? Quem sou eu para construir tecnologia?</em> Eu não tinha resposta para todas. Ainda não tenho.</p>
-    <p class="en">Pausing wasn't easy. Medicine is status, it's your family's pride, it's the path everyone understands. When I shared my decision, I heard silences that hurt more than criticism. At night the questions came: <em>what if I'm wrong? What if I'm throwing away years of effort? Who am I to build technology?</em> I didn't have answers for all of them. I still don't.</p>
-    <p class="pt">Mas tinha uma coisa que eu não conseguia ignorar: <strong>uma atração que eu sentia pelo todo</strong>. Pela mente humana, pela ciência, pela tecnologia, pela possibilidade de juntar tudo isso em algo que sirva às pessoas. Não era só uma oportunidade de carreira — era uma vontade quase física de ajudar em escala, de usar tudo o que sou de uma vez só. Quando esse chamado aparece, ignorá-lo custa mais caro do que segui-lo.</p>
-    <p class="en">But there was one thing I couldn't ignore: <strong>a pull I felt toward the whole</strong>. Toward the human mind, science, technology — the possibility of weaving it all into something that serves people. It wasn't just a career opportunity — it was an almost physical urge to help at scale, to use everything I am at once. When that calling shows up, ignoring it costs more than following it.</p>
-    <blockquote>
-      <span class="pt">Decidi que, antes de terminar de me formar para cuidar de um paciente por vez, eu queria aprender a construir ferramentas que ajudassem milhares — e um dia, quem sabe, milhões.</span>
-      <span class="en">I decided that before finishing my training to care for one patient at a time, I wanted to learn to build tools that could help thousands — and one day, maybe, millions.</span>
-    </blockquote>
-    <p class="pt">Por isso estou onde estou: estudando com mentores do Vale do Silício, programando todos os dias com IA, errando rápido, lançando produtos reais e documentando o caminho. A medicina continua no meu horizonte — quero voltar a ela mais capaz do que saí.</p>
-    <p class="en">That's why I am where I am: studying with Silicon Valley mentors, coding with AI every day, failing fast, shipping real products and documenting the path. Medicine is still on my horizon — I want to return to it more capable than when I left.</p>
-  </div>
-</section>
+      <nav class="nav-menu" id="site-navigation" aria-label="Navegação principal">
+        <ul class="nav-links">
+          <li><a href="#sobre"><span class="pt">Sobre</span><span class="en">About</span></a></li>
+          <li><a href="#trajetoria"><span class="pt">Trajetória</span><span class="en">Journey</span></a></li>
+          <li><a href="#agora"><span class="pt">Projetos</span><span class="en">Projects</span></a></li>
+          <li><a href="#contato"><span class="pt">Contato</span><span class="en">Contact</span></a></li>
+        </ul>
 
-<!-- HISTORIA -->
-<section>
-  <div class="wrap reveal">
-    <span class="kicker pt">DE ONDE EU VENHO</span>
-    <span class="kicker en">WHERE I COME FROM</span>
-    <h2>
-      <span class="pt">Minha história, sem filtro</span>
-      <span class="en">My story, unfiltered</span>
-    </h2>
-    <div class="story" style="margin-top:26px;">
-      <div class="story-item">
-        <span class="story-when pt">INFÂNCIA · INTERIOR DO BRASIL</span><span class="story-when en">CHILDHOOD · BRAZILIAN COUNTRYSIDE</span>
-        <h3 class="pt">Vendedor antes de qualquer diploma</h3><h3 class="en">A salesman before any degree</h3>
-        <p class="pt">Vendi chocolates aos 13 e pamonha na rua aos 15. Ali aprendi o que nenhuma faculdade me ensinou: escutar pessoas, entender o que elas precisam e ter coragem de oferecer. Até hoje, é a habilidade que mais uso.</p>
-        <p class="en">I sold chocolates at 13 and pamonha on the street at 15. That taught me what no university did: listening to people, understanding what they need, and having the courage to make an offer. It's still the skill I use the most.</p>
-      </div>
-      <div class="story-item">
-        <span class="story-when pt">FORMAÇÃO · CLÍNICA</span><span class="story-when en">TRAINING · CLINICAL PRACTICE</span>
-        <h3 class="pt">Quase dez anos cuidando de gente</h3><h3 class="en">Almost ten years caring for people</h3>
-        <p class="pt">Me formei fisioterapeuta e biomédico. Atendi na prática — quiropraxia, dermato-funcional, protocolos de emagrecimento e estética. Errei, ajustei, e vi de perto o que funciona (e o que só parece bonito) na saúde real.</p>
-        <p class="en">I trained as a physiotherapist and biomedical scientist. I treated patients hands-on — chiropractic, dermato-functional care, weight-loss and aesthetics protocols. I made mistakes, adjusted, and saw up close what actually works (and what only looks good) in real-world health.</p>
-      </div>
-      <div class="story-item">
-        <span class="story-when pt">ENSINO</span><span class="story-when en">TEACHING</span>
-        <h3 class="pt">Ensinar me ensinou</h3><h3 class="en">Teaching taught me</h3>
-        <p class="pt">Dei aulas e treinamentos para centenas de profissionais de saúde, no Brasil e fora. Descobri que multiplicar conhecimento vale mais do que guardar técnica — e que eu gostava disso.</p>
-        <p class="en">I taught courses and trainings to hundreds of health professionals, in Brazil and abroad. I learned that multiplying knowledge is worth more than hoarding technique — and that I loved doing it.</p>
-      </div>
-      <div class="story-item">
-        <span class="story-when pt">MARKETING &amp; VENDAS</span><span class="story-when en">MARKETING &amp; SALES</span>
-        <h3 class="pt">O lado do negócio</h3><h3 class="en">The business side</h3>
-        <p class="pt">Fui franqueado da V4 Company e trabalhei com lançamentos digitais. Aprendi na prática a estruturar ofertas, escrever pitch de vendas, montar funis e fazer marketing que gera resultado — habilidades que hoje aplico nos meus próprios produtos.</p>
-        <p class="en">I was a V4 Company franchisee and worked on digital launches. I learned hands-on how to structure offers, write sales pitches, build funnels and do marketing that drives results — skills I now apply to my own products.</p>
-      </div>
-      <div class="story-item">
-        <span class="story-when pt">MEDICINA</span><span class="story-when en">MEDICAL SCHOOL</span>
-        <h3 class="pt">O caminho "certo" — e a pausa</h3><h3 class="en">The "right" path — and the pause</h3>
-        <p class="pt">Entrei na medicina para fechar o ciclo. Mas no meio do curso percebi que a maior contribuição que eu podia dar à saúde, agora, não estava dentro da sala de aula. Tranquei — com respeito, e com plano de voltar.</p>
-        <p class="en">I started med school to close the loop. Halfway through, I realized the biggest contribution I could make to healthcare right now wasn't inside the classroom. I paused — with respect, and with a plan to return.</p>
-      </div>
-      <div class="story-item">
-        <span class="story-when pt">HOJE · VALE DO SILÍCIO</span><span class="story-when en">TODAY · SILICON VALLEY</span>
-        <h3 class="pt">Aprendiz de novo</h3><h3 class="en">A beginner again</h3>
-        <p class="pt">Estudo com mentores do ecossistema do Vale do Silício e construo com IA todos os dias. Sou iniciante em muita coisa — e está tudo bem. É exatamente por isso que estou aqui.</p>
-        <p class="en">I study with mentors from the Silicon Valley ecosystem and build with AI every day. I'm a beginner at many things — and that's fine. That's exactly why I'm here.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- NO QUE SOU BOM -->
-<section>
-  <div class="wrap reveal">
-    <span class="kicker pt">NO QUE SOU BOM</span>
-    <span class="kicker en">WHAT I'M GOOD AT</span>
-    <h2>
-      <span class="pt">O que eu trago para a mesa</span>
-      <span class="en">What I bring to the table</span>
-    </h2>
-    <p style="color:var(--ink-soft); margin-bottom:20px;">
-      <span class="pt">Sem promessas mirabolantes — só o que a prática me deu:</span>
-      <span class="en">No grand promises — just what practice gave me:</span>
-    </p>
-    <div class="skills">
-      <div class="skill">
-        <h3 class="pt">Vendas &amp; pitch</h3><h3 class="en">Sales &amp; pitch</h3>
-        <p class="pt">Vendo desde os 13. Sei transformar um produto em uma oferta clara e um pitch que as pessoas entendem — e compram.</p>
-        <p class="en">Selling since I was 13. I know how to turn a product into a clear offer and a pitch people understand — and buy.</p>
-      </div>
-      <div class="skill">
-        <h3 class="pt">Marketing que gera resultado</h3><h3 class="en">Marketing that drives results</h3>
-        <p class="pt">Funis, lançamentos, copy e posicionamento — aprendidos operando de verdade, não só em teoria.</p>
-        <p class="en">Funnels, launches, copy and positioning — learned by operating for real, not just in theory.</p>
-      </div>
-      <div class="skill">
-        <h3 class="pt">Saúde por dentro</h3><h3 class="en">Healthcare from the inside</h3>
-        <p class="pt">Quase uma década na ponta: sei como pensa o profissional de saúde, o gestor de clínica e o paciente — porque fui os três lados.</p>
-        <p class="en">Almost a decade at the edge: I know how health professionals, clinic managers and patients think — because I've been on all three sides.</p>
-      </div>
-      <div class="skill">
-        <h3 class="pt">Construir com IA</h3><h3 class="en">Building with AI</h3>
-        <p class="pt">Uso IA para projetar, programar e lançar produtos rápido. Ainda estou aprendendo — todo dia — e lançando enquanto aprendo.</p>
-        <p class="en">I use AI to design, code and ship products fast. I'm still learning — every day — and shipping while I learn.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- O QUE ESTOU CONSTRUINDO -->
-<section>
-  <div class="wrap reveal">
-    <span class="kicker pt">O QUE ESTOU CONSTRUINDO</span>
-    <span class="kicker en">WHAT I'M BUILDING</span>
-    <h2>
-      <span class="pt">Ferramentas reais, em construção aberta</span>
-      <span class="en">Real tools, built in the open</span>
-    </h2>
-    <p style="color:var(--ink-soft); margin-bottom:20px;">
-      <span class="pt">A <strong style="color:var(--ink);">Zetheon</strong> é a empresa que registrei para abrigar esse trabalho — uma marca aberta: construo em público, mostro o processo e os erros. Estes são os projetos:</span>
-      <span class="en"><strong style="color:var(--ink);">Zetheon</strong> is the company I registered to house this work — an open brand: I build in public, showing the process and the mistakes. These are the projects:</span>
-    </p>
-    <div class="proj">
-      <a class="proj-card" href="sosmed/index.html">
-        <div class="proj-top">
-          <h3>Dr. SOS Med IA</h3>
-          <span class="proj-tag pt">RODANDO AGORA</span><span class="proj-tag en">LIVE NOW</span>
+        <div class="nav-tools">
+          <div class="lang-toggle" role="group" aria-label="Selecionar idioma">
+            <button type="button" data-set-lang="pt" aria-pressed="true">PT</button>
+            <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+          </div>
+          <a class="nav-contact" href="mailto:drsostenescosta@gmail.com">
+            <span class="pt">Vamos conversar</span>
+            <span class="en">Let's talk</span>
+          </a>
         </div>
-        <p class="pt">A IA médica da Zetheon, em operação. O objetivo é grande — ajudar milhões de vidas — mas o caminho é um passo por vez: hoje ela já trabalha ajudando clínicas a atender e acompanhar melhor.</p>
-        <p class="en">Zetheon's medical AI, in operation. The goal is big — helping millions of lives — but the path is one step at a time: today it already helps clinics serve and follow up with patients better.</p>
-      </a>
-      <a class="proj-card" href="medgroth/index.html">
-        <div class="proj-top">
-          <h3>MedGroth</h3>
-          <span class="proj-tag pt">NO AR</span><span class="proj-tag en">LIVE</span>
-        </div>
-        <p class="pt">A máquina de crescimento para médicos e clínicas: diagnóstico em 3 minutos, plano de 4 semanas, funil de leads e metas de receita. Página de vendas, captura e memorando para investidores — tudo aberto.</p>
-        <p class="en">The growth machine for doctors and clinics: a 3-minute diagnosis, a 4-week plan, a lead funnel and revenue goals. Sales page, lead capture and investor memo — all in the open.</p>
-      </a>
-      <a class="proj-card" href="medeasy.html">
-        <div class="proj-top">
-          <h3>MedEasy</h3>
-          <span class="proj-tag quiet pt">EM CONSTRUÇÃO</span><span class="proj-tag quiet en">IN PROGRESS</span>
-        </div>
-        <p class="pt">A consulta que se documenta sozinha: escuta, transcreve e gera a papelada clínica, com um Índice de Saúde de A a F e um app para o paciente.</p>
-        <p class="en">The consultation that documents itself: it listens, transcribes and generates clinical paperwork, with an A–F Health Index and a patient app.</p>
-      </a>
-      <a class="proj-card" href="https://drsostenescosta-rgb.github.io/chatgosipt/" target="_blank" rel="noopener">
-        <div class="proj-top">
-          <h3>ChatGosipt</h3>
-          <span class="proj-tag quiet pt">LANÇADO</span><span class="proj-tag quiet en">SHIPPED</span>
-        </div>
-        <p class="pt">Transcrição por IA, 100% local e privada. Meu primeiro produto lançado — simples, útil e funcionando.</p>
-        <p class="en">AI transcription, 100% local and private. My first shipped product — simple, useful, and working.</p>
-      </a>
+      </nav>
     </div>
-  </div>
-</section>
+  </header>
 
-<!-- PARA QUEM SENTE O CHAMADO -->
-<section>
-  <div class="wrap prose reveal">
-    <span class="kicker pt">PARA VOCÊ, QUE SENTE ALGO PARECIDO</span>
-    <span class="kicker en">FOR YOU, IF YOU FEEL SOMETHING SIMILAR</span>
-    <h2>
-      <span class="pt">Sair da matrix não é um salto. É uma decisão por dia.</span>
-      <span class="en">Leaving the matrix isn't one leap. It's one decision a day.</span>
-    </h2>
-    <p class="pt">Talvez você tenha chegado até aqui porque também sente: a vida no piloto automático, o caminho "certo" que todo mundo aplaude mas que aperta no peito, um sonho que você adia porque parece irresponsável demais. Eu conheço esse lugar. Vivi nele.</p>
-    <p class="en">Maybe you got this far because you feel it too: life on autopilot, the "right" path everyone applauds but that tightens your chest, a dream you keep postponing because it feels too irresponsible. I know that place. I lived in it.</p>
-    <p class="pt">Não vou te dizer que é fácil, nem que dá certo sempre — seria mentira, e este blog é sobre o oposto disso. O que posso te dizer é o que aprendi até agora: <strong>o medo não some; ele vira passageiro em vez de motorista.</strong> A dúvida não é sinal de que você está errado — é sinal de que está fazendo algo que importa. E a matrix da qual a gente precisa se libertar raramente é o emprego ou o curso: é a ideia de que a sua vida tem que caber na expectativa dos outros.</p>
-    <p class="en">I won't tell you it's easy, or that it always works out — that would be a lie, and this blog is about the opposite of that. What I can tell you is what I've learned so far: <strong>the fear doesn't go away; it becomes a passenger instead of the driver.</strong> Doubt isn't a sign you're wrong — it's a sign you're doing something that matters. And the matrix we need to break free from is rarely the job or the degree: it's the idea that your life has to fit other people's expectations.</p>
-    <blockquote>
-      <span class="pt">Se existe um chamado dentro de você — de ajudar, de construir, de aprender algo novo do zero — ele não vai embora. Você só decide se responde agora ou daqui a dez anos, com mais medo e menos tempo.</span>
-      <span class="en">If there's a calling inside you — to help, to build, to learn something new from scratch — it doesn't go away. You only decide whether you answer it now, or in ten years, with more fear and less time.</span>
-    </blockquote>
-    <p class="pt">Comece pequeno. Estude uma hora por dia. Lance uma coisa imperfeita. Conte para alguém o que você quer construir. Foi assim que eu comecei — vendendo chocolate aos 13, e depois de novo, do zero, aos quase 30, num país que não é o meu, numa área que eu não dominava. Se eu consigo, você consegue.</p>
-    <p class="en">Start small. Study one hour a day. Ship something imperfect. Tell someone what you want to build. That's how I started — selling chocolate at 13, and then again, from zero, at almost 30, in a country that isn't mine, in a field I hadn't mastered. If I can, you can.</p>
-  </div>
-</section>
+  <main id="conteudo">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <h1 id="hero-title">
+          <span class="pt">Saúde me ensinou a cuidar. Negócios, a escutar. Agora estudo IA para <strong>construir.</strong></span>
+          <span class="en">Healthcare taught me to care. Business, to listen. Now I study AI to <strong>build.</strong></span>
+        </h1>
 
-<!-- CONTATO -->
-<section>
-  <div class="wrap prose reveal">
-    <span class="kicker pt">VAMOS CONVERSAR</span>
-    <span class="kicker en">LET'S TALK</span>
-    <h2>
-      <span class="pt">Se algo aqui fez sentido para você</span>
-      <span class="en">If any of this resonated with you</span>
-    </h2>
-    <p class="pt">Escrevo este blog para documentar o caminho — os acertos e os tropeços. Se você é profissional de saúde, empreendedor, ou só alguém curioso sobre IA e medicina: me chama. Eu respondo.</p>
-    <p class="en">I write this blog to document the journey — the wins and the stumbles. If you're a health professional, an entrepreneur, or just curious about AI and medicine: reach out. I reply.</p>
-    <div class="cta-row">
-      <a class="btn btn-solid" href="https://wa.me/5584999869468" target="_blank" rel="noopener">WhatsApp</a>
-      <a class="btn btn-line" href="mailto:drsostenescosta@gmail.com">E-mail</a>
-      <a class="btn btn-line" href="https://www.instagram.com/drsostenes/" target="_blank" rel="noopener">Instagram</a>
-      <a class="btn btn-line" href="https://uk.linkedin.com/in/s%C3%B3stenes-costa-paiva-184137165/en" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="btn btn-line" href="https://www.youtube.com/channel/UC2d-BgBasNZ1nldwCLJ9zGw" target="_blank" rel="noopener">YouTube</a>
+        <p class="hero-lede pt">Sou Sóstenes Costa Paiva — fisioterapeuta, biomédico, empreendedor e fundador da Zatheon. Em 2026, pausei minha trajetória em Medicina para aprofundar inteligência artificial aplicada e descobrir, com responsabilidade, onde a tecnologia pode melhorar o cuidado e a operação em saúde.</p>
+        <p class="hero-lede en">I'm Sóstenes Costa Paiva — a physiotherapist, biomedical scientist, entrepreneur and founder of Zatheon. In 2026, I paused my medical studies to go deeper into applied artificial intelligence and responsibly discover where technology can improve healthcare delivery and operations.</p>
+
+        <div class="hero-actions">
+          <a class="button button-light" href="#trajetoria">
+            <span class="pt">Ver minha trajetória</span>
+            <span class="en">See my journey</span>
+          </a>
+          <a class="button button-ghost" href="https://www.linkedin.com/in/s%C3%B3stenes-costa-paiva-184137165/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+
+        <div class="hero-roles" aria-label="Áreas de atuação">
+          <span class="pt">Fisioterapia</span><span class="en">Physiotherapy</span>
+          <span class="pt">Biomedicina</span><span class="en">Biomedical science</span>
+          <span class="pt">Vendas e operações</span><span class="en">Sales and operations</span>
+          <span class="pt">IA aplicada</span><span class="en">Applied AI</span>
+        </div>
+      </div>
+
+      <figure class="hero-photo">
+        <img src="assets/sostenes-brooklyn-portrait.jpeg" alt="Sóstenes Costa Paiva diante da Manhattan Bridge em Brooklyn" width="720" height="1280" fetchpriority="high" />
+      </figure>
+    </section>
+
+    <section class="section about" id="sobre" aria-labelledby="about-title">
+      <div class="section-shell">
+        <h2 class="about-statement" id="about-title">
+          <span class="pt">Minha trajetória não segue uma linha reta. Ela une <em>cuidado, comunicação, vendas e construção.</em></span>
+          <span class="en">My journey is not a straight line. It connects <em>care, communication, sales and building.</em></span>
+        </h2>
+
+        <div class="about-grid">
+          <p class="pt">Comecei profissionalmente no atendimento ao cliente e no setor bancário. Em paralelo, formei-me em Fisioterapia, aprofundei-me em estética e concluí Biomedicina. A prática em saúde, a gestão de clínica, o ensino e a consultoria comercial me mostraram o mesmo padrão: bons resultados começam quando alguém entende o problema real antes de oferecer a solução.</p>
+          <p class="en">I began professionally in customer service and banking. In parallel, I graduated in Physiotherapy, specialized in aesthetics and completed a Biomedical Science degree. Healthcare practice, clinic management, teaching and commercial consulting showed me the same pattern: good outcomes begin when someone understands the real problem before offering a solution.</p>
+
+          <p class="pt"><strong>Hoje volto a ser aprendiz.</strong> Não apresento protótipos como produtos validados nem ambição como resultado. Meu método é ouvir operadores, mapear fluxos, construir experimentos pequenos, testar hipóteses e deixar que a evidência determine o próximo passo.</p>
+          <p class="en"><strong>Today I am a beginner again.</strong> I do not present prototypes as validated products or ambition as achievement. My method is to listen to operators, map workflows, build small experiments, test assumptions and let evidence determine the next step.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section trajectory" id="trajetoria" aria-labelledby="trajectory-title">
+      <div class="section-shell">
+        <div class="trajectory-intro">
+          <h2 id="trajectory-title">
+            <span class="pt">Trabalho e estudo, em uma só linha do tempo.</span>
+            <span class="en">Work and education, in one timeline.</span>
+          </h2>
+          <a href="https://www.linkedin.com/in/s%C3%B3stenes-costa-paiva-184137165/" target="_blank" rel="noopener noreferrer">
+            <span class="pt">Ver histórico completo no LinkedIn</span>
+            <span class="en">View full history on LinkedIn</span>
+          </a>
+        </div>
+
+        <ol class="timeline">
+          <li class="timeline-item">
+            <time class="timeline-period" datetime="2011">2011–2015</time>
+            <div class="timeline-content">
+              <span class="timeline-type"><span class="pt">Formação</span><span class="en">Education</span></span>
+              <h3 class="pt">Bacharelado em Fisioterapia</h3>
+              <h3 class="en">Bachelor's degree in Physiotherapy</h3>
+              <p class="timeline-org">Universidade Potiguar · Mossoró, Brasil</p>
+              <p class="timeline-description pt">A base clínica da minha trajetória: movimento, reabilitação, cuidado direto e leitura das necessidades de cada pessoa.</p>
+              <p class="timeline-description en">The clinical foundation of my journey: movement, rehabilitation, direct care and understanding each person's needs.</p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <time class="timeline-period" datetime="2013-10">2013–2014</time>
+            <div class="timeline-content">
+              <span class="timeline-type work"><span class="pt">Trabalho</span><span class="en">Work</span></span>
+              <h3 class="pt">Supervisor de atendimento ao cliente</h3>
+              <h3 class="en">Customer Service Supervisor</h3>
+              <p class="timeline-org">AeC Contact Center · Mossoró, Brasil</p>
+              <p class="timeline-description pt">Uma primeira escola de gestão de equipe, processos e comunicação sob pressão.</p>
+              <p class="timeline-description en">An early school in team management, processes and communication under pressure.</p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <time class="timeline-period" datetime="2014-03">2014–2021</time>
+            <div class="timeline-content">
+              <span class="timeline-type work"><span class="pt">Trabalho</span><span class="en">Work</span></span>
+              <h3 class="pt">Gerente assistente</h3>
+              <h3 class="en">Assistant Manager</h3>
+              <p class="timeline-org">Caixa Econômica Federal · Mossoró, Brasil</p>
+              <p class="timeline-description pt">Atendimento ao público, gestão de contas, processos comerciais e contábeis e venda de produtos bancários.</p>
+              <p class="timeline-description en">Customer service, account management, commercial and accounting processes, and banking product sales.</p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <time class="timeline-period" datetime="2016">2016–2017</time>
+            <div class="timeline-content">
+              <span class="timeline-type"><span class="pt">Formação</span><span class="en">Education</span></span>
+              <h3 class="pt">Pós-graduação em Fisioterapia Dermatofuncional e Estética</h3>
+              <h3 class="en">Postgraduate studies in Dermato-Functional Physiotherapy and Aesthetics</h3>
+              <p class="timeline-org">Unyleya</p>
+              <p class="timeline-description pt">Especialização voltada à prática dermatofuncional, estética e tecnologias aplicadas ao cuidado.</p>
+              <p class="timeline-description en">Specialized studies in dermato-functional practice, aesthetics and care technologies.</p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <time class="timeline-period" datetime="2016">2016–<span class="pt">presente</span><span class="en">present</span></time>
+            <div class="timeline-content">
+              <span class="timeline-type work"><span class="pt">Trabalho</span><span class="en">Work</span></span>
+              <h3 class="pt">Gestão de saúde, spa e estética</h3>
+              <h3 class="en">Health, Spa and Aesthetics Management</h3>
+              <p class="timeline-org">Trattare Clinical · Mossoró, Brasil</p>
+              <p class="timeline-description pt">Experiência em gestão, treinamento, operação de serviços de saúde e relacionamento com clientes.</p>
+              <p class="timeline-description en">Experience in management, training, healthcare service operations and client relationships.</p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <time class="timeline-period" datetime="2018-01">2018–2023</time>
+            <div class="timeline-content">
+              <span class="timeline-type"><span class="pt">Formação</span><span class="en">Education</span></span>
+              <h3 class="pt">Bacharelado em Biomedicina</h3>
+              <h3 class="en">Bachelor's degree in Biomedical Science</h3>
+              <p class="timeline-org">UNIBTA — Centro Universitário</p>
+              <p class="timeline-description pt">Formação concluída com ênfase registrada em estética e atuação como secretário acadêmico.</p>
+              <p class="timeline-description en">Degree completed with a recorded emphasis in aesthetics and service as academic secretary.</p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <time class="timeline-period" datetime="2020-05">2020</time>
+            <div class="timeline-content">
+              <span class="timeline-type work"><span class="pt">Trabalho</span><span class="en">Work</span></span>
+              <h3 class="pt">Fisioterapeuta</h3>
+              <h3 class="en">Physical Therapist</h3>
+              <p class="timeline-org">Governo do Estado do Rio Grande do Norte · Mossoró, Brasil</p>
+              <p class="timeline-description pt">Atuação temporária em serviço público de saúde entre maio e outubro de 2020.</p>
+              <p class="timeline-description en">Temporary work in public healthcare from May to October 2020.</p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <time class="timeline-period" datetime="2021-04">2021–<span class="pt">presente</span><span class="en">present</span></time>
+            <div class="timeline-content">
+              <span class="timeline-type work"><span class="pt">Trabalho</span><span class="en">Work</span></span>
+              <h3 class="pt">Consultoria comercial, marketing e vendas para saúde</h3>
+              <h3 class="en">Healthcare Marketing, Sales and Commercial Consulting</h3>
+              <p class="timeline-org">Dr SOS Service and Consultancy · Remoto</p>
+              <p class="timeline-description pt">Consultoria e treinamento em serviços de saúde, estética, marketing, vendas e gestão de negócios.</p>
+              <p class="timeline-description en">Consulting and training across healthcare services, aesthetics, marketing, sales and business management.</p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <time class="timeline-period" datetime="2025-06">2025–2026</time>
+            <div class="timeline-content">
+              <span class="timeline-type"><span class="pt">Formação</span><span class="en">Education</span></span>
+              <h3 class="pt">Trajetória acadêmica em Medicina — pausada</h3>
+              <h3 class="en">Medical education journey — paused</h3>
+              <p class="timeline-org">Trakia University — Stara Zagora, Bulgária</p>
+              <p class="timeline-description pt">Iniciei Medicina em 2025 e pausei o curso em 2026 para dedicar este período ao aprofundamento em IA aplicada, construção da Zatheon e conversas com operadores de saúde. Não sou médico.</p>
+              <p class="timeline-description en">I began medical school in 2025 and paused in 2026 to focus this period on applied AI, building Zatheon and speaking with healthcare operators. I am not a physician.</p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <time class="timeline-period" datetime="2026-06">2026</time>
+            <div class="timeline-content">
+              <span class="timeline-type certificate"><span class="pt">Certificação</span><span class="en">Certificate</span></span>
+              <h3>AI Fluency: Framework &amp; Foundations</h3>
+              <p class="timeline-org">Anthropic · <span class="pt">concluído em junho de 2026</span><span class="en">completed June 2026</span></p>
+              <p class="timeline-description pt">Um dos marcos formais da fase atual de estudo em inteligência artificial.</p>
+              <p class="timeline-description en">One formal milestone in my current phase of artificial intelligence study.</p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <time class="timeline-period" datetime="2026-07">2026–<span class="pt">presente</span><span class="en">present</span></time>
+            <div class="timeline-content">
+              <span class="timeline-type work"><span class="pt">Trabalho</span><span class="en">Work</span></span>
+              <h3>Founder, Learning &amp; Prototyping</h3>
+              <p class="timeline-org">Zatheon · Remoto</p>
+              <p class="timeline-description pt">Construção learning-first: ouvir operadores de saúde, mapear problemas recorrentes, criar protótipos pequenos e testar hipóteses antes de fazer afirmações de produto ou mercado.</p>
+              <p class="timeline-description en">Learning-first company building: speaking with healthcare operators, mapping recurring problems, creating small prototypes and testing assumptions before making product or market claims.</p>
+            </div>
+          </li>
+        </ol>
+
+        <p class="timeline-note">
+          <span class="pt">Histórico resumido a partir do perfil profissional e de registros verificados. Medicina aparece como trajetória pausada, não como formação concluída. </span>
+          <span class="en">A concise history based on the professional profile and verified records. Medicine is shown as a paused journey, not a completed degree. </span>
+          <a href="https://www.linkedin.com/in/s%C3%B3stenes-costa-paiva-184137165/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="section capabilities" aria-labelledby="capabilities-title">
+      <div class="section-shell">
+        <h2 id="capabilities-title">
+          <span class="pt">O valor está na interseção, não em uma etiqueta.</span>
+          <span class="en">The value is in the intersection, not a label.</span>
+        </h2>
+
+        <div class="capability-grid">
+          <article class="capability">
+            <h3 class="pt">Saúde por dentro</h3>
+            <h3 class="en">Healthcare from within</h3>
+            <p class="pt">Fisioterapia, Biomedicina, estética, gestão de clínica e contato direto com profissionais e pacientes.</p>
+            <p class="en">Physiotherapy, biomedical science, aesthetics, clinic management and direct work with professionals and patients.</p>
+          </article>
+
+          <article class="capability">
+            <h3 class="pt">Negócios e vendas</h3>
+            <h3 class="en">Business and sales</h3>
+            <p class="pt">Atendimento, produtos bancários, consultoria comercial, ofertas, marketing e desenvolvimento de negócios.</p>
+            <p class="en">Customer service, banking products, commercial consulting, offers, marketing and business development.</p>
+          </article>
+
+          <article class="capability">
+            <h3 class="pt">Ensino e comunicação</h3>
+            <h3 class="en">Teaching and communication</h3>
+            <p class="pt">Treinamentos em saúde, estética, cuidado humano, gestão e vendas — sempre com linguagem prática.</p>
+            <p class="en">Training in healthcare, aesthetics, human care, management and sales — always with practical language.</p>
+          </article>
+
+          <article class="capability">
+            <h3 class="pt">IA como capacidade aplicada</h3>
+            <h3 class="en">AI as an applied capability</h3>
+            <p class="pt">Estudo, prototipagem e automação com supervisão humana. Ainda em aprofundamento, sem reivindicar especialização concluída.</p>
+            <p class="en">Study, prototyping and automation with human oversight. Still deepening the craft, without claiming completed expertise.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section visual-story" aria-labelledby="visual-title">
+      <div class="section-shell">
+        <div class="section-heading">
+          <h2 id="visual-title">
+            <span class="pt">Aprender também é mudar de lugar.</span>
+            <span class="en">Learning also means changing your surroundings.</span>
+          </h2>
+          <div>
+            <p class="pt">As viagens não são troféus no currículo. São parte da escolha de ampliar repertório, conviver com novas referências e aproximar ambição de prática.</p>
+            <p class="en">Travel is not a trophy on a résumé. It is part of the choice to broaden perspective, live among new references and bring ambition closer to practice.</p>
+          </div>
+        </div>
+
+        <div class="gallery">
+          <figure class="gallery-main">
+            <img src="assets/sostenes-brooklyn-full.jpeg" alt="Sóstenes Costa Paiva em uma rua de Brooklyn com a Manhattan Bridge ao fundo" width="720" height="1280" loading="lazy" />
+            <figcaption>Brooklyn · New York</figcaption>
+          </figure>
+          <figure class="gallery-palms">
+            <img src="assets/sostenes-stanford-palms.jpeg" alt="Sóstenes Costa Paiva em uma alameda arborizada na Universidade Stanford" width="960" height="1280" loading="lazy" />
+            <figcaption>Stanford · California</figcaption>
+          </figure>
+          <figure class="gallery-arcade">
+            <img src="assets/sostenes-stanford-arcade.jpeg" alt="Sóstenes Costa Paiva caminhando sob as arcadas da Universidade Stanford" width="960" height="1280" loading="lazy" />
+            <figcaption>Stanford · California</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section now" id="agora" aria-labelledby="now-title">
+      <div class="section-shell now-layout">
+        <h2 id="now-title">
+          <span class="pt">Empresa, projeto e experimentos em construção.</span>
+          <span class="en">Company, project and experiments in progress.</span>
+        </h2>
+
+        <div class="now-copy">
+          <p class="pt">O desenho é simples: <strong>Zatheon é a empresa</strong>; <strong>Clinic Now é o projeto público em estruturação</strong>. Os trabalhos abaixo mostram como saúde, vendas, operação e IA aplicada começam a se conectar — sempre com escopo delimitado e evidência antes de promessa.</p>
+          <p class="en">The structure is simple: <strong>Zatheon is the company</strong>; <strong>Clinic Now is the public project being shaped</strong>. The work below shows how healthcare, sales, operations and applied AI begin to connect — always with a bounded scope and evidence before promises.</p>
+
+          <div class="venture-map">
+            <article class="venture venture-company">
+              <div class="venture-identity">
+                <span class="venture-mark" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" fill="none">
+                    <circle cx="24" cy="24" r="21" stroke="currentColor" stroke-width="1.6" />
+                    <path d="M14 15h21L13 34h22" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                <div>
+                  <h3>Zatheon</h3>
+                  <p class="venture-kind pt">Empresa · learning-first</p>
+                  <p class="venture-kind en">Company · learning-first</p>
+                </div>
+              </div>
+              <p class="venture-description pt">Uma empresa em construção para aprender, prototipar e investigar aplicações responsáveis de IA. Inteligência a serviço da vida é a direção; validação vem antes de escala.</p>
+              <p class="venture-description en">A company being built to learn, prototype and investigate responsible AI applications. Intelligence in service of life is the direction; validation comes before scale.</p>
+            </article>
+
+            <article class="venture venture-project">
+              <div class="venture-identity">
+                <span class="venture-mark" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" fill="none">
+                    <path d="M25 4C13.4 4 4 12.6 4 23.2c0 5.2 2.3 9.9 6.1 13.4L8.7 44l8-3.4c2.6 1 5.4 1.6 8.3 1.6 11.6 0 19-8.5 19-19S36.6 4 25 4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+                    <path d="M15 23.3h6.1l3.1-6.2 4.3 12.5 3.1-6.3H38" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                <div>
+                  <h3>Clinic Now</h3>
+                  <p class="venture-kind pt">Projeto · saúde + negócios</p>
+                  <p class="venture-kind en">Project · health + business</p>
+                </div>
+              </div>
+              <p class="venture-description pt">A frente pública da Zatheon em estruturação, voltada a investigar como vendas, posicionamento, experiência e operação podem melhorar com IA aplicada e supervisão humana.</p>
+              <p class="venture-description en">Zatheon's public initiative in development, investigating how sales, positioning, experience and operations can improve through applied AI and human oversight.</p>
+            </article>
+          </div>
+
+          <div class="workstreams">
+            <h3>
+              <span class="pt">Como essa direção toma forma.</span>
+              <span class="en">How this direction takes shape.</span>
+            </h3>
+
+            <div class="workstream-list">
+              <article class="workstream">
+                <div class="workstream-title">
+                  <h4 class="pt">Mentoria comercial e implementação</h4>
+                  <h4 class="en">Commercial mentoring and implementation</h4>
+                  <span class="workstream-status pt">Atuação por projeto</span>
+                  <span class="workstream-status en">Project-based work</span>
+                </div>
+                <p class="pt">Diagnóstico comercial, posicionamento, mentoria prática de vendas e apoio à implantação para negócios e clínicas. Escopo, disponibilidade e critérios de avaliação são definidos antes de começar.</p>
+                <p class="en">Commercial diagnosis, positioning, practical sales mentoring and implementation support for businesses and clinics. Scope, availability and evaluation criteria are defined before work begins.</p>
+              </article>
+
+              <article class="workstream">
+                <div class="workstream-title">
+                  <h4 class="pt">Implementação de IA aplicada</h4>
+                  <h4 class="en">Applied AI implementation</h4>
+                  <span class="workstream-status pt">Prototipagem supervisionada</span>
+                  <span class="workstream-status en">Supervised prototyping</span>
+                </div>
+                <p class="pt">Mapeamento de um fluxo específico, construção de um protótipo pequeno e avaliação com supervisão humana. Não é automação irrestrita nem promessa de resultado.</p>
+                <p class="en">Mapping a specific workflow, building a small prototype and evaluating it with human oversight. This is neither unrestricted automation nor a promise of results.</p>
+              </article>
+
+              <article class="workstream">
+                <div class="workstream-title">
+                  <h4 class="pt">Concierge de conversão por voz</h4>
+                  <h4 class="en">Voice conversion concierge</h4>
+                  <span class="workstream-status pt">Laboratório sintético</span>
+                  <span class="workstream-status en">Synthetic lab</span>
+                </div>
+                <p class="pt">Experimento de conversa assistida para observar escuta, roteiro e acompanhamento comercial. A demo usa dados e preços sintéticos, mantém ação externa desativada e não representa um agente em produção. <a href="https://clinic-now-sales-lab.vercel.app/" target="_blank" rel="noopener noreferrer">Abrir laboratório</a>.</p>
+                <p class="en">An assisted-conversation experiment to study listening, scripting and commercial follow-up. The demo uses synthetic data and pricing, keeps external actions disabled and is not a production agent. <a href="https://clinic-now-sales-lab.vercel.app/" target="_blank" rel="noopener noreferrer">Open the lab</a>.</p>
+              </article>
+
+              <article class="workstream">
+                <div class="workstream-title">
+                  <h4 class="pt">Cabine / ponto assistido Clinic Now</h4>
+                  <h4 class="en">Clinic Now assisted point concept</h4>
+                  <span class="workstream-status pt">Conceito condicionado</span>
+                  <span class="workstream-status en">Conditional concept</span>
+                </div>
+                <p class="pt">Visão futura de um ponto assistido para jornadas não urgentes. A cabine só avança se um piloto demonstrar uma barreira real que ela resolva; hoje não é produto implantado nem serviço disponível.</p>
+                <p class="en">A future vision for an assisted point supporting non-urgent journeys. It only advances if a pilot proves a real barrier it can solve; today it is neither a deployed product nor an available service.</p>
+              </article>
+            </div>
+
+            <div class="now-actions">
+              <a class="button button-forest" href="https://wa.me/5584999869468?text=Quero%20conversar%20sobre%20um%20projeto%20de%20vendas%20ou%20IA" target="_blank" rel="noopener noreferrer">
+                <span class="pt">Conversar sobre um projeto</span>
+                <span class="en">Discuss a project</span>
+              </a>
+              <a class="button button-outline" href="https://clinic-now-sales-lab.vercel.app/" target="_blank" rel="noopener noreferrer">
+                <span class="pt">Ver demo do Clinic Now</span>
+                <span class="en">See the Clinic Now demo</span>
+              </a>
+            </div>
+          </div>
+
+          <p class="now-principle">
+            <span class="pt">Inteligência a serviço da vida — com curiosidade, método e responsabilidade.</span>
+            <span class="en">Intelligence in service of life — with curiosity, method and responsibility.</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact" id="contato" aria-labelledby="contact-title">
+      <div class="section-shell contact-layout">
+        <div>
+          <h2 id="contact-title">
+            <span class="pt">Vamos trocar uma conversa que mova algo adiante.</span>
+            <span class="en">Let's have a conversation that moves something forward.</span>
+          </h2>
+          <p class="pt">Quero conversar com operadores de saúde, fundadores, engenheiros, pesquisadores e pessoas que também estejam investigando onde a IA cria valor real — especialmente antes de virar promessa.</p>
+          <p class="en">I want to connect with healthcare operators, founders, engineers, researchers and people who are also investigating where AI creates real value — especially before it becomes a promise.</p>
+        </div>
+
+        <div class="contact-links">
+          <a href="mailto:drsostenescosta@gmail.com"><span>E-mail</span><span class="contact-meta">drsostenescosta@gmail.com</span></a>
+          <a href="https://wa.me/5584999869468" target="_blank" rel="noopener noreferrer"><span>WhatsApp</span><span class="contact-meta"><span class="pt">Mensagem direta</span><span class="en">Direct message</span></span></a>
+          <a href="https://www.linkedin.com/in/s%C3%B3stenes-costa-paiva-184137165/" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><span class="contact-meta"><span class="pt">Perfil profissional</span><span class="en">Professional profile</span></span></a>
+          <a href="https://www.instagram.com/drsostenes/" target="_blank" rel="noopener noreferrer"><span>Instagram</span><span class="contact-meta">@drsostenes</span></a>
+          <a href="https://www.youtube.com/channel/UC2d-BgBasNZ1nldwCLJ9zGw" target="_blank" rel="noopener noreferrer"><span>YouTube</span><span class="contact-meta"><span class="pt">Vídeos e trajetória</span><span class="en">Videos and journey</span></span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-shell">
+      <p><span id="current-year">2026</span> © Sóstenes Costa Paiva</p>
+      <p>
+        <span class="pt">Construído com clareza sobre o estágio atual.</span>
+        <span class="en">Built with clarity about the current stage.</span>
+        <a href="#top"><span class="pt">Voltar ao início</span><span class="en">Back to top</span></a>
+      </p>
     </div>
-  </div>
-</section>
+  </footer>
 
-<footer>
-  <span class="pt">&copy; 2026 SÓSTENES COSTA PAIVA · ZETHEON · CONSTRUINDO EM PÚBLICO</span>
-  <span class="en">&copy; 2026 SÓSTENES COSTA PAIVA · ZETHEON · BUILDING IN PUBLIC</span>
-</footer>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var body = document.body;
+      var langButtons = document.querySelectorAll("[data-set-lang]");
+      var menuButton = document.querySelector(".menu-toggle");
+      var navLinks = document.querySelectorAll(".nav-menu a");
 
-<script>
-  function setLang(lang) {
-    document.documentElement.setAttribute('data-lang', lang);
-    document.documentElement.setAttribute('lang', lang === 'en' ? 'en' : 'pt-BR');
-    document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
-      btn.classList.toggle('active', btn.getAttribute('data-set-lang') === lang);
-    });
-  }
-  document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
-    btn.addEventListener('click', function () { setLang(btn.getAttribute('data-set-lang')); });
-  });
+      function setLanguage(lang) {
+        var next = lang === "en" ? "en" : "pt";
+        root.setAttribute("data-lang", next);
+        root.setAttribute("lang", next === "en" ? "en" : "pt-BR");
+        langButtons.forEach(function (button) {
+          button.setAttribute("aria-pressed", String(button.getAttribute("data-set-lang") === next));
+        });
+        updateMenuLabel();
+        try {
+          window.localStorage.setItem("sostenes-site-lang", next);
+        } catch (error) {
+          // The page remains fully functional when storage is unavailable.
+        }
+      }
 
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if ('IntersectionObserver' in window && !reduced) {
-    var obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
+      function closeMenu() {
+        body.classList.remove("menu-open");
+        menuButton.setAttribute("aria-expanded", "false");
+        updateMenuLabel();
+      }
+
+      function updateMenuLabel() {
+        var english = root.getAttribute("data-lang") === "en";
+        var open = body.classList.contains("menu-open");
+        menuButton.setAttribute("aria-label", english
+          ? (open ? "Close navigation menu" : "Open navigation menu")
+          : (open ? "Fechar menu de navegação" : "Abrir menu de navegação"));
+      }
+
+      langButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          setLanguage(button.getAttribute("data-set-lang"));
+        });
       });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(function (el) { obs.observe(el); });
-  } else {
-    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
-  }
-</script>
 
+      menuButton.addEventListener("click", function () {
+        var open = body.classList.toggle("menu-open");
+        menuButton.setAttribute("aria-expanded", String(open));
+        updateMenuLabel();
+      });
+
+      navLinks.forEach(function (link) {
+        link.addEventListener("click", closeMenu);
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          closeMenu();
+        }
+      });
+
+      try {
+        var savedLanguage = window.localStorage.getItem("sostenes-site-lang");
+        if (savedLanguage) {
+          setLanguage(savedLanguage);
+        }
+      } catch (error) {
+        setLanguage("pt");
+      }
+
+      document.getElementById("current-year").textContent = String(new Date().getFullYear());
+    })();
+  </script>
 </body>
 </html>
