@@ -3,3 +3,4 @@
 ideias/
 qa/
 .claude/
+.env*

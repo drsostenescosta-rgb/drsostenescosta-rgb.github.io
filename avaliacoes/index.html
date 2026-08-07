@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<title>Avaliações — Sóstenes Costa Paiva · Zatheon</title>
+<meta name="description" content="Avaliações públicas de quem já trabalhou, estudou ou conviveu com Sóstenes Costa Paiva, fundador da Zatheon. Deixe também a sua — publicada após moderação." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f3; --bg-soft: #f2efe7; --ink: #1f2421; --ink-soft: #5b615c;
+    --line: #e3ded2; --accent: #1d7a55; --accent-soft: #e7f2ec; --gold: #806313; --gold-soft: #f4ecdc; /* dourado de texto escurecido para contraste AA */
+    --danger: #a3402e;
+    --serif: 'Fraunces', serif; --sans: 'Inter', sans-serif; --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.7; font-size: 16px; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 22px; }
+
+  header.nav { position: sticky; top: 0; background: rgba(250,248,243,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); z-index: 10; }
+  .nav-inner { max-width: 860px; margin: 0 auto; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .brand { font-family: var(--serif); font-weight: 600; color: var(--ink); font-size: 1.02rem; }
+  .brand small { display: block; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; color: var(--gold); font-weight: 500; }
+  .nav a.back { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.05em; white-space: nowrap; }
+
+  .hero { padding: 56px 0 20px; }
+  .kicker { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.18em; color: var(--gold); display: block; margin-bottom: 12px; }
+  h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(1.7rem, 4.5vw, 2.5rem); line-height: 1.2; margin-bottom: 14px; }
+  h1 em { color: var(--accent); font-style: italic; }
+  .hero p.lead { color: var(--ink-soft); max-width: 660px; font-size: 1.04rem; }
+  .hero p.convite { margin-top: 14px; font-size: 0.95rem; }
+
+  section { padding: 34px 0 8px; }
+  h2 { font-family: var(--serif); font-weight: 600; font-size: 1.35rem; margin-bottom: 8px; }
+  .sub { color: var(--ink-soft); font-size: 0.92rem; margin-bottom: 18px; max-width: 660px; }
+
+  /* ===== Lista de depoimentos ===== */
+  .lista { display: grid; gap: 16px; }
+  .depoimento { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+  .dep-topo { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+  .dep-estrelas { color: #a07d1c; font-size: 1.05rem; letter-spacing: 2px; white-space: nowrap; } /* dourado decorativo original — elemento gráfico exige só 3:1 */
+  .dep-estrelas .off { color: var(--line); }
+  .dep-data { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em; color: var(--ink-soft); }
+  .dep-nome { font-family: var(--serif); font-weight: 600; font-size: 1.08rem; }
+  .dep-relacao { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); border: 1px solid rgba(29,122,85,0.25); border-radius: 999px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; white-space: nowrap; }
+  .dep-comentario { margin-top: 10px; font-size: 0.94rem; color: var(--ink); }
+  .dep-porque { margin-top: 12px; padding: 10px 14px; background: var(--gold-soft); border-left: 3px solid var(--gold); border-radius: 0 10px 10px 0; font-size: 0.88rem; color: var(--ink-soft); }
+  .dep-porque strong { display: block; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; color: var(--gold); font-weight: 500; margin-bottom: 2px; }
+
+  /* Skeleton */
+  .skeleton { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+  .sk-linha { height: 12px; border-radius: 6px; background: linear-gradient(90deg, var(--bg-soft) 25%, var(--line) 50%, var(--bg-soft) 75%); background-size: 200% 100%; animation: brilho 1.4s ease-in-out infinite; margin-bottom: 10px; }
+  .sk-linha.curta { width: 40%; }
+  .sk-linha.media { width: 70%; }
+  @keyframes brilho { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  @media (prefers-reduced-motion: reduce) { .sk-linha { animation: none; } }
+
+  /* Estado vazio / erro */
+  .estado { background: #fff; border: 1px dashed var(--line); border-radius: 14px; padding: 34px 22px; text-align: center; }
+  .estado .icone { font-size: 1.6rem; color: var(--gold); letter-spacing: 4px; display: block; margin-bottom: 10px; }
+  .estado h3 { font-family: var(--serif); font-weight: 600; font-size: 1.1rem; margin-bottom: 6px; }
+  .estado p { font-size: 0.9rem; color: var(--ink-soft); max-width: 460px; margin: 0 auto; }
+
+  /* ===== Formulário ===== */
+  .form-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 26px; margin-top: 8px; }
+  .campo { margin-bottom: 18px; }
+  .campo label.rotulo { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 5px; }
+  .campo .opcional { font-weight: 400; color: var(--ink-soft); font-size: 0.8rem; }
+  .campo input[type="text"], .campo textarea {
+    width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 10px 13px;
+    font-family: var(--sans); font-size: 0.94rem; color: var(--ink); background: var(--bg);
+  }
+  .campo input[type="text"]:focus, .campo textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  .campo textarea { min-height: 120px; resize: vertical; }
+  .campo .ajuda { font-size: 0.78rem; color: var(--ink-soft); margin-top: 3px; }
+  .contador { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.05em; color: var(--ink-soft); text-align: right; margin-top: 3px; }
+  .erro-campo { display: none; color: var(--danger); font-size: 0.8rem; margin-top: 4px; }
+  .campo.invalido .erro-campo { display: block; }
+  .campo.invalido input[type="text"], .campo.invalido textarea { border-color: var(--danger); }
+
+  /* Estrelas clicáveis */
+  fieldset.estrelas-campo { border: none; margin-bottom: 18px; }
+  fieldset.estrelas-campo legend { font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; padding: 0; }
+  .seletor-estrelas { display: inline-flex; gap: 4px; }
+  .seletor-estrelas input[type="radio"] { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+  .seletor-estrelas label { cursor: pointer; font-size: 1.9rem; line-height: 1; color: var(--line); transition: color 0.12s ease, transform 0.12s ease; padding: 2px; user-select: none; }
+  .seletor-estrelas label.acesa { color: var(--gold); }
+  .seletor-estrelas label:hover { transform: scale(1.12); }
+  .seletor-estrelas input[type="radio"]:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+  .estrelas-dica { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; color: var(--ink-soft); margin-left: 10px; vertical-align: 6px; }
+  .estrelas-campo .erro-campo { margin-top: 2px; }
+  .estrelas-campo.invalido .erro-campo { display: block; }
+
+  /* Consentimento */
+  .consentimento { display: flex; gap: 10px; align-items: flex-start; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; margin-bottom: 18px; }
+  .consentimento input[type="checkbox"] { margin-top: 4px; width: 17px; height: 17px; accent-color: var(--accent); flex-shrink: 0; cursor: pointer; }
+  .consentimento label { font-size: 0.85rem; color: var(--ink-soft); cursor: pointer; }
+  .consentimento label strong { color: var(--ink); }
+  .campo-consent.invalido .consentimento { border-color: var(--danger); }
+  .campo-consent .erro-campo { margin: -12px 0 16px; }
+  .campo-consent.invalido .erro-campo { display: block; }
+
+  /* Honeypot — escondido de humanos */
+  .contato-extra { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+  /* Texto apenas para leitores de tela */
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+
+  .btn-enviar { display: inline-block; background: var(--accent); color: #fff; border: none; padding: 12px 26px; border-radius: 10px; font-family: var(--sans); font-weight: 600; font-size: 0.94rem; cursor: pointer; transition: filter 0.15s ease, transform 0.15s ease; }
+  .btn-enviar:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .btn-enviar:disabled { opacity: 0.6; cursor: wait; transform: none; }
+
+  .form-status { margin-top: 16px; padding: 13px 16px; border-radius: 10px; font-size: 0.9rem; display: none; }
+  .form-status.ok { display: block; background: var(--accent-soft); border: 1px solid rgba(29,122,85,0.35); color: var(--accent); }
+  .form-status.falha { display: block; background: #f7e8e4; border: 1px solid rgba(163,64,46,0.35); color: var(--danger); }
+
+  .nota-moderacao { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em; color: var(--ink-soft); margin-top: 14px; }
+
+  footer { border-top: 1px solid var(--line); margin-top: 48px; padding: 26px 22px 40px; text-align: center; color: var(--ink-soft); font-size: 0.74rem; font-family: var(--mono); letter-spacing: 0.06em; }
+  footer .eco-links { margin-bottom: 10px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; font-family: var(--sans); font-size: 0.82rem; letter-spacing: 0; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">Avaliações <small>SÓSTENES COSTA PAIVA · ZATHEON</small></div>
+    <a class="back" href="../">← VOLTAR</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="hero">
+    <span class="kicker">AVALIAÇÕES · DEPOIMENTOS PÚBLICOS</span>
+    <h1>Como é trabalhar, estudar e <em>construir</em> com o Sóstenes?</h1>
+    <p class="lead">Quem já trabalhou, estudou ou conviveu com Sóstenes conta aqui como foi — colegas, clientes, professores, parceiros. Depoimentos reais, publicados com consentimento e após moderação.</p>
+    <p class="convite">Você também tem uma história? <a href="#avaliar">Deixe a sua avaliação</a> — leva dois minutos.</p>
+  </div>
+
+  <section id="depoimentos" aria-labelledby="titulo-depoimentos">
+    <h2 id="titulo-depoimentos">O que já disseram</h2>
+    <p class="sub">Somente avaliações aprovadas na moderação aparecem aqui, sempre com o nome autorizado pela própria pessoa.</p>
+    <div class="lista" id="lista" aria-live="polite">
+      <div class="skeleton" aria-hidden="true">
+        <div class="sk-linha curta"></div>
+        <div class="sk-linha media"></div>
+        <div class="sk-linha"></div>
+      </div>
+      <div class="skeleton" aria-hidden="true">
+        <div class="sk-linha curta"></div>
+        <div class="sk-linha media"></div>
+        <div class="sk-linha"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="avaliar" aria-labelledby="titulo-avaliar">
+    <h2 id="titulo-avaliar">Deixe sua avaliação</h2>
+    <p class="sub">Conte como foi a sua experiência. Sua avaliação passa por moderação antes de ser publicada.</p>
+
+    <form class="form-card" id="form-avaliacao" novalidate>
+
+      <fieldset class="estrelas-campo" id="campo-estrelas">
+        <legend>Sua nota <span aria-hidden="true">*</span></legend>
+        <span class="seletor-estrelas" id="seletor-estrelas">
+          <input type="radio" name="estrelas" id="estrela-1" value="1" />
+          <label for="estrela-1" data-valor="1"><span aria-hidden="true">★</span><span class="sr-only">1 estrela</span></label>
+          <input type="radio" name="estrelas" id="estrela-2" value="2" />
+          <label for="estrela-2" data-valor="2"><span aria-hidden="true">★</span><span class="sr-only">2 estrelas</span></label>
+          <input type="radio" name="estrelas" id="estrela-3" value="3" />
+          <label for="estrela-3" data-valor="3"><span aria-hidden="true">★</span><span class="sr-only">3 estrelas</span></label>
+          <input type="radio" name="estrelas" id="estrela-4" value="4" />
+          <label for="estrela-4" data-valor="4"><span aria-hidden="true">★</span><span class="sr-only">4 estrelas</span></label>
+          <input type="radio" name="estrelas" id="estrela-5" value="5" />
+          <label for="estrela-5" data-valor="5"><span aria-hidden="true">★</span><span class="sr-only">5 estrelas</span></label>
+        </span>
+        <span class="estrelas-dica" id="estrelas-dica" aria-live="polite"></span>
+        <span class="erro-campo" id="erro-estrelas">Escolha uma nota de 1 a 5 estrelas.</span>
+      </fieldset>
+
+      <div class="campo" id="campo-nome">
+        <label class="rotulo" for="nome">Seu nome <span aria-hidden="true">*</span></label>
+        <input type="text" id="nome" name="nome" maxlength="80" autocomplete="name" required aria-describedby="erro-nome" />
+        <span class="erro-campo" id="erro-nome">Informe seu nome (entre 2 e 80 caracteres).</span>
+      </div>
+
+      <div class="campo" id="campo-relacao">
+        <label class="rotulo" for="relacao">Sua relação com o Sóstenes <span class="opcional">(opcional — ex.: colega, cliente, professor)</span></label>
+        <input type="text" id="relacao" name="relacao" maxlength="120" aria-describedby="erro-relacao" />
+        <span class="erro-campo" id="erro-relacao">A relação pode ter no máximo 120 caracteres.</span>
+      </div>
+
+      <div class="campo" id="campo-comentario">
+        <label class="rotulo" for="comentario">Seu comentário <span aria-hidden="true">*</span></label>
+        <textarea id="comentario" name="comentario" maxlength="1200" required aria-describedby="ajuda-comentario erro-comentario"></textarea>
+        <div class="ajuda" id="ajuda-comentario">Como foi trabalhar, estudar ou conviver com ele? Mínimo de 10 caracteres.</div>
+        <div class="contador" id="contador-comentario" aria-hidden="true">0/1200</div>
+        <span class="erro-campo" id="erro-comentario">Escreva um comentário entre 10 e 1200 caracteres.</span>
+      </div>
+
+      <div class="campo" id="campo-porque">
+        <label class="rotulo" for="porque">Por que me recomenda? <span class="opcional">(opcional)</span></label>
+        <textarea id="porque" name="porque" maxlength="600" style="min-height:80px" aria-describedby="erro-porque"></textarea>
+        <div class="contador" id="contador-porque" aria-hidden="true">0/600</div>
+        <span class="erro-campo" id="erro-porque">Este campo pode ter no máximo 600 caracteres.</span>
+      </div>
+
+      <div class="contato-extra" aria-hidden="true">
+        <label for="contato-extra">Se você é uma pessoa, deixe este campo vazio</label>
+        <input type="text" id="contato-extra" name="contato_extra" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div class="campo-consent" id="campo-consent">
+        <div class="consentimento">
+          <input type="checkbox" id="consentimento" name="consentimento" aria-describedby="erro-consent" />
+          <label for="consentimento"><strong>Autorizo a publicação do meu nome e avaliação nesta página.</strong> Posso pedir remoção a qualquer momento pelo e-mail <a href="mailto:drsostenescosta@gmail.com">drsostenescosta@gmail.com</a>. Saiba mais na <a href="../privacidade.html">política de privacidade</a>.</label>
+        </div>
+        <span class="erro-campo" id="erro-consent">Para publicar sua avaliação, é necessário autorizar a publicação.</span>
+      </div>
+
+      <button type="submit" class="btn-enviar" id="btn-enviar">Enviar avaliação</button>
+
+      <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+
+      <p class="nota-moderacao">SEU NOME E AVALIAÇÃO SÓ APARECEM APÓS APROVAÇÃO NA MODERAÇÃO · LGPD</p>
+    </form>
+  </section>
+
+</div>
+
+<footer>
+  <div class="eco-links">
+    <a href="../">Início</a>
+    <a href="../projetos/">Mapa de projetos</a>
+    <a href="../careloop/">CareLoop</a>
+    <a href="../emily/">Emily</a>
+    <a href="../privacidade.html">Privacidade</a>
+  </div>
+  ZATHEON · AVALIAÇÕES PUBLICADAS COM CONSENTIMENTO E APÓS MODERAÇÃO · REMOÇÃO A QUALQUER MOMENTO POR E-MAIL
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var SUPABASE_URL = 'https://yaqphldowpshhrtvvfaq.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_V64ejsDNKclPdFlqymghnQ_jUr5ivj1';
+  var TABELA = SUPABASE_URL + '/rest/v1/depoimentos_fundador';
+  var CABECALHOS = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': 'Bearer ' + SUPABASE_KEY
+  };
+
+  /* ============ Lista de depoimentos ============ */
+  var lista = document.getElementById('lista');
+
+  function el(tag, className, texto) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (texto !== undefined && texto !== null) node.textContent = texto;
+    return node;
+  }
+
+  function estrelasHtml(n) {
+    var span = el('span', 'dep-estrelas');
+    span.setAttribute('role', 'img');
+    span.setAttribute('aria-label', n + ' de 5 estrelas');
+    for (var i = 1; i <= 5; i++) {
+      var s = el('span', i <= n ? '' : 'off', '★');
+      s.setAttribute('aria-hidden', 'true');
+      span.appendChild(s);
+    }
+    return span;
+  }
+
+  function formataData(iso) {
+    try {
+      var d = new Date(iso);
+      if (isNaN(d.getTime())) return '';
+      return d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
+    } catch (e) { return ''; }
+  }
+
+  function renderVazio() {
+    lista.innerHTML = '';
+    var box = el('div', 'estado');
+    var ico = el('span', 'icone', '★ ★ ★ ★ ★');
+    ico.setAttribute('aria-hidden', 'true');
+    box.appendChild(ico);
+    box.appendChild(el('h3', null, 'Seja o primeiro a avaliar'));
+    var p = el('p');
+    p.appendChild(document.createTextNode('Nenhuma avaliação publicada por enquanto. Se você já trabalhou, estudou ou conviveu com o Sóstenes, '));
+    var link = el('a', null, 'conte como foi');
+    link.href = '#avaliar';
+    p.appendChild(link);
+    p.appendChild(document.createTextNode(' — sua avaliação pode ser a primeira.'));
+    box.appendChild(p);
+    lista.appendChild(box);
+  }
+
+  function renderErroLista() {
+    lista.innerHTML = '';
+    var box = el('div', 'estado');
+    box.appendChild(el('h3', null, 'Não foi possível carregar as avaliações'));
+    box.appendChild(el('p', null, 'Tente recarregar a página em instantes. O formulário abaixo continua funcionando normalmente.'));
+    lista.appendChild(box);
+  }
+
+  function renderDepoimentos(itens) {
+    lista.innerHTML = '';
+    itens.forEach(function (item) {
+      var card = el('article', 'depoimento');
+
+      var topo = el('div', 'dep-topo');
+      topo.appendChild(estrelasHtml(Math.max(1, Math.min(5, Number(item.estrelas) || 0))));
+      var data = formataData(item.created_at);
+      if (data) topo.appendChild(el('span', 'dep-data', data.toUpperCase()));
+      card.appendChild(topo);
+
+      var nomeLinha = el('div');
+      nomeLinha.appendChild(el('span', 'dep-nome', item.nome || 'Anônimo'));
+      if (item.relacao) nomeLinha.appendChild(el('span', 'dep-relacao', item.relacao));
+      card.appendChild(nomeLinha);
+
+      card.appendChild(el('p', 'dep-comentario', item.comentario || ''));
+
+      if (item.porque_recomenda) {
+        var porque = el('div', 'dep-porque');
+        porque.appendChild(el('strong', null, 'POR QUE RECOMENDO'));
+        porque.appendChild(document.createTextNode(item.porque_recomenda));
+        card.appendChild(porque);
+      }
+
+      lista.appendChild(card);
+    });
+  }
+
+  function carregarDepoimentos() {
+    var url = TABELA + '?select=nome,relacao,estrelas,comentario,porque_recomenda,created_at&order=created_at.desc';
+    fetch(url, { headers: CABECALHOS })
+      .then(function (resp) {
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        return resp.json();
+      })
+      .then(function (dados) {
+        if (Array.isArray(dados) && dados.length > 0) renderDepoimentos(dados);
+        else renderVazio();
+      })
+      .catch(function () { renderErroLista(); });
+  }
+
+  carregarDepoimentos();
+
+  /* ============ Seletor de estrelas ============ */
+  var seletor = document.getElementById('seletor-estrelas');
+  var radios = Array.prototype.slice.call(seletor.querySelectorAll('input[type="radio"]'));
+  var rotulos = Array.prototype.slice.call(seletor.querySelectorAll('label'));
+  var dica = document.getElementById('estrelas-dica');
+  var DICAS = { 1: 'MUITO RUIM', 2: 'RUIM', 3: 'OK', 4: 'MUITO BOM', 5: 'EXCELENTE' };
+
+  function pintar(n) {
+    rotulos.forEach(function (rotulo, i) {
+      rotulo.classList.toggle('acesa', i < n);
+    });
+  }
+
+  function valorEscolhido() {
+    var marcado = radios.filter(function (r) { return r.checked; })[0];
+    return marcado ? Number(marcado.value) : 0;
+  }
+
+  radios.forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      var v = Number(radio.value);
+      pintar(v);
+      dica.textContent = DICAS[v] || '';
+      document.getElementById('campo-estrelas').classList.remove('invalido');
+    });
+  });
+  rotulos.forEach(function (rotulo, i) {
+    rotulo.addEventListener('mouseenter', function () { pintar(i + 1); });
+  });
+  seletor.addEventListener('mouseleave', function () { pintar(valorEscolhido()); });
+
+  /* ============ Contadores ============ */
+  function ligaContador(idCampo, idContador, max) {
+    var campo = document.getElementById(idCampo);
+    var contador = document.getElementById(idContador);
+    function atualiza() { contador.textContent = campo.value.length + '/' + max; }
+    campo.addEventListener('input', atualiza);
+    atualiza();
+  }
+  ligaContador('comentario', 'contador-comentario', 1200);
+  ligaContador('porque', 'contador-porque', 600);
+
+  /* ============ Envio do formulário ============ */
+  var form = document.getElementById('form-avaliacao');
+  var btn = document.getElementById('btn-enviar');
+  var statusBox = document.getElementById('form-status');
+
+  function marca(idCampo, invalido) {
+    document.getElementById(idCampo).classList.toggle('invalido', invalido);
+    return !invalido;
+  }
+
+  function mostraStatus(tipo, mensagem) {
+    statusBox.className = 'form-status ' + tipo;
+    statusBox.textContent = mensagem;
+  }
+
+  form.addEventListener('submit', function (evento) {
+    evento.preventDefault();
+    statusBox.className = 'form-status';
+    statusBox.textContent = '';
+
+    var nome = document.getElementById('nome').value.trim();
+    var relacao = document.getElementById('relacao').value.trim();
+    var comentario = document.getElementById('comentario').value.trim();
+    var porque = document.getElementById('porque').value.trim();
+    var consentiu = document.getElementById('consentimento').checked;
+    var estrelas = valorEscolhido();
+    var honeypot = document.getElementById('contato-extra').value;
+
+    /* Validação espelhando os limites do banco */
+    var ok = true;
+    ok = marca('campo-estrelas', !(estrelas >= 1 && estrelas <= 5)) && ok;
+    ok = marca('campo-nome', !(nome.length >= 2 && nome.length <= 80)) && ok;
+    ok = marca('campo-relacao', relacao.length > 120) && ok;
+    ok = marca('campo-comentario', !(comentario.length >= 10 && comentario.length <= 1200)) && ok;
+    ok = marca('campo-porque', porque.length > 600) && ok;
+    ok = marca('campo-consent', !consentiu) && ok;
+
+    if (!ok) {
+      mostraStatus('falha', 'Confira os campos destacados acima e tente novamente.');
+      var primeiroInvalido = form.querySelector('.invalido');
+      if (primeiroInvalido) primeiroInvalido.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    /* Honeypot preenchido: não envia nada, finge sucesso */
+    if (honeypot) {
+      form.reset();
+      pintar(0);
+      dica.textContent = '';
+      mostraStatus('ok', 'Obrigado! Sua avaliação aparece após moderação.');
+      return;
+    }
+
+    var corpo = {
+      nome: nome,
+      relacao: relacao || null,
+      estrelas: estrelas,
+      comentario: comentario,
+      porque_recomenda: porque || null,
+      consentimento: true,
+      aprovado: false
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+
+    fetch(TABELA, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(corpo)
+    })
+      .then(function (resp) {
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        form.reset();
+        pintar(0);
+        dica.textContent = '';
+        document.getElementById('contador-comentario').textContent = '0/1200';
+        document.getElementById('contador-porque').textContent = '0/600';
+        mostraStatus('ok', 'Obrigado! Sua avaliação aparece após moderação.');
+      })
+      .catch(function () {
+        mostraStatus('falha', 'Não foi possível enviar sua avaliação agora. Tente novamente em instantes ou escreva para drsostenescosta@gmail.com.');
+      })
+      .then(function () {
+        btn.disabled = false;
+        btn.textContent = 'Enviar avaliação';
+      });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <title>CareLoop — Assinaturas de cuidado para médicos. Recorrência ética, receita previsível.</title>
-<meta name="description" content="O CareLoop transforma protocolos clínicos em assinaturas de cuidado: acompanhamento recorrente com cobrança automática, lembretes e painel de receita previsível. Software do ecossistema Zatheon — não é plano de saúde." />
-<meta property="og:title" content="CareLoop — Assinaturas de cuidado para médicos" />
-<meta property="og:description" content="Transforme protocolos clínicos em acompanhamento recorrente: cobrança automática Pix/cartão, jornada do assinante e painel de MRR do consultório." />
+<meta name="description" content="CareLoop é uma ideia mapeada do ecossistema Zatheon: transformar protocolos clínicos em assinaturas de cuidado, com recorrência ética e receita previsível. Ainda não é um produto em operação — página de tese, com lista de interesse." />
+<meta name="robots" content="noindex" /><!-- ideia mapeada — indexar apenas após gatilho de lançamento, espelhando o critério do MedVerse -->
+<meta property="og:title" content="CareLoop — Assinaturas de cuidado para médicos (ideia mapeada)" />
+<meta property="og:description" content="A tese: transformar protocolos clínicos em acompanhamento recorrente. Ideia mapeada do ecossistema Zatheon — ainda não é um produto em operação; lista de interesse aberta." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -125,6 +127,9 @@
   .cta-final p { color:var(--muted); max-width:52ch; margin:0 auto 30px; }
 
   .selo { display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--em-light); border:1px solid rgba(56,189,248,0.35); border-radius:999px; padding:6px 14px; background:rgba(56,189,248,0.06); }
+  .selo-status { display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-light); border:1px solid rgba(201,162,39,0.45); border-radius:999px; padding:6px 14px; background:rgba(201,162,39,0.08); margin-bottom:14px; }
+  .aviso-estagio { margin:18px 0 0; padding:14px 18px; background:rgba(201,162,39,0.06); border:1px solid rgba(201,162,39,0.35); border-radius:12px; font-size:0.85rem; color:var(--muted); max-width:60ch; }
+  .aviso-estagio strong { color:var(--text); }
 
   footer { border-top:1px solid var(--border); padding:34px 0; }
   .foot { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center; color:var(--muted); font-size:0.82rem; }
@@ -144,26 +149,30 @@
     </a>
     <nav class="nav-links">
       <a href="#dor">O problema</a>
-      <a href="#como">Como funciona</a>
+      <a href="#como">Como funcionaria</a>
       <a href="#produto">Funcionalidades</a>
-      <a href="#planos">Planos</a>
+      <a href="#planos">Previsão de planos</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <a class="btn btn-em" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20conhecer%20o%20CareLoop%20e%20montar%20minha%20primeira%20assinatura%20de%20cuidado." target="_blank" rel="noopener">Falar no WhatsApp</a>
+    <a class="btn btn-em" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20entrar%20na%20lista%20de%20interesse%20do%20CareLoop." target="_blank" rel="noopener">Lista de interesse</a>
   </div>
 </header>
 
 <section class="hero" id="top">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow">Recorrência para médicos · ecossistema Zatheon</span>
+      <span class="eyebrow">Recorrência para médicos · ecossistema Zatheon</span><br>
+      <span class="selo-status" style="margin-top:14px">IDEIA MAPEADA — NÃO É UM PRODUTO EM OPERAÇÃO</span>
       <h1><span class="grad">Sua agenda não precisa recomeçar</span><br>do zero <em>todo mês</em>.</h1>
-      <p class="hero-sub">O CareLoop transforma seus protocolos clínicos em <strong>assinaturas de cuidado</strong>: o paciente contrata acompanhamento contínuo — consultas periódicas, revisão de exames, canal de dúvidas, lembretes — e paga um valor mensal pela assinatura de serviços, com cobrança automática. Você para de vender consulta avulsa e passa a construir receita previsível, cuidando melhor de quem já confia em você. Interações remotas (canal de dúvidas, telemonitoramento) observam a Resolução CFM nº 2.314/2022.</p>
+      <p class="hero-sub">A tese do CareLoop: transformar protocolos clínicos em <strong>assinaturas de cuidado</strong> — o paciente contrataria acompanhamento contínuo (consultas periódicas, revisão de exames, canal de dúvidas, lembretes) e pagaria um valor mensal pela assinatura de serviços, com cobrança automática. Em vez de vender consulta avulsa, o médico construiria receita previsível cuidando melhor de quem já confia nele. Interações remotas (canal de dúvidas, telemonitoramento) observariam a Resolução CFM nº 2.314/2022.</p>
       <div class="hero-ctas">
-        <a class="btn btn-em btn-lg" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20conhecer%20o%20CareLoop%20e%20montar%20minha%20primeira%20assinatura%20de%20cuidado." target="_blank" rel="noopener">Montar minha primeira assinatura →</a>
-        <a class="btn btn-ghost btn-lg" href="#como">Ver como funciona</a>
+        <a class="btn btn-em btn-lg" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20entrar%20na%20lista%20de%20interesse%20do%20CareLoop." target="_blank" rel="noopener">Entrar na lista de interesse →</a>
+        <a class="btn btn-ghost btn-lg" href="#como">Ver como funcionaria</a>
       </div>
-      <div class="hero-note">contrato entre médico e paciente · não é plano de saúde · cancele quando quiser</div>
+      <div class="hero-note">contrato entre médico e paciente · não é plano de saúde · desenho da tese</div>
+      <div class="aviso-estagio">
+        <strong>O que esta página é (e não é):</strong> uma ideia mapeada do ecossistema Zatheon, apresentada a quem quiser construí-la junto. Não é um produto em operação — não há infraestrutura de cobrança, contratos ou clientes, e não há preço definido. O painel ao lado é mockup ilustrativo e os valores citados são previsão de lançamento. Se o CareLoop te interessa, entre na lista de interesse ou candidate-se a parceiro de design.
+      </div>
     </div>
     <div class="mock" aria-hidden="true">
       <div class="mock-bar"><span class="mock-dot e"></span><span class="mock-dot g"></span><span class="mock-dot"></span></div>
@@ -200,7 +209,7 @@
 <section id="como">
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">Como funciona</span>
+      <span class="eyebrow">Como funcionaria</span>
       <h2>Do protocolo clínico à <em>assinatura de cuidado</em> em 4 passos</h2>
       <p>Inspirado nos modelos de cuidado direto médico–paciente que já funcionam lá fora — adaptado à realidade e à regulação brasileiras.</p>
     </div>
@@ -216,9 +225,9 @@
 <section id="produto">
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">Funcionalidades</span>
+      <span class="eyebrow">Funcionalidades previstas</span>
       <h2>Tudo que a recorrência exige, <em>num lugar só</em></h2>
-      <p>Não é gateway de pagamento com outro nome. É a operação completa da assinatura: clínica, financeira e de relacionamento.</p>
+      <p>Não é gateway de pagamento com outro nome. É o desenho da operação completa da assinatura — clínica, financeira e de relacionamento. Nada abaixo está em operação hoje.</p>
     </div>
     <div class="cards3">
       <div class="card"><div class="ico">📚</div><h3>Biblioteca de protocolos</h3><p>Modelos de acompanhamento por especialidade, com cadência de consultas, exames e entregáveis sugeridos. Ajuste ao seu jeito de atender — o protocolo é seu, a estrutura é pronta.</p></div>
@@ -229,8 +238,8 @@
       <div class="card"><div class="ico">🧩</div><h3>Ecossistema Zatheon</h3><p>Agenda integrada com o <a href="../sosmed/index.html" style="color:var(--em-light)">SosMed</a>; captação e crescimento com <a href="../clinicnow/index.html" style="color:var(--em-light)">ClinicNow</a> e <a href="../medgroth/index.html" style="color:var(--em-light)">MedGroth</a>. O funil traz o paciente; o CareLoop faz ele ficar.</p></div>
     </div>
     <div style="margin-top:34px; display:flex; gap:14px; flex-wrap:wrap; align-items:center">
-      <a class="btn btn-em" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20conhecer%20o%20CareLoop%20e%20montar%20minha%20primeira%20assinatura%20de%20cuidado." target="_blank" rel="noopener">Quero ver por dentro →</a>
-      <span class="selo">🇧🇷 Dados no Brasil · LGPD · Supabase São Paulo</span>
+      <a class="btn btn-em" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20entrar%20na%20lista%20de%20interesse%20do%20CareLoop." target="_blank" rel="noopener">Quero acompanhar a construção →</a>
+      <span class="selo">🇧🇷 Desenho da tese: dados no Brasil · LGPD</span>
     </div>
   </div>
 </section>
@@ -238,15 +247,15 @@
 <section id="planos">
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">Planos</span>
-      <h2>Você cobra recorrente. <em>Nós também</em> — e barato.</h2>
-      <p>Sem taxa por assinante escondida, sem fidelidade. Cancele quando quiser. O plano se paga com uma fração de uma única assinatura ativa.</p>
+      <span class="eyebrow">Previsão de planos</span>
+      <h2>Você cobraria recorrente. <em>Nós também</em> — e barato.</h2>
+      <p><strong style="color:var(--gold-light)">Previsão de lançamento — nada está à venda hoje.</strong> Os valores abaixo são a intenção de preço para quando o produto existir: sem taxa por assinante escondida, sem fidelidade, cancelamento livre. Por ora, o único passo possível é a lista de interesse.</p>
     </div>
     <div class="plans">
       <div class="plan">
         <h3>Início</h3>
         <div class="for">Para lançar sua primeira assinatura de cuidado</div>
-        <div class="price">R$ 147<small>/mês</small></div>
+        <div class="price">R$ 147<small>/mês · previsão de lançamento</small></div>
         <ul>
           <li>Até 30 assinantes ativos</li>
           <li>Biblioteca de protocolos por especialidade</li>
@@ -256,13 +265,13 @@
           <li class="no">Automações de WhatsApp</li>
           <li class="no">Multi-profissional</li>
         </ul>
-        <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20come%C3%A7ar%20no%20CareLoop%20com%20o%20plano%20In%C3%ADcio." target="_blank" rel="noopener">Começar no Início</a>
+        <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20entrar%20na%20lista%20de%20interesse%20do%20CareLoop." target="_blank" rel="noopener">Entrar na lista de interesse</a>
       </div>
       <div class="plan hot">
         <span class="tag">Recomendado</span>
         <h3>Prática</h3>
         <div class="for">Para quem quer a recorrência como motor do consultório</div>
-        <div class="price">R$ 297<small>/mês</small></div>
+        <div class="price">R$ 297<small>/mês · previsão de lançamento</small></div>
         <ul>
           <li>Tudo do Início</li>
           <li>Até 200 assinantes ativos</li>
@@ -272,12 +281,12 @@
           <li>Integração com agenda SosMed</li>
           <li class="no">Multi-profissional e API</li>
         </ul>
-        <a class="btn btn-em" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20o%20plano%20Pr%C3%A1tica%20do%20CareLoop." target="_blank" rel="noopener">Quero o Prática →</a>
+        <a class="btn btn-em" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20entrar%20na%20lista%20de%20interesse%20do%20CareLoop." target="_blank" rel="noopener">Entrar na lista de interesse →</a>
       </div>
       <div class="plan">
         <h3>Clínica</h3>
         <div class="for">Para clínicas com mais de um profissional</div>
-        <div class="price">R$ 597<small>/mês</small></div>
+        <div class="price">R$ 597<small>/mês · previsão de lançamento</small></div>
         <ul>
           <li>Tudo do Prática</li>
           <li>Assinantes ilimitados</li>
@@ -286,10 +295,10 @@
           <li>Relatórios consolidados da clínica</li>
           <li>Suporte prioritário de implantação</li>
         </ul>
-        <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20o%20plano%20Cl%C3%ADnica%20do%20CareLoop%20para%20minha%20equipe." target="_blank" rel="noopener">Falar sobre o Clínica</a>
+        <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20tenho%20uma%20cl%C3%ADnica%20e%20quero%20entrar%20na%20lista%20de%20interesse%20do%20CareLoop." target="_blank" rel="noopener">Entrar na lista de interesse</a>
       </div>
     </div>
-    <div class="founder">★ Preço de fundador: as 20 primeiras contas ativas travam essas condições para sempre.</div>
+    <div class="founder">★ Intenção de preço de fundador: quem entrar na lista de interesse terá prioridade nas condições de lançamento.</div>
   </div>
 </section>
 
@@ -313,21 +322,22 @@
       <h2>Perguntas diretas, respostas diretas</h2>
     </div>
     <details><summary>Isso é plano de saúde?</summary><p>Não — e essa diferença é inegociável. Plano de saúde é atividade de operadora, regulada pela ANS, com rede, cobertura e mutualização de risco. O CareLoop é um software que operacionaliza <strong>contratos diretos de prestação de serviços médicos recorrentes</strong> entre você e o seu paciente: escopo definido em contrato, sem intermediário, sem promessa de cobertura. Cada assinatura deixa isso explícito no aceite digital.</p></details>
-    <details><summary>Como o paciente paga?</summary><p>Pix recorrente ou cartão de crédito, com cobrança automática na data combinada. O paciente recebe aviso antes de cada cobrança, e falhas de pagamento entram em retry automático com notificação — sem sua secretária precisar cobrar ninguém.</p></details>
-    <details><summary>O paciente (ou eu) pode cancelar?</summary><p>Sim, os dois lados. O paciente cancela a assinatura pelo próprio link, conforme as condições do contrato que ele aceitou. E você cancela o CareLoop quando quiser, sem multa e sem fidelidade. Recorrência forçada não é recorrência — é armadilha.</p></details>
-    <details><summary>Funciona para a minha especialidade?</summary><p>Se a sua prática envolve acompanhamento ao longo do tempo — emagrecimento, longevidade, doenças crônicas, saúde mental, dor, pediatria, ginecologia de rotina — funciona. A biblioteca traz protocolos de partida por nicho e você adapta a cadência ao seu jeito de atender. Especialidades puramente pontuais (um procedimento e fim) aproveitam menos.</p></details>
-    <details><summary>E a LGPD?</summary><p>Dados de saúde são dados sensíveis e tratamos como tal: hospedagem no Brasil (Supabase, região São Paulo), criptografia em trânsito e em repouso, consentimento registrado no aceite do contrato e você como controlador dos dados dos seus pacientes. Exportação e exclusão a qualquer momento — os dados são seus e deles, não nossos.</p></details>
-    <details><summary>Preciso do MedGroth junto?</summary><p>Não. O CareLoop funciona sozinho. Mas eles se completam: o <a href="../medgroth/index.html" style="color:var(--em-light)">MedGroth</a> constrói a máquina que atrai e converte pacientes; o CareLoop transforma esses pacientes em assinantes de longo prazo. Um enche o funil, o outro fecha o ciclo.</p></details>
+    <details><summary>Como o paciente pagaria?</summary><p>No desenho da tese: Pix recorrente ou cartão de crédito, com cobrança automática na data combinada, aviso antes de cada cobrança e retry automático com notificação em caso de falha — sem a secretária precisar cobrar ninguém. Nada disso está construído ainda.</p></details>
+    <details><summary>O paciente (ou eu) poderia cancelar?</summary><p>Sim, os dois lados — esse é um princípio da tese. O paciente cancelaria a assinatura pelo próprio link, conforme as condições do contrato aceito. E o médico cancelaria o CareLoop quando quisesse, sem multa e sem fidelidade. Recorrência forçada não é recorrência — é armadilha.</p></details>
+    <details><summary>Serviria para a minha especialidade?</summary><p>Se a sua prática envolve acompanhamento ao longo do tempo — emagrecimento, longevidade, doenças crônicas, saúde mental, dor, pediatria, ginecologia de rotina — a tese se aplica. A biblioteca traria protocolos de partida por nicho, com a cadência adaptável ao seu jeito de atender. Especialidades puramente pontuais (um procedimento e fim) aproveitariam menos.</p></details>
+    <details><summary>E a LGPD?</summary><p>Dados de saúde são dados sensíveis e o desenho parte disso: hospedagem no Brasil, criptografia em trânsito e em repouso, consentimento registrado no aceite do contrato e o médico como controlador dos dados dos seus pacientes. Exportação e exclusão a qualquer momento — os dados seriam seus e deles, não nossos.</p></details>
+    <details><summary>Precisaria do MedGroth junto?</summary><p>Não. O CareLoop é pensado para funcionar sozinho. Mas eles se completariam: o <a href="../medgroth/index.html" style="color:var(--em-light)">MedGroth</a> constrói a máquina que atrai e converte pacientes; o CareLoop transformaria esses pacientes em assinantes de longo prazo. Um enche o funil, o outro fecha o ciclo.</p></details>
   </div>
 </section>
 
 <section class="cta-final">
   <div class="wrap">
-    <span class="eyebrow" style="justify-content:center">Comece agora</span>
-    <h2>Pare de vender consultas.<br>Comece a <em>assinar cuidado</em>.</h2>
-    <p>Chame no WhatsApp, conte seu nicho e monte sua primeira assinatura de cuidado ainda esta semana — com contrato, cobrança e lembretes prontos.</p>
-    <a class="btn btn-em btn-lg" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20conhecer%20o%20CareLoop%20e%20montar%20minha%20primeira%20assinatura%20de%20cuidado." target="_blank" rel="noopener">Falar com a gente no WhatsApp →</a>
-    <div style="margin-top:26px"><span class="selo">🇧🇷 Dados no Brasil · LGPD · Supabase São Paulo</span></div>
+    <span class="eyebrow" style="justify-content:center">Acompanhe a construção</span>
+    <h2>A tese: parar de vender consultas.<br>Passar a <em>assinar cuidado</em>.</h2>
+    <p>O CareLoop ainda não existe como produto. Se essa tese resolve um problema seu, chame no WhatsApp, conte seu nicho e entre na lista de interesse — ou candidate-se a parceiro de design para desenhar o produto junto.</p>
+    <a class="btn btn-em btn-lg" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20entrar%20na%20lista%20de%20interesse%20do%20CareLoop." target="_blank" rel="noopener">Entrar na lista de interesse →</a>
+    <a class="btn btn-ghost btn-lg" href="mailto:drsostenescosta@gmail.com?subject=Parceiro%20de%20design%20%E2%80%94%20CareLoop">Ser parceiro de design</a>
+    <div style="margin-top:26px"><span class="selo">🇧🇷 Desenho da tese: dados no Brasil · LGPD</span></div>
   </div>
 </section>
 
@@ -340,10 +350,10 @@
       <a href="../medverse/">MedVerse</a>
       <a href="../clinicnow/">ClinicNow</a>
       <a href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20saber%20mais%20sobre%20o%20CareLoop." target="_blank" rel="noopener">WhatsApp</a>
-      <a href="../sosmed/privacidade.html">Política de Privacidade</a>
+      <a href="../privacidade.html">Privacidade</a>
     </div>
   </div>
-  <div class="wrap disclaimer">O CareLoop é um software de gestão de contratos de prestação de serviços médicos recorrentes, celebrados diretamente entre médico e paciente. Não é plano de saúde, não é operadora, não realiza atividade regulada pela ANS e não oferece cobertura assistencial. A definição de escopo clínico, preços e comunicação de cada assinatura é responsabilidade exclusiva do profissional, dentro das normas do CFM e dos conselhos de classe. Nenhuma informação nesta página constitui promessa de resultado clínico ou financeiro.</div>
+  <div class="wrap disclaimer">O CareLoop é uma ideia mapeada do ecossistema Zatheon: o desenho de um software de gestão de contratos de prestação de serviços médicos recorrentes, celebrados diretamente entre médico e paciente. Não é um produto em operação, não há infraestrutura de cobrança ou contratos em funcionamento, e os valores citados são previsão de lançamento. Não é plano de saúde, não é operadora, não realiza atividade regulada pela ANS e não oferece cobertura assistencial. A definição de escopo clínico, preços e comunicação de cada assinatura seria responsabilidade exclusiva do profissional, dentro das normas do CFM e dos conselhos de classe. Nenhuma informação nesta página constitui promessa de resultado clínico ou financeiro.</div>
 </footer>
 </body>
 </html>

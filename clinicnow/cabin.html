@@ -3,129 +3,415 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <title>ClinicNow Cabin — O acesso começa aqui. O cuidado continua humano.</title>
 <meta name="description" content="Tese em validação: um corredor de acesso fechado — da solicitação não-urgente ao próximo passo documentado — com canal assistido por cabine onde a evidência mostrar necessidade. Protótipo; não é um serviço de saúde." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#04080a; --panel:rgba(255,255,255,0.04); --line:rgba(255,255,255,0.1);
-    --ink:#eef4f0; --ink-soft:#9fb0a7; --green:#19c37d; --gold:#c9a227;
-    --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace; }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
-  a{color:var(--green);text-decoration:none}
-  .wrap{max-width:840px;margin:0 auto;padding:0 22px}
-  .orb{position:fixed;border-radius:50%;filter:blur(90px);opacity:.16;pointer-events:none;z-index:0}
-  .o1{width:420px;height:420px;background:var(--green);top:-120px;right:-80px}
-  .o2{width:360px;height:360px;background:var(--gold);bottom:-140px;left:-100px}
-  main{position:relative;z-index:1}
-  header.nav{position:sticky;top:0;background:rgba(4,8,10,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:10}
-  .nav-inner{max-width:840px;margin:0 auto;padding:14px 22px;display:flex;justify-content:space-between;align-items:center}
-  .brand{font-family:var(--serif);font-weight:600}
-  .brand small{color:var(--gold);font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;display:block}
-  .nav a.back{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--ink-soft)}
-  .hero{padding:64px 0 30px}
-  .kicker{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--gold);display:block;margin-bottom:14px}
-  h1{font-family:var(--serif);font-weight:600;font-size:clamp(1.8rem,5vw,2.7rem);line-height:1.18;margin-bottom:16px}
-  h1 em{color:var(--green);font-style:normal}
-  .hero p{color:var(--ink-soft);max-width:640px}
-  .aviso{margin:22px 0;padding:14px 18px;border:1px solid rgba(201,162,39,.35);border-radius:10px;font-size:.86rem;color:var(--ink-soft);background:var(--panel)}
-  section{padding:34px 0 8px}
-  h2{font-family:var(--serif);font-weight:600;font-size:1.35rem;margin-bottom:10px}
-  .sub{color:var(--ink-soft);font-size:.92rem;margin-bottom:18px;max-width:640px}
-  .passos{display:grid;gap:10px;counter-reset:p}
-  .passo{display:flex;gap:14px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-  .passo::before{counter-increment:p;content:counter(p);font-family:var(--mono);color:var(--green);font-size:.85rem;border:1px solid var(--line);border-radius:8px;padding:2px 9px;flex:none;margin-top:2px}
-  .passo p{font-size:.92rem;color:var(--ink-soft)}
-  .passo strong{color:var(--ink)}
-  .canais{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:8px}
-  .canal{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
-  .canal .tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;color:var(--gold);border:1px solid rgba(201,162,39,.4);border-radius:99px;padding:3px 9px}
-  .canal h3{font-family:var(--serif);font-size:1.1rem;margin:10px 0 6px}
-  .canal p{font-size:.88rem;color:var(--ink-soft)}
-  ul.limites{list-style:none;display:grid;gap:8px}
-  ul.limites li{font-size:.9rem;color:var(--ink-soft);padding-left:22px;position:relative}
-  ul.limites li::before{content:'—';position:absolute;left:0;color:var(--green)}
-  .cta{margin:44px 0 60px;padding:28px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(160deg,rgba(25,195,125,.08),rgba(201,162,39,.05))}
-  .cta h2{margin-bottom:8px}
-  .cta p{color:var(--ink-soft);font-size:.92rem;margin-bottom:16px;max-width:600px}
-  .cta a.b{display:inline-block;background:var(--green);color:#04231a;font-weight:600;padding:11px 22px;border-radius:10px;font-size:.9rem;margin:0 10px 10px 0}
-  .cta a.g{display:inline-block;border:1px solid var(--line);color:var(--ink);padding:11px 22px;border-radius:10px;font-size:.9rem}
-  footer{border-top:1px solid var(--line);padding:26px 22px 42px;text-align:center;color:var(--ink-soft);font-size:.72rem;font-family:var(--mono);letter-spacing:.08em}
-  :focus-visible{outline:2px solid var(--green);outline-offset:3px}
-  @media (prefers-reduced-motion:no-preference){ .fade{animation:f .7s ease both} @keyframes f{from{opacity:0;transform:translateY(10px)}to{opacity:1}} }
+  :root {
+    --bg:#faf8f3; --bg-soft:#f2efe7; --card:#ffffff;
+    --ink:#1f2421; --ink-soft:#5b615c;
+    --line:#e3ded2; --line-strong:#cfc9ba;
+    --green:#1d7a55; --green-soft:#e7f2ec;
+    --gold:#a07d1c; --gold-text:#806313; --gold-soft:#f5efdd;
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.7; font-size:16.5px; -webkit-font-smoothing:antialiased; }
+  img { display:block; max-width:100%; height:auto; }
+  a { color:var(--green); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  :focus-visible { outline:2px solid var(--green); outline-offset:3px; }
+
+  .wrap { max-width:940px; margin:0 auto; padding:0 22px; }
+
+  /* ---- Header ---- */
+  header.nav { position:sticky; top:0; z-index:50; background:rgba(250,248,243,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav-inner { max-width:940px; margin:0 auto; padding:13px 22px; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+  .brand { font-family:var(--serif); font-weight:600; font-size:1.02rem; line-height:1.2; }
+  .brand small { display:block; font-family:var(--mono); font-weight:400; font-size:0.6rem; letter-spacing:0.16em; color:var(--gold-text); }
+  .nav-right { display:flex; align-items:center; gap:14px; }
+  .selo-tese { font-family:var(--mono); font-size:0.62rem; letter-spacing:0.12em; color:var(--gold-text); border:1px solid var(--gold); border-radius:999px; padding:4px 12px; background:var(--gold-soft); white-space:nowrap; }
+  a.back { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.08em; color:var(--ink-soft); white-space:nowrap; }
+  a.back:hover { color:var(--green); text-decoration:none; }
+  @media (max-width:560px){ .selo-tese { display:none; } }
+
+  /* ---- Hero ---- */
+  .hero { padding:72px 0 20px; }
+  .kicker { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-text); display:block; margin-bottom:16px; }
+  h1 { font-family:var(--serif); font-weight:500; font-size:clamp(2rem,5vw,3rem); line-height:1.15; letter-spacing:-0.01em; margin-bottom:18px; max-width:18ch; }
+  h1 em { font-style:italic; color:var(--green); }
+  .hero p.lead { color:var(--ink-soft); font-size:1.05rem; max-width:58ch; }
+  .aviso { margin:30px 0 0; padding:16px 20px; background:var(--card); border:1px solid var(--line); border-left:3px solid var(--gold); border-radius:10px; font-size:0.86rem; color:var(--ink-soft); max-width:760px; }
+  .aviso strong { color:var(--ink); }
+
+  /* ---- Sections ---- */
+  section { padding:58px 0 6px; }
+  section + section { margin-top:26px; }
+  .sec-head { margin-bottom:28px; }
+  h2 { font-family:var(--serif); font-weight:500; font-size:clamp(1.45rem,3vw,1.85rem); margin-bottom:8px; }
+  .sub { color:var(--ink-soft); font-size:0.94rem; max-width:64ch; }
+
+  /* ---- Galeria conceito ---- */
+  .galeria { display:grid; gap:18px; }
+  @media (min-width:760px){
+    .galeria { grid-template-columns:1fr 1fr; }
+    .g-full { grid-column:1 / -1; }
+  }
+  .gcard { background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; }
+  .gcard img { width:100%; border-bottom:1px solid var(--line); }
+  .gcard .gbody { padding:16px 20px 18px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .gcard h3 { font-family:var(--serif); font-weight:500; font-size:1.06rem; line-height:1.35; }
+  .gcard p { color:var(--ink-soft); font-size:0.88rem; }
+  .selo-conceito { margin-top:auto; align-self:flex-start; font-family:var(--mono); font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-text); border:1px solid var(--gold); border-radius:6px; padding:3px 9px; background:var(--gold-soft); }
+
+  /* ---- Circuito em 8 passos ---- */
+  .passos { display:grid; gap:14px; }
+  @media (min-width:700px){ .passos { grid-template-columns:1fr 1fr; } }
+  .passo { position:relative; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px 18px; display:flex; gap:16px; align-items:flex-start; }
+  .passo .ico { flex:none; width:44px; height:44px; border-radius:11px; background:var(--green-soft); border:1px solid rgba(29,122,85,0.25); display:flex; align-items:center; justify-content:center; }
+  .passo .ico svg { width:24px; height:24px; }
+  .passo .num { position:absolute; top:14px; right:16px; font-family:var(--mono); font-size:0.66rem; letter-spacing:0.08em; color:var(--line-strong); }
+  .passo h3 { font-family:var(--serif); font-weight:500; font-size:1rem; margin-bottom:4px; padding-right:28px; }
+  .passo p { color:var(--ink-soft); font-size:0.87rem; }
+
+  /* ---- Aferições ---- */
+  .chips { display:flex; flex-wrap:wrap; gap:12px; margin-top:6px; }
+  .chip { display:inline-flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:10px 20px 10px 14px; font-size:0.9rem; font-weight:500; }
+  .chip svg { width:22px; height:22px; flex:none; }
+  .chip small { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-text); }
+  .nota-proposta { margin-top:16px; font-size:0.8rem; color:var(--ink-soft); max-width:64ch; }
+
+  /* ---- Governança ---- */
+  .gov-grid { display:grid; gap:14px; margin-bottom:22px; }
+  @media (min-width:700px){ .gov-grid { grid-template-columns:repeat(3,1fr); } }
+  .gov { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; }
+  .gov .tag { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--green); display:block; margin-bottom:8px; }
+  .gov h3 { font-family:var(--serif); font-weight:500; font-size:1rem; margin-bottom:6px; }
+  .gov p { color:var(--ink-soft); font-size:0.85rem; }
+  .limites-box { background:var(--bg-soft); border:1px solid var(--line); border-radius:14px; padding:22px 26px; }
+  .limites-box h3 { font-family:var(--serif); font-weight:500; font-size:1.05rem; margin-bottom:12px; }
+  ul.limites { list-style:none; display:grid; gap:9px; }
+  ul.limites li { font-size:0.88rem; color:var(--ink-soft); padding-left:24px; position:relative; }
+  ul.limites li::before { content:'—'; position:absolute; left:0; color:var(--green); }
+
+  /* ---- CTA ---- */
+  .cta { margin:56px 0 64px; padding:34px 30px; background:var(--card); border:1px solid var(--line); border-radius:16px; }
+  .cta h2 { margin-bottom:10px; }
+  .cta p { color:var(--ink-soft); font-size:0.93rem; max-width:62ch; margin-bottom:22px; }
+  .btns { display:flex; flex-wrap:wrap; gap:12px; }
+  a.btn { display:inline-flex; align-items:center; gap:9px; padding:12px 24px; border-radius:10px; font-weight:600; font-size:0.9rem; text-decoration:none; }
+  a.btn:hover { text-decoration:none; filter:brightness(1.05); }
+  a.btn-primario { background:var(--green); color:#ffffff; }
+  a.btn-zap { border:1px solid var(--line-strong); color:var(--ink); background:var(--bg); }
+  a.btn-zap:hover { border-color:var(--green); color:var(--green); }
+  a.btn svg { width:17px; height:17px; }
+
+  footer { border-top:1px solid var(--line); padding:28px 22px 44px; text-align:center; color:var(--ink-soft); font-size:0.7rem; font-family:var(--mono); letter-spacing:0.08em; }
+
+  @media (prefers-reduced-motion:no-preference){
+    .fade { animation:f .6s ease both; }
+    @keyframes f { from { opacity:0; transform:translateY(8px); } to { opacity:1; } }
+  }
 </style>
 </head>
 <body>
-<div class="orb o1"></div><div class="orb o2"></div>
+
 <header class="nav">
   <div class="nav-inner">
-    <div class="brand">ClinicNow <small>FAMÍLIA CLINIC NOW · ZATHEON</small></div>
-    <a class="back" href="../projetos/">← MAPA DE PROJETOS</a>
+    <div class="brand">ClinicNow Cabin <small>FAMÍLIA CLINICNOW · ZATHEON</small></div>
+    <div class="nav-right">
+      <span class="selo-tese">TESE EM VALIDAÇÃO</span>
+      <a class="back" href="../">← VOLTAR</a>
+    </div>
   </div>
 </header>
+
 <main>
 <div class="wrap">
 
+  <!-- 2 · Hero -->
   <div class="hero fade">
-    <span class="kicker">CLINICNOW CABIN · TESE EM VALIDAÇÃO · PROTÓTIPO DE HACKATHON</span>
+    <span class="kicker">Tese em validação · Protótipo de hackathon</span>
     <h1>O acesso começa aqui. <em>O cuidado continua humano.</em></h1>
-    <p>Um corredor de acesso fechado: da solicitação de cuidado não-urgente até o <strong style="color:var(--ink)">próximo passo documentado</strong> — preparado por IA, decidido sempre por profissionais licenciados, acompanhado até o desfecho. Não é mais um marketplace de vídeo-chamada: é o circuito inteiro se fechando.</p>
-    <div class="aviso"><strong>O que esta página é (e não é):</strong> uma tese em validação e um protótipo de apresentação. Não presta atendimento, não recebe dados de pacientes e não afirma existir produto implantado, rede de médicos, parceiro, tração ou resultado clínico. Demonstrações usam apenas casos sintéticos. As imagens de cabine são visualização de conceito, não fotografia de produto.</div>
+    <p class="lead">Um corredor de acesso fechado: da solicitação de cuidado não-urgente até o próximo passo documentado — preparado por IA, decidido sempre por profissionais licenciados, acompanhado até o desfecho.</p>
+    <div class="aviso"><strong>O que esta página é (e não é):</strong> uma tese em validação e um protótipo de apresentação. Não presta atendimento, não recebe dados de pacientes e não afirma existir produto implantado, rede de médicos, parceiro, tração ou resultado clínico. Demonstrações usam apenas casos sintéticos. As imagens abaixo são visualização de conceito, não fotografia de produto.</div>
   </div>
 
-  <section class="fade">
-    <h2>O circuito mínimo</h2>
-    <p class="sub">O que estamos testando — primeiro em modo sombra, com casos sintéticos ou retrospectivos desidentificados e autorizados:</p>
+  <!-- 3 · Como seria o atendimento -->
+  <section class="fade" aria-labelledby="t-atendimento">
+    <div class="sec-head">
+      <h2 id="t-atendimento">Como seria o atendimento</h2>
+      <p class="sub">Três momentos do conceito, ilustrados. Digital quando possível, assistido quando a evidência exigir — sempre com decisão clínica humana.</p>
+    </div>
+    <div class="galeria">
+      <figure class="gcard g-full">
+        <img src="../assets/cabin/clinic-now-point-concept-web.jpg" width="1672" height="941" loading="lazy"
+             alt="Ilustração conceitual: paciente sentado na cabine assistida com braçadeira de pressão arterial no braço, diante de uma tela em que a médica conduz o atendimento remoto." />
+        <figcaption class="gbody">
+          <h3>O ponto assistido: sinais vitais aferidos na hora — pressão, frequência cardíaca</h3>
+          <p>Cabine em espaços amplos — mercados, rodoviárias, farmácias, unidades de trabalho — para quem não tem telefone, computador, internet ou privacidade, quando o protocolo do parceiro exigir instrumento.</p>
+          <span class="selo-conceito">Visualização conceitual — não é um produto existente</span>
+        </figcaption>
+      </figure>
+      <figure class="gcard">
+        <img src="../assets/cabin/clinician-review-concept-web.jpg" width="1672" height="941" loading="lazy"
+             alt="Ilustração conceitual: médica especialista revisando o pacote do caso de forma assíncrona em uma estação de trabalho clínica." />
+        <figcaption class="gbody">
+          <h3>A revisão assíncrona do especialista</h3>
+          <p>Modelo eConsult: o especialista revisa o caso preparado, no seu tempo, mantendo os papéis clínicos exigidos em cada passo.</p>
+          <span class="selo-conceito">Visualização conceitual — não é um produto existente</span>
+        </figcaption>
+      </figure>
+      <figure class="gcard">
+        <img src="../assets/cabin/patient-app-concept-web.jpg" width="1536" height="1024" loading="lazy"
+             alt="Ilustração conceitual: aplicativo do paciente no celular exibindo o acompanhamento da solicitação e o próximo passo do cuidado." />
+        <figcaption class="gbody">
+          <h3>O acompanhamento no app do paciente</h3>
+          <p>Canal futuro para quem tem celular e conexão: acompanha a solicitação, recebe o próximo passo e mantém tudo documentado.</p>
+          <span class="selo-conceito">Visualização conceitual — não é um produto existente</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 4 · O circuito em 8 passos -->
+  <section class="fade" aria-labelledby="t-circuito">
+    <div class="sec-head">
+      <h2 id="t-circuito">O circuito em 8 passos</h2>
+      <p class="sub">O que estamos testando — primeiro em modo sombra, com casos sintéticos ou retrospectivos desidentificados e autorizados, na linha de serviço que o operador escolher com dados reais (volume de encaminhamentos, fila, espera).</p>
+    </div>
     <div class="passos">
-      <div class="passo"><p><strong>O operador escolhe a linha de serviço</strong> com dados reais (volume de encaminhamentos, fila, espera).</p></div>
-      <div class="passo"><p><strong>A pessoa permanece no fluxo e no prontuário existentes</strong> — nada de sistema paralelo.</p></div>
-      <div class="passo"><p><strong>A IA prepara o pacote</strong>: consentimento, fonte, tradução, lacunas apontadas e anexos — sem decidir nada clínico.</p></div>
-      <div class="passo"><p><strong>Clínico assistente e especialista mantêm os papéis clínicos</strong> exigidos em cada passo.</p></div>
-      <div class="passo"><p><strong>O especialista revisa de forma assíncrona</strong> (modelo eConsult).</p></div>
-      <div class="passo"><p><strong>O profissional resolve, pede mais informação, recomenda vídeo ou avaliação presencial.</strong></p></div>
-      <div class="passo"><p><strong>Um dono operacional acompanha até o próximo passo ser concluído.</strong></p></div>
-      <div class="passo"><p><strong>O painel mede solicitação → desfecho</strong>, não apenas "consulta realizada".</p></div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- solicitação: prancheta com + -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9.5 4.5h5v2.5h-5z"/>
+            <path d="M9.5 5H7.5A1.5 1.5 0 0 0 6 6.5V19a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19V6.5A1.5 1.5 0 0 0 16.5 5h-2"/>
+            <path d="M12 10.5v5M9.5 13h5" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">01</span>
+        <div>
+          <h3>Solicitação</h3>
+          <p>A pessoa inicia uma solicitação de cuidado não-urgente e permanece no fluxo e no prontuário existentes — nada de sistema paralelo.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- preparação com IA: documento + faísca -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13.5 3.5h-6A1.5 1.5 0 0 0 6 5v14a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19V8z"/>
+            <path d="M13.5 3.5V8H18"/>
+            <path d="M11.5 11l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">02</span>
+        <div>
+          <h3>Preparação com IA</h3>
+          <p>A IA organiza o pacote do caso: fonte, tradução, lacunas apontadas e anexos — sem decidir nada clínico.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- consentimento: escudo com check -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3.5 18.5 6v5.2c0 4.2-2.8 7.3-6.5 8.9-3.7-1.6-6.5-4.7-6.5-8.9V6z"/>
+            <path d="m9.2 12 2 2 3.6-3.9" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">03</span>
+        <div>
+          <h3>Consentimento</h3>
+          <p>Consentimento registrado antes de qualquer passo, com os papéis clínicos exigidos — clínico assistente e especialista — preservados.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- revisão do especialista: estetoscópio -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6.5 4v5a4.5 4.5 0 0 0 9 0V4"/>
+            <path d="M11 13.4V16a4 4 0 0 0 8 0v-1.2"/>
+            <circle cx="19" cy="12.5" r="2.3" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">04</span>
+        <div>
+          <h3>Revisão do especialista</h3>
+          <p>O especialista revisa o caso de forma assíncrona (modelo eConsult), no seu tempo, com o pacote completo à frente.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- resolução/encaminhamento: seta que bifurca -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12h5l4-5h4"/>
+            <path d="m9 12 4 5h4"/>
+            <path d="M14.8 4.8 17 7l-2.2 2.2" stroke="#a07d1c"/>
+            <path d="M14.8 14.8 17 17l-2.2 2.2" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">05</span>
+        <div>
+          <h3>Resolução ou encaminhamento</h3>
+          <p>O profissional resolve, pede mais informação, recomenda vídeo ou avaliação presencial — a decisão é sempre humana.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- acompanhamento: rota entre dois pontos -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="6" cy="4.8" r="1.8"/>
+            <circle cx="18.2" cy="18.5" r="1.8" stroke="#a07d1c"/>
+            <path d="M8 4.8h8a3.5 3.5 0 0 1 0 7H8a3.5 3.5 0 0 0 0 7h8" stroke-dasharray="2.5 3.2"/>
+          </svg>
+        </span>
+        <span class="num">06</span>
+        <div>
+          <h3>Acompanhamento</h3>
+          <p>Um dono operacional acompanha o caso até o próximo passo ser concluído — ninguém fica perdido no meio do caminho.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- desfecho documentado: arquivo com check -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13.5 3.5h-6A1.5 1.5 0 0 0 6 5v14a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19V8z"/>
+            <path d="M13.5 3.5V8H18"/>
+            <path d="m9.3 14 2 2 3.5-4" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">07</span>
+        <div>
+          <h3>Desfecho documentado</h3>
+          <p>Cada caso termina com o próximo passo registrado no prontuário existente — desfecho, não promessa.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- dashboard: barras -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="4" width="16" height="16" rx="2.5"/>
+            <path d="M8.5 15.8v-3.6"/>
+            <path d="M12 15.8V8.6" stroke="#a07d1c"/>
+            <path d="M15.5 15.8v-2.4"/>
+          </svg>
+        </span>
+        <span class="num">08</span>
+        <div>
+          <h3>Dashboard</h3>
+          <p>O painel mede solicitação → desfecho, não apenas "consulta realizada".</p>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <section class="fade">
-    <h2>Dois canais, uma regra</h2>
-    <p class="sub">Acessibilidade é decisão de canal: digital quando possível, assistido quando a evidência exigir.</p>
-    <div class="canais">
-      <div class="canal">
-        <span class="tag">CANAL FUTURO</span>
-        <h3>ClinicNow App</h3>
-        <p>A experiência web/app para quem tem celular e conexão: acompanha a solicitação, recebe o próximo passo e mantém tudo documentado.</p>
+  <!-- 5 · O que a cabine afere -->
+  <section class="fade" aria-labelledby="t-afere">
+    <div class="sec-head">
+      <h2 id="t-afere">O que a cabine afere</h2>
+      <p class="sub">Capacidades propostas do conceito — entram apenas quando o protocolo do parceiro exigir instrumento.</p>
+    </div>
+    <div class="chips">
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 15a7 7 0 0 1 14 0"/>
+          <path d="M12 15l3.2-4.2" stroke="#a07d1c"/>
+          <circle cx="12" cy="15" r="1" fill="#1d7a55"/>
+          <path d="M4.5 18h15"/>
+        </svg>
+        <span>Pressão arterial<br><small>proposta do conceito</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 20s-7-4.4-7-9.8A4 4 0 0 1 12 7.4a4 4 0 0 1 7 2.8C19 15.6 12 20 12 20z"/>
+          <path d="M8.5 12h1.6l1.2-2 1.7 3.4 1.2-1.9h1.8" stroke="#a07d1c"/>
+        </svg>
+        <span>Frequência cardíaca<br><small>proposta do conceito</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10.5 13.7V4.5a1.5 1.5 0 0 1 3 0v9.2a3.5 3.5 0 1 1-3 0z"/>
+          <circle cx="12" cy="17" r="1.2" fill="#a07d1c" stroke="none"/>
+        </svg>
+        <span>Temperatura<br><small>proposta do conceito</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3.5s5.5 6 5.5 10a5.5 5.5 0 0 1-11 0c0-4 5.5-10 5.5-10z"/>
+          <path d="M9.5 13.5a2.6 2.6 0 0 0 2.6 2.6" stroke="#a07d1c"/>
+        </svg>
+        <span>Saturação (SpO₂)<br><small>proposta do conceito</small></span>
+      </span>
+    </div>
+    <p class="nota-proposta">Nenhum instrumento está homologado, integrado ou prometido. O que a cabine afere será definido pelo protocolo clínico do parceiro e validado no piloto — e só entra no roadmap se os dados mostrarem necessidade.</p>
+  </section>
+
+  <!-- 6 · Governança e gate -->
+  <section class="fade" aria-labelledby="t-governanca">
+    <div class="sec-head">
+      <h2 id="t-governanca">Governança e gate de evidência</h2>
+      <p class="sub">Acessibilidade é decisão de canal: digital quando possível, assistido quando a evidência exigir. A cabine só entra no roadmap se os dados do piloto mostrarem falha por conectividade, privacidade, letramento ou instrumento.</p>
+    </div>
+    <div class="gov-grid">
+      <div class="gov">
+        <span class="tag">Parceiro</span>
+        <h3>Um design partner real</h3>
+        <p>Operadora integrada, autogestão ou rede com um corredor real de encaminhamentos (≥50/mês, espera mediana ≥30 dias).</p>
       </div>
-      <div class="canal">
-        <span class="tag">CONCEITO · SÓ SE A EVIDÊNCIA PEDIR</span>
-        <h3>ClinicNow Cabin (ponto assistido)</h3>
-        <p>Cabine assistida em espaços amplos — mercados, rodoviárias, farmácias, unidades de trabalho — para quem não tem telefone, computador, internet ou privacidade. Com suporte à aferição de sinais como pressão arterial e frequência cardíaca, quando o protocolo do parceiro exigir instrumento. Entra no roadmap apenas se os dados do piloto mostrarem falha por conectividade, privacidade, letramento ou instrumento.</p>
+      <div class="gov">
+        <span class="tag">Piloto-sombra</span>
+        <h3>90 dias, 50 casos</h3>
+        <p>Modo sombra, com casos sintéticos ou retrospectivos desidentificados e autorizados — antes de qualquer dado identificável.</p>
       </div>
+      <div class="gov">
+        <span class="tag">Autoridade clínica</span>
+        <h3>100% de revisão humana</h3>
+        <p>Autoridade clínica humana explícita em todo passo com consequência. A IA prepara; profissionais licenciados decidem.</p>
+      </div>
+    </div>
+    <div class="limites-box">
+      <h3>O que esta página não pode prometer</h3>
+      <ul class="limites">
+        <li>Nenhum diagnóstico, prescrição, exclusão de urgência ou escolha autônoma de especialidade pela IA.</li>
+        <li>Nenhum dado de saúde identificável antes de contratos, governança e revisão clínica.</li>
+        <li>Nenhuma promessa de médicos disponíveis, preço, SLA, 24/7, redução de fila ou de custo.</li>
+        <li>Validar o corredor antes da plataforma; o software antes do hardware dedicado.</li>
+      </ul>
     </div>
   </section>
 
-  <section class="fade">
-    <h2>Limites que não se negociam</h2>
-    <ul class="limites">
-      <li>Nenhum diagnóstico, prescrição, exclusão de urgência ou escolha autônoma de especialidade pela IA.</li>
-      <li>Nenhum dado de saúde identificável antes de contratos, governança e revisão clínica.</li>
-      <li>Nenhuma promessa de médicos disponíveis, preço, SLA, 24/7, redução de fila ou de custo.</li>
-      <li>Autoridade clínica humana explícita em todo passo com consequência.</li>
-      <li>Validar o corredor antes da plataforma; o software antes do hardware dedicado.</li>
-    </ul>
-  </section>
-
+  <!-- 7 · CTA -->
   <div class="cta fade">
     <h2>Seja design partner</h2>
-    <p>Procuramos uma operadora integrada, autogestão ou rede com um corredor real de encaminhamentos (≥50/mês, espera mediana ≥30 dias) disposta a testar em modo sombra — 90 dias, 50 casos, 100% de revisão humana. Se você conhece esse fluxo por dentro, compartilhe seu caminho de acesso.</p>
-    <a class="b" href="mailto:drsostenescosta@gmail.com?subject=Design%20partner%20—%20ClinicNow%20Cabin">Quero ser design partner</a>
-    <a class="g" href="mailto:drsostenescosta@gmail.com?subject=Meu%20fluxo%20de%20acesso%20—%20ClinicNow%20Cabin">Compartilhar meu fluxo de acesso</a>
+    <p>Procuramos uma operadora integrada, autogestão ou rede com um corredor real de encaminhamentos disposta a testar em modo sombra — 90 dias, 50 casos, 100% de revisão humana. Se você conhece esse fluxo por dentro, compartilhe seu caminho de acesso.</p>
+    <div class="btns">
+      <a class="btn btn-primario" href="mailto:drsostenescosta@gmail.com?subject=Design%20partner%20—%20ClinicNow%20Cabin">Quero ser design partner</a>
+      <a class="btn btn-zap" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20do%20ClinicNow%20Cabin%20e%20quero%20conversar%20sobre%20o%20piloto-sombra." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.9L3.5 20.5l4.2-1.1A8.5 8.5 0 1 0 12 3.5z"/>
+          <path d="M9 8.8c.3-.7.9-.7 1.2 0l.5 1.2c.1.3 0 .7-.2.9l-.5.5c.5 1.1 1.5 2.1 2.6 2.6l.5-.5c.2-.2.6-.3.9-.2l1.2.5c.7.3.7.9 0 1.2-3.5 1.6-8.3-3.2-6.2-6.2z"/>
+        </svg>
+        Conversar no WhatsApp
+      </a>
+    </div>
   </div>
 
 </div>
 </main>
+
 <footer>ZATHEON · CLINICNOW CABIN — NOME DE TRABALHO, SEM REGISTRO FORMAL · PROTÓTIPO · CONTEÚDO SINTÉTICO</footer>
 </body>
 </html>

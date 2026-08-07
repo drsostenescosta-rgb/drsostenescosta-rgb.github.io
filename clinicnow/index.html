@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <title>ClinicNow — O cockpit de crescimento e operação do médico</title>
 <meta name="description" content="ClinicNow é a evolução do MedGroth: diagnóstico e plano de crescimento, CRM de leads, agenda inteligente, follow-up automático no WhatsApp e telemedicina integrada — o médico dono da própria demanda. Do ecossistema Zatheon." />
 <meta property="og:title" content="ClinicNow — O cockpit de crescimento e operação do médico" />
@@ -59,7 +60,7 @@
   .hero-ctas { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:22px; }
   .hero-note { font-size:0.78rem; color:var(--muted); font-family:var(--mono); }
   .selo { display:inline-flex; align-items:center; gap:8px; margin-top:14px; font-family:var(--mono); font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); border:1px solid var(--border); border-radius:8px; padding:6px 14px; background:rgba(27,36,34,0.04); }
-  .selo::before { content:''; font-size:0.8rem; }
+  .selo-status { display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--vi-dark); border:1px solid rgba(150,105,15,0.45); border-radius:8px; padding:6px 14px; background:rgba(150,105,15,0.08); margin-bottom:14px; }
 
   .mock { border-radius:20px; border:1px solid var(--border-strong); background:#ffffff; box-shadow:0 1px 2px rgba(20,24,23,0.06), 0 12px 28px rgba(20,24,23,0.08); overflow:hidden; }
   .mock-bar { display:flex; gap:7px; padding:12px 16px; border-bottom:1px solid var(--border); }
@@ -107,7 +108,7 @@
   .price small { font-size:0.85rem; color:var(--muted); font-family:var(--sans); }
   .plan ul { list-style:none; margin:18px 0 24px; display:grid; gap:9px; flex:1; }
   .plan li { font-size:0.89rem; color:var(--muted); padding-left:24px; position:relative; }
-  .plan li::before { content:''; position:absolute; left:0; color:var(--em-light); font-weight:700; }
+  .plan li::before { content:'✓'; position:absolute; left:0; color:var(--em-light); font-weight:700; }
   .plan li.no::before { content:'—'; color:rgba(27,36,34,0.25); }
   .plan .btn { justify-content:center; }
   .founder { margin-top:22px; text-align:center; font-size:0.85rem; color:var(--gold-light); font-family:var(--mono); }
@@ -153,7 +154,8 @@
 <section class="hero" id="top">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow">Marketing · Organização · Telemedicina</span>
+      <span class="eyebrow">Marketing · Organização · Telemedicina</span><br>
+      <span class="selo-status" style="margin-top:14px">EM ESTRUTURAÇÃO — VAGAS DE FUNDADOR = ACESSO ANTECIPADO</span>
       <h1><span class="grad">O médico dono</span><br>da própria <em>demanda</em>.</h1>
       <p class="hero-sub">Para o médico de consultório que depende de indicação e vê paciente sumir depois da primeira consulta: o ClinicNow opera a continuidade do seu cuidado — agenda, confirmação, follow-up e retorno — e <strong>mede em reais o que devolveu para a sua agenda</strong>. Sem promessa: número medido, no seu cockpit.</p>
       <div class="hero-ctas">
@@ -188,9 +190,9 @@
       <p>A rotina do médico brasileiro é a mesma há décadas: depende de indicação para crescer, junta cinco ferramentas para operar e perde o paciente no meio do caminho.</p>
     </div>
     <div class="cards3">
-      <div class="card"><div class="ico"></div><h3>Crescer na sorte</h3><p>Paciente novo chega por indicação — quando chega. Sem funil, sem origem rastreada, sem previsibilidade. O crescimento da clínica está na mão dos outros, não na sua.</p></div>
-      <div class="card"><div class="ico"></div><h3>Ferramentas espalhadas</h3><p>Agenda num app, leads no caderno, vídeo em outro lugar, mensagens no celular pessoal. Cada consulta atravessa quatro sistemas que não conversam — e você é o integrador manual de todos eles.</p></div>
-      <div class="card"><div class="ico"></div><h3>O paciente que não volta</h3><p>Alta, retorno em 60 dias… e silêncio. Sem follow-up, o paciente esquece, a continuidade do cuidado se perde e a agenda do mês que vem começa do zero.</p></div>
+      <div class="card"><h3>Crescer na sorte</h3><p>Paciente novo chega por indicação — quando chega. Sem funil, sem origem rastreada, sem previsibilidade. O crescimento da clínica está na mão dos outros, não na sua.</p></div>
+      <div class="card"><h3>Ferramentas espalhadas</h3><p>Agenda num app, leads no caderno, vídeo em outro lugar, mensagens no celular pessoal. Cada consulta atravessa quatro sistemas que não conversam — e você é o integrador manual de todos eles.</p></div>
+      <div class="card"><h3>O paciente que não volta</h3><p>Alta, retorno em 60 dias… e silêncio. Sem follow-up, o paciente esquece, a continuidade do cuidado se perde e a agenda do mês que vem começa do zero.</p></div>
     </div>
   </div>
 </section>
@@ -235,7 +237,7 @@ try {
   fetch('https://yaqphldowpshhrtvvfaq.supabase.co/rest/v1/docgrow_pageviews', {
     method: 'POST',
     headers: { 'apikey': 'sb_publishable_V64ejsDNKclPdFlqymghnQ_jUr5ivj1', 'Authorization': 'Bearer sb_publishable_V64ejsDNKclPdFlqymghnQ_jUr5ivj1', 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-    body: JSON.stringify({ pagina: 'docgrow-landing', ref: document.referrer ? new URL(document.referrer).hostname : null })
+    body: JSON.stringify({ pagina: 'clinicnow-landing', ref: document.referrer ? new URL(document.referrer).hostname : null })
   }).catch(function () {});
 } catch (e) {}
 
@@ -295,12 +297,12 @@ function demoRun(tipo) {
       <p>Tudo que estava espalhado em cinco apps, num só lugar — do lead que chegou hoje à teleconsulta das 14h30.</p>
     </div>
     <div class="cards3">
-      <div class="card"><div class="ico"></div><h3>Diagnóstico + plano de crescimento com IA</h3><p>Perfil identificado em 3 minutos e plano de 4 semanas gerado para o seu nicho, com checklist executável e scripts de conversão — sempre dentro das normas de publicidade médica.</p></div>
-      <div class="card"><div class="ico"></div><h3>CRM kanban com origem do lead</h3><p>Novo → conversando → avaliação → fechado. Cada lead com origem rastreada (indicação, Instagram, Google) para você saber de onde vem sua demanda — e investir onde funciona.</p></div>
-      <div class="card"><div class="ico"></div><h3>Agenda unificada: presencial + tele</h3><p>Uma só agenda para consultório e telemedicina. Bloqueios, encaixes e confirmações num lugar só, com o dia inteiro visível de manhã, no celular ou no computador.</p></div>
-      <div class="card"><div class="ico"></div><h3>Follow-up automático no WhatsApp</h3><p>Recall de pacientes antigos, lembrete de retorno e mensagem pós-consulta — disparados no momento certo, com o seu tom. O paciente sente cuidado; a agenda sente o efeito.</p></div>
-      <div class="card"><div class="ico"></div><h3>Sala de telemedicina no navegador</h3><p>Sem app para instalar: o paciente recebe um link único e entra. A consulta fica registrada no prontuário SosMed, em conformidade com a Resolução CFM nº 2.314/2022.</p></div>
-      <div class="card"><div class="ico"></div><h3>Painel de metas + relatório mensal</h3><p>Meta de receita, funil da semana e o relatório "sua clínica este mês": leads, conversão, comparecimento e receita vs. meta — os números do crescimento na sua frente.</p></div>
+      <div class="card"><h3>Diagnóstico + plano de crescimento com IA</h3><p>Perfil identificado em 3 minutos e plano de 4 semanas gerado para o seu nicho, com checklist executável e scripts de conversão — sempre dentro das normas de publicidade médica.</p></div>
+      <div class="card"><h3>CRM kanban com origem do lead</h3><p>Novo → conversando → avaliação → fechado. Cada lead com origem rastreada (indicação, Instagram, Google) para você saber de onde vem sua demanda — e investir onde funciona.</p></div>
+      <div class="card"><h3>Agenda unificada: presencial + tele</h3><p>Uma só agenda para consultório e telemedicina. Bloqueios, encaixes e confirmações num lugar só, com o dia inteiro visível de manhã, no celular ou no computador.</p></div>
+      <div class="card"><h3>Follow-up automático no WhatsApp</h3><p>Recall de pacientes antigos, lembrete de retorno e mensagem pós-consulta — disparados no momento certo, com o seu tom. O paciente sente cuidado; a agenda sente o efeito.</p></div>
+      <div class="card"><h3>Sala de telemedicina no navegador</h3><p>Sem app para instalar: o paciente recebe um link único e entra. A consulta fica registrada no prontuário SosMed, em conformidade com a Resolução CFM nº 2.314/2022.</p></div>
+      <div class="card"><h3>Painel de metas + relatório mensal</h3><p>Meta de receita, funil da semana e o relatório "sua clínica este mês": leads, conversão, comparecimento e receita vs. meta — os números do crescimento na sua frente.</p></div>
     </div>
     <div style="margin-top:34px; display:flex; gap:14px; flex-wrap:wrap">
       <a class="btn btn-em" href="https://wa.me/5584999869468?text=Quero%20come%C3%A7ar%20no%20ClinicNow" target="_blank" rel="noopener">Quero o ClinicNow →</a>
@@ -330,6 +332,7 @@ function demoRun(tipo) {
       <span class="eyebrow">Planos</span>
       <h2>Escolha a velocidade do seu <em>crescimento</em></h2>
       <p>Sem fidelidade. Cancele quando quiser. Assinantes do MedGroth migram para o ClinicNow sem custo — com o preço de fundador preservado.</p>
+      <p style="margin-top:10px; font-family:var(--mono); font-size:0.78rem; color:var(--vi-dark)">O ClinicNow está em estruturação: os planos abaixo são preço de fundador para acesso antecipado a um produto ainda em construção — não a um produto validado com clientes.</p>
       <p style="margin-top:10px; font-family:var(--mono); font-size:0.78rem; color:var(--muted)">Preço internacional em dólar, abaixo do menor concorrente global — Vezeeta US$ 43/mês, Tebra a partir de US$ 49/mês, Doctolib ~US$ 120/mês. No Brasil, a cobrança é em reais pelo câmbio do dia.</p>
     </div>
     <div class="plans">
@@ -434,7 +437,7 @@ function demoRun(tipo) {
       <a href="../sosmed/">SosMed</a>
       <a href="../medverse/">MedVerse</a>
       <a href="https://wa.me/5584999869468?text=Quero%20conhecer%20o%20ClinicNow" target="_blank" rel="noopener">WhatsApp</a>
-      <a href="../sosmed/privacidade.html">Política de Privacidade</a>
+      <a href="../privacidade.html">Privacidade</a>
     </div>
   </div>
   <div class="wrap disclaimer">Dados no Brasil · LGPD · Supabase São Paulo. O ClinicNow é uma ferramenta de estratégia, gestão e operação. Não presta orientação clínica nem substitui a responsabilidade profissional e regulatória (CFM/conselhos) de cada usuário. A telemedicina opera em conformidade com a Resolução CFM nº 2.314/2022. Projeções são estimativas baseadas nas respostas fornecidas — nunca promessa ou garantia de resultado.</div>
