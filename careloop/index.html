@@ -1,359 +1,678 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<title>CareLoop — Assinaturas de cuidado para médicos. Recorrência ética, receita previsível.</title>
-<meta name="description" content="CareLoop é uma ideia mapeada do ecossistema Zatheon: transformar protocolos clínicos em assinaturas de cuidado, com recorrência ética e receita previsível. Ainda não é um produto em operação — página de tese, com lista de interesse." />
+<title>CareLoop — A assinatura de fidelização própria da clínica. Ideia mapeada.</title>
+<meta name="description" content="Ideia mapeada do ecossistema Zatheon: um software para a clínica operar a própria assinatura de fidelização — cobrança recorrente, carteirinha de membro e benefícios definidos em contrato. Não é um produto em operação; não há preços e nada está à venda." />
 <meta name="robots" content="noindex" /><!-- ideia mapeada — indexar apenas após gatilho de lançamento, espelhando o critério do MedVerse -->
-<meta property="og:title" content="CareLoop — Assinaturas de cuidado para médicos (ideia mapeada)" />
-<meta property="og:description" content="A tese: transformar protocolos clínicos em acompanhamento recorrente. Ideia mapeada do ecossistema Zatheon — ainda não é um produto em operação; lista de interesse aberta." />
+<meta property="og:title" content="CareLoop — Assinatura de fidelização própria da clínica (ideia mapeada)" />
+<meta property="og:description" content="A tese: transformar acompanhamento contínuo em vínculo de membro — cobrança recorrente, carteirinha e benefícios em contrato. Ideia mapeada do ecossistema Zatheon; não é um produto em operação." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:#04080c; --bg-2:#071016; --card:rgba(13,24,32,0.6); --card-solid:#0b141c;
-    --em:#38bdf8; --em-light:#7dd3fc; --em-dark:#0ea5e9;
-    --gold:#c9a227; --gold-light:#e2c464;
-    --text:#e8edf2; --muted:#8f9fab; --border:rgba(232,237,242,0.09); --border-strong:rgba(232,237,242,0.18);
+    --bg:#faf8f3; --bg-soft:#f2efe7; --card:#ffffff;
+    --ink:#1f2421; --ink-soft:#5b615c;
+    --line:#e3ded2; --line-strong:#cfc9ba;
+    --green:#1d7a55; --green-soft:#e7f2ec;
+    --gold:#a07d1c; --gold-text:#806313; --gold-soft:#f5efdd;
     --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
   }
   * { box-sizing:border-box; margin:0; padding:0; }
   html { scroll-behavior:smooth; }
-  body { background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.6; overflow-x:hidden; }
-  a { color:inherit; text-decoration:none; }
-  h1,h2,h3 { font-family:var(--serif); font-weight:500; line-height:1.15; }
-  em { font-style:italic; color:var(--em-light); }
-  .wrap { max-width:1120px; margin:0 auto; padding:0 24px; position:relative; z-index:2; }
-  .bg-orbs { position:fixed; inset:0; z-index:-2; overflow:hidden; pointer-events:none; }
-  .orb { position:absolute; border-radius:50%; filter:blur(100px); opacity:0.45; }
-  .orb-a { width:620px; height:620px; top:-14%; left:-10%; background:radial-gradient(circle,rgba(56,189,248,0.28),transparent 70%); animation:d1 26s ease-in-out infinite; }
-  .orb-b { width:540px; height:540px; bottom:-16%; right:-10%; background:radial-gradient(circle,rgba(201,162,39,0.20),transparent 70%); animation:d2 32s ease-in-out infinite; }
-  @keyframes d1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(60px,50px)} }
-  @keyframes d2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-50px,-40px)} }
-  @media (prefers-reduced-motion:reduce){ .orb{animation:none} }
-  .eyebrow { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--em-light); font-weight:600; display:inline-flex; align-items:center; gap:10px; }
-  .eyebrow::before { content:''; width:26px; height:1px; background:linear-gradient(90deg,var(--em),transparent); }
-  .grad { background:linear-gradient(115deg,#fff 0%,#dbeffb 45%,var(--em-light) 75%,var(--em) 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  body { background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.7; font-size:16.5px; -webkit-font-smoothing:antialiased; }
+  img { display:block; max-width:100%; height:auto; }
+  a { color:var(--green); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  :focus-visible { outline:2px solid var(--green); outline-offset:3px; }
 
-  header.nav { position:fixed; top:0; left:0; right:0; z-index:100; backdrop-filter:blur(18px); background:rgba(4,8,12,0.65); border-bottom:1px solid var(--border); }
-  .nav-inner { display:flex; align-items:center; justify-content:space-between; padding:13px 24px; max-width:1120px; margin:0 auto; gap:14px; }
-  .brand { display:flex; align-items:center; gap:11px; }
-  .logo { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:1.05rem; color:var(--em-light); background:linear-gradient(145deg,rgba(56,189,248,0.16),rgba(56,189,248,0.03)); border:1px solid rgba(56,189,248,0.45); box-shadow:0 0 18px rgba(56,189,248,0.18); }
-  .brand-name { font-family:var(--serif); font-size:1.1rem; font-weight:600; white-space:nowrap; }
-  .brand-sub { font-family:var(--sans); font-size:0.74rem; letter-spacing:0; text-transform:none; color:var(--muted); border:1px solid var(--border-strong); padding:2px 9px; border-radius:6px; white-space:nowrap; }
-  .zbadge { font-family:var(--sans); font-size:0.74rem; letter-spacing:0; text-transform:none; color:var(--muted); border:1px solid var(--border-strong); padding:2px 9px; border-radius:6px; margin-left:8px; white-space:nowrap; }
-  .nav-links { display:flex; gap:20px; }
-  .nav-links a { font-size:0.88rem; font-weight:500; white-space:nowrap; color:var(--muted); transition:color .2s; }
-  .nav-links a:hover { color:var(--em-light); }
-  @media (max-width:820px){ .nav-links{display:none} .zbadge{display:none} }
+  .wrap { max-width:940px; margin:0 auto; padding:0 22px; }
 
-  .btn { display:inline-flex; align-items:center; gap:8px; padding:12px 24px; border-radius:999px; font-weight:700; font-size:0.92rem; cursor:pointer; border:1px solid transparent; white-space:nowrap; transition:transform .2s, box-shadow .3s, filter .2s; }
-  .btn-em { background:linear-gradient(135deg,var(--em-light),var(--em-dark)); color:#031019; box-shadow:0 4px 22px rgba(56,189,248,0.3); }
-  .btn-em:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(56,189,248,0.5); filter:brightness(1.05); }
-  .btn-ghost { border-color:var(--border-strong); color:var(--text); background:rgba(255,255,255,0.02); }
-  .btn-ghost:hover { border-color:var(--em); color:var(--em-light); transform:translateY(-2px); }
-  .btn-lg { padding:15px 30px; font-size:1rem; }
+  /* ---- Header ---- */
+  header.nav { position:sticky; top:0; z-index:50; background:rgba(250,248,243,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav-inner { max-width:940px; margin:0 auto; padding:13px 22px; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+  .brand { font-family:var(--serif); font-weight:600; font-size:1.02rem; line-height:1.2; }
+  .brand small { display:block; font-family:var(--mono); font-weight:400; font-size:0.6rem; letter-spacing:0.16em; color:var(--gold-text); }
+  .nav-right { display:flex; align-items:center; gap:14px; }
+  .selo-tese { font-family:var(--mono); font-size:0.62rem; letter-spacing:0.12em; color:var(--gold-text); border:1px solid var(--gold); border-radius:999px; padding:4px 12px; background:var(--gold-soft); white-space:nowrap; }
+  a.back { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.08em; color:var(--ink-soft); white-space:nowrap; }
+  a.back:hover { color:var(--green); text-decoration:none; }
+  @media (max-width:560px){ .selo-tese { display:none; } }
 
-  .hero { padding:150px 0 70px; }
-  .hero-grid { display:grid; grid-template-columns:1.05fr 0.95fr; gap:52px; align-items:center; }
-  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr} }
-  .hero h1 { font-size:clamp(2.3rem,4.8vw,3.6rem); margin:20px 0; letter-spacing:-0.01em; }
-  .hero-sub { color:var(--muted); font-size:1.08rem; max-width:50ch; margin-bottom:30px; }
-  .hero-ctas { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:22px; }
-  .hero-note { font-size:0.78rem; color:var(--muted); font-family:var(--mono); }
+  /* ---- Hero ---- */
+  .hero { padding:72px 0 20px; }
+  .kicker { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-text); display:block; margin-bottom:16px; }
+  h1 { font-family:var(--serif); font-weight:500; font-size:clamp(2rem,5vw,3rem); line-height:1.15; letter-spacing:-0.01em; margin-bottom:18px; max-width:18ch; }
+  h1 em { font-style:italic; color:var(--green); }
+  .hero p.lead { color:var(--ink-soft); font-size:1.05rem; max-width:58ch; }
+  .aviso { margin:30px 0 0; padding:16px 20px; background:var(--card); border:1px solid var(--line); border-left:3px solid var(--gold); border-radius:10px; font-size:0.86rem; color:var(--ink-soft); max-width:760px; }
+  .aviso strong { color:var(--ink); }
 
-  .mock { border-radius:20px; border:1px solid var(--border-strong); background:linear-gradient(160deg,rgba(13,24,32,0.92),rgba(6,11,15,0.92)); box-shadow:0 30px 80px rgba(0,0,0,0.55); overflow:hidden; }
-  .mock-bar { display:flex; gap:7px; padding:12px 16px; border-bottom:1px solid var(--border); }
-  .mock-dot { width:10px; height:10px; border-radius:50%; background:rgba(232,237,242,0.16); }
-  .mock-dot.e { background:var(--em); } .mock-dot.g { background:var(--gold); }
-  .mock-body { padding:20px; display:grid; gap:10px; }
-  .m-row { display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:11px; background:rgba(255,255,255,0.025); border:1px solid var(--border); }
-  .m-label { font-size:0.82rem; color:var(--muted); }
-  .m-val { font-family:var(--mono); font-weight:600; font-size:0.95rem; }
-  .m-val.up { color:var(--em-light); }
-  .m-bar { height:8px; border-radius:99px; background:rgba(255,255,255,0.06); overflow:hidden; }
-  .m-fill { height:100%; border-radius:99px; background:linear-gradient(90deg,var(--em-dark),var(--em-light)); }
+  /* ---- Sections ---- */
+  section { padding:58px 0 6px; }
+  section + section { margin-top:26px; }
+  .sec-head { margin-bottom:28px; }
+  h2 { font-family:var(--serif); font-weight:500; font-size:clamp(1.45rem,3vw,1.85rem); margin-bottom:8px; }
+  .sub { color:var(--ink-soft); font-size:0.94rem; max-width:64ch; }
 
-  section { padding:74px 0; }
-  section + section { border-top:1px solid var(--border); }
-  .sec-head { max-width:640px; margin-bottom:44px; }
-  .sec-head h2 { font-size:clamp(1.7rem,3.4vw,2.4rem); margin:16px 0 14px; }
-  .sec-head p { color:var(--muted); }
+  /* ---- Galeria conceito (ilustrações SVG) ---- */
+  .galeria { display:grid; gap:18px; }
+  @media (min-width:760px){
+    .galeria { grid-template-columns:1fr 1fr; }
+    .g-full { grid-column:1 / -1; }
+  }
+  .gcard { background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; }
+  .gcard .illus { display:block; width:100%; height:auto; border-bottom:1px solid var(--line); background:#f6f3ea; }
+  .gcard .gbody { padding:16px 20px 18px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .gcard h3 { font-family:var(--serif); font-weight:500; font-size:1.06rem; line-height:1.35; }
+  .gcard p { color:var(--ink-soft); font-size:0.88rem; }
+  .selo-conceito { margin-top:auto; align-self:flex-start; font-family:var(--mono); font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-text); border:1px solid var(--gold); border-radius:6px; padding:3px 9px; background:var(--gold-soft); }
 
-  .cards3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-  @media (max-width:860px){ .cards3{grid-template-columns:1fr} }
-  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:26px; }
-  .card .ico { font-size:1.5rem; margin-bottom:12px; }
-  .card h3 { font-size:1.1rem; margin-bottom:8px; }
-  .card p { color:var(--muted); font-size:0.92rem; }
-  .card ul { margin:12px 0 0 18px; color:var(--muted); font-size:0.9rem; display:grid; gap:6px; }
+  /* ---- Circuito em 8 passos ---- */
+  .passos { display:grid; gap:14px; }
+  @media (min-width:700px){ .passos { grid-template-columns:1fr 1fr; } }
+  .passo { position:relative; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px 18px; display:flex; gap:16px; align-items:flex-start; }
+  .passo .ico { flex:none; width:44px; height:44px; border-radius:11px; background:var(--green-soft); border:1px solid rgba(29,122,85,0.25); display:flex; align-items:center; justify-content:center; }
+  .passo .ico svg { width:24px; height:24px; }
+  .passo .num { position:absolute; top:14px; right:16px; font-family:var(--mono); font-size:0.66rem; letter-spacing:0.08em; color:var(--line-strong); }
+  .passo h3 { font-family:var(--serif); font-weight:500; font-size:1rem; margin-bottom:4px; padding-right:28px; }
+  .passo p { color:var(--ink-soft); font-size:0.87rem; }
 
-  .steps { display:grid; gap:14px; counter-reset:st; }
-  .step { display:flex; gap:18px; align-items:flex-start; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 22px; }
-  .step .n { counter-increment:st; flex-shrink:0; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-weight:600; color:var(--em-light); background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.4); }
-  .step .n::before { content:counter(st); }
-  .step h3 { font-size:1.02rem; margin-bottom:4px; }
-  .step p { color:var(--muted); font-size:0.9rem; }
+  /* ---- Chips ---- */
+  .chips { display:flex; flex-wrap:wrap; gap:12px; margin-top:6px; }
+  .chip { display:inline-flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:10px 20px 10px 14px; font-size:0.9rem; font-weight:500; }
+  .chip svg { width:22px; height:22px; flex:none; }
+  .chip small { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-text); }
+  .nota-proposta { margin-top:16px; font-size:0.8rem; color:var(--ink-soft); max-width:64ch; }
 
-  .plans { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:stretch; }
-  @media (max-width:900px){ .plans{grid-template-columns:1fr} }
-  .plan { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:30px 26px; display:flex; flex-direction:column; position:relative; }
-  .plan.hot { border-color:rgba(56,189,248,0.55); box-shadow:0 0 40px rgba(56,189,248,0.12); }
-  .plan .tag { position:absolute; top:-12px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; background:linear-gradient(135deg,var(--em-light),var(--em-dark)); color:#031019; font-weight:700; padding:5px 14px; border-radius:999px; }
-  .plan h3 { font-size:1.15rem; }
-  .plan .for { color:var(--muted); font-size:0.82rem; margin:4px 0 16px; }
-  .price { font-family:var(--serif); font-size:2.2rem; }
-  .price small { font-size:0.85rem; color:var(--muted); font-family:var(--sans); }
-  .plan ul { list-style:none; margin:18px 0 24px; display:grid; gap:9px; flex:1; }
-  .plan li { font-size:0.89rem; color:var(--muted); padding-left:24px; position:relative; }
-  .plan li::before { content:'✓'; position:absolute; left:0; color:var(--em-light); font-weight:700; }
-  .plan li.no::before { content:'—'; color:rgba(232,237,242,0.25); }
-  .plan .btn { justify-content:center; }
-  .founder { margin-top:22px; text-align:center; font-size:0.85rem; color:var(--gold-light); font-family:var(--mono); }
+  /* ---- Estruturas / Governança ---- */
+  .gov-grid { display:grid; gap:14px; margin-bottom:22px; }
+  @media (min-width:700px){ .gov-grid { grid-template-columns:repeat(3,1fr); } }
+  .gov { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; }
+  .gov .tag { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--green); display:block; margin-bottom:8px; }
+  .gov .tag.ouro { color:var(--gold-text); }
+  .gov h3 { font-family:var(--serif); font-weight:500; font-size:1rem; margin-bottom:6px; }
+  .gov p { color:var(--ink-soft); font-size:0.85rem; }
+  .limites-box { background:var(--bg-soft); border:1px solid var(--line); border-radius:14px; padding:22px 26px; }
+  .limites-box h3 { font-family:var(--serif); font-weight:500; font-size:1.05rem; margin-bottom:12px; }
+  ul.limites { list-style:none; display:grid; gap:9px; }
+  ul.limites li { font-size:0.88rem; color:var(--ink-soft); padding-left:24px; position:relative; }
+  ul.limites li::before { content:'—'; position:absolute; left:0; color:var(--green); }
 
-  .quote { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:26px 30px; font-family:var(--serif); font-size:1.15rem; font-style:italic; max-width:760px; }
-  .quote .who { display:block; margin-top:14px; font-family:var(--mono); font-style:normal; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+  /* ---- CTA ---- */
+  .cta { margin:56px 0 64px; padding:34px 30px; background:var(--card); border:1px solid var(--line); border-radius:16px; }
+  .cta h2 { margin-bottom:10px; }
+  .cta p { color:var(--ink-soft); font-size:0.93rem; max-width:62ch; margin-bottom:22px; }
+  .btns { display:flex; flex-wrap:wrap; gap:12px; }
+  a.btn { display:inline-flex; align-items:center; gap:9px; padding:12px 24px; border-radius:10px; font-weight:600; font-size:0.9rem; text-decoration:none; }
+  a.btn:hover { text-decoration:none; filter:brightness(1.05); }
+  a.btn-primario { background:var(--green); color:#ffffff; }
+  a.btn-zap { border:1px solid var(--line-strong); color:var(--ink); background:var(--bg); }
+  a.btn-zap:hover { border-color:var(--green); color:var(--green); }
+  a.btn svg { width:17px; height:17px; }
 
-  details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 22px; margin-bottom:10px; }
-  summary { cursor:pointer; font-weight:600; font-size:0.95rem; }
-  details p { color:var(--muted); font-size:0.9rem; margin-top:10px; }
+  /* ---- Footer ---- */
+  footer { border-top:1px solid var(--line); padding:28px 22px 44px; text-align:center; color:var(--ink-soft); font-size:0.7rem; font-family:var(--mono); letter-spacing:0.08em; }
+  .foot-links { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; margin-top:14px; }
+  .foot-links a { color:var(--ink-soft); }
+  .foot-links a:hover { color:var(--green); }
+  .foot-disc { margin:18px auto 0; max-width:74ch; font-family:var(--sans); letter-spacing:0; font-size:0.72rem; line-height:1.65; color:var(--ink-soft); }
 
-  .cta-final { text-align:center; padding:90px 0; }
-  .cta-final h2 { font-size:clamp(1.8rem,3.6vw,2.6rem); margin-bottom:14px; }
-  .cta-final p { color:var(--muted); max-width:52ch; margin:0 auto 30px; }
-
-  .selo { display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--em-light); border:1px solid rgba(56,189,248,0.35); border-radius:999px; padding:6px 14px; background:rgba(56,189,248,0.06); }
-  .selo-status { display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-light); border:1px solid rgba(201,162,39,0.45); border-radius:999px; padding:6px 14px; background:rgba(201,162,39,0.08); margin-bottom:14px; }
-  .aviso-estagio { margin:18px 0 0; padding:14px 18px; background:rgba(201,162,39,0.06); border:1px solid rgba(201,162,39,0.35); border-radius:12px; font-size:0.85rem; color:var(--muted); max-width:60ch; }
-  .aviso-estagio strong { color:var(--text); }
-
-  footer { border-top:1px solid var(--border); padding:34px 0; }
-  .foot { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center; color:var(--muted); font-size:0.82rem; }
-  .foot a { color:var(--muted); border-bottom:1px solid transparent; }
-  .foot a:hover { color:var(--em-light); }
-  .disclaimer { margin-top:14px; font-size:0.72rem; color:rgba(143,159,171,0.7); max-width:70ch; }
+  @media (prefers-reduced-motion:no-preference){
+    .fade { animation:f .6s ease both; }
+    @keyframes f { from { opacity:0; transform:translateY(8px); } to { opacity:1; } }
+  }
 </style>
 </head>
 <body>
-<div class="bg-orbs"><div class="orb orb-a"></div><div class="orb orb-b"></div></div>
 
 <header class="nav">
   <div class="nav-inner">
-    <a class="brand" href="#top">
-      <span class="logo">Cl</span>
-      <span class="brand-name">CareLoop</span><span class="zbadge">por Zatheon</span>
-    </a>
-    <nav class="nav-links">
-      <a href="#dor">O problema</a>
-      <a href="#como">Como funcionaria</a>
-      <a href="#produto">Funcionalidades</a>
-      <a href="#planos">Previsão de planos</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-    <a class="btn btn-em" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20entrar%20na%20lista%20de%20interesse%20do%20CareLoop." target="_blank" rel="noopener">Lista de interesse</a>
+    <div class="brand">CareLoop <small>ECOSSISTEMA ZATHEON</small></div>
+    <div class="nav-right">
+      <span class="selo-tese">IDEIA MAPEADA</span>
+      <a class="back" href="../">← VOLTAR</a>
+    </div>
   </div>
 </header>
 
-<section class="hero" id="top">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="eyebrow">Recorrência para médicos · ecossistema Zatheon</span><br>
-      <span class="selo-status" style="margin-top:14px">IDEIA MAPEADA — NÃO É UM PRODUTO EM OPERAÇÃO</span>
-      <h1><span class="grad">Sua agenda não precisa recomeçar</span><br>do zero <em>todo mês</em>.</h1>
-      <p class="hero-sub">A tese do CareLoop: transformar protocolos clínicos em <strong>assinaturas de cuidado</strong> — o paciente contrataria acompanhamento contínuo (consultas periódicas, revisão de exames, canal de dúvidas, lembretes) e pagaria um valor mensal pela assinatura de serviços, com cobrança automática. Em vez de vender consulta avulsa, o médico construiria receita previsível cuidando melhor de quem já confia nele. Interações remotas (canal de dúvidas, telemonitoramento) observariam a Resolução CFM nº 2.314/2022.</p>
-      <div class="hero-ctas">
-        <a class="btn btn-em btn-lg" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20entrar%20na%20lista%20de%20interesse%20do%20CareLoop." target="_blank" rel="noopener">Entrar na lista de interesse →</a>
-        <a class="btn btn-ghost btn-lg" href="#como">Ver como funcionaria</a>
-      </div>
-      <div class="hero-note">contrato entre médico e paciente · não é plano de saúde · desenho da tese</div>
-      <div class="aviso-estagio">
-        <strong>O que esta página é (e não é):</strong> uma ideia mapeada do ecossistema Zatheon, apresentada a quem quiser construí-la junto. Não é um produto em operação — não há infraestrutura de cobrança, contratos ou clientes, e não há preço definido. O painel ao lado é mockup ilustrativo e os valores citados são previsão de lançamento. Se o CareLoop te interessa, entre na lista de interesse ou candidate-se a parceiro de design.
-      </div>
+<main>
+<div class="wrap">
+
+  <!-- 2 · Hero -->
+  <div class="hero fade">
+    <span class="kicker">✳ Ideia mapeada · Tese em validação</span>
+    <h1>Do paciente avulso ao <em>membro da clínica</em>.</h1>
+    <p class="lead">A tese do CareLoop: a clínica poderia operar a própria assinatura de fidelização — cobrança recorrente, carteirinha de membro e benefícios definidos em contrato — transformando o acompanhamento que ela já entrega em vínculo contínuo e receita previsível, às claras.</p>
+    <div class="aviso"><strong>O que esta página é (e não é):</strong> uma ideia mapeada do ecossistema Zatheon, em fase de tese. Não é um produto em operação: não há infraestrutura de cobrança, contratos, clientes nem preços definidos — nada está à venda. Não é plano de saúde. As ilustrações abaixo são visualizações de conceito criadas para explicar a tese, não telas de um sistema existente.</div>
+  </div>
+
+  <!-- 3 · Como seria na prática -->
+  <section class="fade" aria-labelledby="t-pratica">
+    <div class="sec-head">
+      <h2 id="t-pratica">Como seria na prática</h2>
+      <p class="sub">Três momentos do conceito, ilustrados: a carteirinha no bolso do paciente, o ciclo que substitui a consulta avulsa e o painel que a clínica acompanharia.</p>
     </div>
-    <div class="mock" aria-hidden="true">
-      <div class="mock-bar"><span class="mock-dot e"></span><span class="mock-dot g"></span><span class="mock-dot"></span></div>
-      <div class="mock-body">
-        <div class="m-row"><span class="m-label">Assinantes ativos</span><span class="m-val">47</span></div>
-        <div class="m-row"><span class="m-label">Receita recorrente mensal</span><span class="m-val up">R$ 21.150 ▲</span></div>
-        <div class="m-row" style="display:block">
-          <div style="display:flex; justify-content:space-between; margin-bottom:8px"><span class="m-label">Adimplência</span><span class="m-val up">96%</span></div>
-          <div class="m-bar"><div class="m-fill" style="width:96%"></div></div>
+    <div class="galeria">
+
+      <figure class="gcard g-full">
+        <svg class="illus" viewBox="0 0 1200 600" role="img" aria-labelledby="ill-cart-t" xmlns="http://www.w3.org/2000/svg">
+          <title id="ill-cart-t">Ilustração conceitual: celular exibindo a carteirinha virtual de membro, ampliada ao lado com nome, plano e código de validação esquemáticos.</title>
+          <rect width="1200" height="600" fill="#f6f3ea"/>
+          <g stroke="#a07d1c" stroke-width="2.5" stroke-linecap="round" opacity="0.6">
+            <path d="M1108 88v20M1098 98h20"/>
+            <path d="M84 508v14M77 515h14"/>
+          </g>
+          <!-- celular -->
+          <g>
+            <rect x="120" y="80" width="250" height="470" rx="34" fill="#ffffff" stroke="#cfc9ba" stroke-width="3"/>
+            <rect x="205" y="98" width="80" height="8" rx="4" fill="#e3ded2"/>
+            <rect x="144" y="126" width="202" height="44" rx="10" fill="#e7f2ec"/>
+            <circle cx="167" cy="148" r="9" fill="none" stroke="#1d7a55" stroke-width="3"/>
+            <rect x="186" y="142" width="96" height="12" rx="6" fill="#cfe4d8"/>
+            <!-- mini carteirinha -->
+            <rect x="144" y="186" width="202" height="122" rx="14" fill="#ffffff" stroke="#cfc9ba" stroke-width="2.5"/>
+            <path d="M144 222v-22a14 14 0 0 1 14-14h174a14 14 0 0 1 14 14v22z" fill="#1d7a55"/>
+            <rect x="158" y="197" width="64" height="10" rx="5" fill="#ffffff" opacity="0.85"/>
+            <rect x="298" y="195" width="38" height="15" rx="7.5" fill="none" stroke="#f5efdd" stroke-width="2"/>
+            <circle cx="173" cy="245" r="12" fill="#e7f2ec" stroke="#1d7a55" stroke-width="2.5"/>
+            <rect x="194" y="235" width="80" height="9" rx="4.5" fill="#e3ded2"/>
+            <rect x="194" y="250" width="56" height="9" rx="4.5" fill="#efe9db"/>
+            <rect x="292" y="230" width="40" height="40" rx="4" fill="none" stroke="#cfc9ba" stroke-width="2"/>
+            <path d="M299 237h9v9h-9zM320 237h6v6h-6zM299 258h6v6h-6zM312 249h7v7h-7z" fill="#1f2421"/>
+            <rect x="158" y="282" width="118" height="13" rx="6.5" fill="#f5efdd" stroke="#a07d1c" stroke-width="1.5"/>
+            <!-- linhas do app -->
+            <rect x="144" y="326" width="202" height="36" rx="9" fill="#faf8f3" stroke="#e3ded2" stroke-width="2"/>
+            <rect x="160" y="339" width="110" height="10" rx="5" fill="#e3ded2"/>
+            <rect x="144" y="372" width="202" height="36" rx="9" fill="#faf8f3" stroke="#e3ded2" stroke-width="2"/>
+            <rect x="160" y="385" width="84" height="10" rx="5" fill="#e3ded2"/>
+            <rect x="144" y="418" width="202" height="36" rx="9" fill="#faf8f3" stroke="#e3ded2" stroke-width="2"/>
+            <rect x="160" y="431" width="128" height="10" rx="5" fill="#e3ded2"/>
+            <rect x="217" y="528" width="56" height="6" rx="3" fill="#cfc9ba"/>
+          </g>
+          <!-- conector -->
+          <path d="M386 300h64" stroke="#a07d1c" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 11" fill="none"/>
+          <!-- carteirinha ampliada -->
+          <g>
+            <rect x="470" y="130" width="630" height="340" rx="24" fill="#ffffff"/>
+            <path d="M470 214v-60a24 24 0 0 1 24-24h582a24 24 0 0 1 24 24v60z" fill="#1d7a55"/>
+            <circle cx="516" cy="172" r="17" fill="none" stroke="#ffffff" stroke-width="3"/>
+            <path d="M509 172a7 7 0 0 1 14 0 7 7 0 0 1-14 0z" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="6 5"/>
+            <text x="548" y="179" font-family="'JetBrains Mono',monospace" font-size="19" letter-spacing="3" fill="#ffffff">CARELOOP</text>
+            <rect x="972" y="155" width="104" height="34" rx="17" fill="none" stroke="#f5efdd" stroke-width="2.5"/>
+            <text x="1024" y="177" font-family="'JetBrains Mono',monospace" font-size="15" letter-spacing="2" fill="#ffffff" text-anchor="middle">MEMBRO</text>
+            <!-- titular -->
+            <circle cx="532" cy="278" r="34" fill="#e7f2ec" stroke="#1d7a55" stroke-width="3"/>
+            <circle cx="532" cy="269" r="10" fill="none" stroke="#1d7a55" stroke-width="3"/>
+            <path d="M514 296a18 13 0 0 1 36 0" fill="none" stroke="#1d7a55" stroke-width="3" stroke-linecap="round"/>
+            <rect x="592" y="252" width="250" height="18" rx="9" fill="#e3ded2"/>
+            <rect x="592" y="280" width="170" height="14" rx="7" fill="#efe9db"/>
+            <text x="592" y="332" font-family="'JetBrains Mono',monospace" font-size="14" letter-spacing="2" fill="#5b615c">PLANO</text>
+            <rect x="592" y="342" width="252" height="36" rx="18" fill="#f5efdd" stroke="#a07d1c" stroke-width="2"/>
+            <text x="718" y="366" font-family="'JetBrains Mono',monospace" font-size="14" letter-spacing="1.5" fill="#806313" text-anchor="middle">PLANO DE ACOMPANHAMENTO</text>
+            <!-- QR -->
+            <rect x="920" y="236" width="144" height="144" rx="8" fill="#faf8f3" stroke="#cfc9ba" stroke-width="2.5"/>
+            <g fill="none" stroke="#1f2421" stroke-width="3.5">
+              <rect x="936" y="252" width="28" height="28"/>
+              <rect x="1020" y="252" width="28" height="28"/>
+              <rect x="936" y="336" width="28" height="28"/>
+            </g>
+            <g fill="#1f2421">
+              <rect x="945" y="261" width="10" height="10"/>
+              <rect x="1029" y="261" width="10" height="10"/>
+              <rect x="945" y="345" width="10" height="10"/>
+              <rect x="980" y="252" width="10" height="10"/>
+              <rect x="998" y="266" width="10" height="10"/>
+              <rect x="980" y="284" width="10" height="10"/>
+              <rect x="1012" y="298" width="10" height="10"/>
+              <rect x="984" y="312" width="10" height="10"/>
+              <rect x="1000" y="330" width="10" height="10"/>
+              <rect x="1024" y="316" width="10" height="10"/>
+              <rect x="1036" y="340" width="10" height="10"/>
+              <rect x="964" y="300" width="10" height="10"/>
+            </g>
+            <text x="992" y="404" font-family="'JetBrains Mono',monospace" font-size="15" fill="#5b615c" text-anchor="middle">validação na recepção</text>
+            <path d="M500 414h384" stroke="#e3ded2" stroke-width="2.5" stroke-dasharray="6 7"/>
+            <circle cx="507" cy="437" r="5" fill="#1d7a55"/>
+            <text x="522" y="443" font-family="'JetBrains Mono',monospace" font-size="14" fill="#5b615c">assinatura ativa — ilustrativo</text>
+            <text x="1070" y="443" font-family="'JetBrains Mono',monospace" font-size="14" fill="#806313" text-anchor="end">renova a cada ciclo</text>
+            <rect x="470" y="130" width="630" height="340" rx="24" fill="none" stroke="#cfc9ba" stroke-width="3"/>
+          </g>
+        </svg>
+        <figcaption class="gbody">
+          <h3>A carteirinha virtual de membro</h3>
+          <p>O paciente carregaria no celular a identidade de membro da clínica: plano contratado, situação da assinatura e validação rápida na recepção. O vínculo — que hoje é invisível — ganharia forma.</p>
+          <span class="selo-conceito">Visualização conceitual — não é um produto existente</span>
+        </figcaption>
+      </figure>
+
+      <figure class="gcard">
+        <svg class="illus" viewBox="0 0 800 620" role="img" aria-labelledby="ill-loop-t" xmlns="http://www.w3.org/2000/svg">
+          <title id="ill-loop-t">Ilustração conceitual: ciclo mensal da assinatura — cobrança do ciclo, consulta e canal, benefícios em uso e renovação, ligados por setas em círculo.</title>
+          <defs>
+            <marker id="cl-seta" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+              <path d="M0 0 10 5 0 10z" fill="#a07d1c"/>
+            </marker>
+            <marker id="cl-seta-verde" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 10 5 0 10z" fill="#1d7a55"/>
+            </marker>
+          </defs>
+          <rect width="800" height="620" fill="#f6f3ea"/>
+          <circle cx="400" cy="305" r="170" fill="none" stroke="#dcd6c6" stroke-width="2.5" stroke-dasharray="3 11"/>
+          <!-- setas do ciclo -->
+          <g fill="none" stroke="#a07d1c" stroke-width="3.5" stroke-linecap="round">
+            <path d="M479.8 154.9A170 170 0 0 1 550.1 225.2" marker-end="url(#cl-seta)"/>
+            <path d="M550.1 384.8A170 170 0 0 1 479.8 455.1" marker-end="url(#cl-seta)"/>
+            <path d="M320.2 455.1A170 170 0 0 1 249.9 384.8" marker-end="url(#cl-seta)"/>
+            <path d="M249.9 225.2A170 170 0 0 1 320.2 154.9" marker-end="url(#cl-seta)"/>
+          </g>
+          <!-- centro -->
+          <path d="M400 296c-4-11-22-11-22 3 0 11 13 16 22 24 9-8 22-13 22-24 0-14-18-14-22-3z" fill="#e7f2ec" stroke="#1d7a55" stroke-width="3"/>
+          <text x="400" y="398" font-family="'JetBrains Mono',monospace" font-size="18" letter-spacing="2.5" fill="#806313" text-anchor="middle">CICLO MENSAL</text>
+          <!-- nó: cobrança (topo) -->
+          <g>
+            <rect x="356" y="91" width="88" height="88" rx="20" fill="#ffffff" stroke="#cfc9ba" stroke-width="3"/>
+            <g fill="none" stroke="#1d7a55" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="378" y="118" width="44" height="38" rx="6"/>
+              <path d="M388 110v12M412 110v12M378 130h44"/>
+            </g>
+            <circle cx="411" cy="145" r="6" fill="none" stroke="#a07d1c" stroke-width="3.2"/>
+            <path d="M387 141h10M387 149h6" stroke="#1d7a55" stroke-width="3.2" stroke-linecap="round"/>
+          </g>
+          <text x="400" y="70" font-family="'JetBrains Mono',monospace" font-size="18" letter-spacing="2" fill="#5b615c" text-anchor="middle">COBRANÇA DO CICLO</text>
+          <!-- nó: consulta + canal (direita) -->
+          <g>
+            <rect x="526" y="261" width="88" height="88" rx="20" fill="#ffffff" stroke="#cfc9ba" stroke-width="3"/>
+            <path d="M550 285h40a9 9 0 0 1 9 9v18a9 9 0 0 1-9 9h-20l-11 10v-10h-9a9 9 0 0 1-9-9v-18a9 9 0 0 1 9-9z" fill="none" stroke="#1d7a55" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M570 296v14M563 303h14" stroke="#a07d1c" stroke-width="3.2" stroke-linecap="round"/>
+          </g>
+          <text x="570" y="376" font-family="'JetBrains Mono',monospace" font-size="17" letter-spacing="1.5" fill="#5b615c" text-anchor="middle">CONSULTA + CANAL</text>
+          <!-- nó: benefícios (base) -->
+          <g>
+            <rect x="356" y="431" width="88" height="88" rx="20" fill="#ffffff" stroke="#cfc9ba" stroke-width="3"/>
+            <g fill="none" stroke="#1d7a55" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="376" y="462" width="48" height="13" rx="3"/>
+              <rect x="381" y="475" width="38" height="22" rx="4"/>
+            </g>
+            <g stroke="#a07d1c" stroke-width="3.2" stroke-linecap="round" fill="none">
+              <path d="M400 462v35"/>
+              <path d="M400 462l-9-9M400 462l9-9"/>
+            </g>
+          </g>
+          <text x="400" y="549" font-family="'JetBrains Mono',monospace" font-size="18" letter-spacing="2" fill="#5b615c" text-anchor="middle">BENEFÍCIOS EM USO</text>
+          <!-- nó: renovação (esquerda) -->
+          <g>
+            <rect x="186" y="261" width="88" height="88" rx="20" fill="#ffffff" stroke="#cfc9ba" stroke-width="3"/>
+            <g fill="none" stroke="#1d7a55" stroke-width="3.4" stroke-linecap="round">
+              <path d="M213 302a17 17 0 0 1 34 0" marker-end="url(#cl-seta-verde)"/>
+              <path d="M247 308a17 17 0 0 1-34 0" marker-end="url(#cl-seta-verde)"/>
+            </g>
+            <circle cx="230" cy="305" r="3.4" fill="#a07d1c"/>
+          </g>
+          <text x="230" y="376" font-family="'JetBrains Mono',monospace" font-size="18" letter-spacing="2" fill="#5b615c" text-anchor="middle">RENOVAÇÃO</text>
+        </svg>
+        <figcaption class="gbody">
+          <h3>O loop da recorrência</h3>
+          <p>Um ciclo em vez de eventos avulsos: cobrança automática no início do período, consulta e canal no ritmo do protocolo, benefícios em uso — e renovação sem fricção fechando o círculo.</p>
+          <span class="selo-conceito">Visualização conceitual — não é um produto existente</span>
+        </figcaption>
+      </figure>
+
+      <figure class="gcard">
+        <svg class="illus" viewBox="0 0 800 620" role="img" aria-labelledby="ill-painel-t" xmlns="http://www.w3.org/2000/svg">
+          <title id="ill-painel-t">Ilustração conceitual: janela de navegador com o painel da clínica — receita recorrente, membros ativos e renovações, com valores ilustrativos vazios.</title>
+          <rect width="800" height="620" fill="#f6f3ea"/>
+          <rect x="70" y="80" width="660" height="470" rx="16" fill="#ffffff" stroke="#cfc9ba" stroke-width="3"/>
+          <circle cx="100" cy="104" r="6" fill="#cfc9ba"/>
+          <circle cx="122" cy="104" r="6" fill="#1d7a55"/>
+          <circle cx="144" cy="104" r="6" fill="#a07d1c"/>
+          <rect x="172" y="92" width="340" height="26" rx="13" fill="#f2efe7"/>
+          <text x="188" y="110" font-family="'JetBrains Mono',monospace" font-size="15" fill="#5b615c">careloop · painel da clínica — conceito</text>
+          <path d="M70 128h660" stroke="#e3ded2" stroke-width="2.5"/>
+          <!-- sidebar -->
+          <path d="M190 128v422" stroke="#e3ded2" stroke-width="2.5"/>
+          <rect x="86" y="150" width="88" height="20" rx="10" fill="#e7f2ec" stroke="#1d7a55" stroke-width="1.6"/>
+          <rect x="86" y="184" width="72" height="16" rx="8" fill="#efe9db"/>
+          <rect x="86" y="214" width="80" height="16" rx="8" fill="#efe9db"/>
+          <rect x="86" y="244" width="62" height="16" rx="8" fill="#efe9db"/>
+          <!-- cards de indicadores -->
+          <g fill="#faf8f3" stroke="#e3ded2" stroke-width="2">
+            <rect x="208" y="148" width="160" height="90" rx="12"/>
+            <rect x="381" y="148" width="160" height="90" rx="12"/>
+            <rect x="554" y="148" width="160" height="90" rx="12"/>
+          </g>
+          <text x="224" y="176" font-family="'JetBrains Mono',monospace" font-size="15" letter-spacing="1.5" fill="#806313">MRR</text>
+          <text x="224" y="218" font-family="'Fraunces',serif" font-size="36" fill="#1f2421">R$ —</text>
+          <text x="397" y="176" font-family="'JetBrains Mono',monospace" font-size="15" letter-spacing="1" fill="#806313">MEMBROS</text>
+          <text x="397" y="218" font-family="'Fraunces',serif" font-size="36" fill="#1f2421">—</text>
+          <text x="570" y="176" font-family="'JetBrains Mono',monospace" font-size="15" letter-spacing="1" fill="#806313">RENOVAÇÕES</text>
+          <text x="570" y="218" font-family="'Fraunces',serif" font-size="36" fill="#1f2421">—</text>
+          <!-- gráfico -->
+          <rect x="208" y="254" width="506" height="160" rx="12" fill="#ffffff" stroke="#e3ded2" stroke-width="2"/>
+          <text x="224" y="280" font-family="'JetBrains Mono',monospace" font-size="15" fill="#5b615c">RECEITA RECORRENTE — ILUSTRATIVO</text>
+          <path d="M224 394h474" stroke="#cfc9ba" stroke-width="2"/>
+          <g>
+            <rect x="234" y="354" width="34" height="40" rx="4" fill="#cfe4d8"/>
+            <rect x="292" y="338" width="34" height="56" rx="4" fill="#9ec9b4"/>
+            <rect x="350" y="346" width="34" height="48" rx="4" fill="#cfe4d8"/>
+            <rect x="408" y="324" width="34" height="70" rx="4" fill="#9ec9b4"/>
+            <rect x="466" y="330" width="34" height="64" rx="4" fill="#cfe4d8"/>
+            <rect x="524" y="310" width="34" height="84" rx="4" fill="#9ec9b4"/>
+            <rect x="582" y="318" width="34" height="76" rx="4" fill="#cfe4d8"/>
+            <rect x="640" y="298" width="34" height="96" rx="4" fill="none" stroke="#a07d1c" stroke-width="2.5" stroke-dasharray="5 5"/>
+          </g>
+          <!-- lista de membros -->
+          <rect x="208" y="428" width="506" height="102" rx="12" fill="#faf8f3" stroke="#e3ded2" stroke-width="2"/>
+          <g>
+            <circle cx="230" cy="454" r="4.5" fill="#1d7a55"/>
+            <rect x="246" y="448" width="150" height="12" rx="6" fill="#e3ded2"/>
+            <rect x="552" y="443" width="146" height="24" rx="12" fill="#e7f2ec"/>
+            <text x="625" y="460" font-family="'JetBrains Mono',monospace" font-size="13" fill="#1d7a55" text-anchor="middle">renova em — dias</text>
+          </g>
+          <g>
+            <circle cx="230" cy="484" r="4.5" fill="#1d7a55"/>
+            <rect x="246" y="478" width="118" height="12" rx="6" fill="#e3ded2"/>
+            <rect x="552" y="473" width="146" height="24" rx="12" fill="#f5efdd"/>
+            <text x="625" y="490" font-family="'JetBrains Mono',monospace" font-size="13" fill="#806313" text-anchor="middle">aviso enviado</text>
+          </g>
+          <g>
+            <circle cx="230" cy="514" r="4.5" fill="#1d7a55"/>
+            <rect x="246" y="508" width="134" height="12" rx="6" fill="#e3ded2"/>
+            <rect x="552" y="503" width="146" height="24" rx="12" fill="#e7f2ec"/>
+            <text x="625" y="520" font-family="'JetBrains Mono',monospace" font-size="13" fill="#1d7a55" text-anchor="middle">adimplente</text>
+          </g>
+        </svg>
+        <figcaption class="gbody">
+          <h3>O painel da clínica</h3>
+          <p>Receita recorrente, membros ativos, renovações e quem precisa de atenção — num só lugar. Os números aparecem propositalmente vazios: nada aqui é métrica real ou prometida.</p>
+          <span class="selo-conceito">Visualização conceitual — não é um produto existente</span>
+        </figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <!-- 4 · O circuito da assinatura -->
+  <section class="fade" aria-labelledby="t-circuito">
+    <div class="sec-head">
+      <h2 id="t-circuito">O circuito da assinatura em 8 passos</h2>
+      <p class="sub">O problema que a tese ataca é conhecido: consulta avulsa zera a receita no dia 1º e o paciente some na metade do tratamento. O circuito abaixo é o desenho de como a assinatura própria da clínica enfrentaria os dois — nada dele está construído hoje.</p>
+    </div>
+    <div class="passos">
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- desenho do plano: camadas -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3.8 19 7.6l-7 3.8-7-3.8z"/>
+            <path d="m5 11.8 7 3.8 7-3.8" stroke="#a07d1c"/>
+            <path d="m5 16 7 3.8 7-3.8"/>
+          </svg>
+        </span>
+        <span class="num">01</span>
+        <div>
+          <h3>Desenho do plano</h3>
+          <p>A clínica partiria dos protocolos que já pratica — emagrecimento, hipertensão, longevidade, pediatria de rotina — e desenharia o plano: o que entra, com que cadência, para qual perfil de paciente.</p>
         </div>
-        <div class="m-row"><span class="m-label">Renovações próximos 7 dias</span><span class="m-val">9 · lembretes enviados</span></div>
-        <div class="m-row"><span class="m-label">Assinatura mais popular</span><span class="m-val up">Longevidade trimestral</span></div>
-        <div style="font-family:var(--mono); font-size:0.7rem; color:var(--muted); text-align:center; padding-top:4px">Dados meramente ilustrativos — não representam resultados reais ou prometidos</div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- contrato: documento com check -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13.5 3.5h-6A1.5 1.5 0 0 0 6 5v14a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19V8z"/>
+            <path d="M13.5 3.5V8H18"/>
+            <path d="m9.3 14 2 2 3.5-4" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">02</span>
+        <div>
+          <h3>Contrato às claras</h3>
+          <p>Contrato digital de prestação de serviços entre clínica e paciente, com aceite registrado e escopo explícito do que está — e do que não está — incluído. Transparência que protege os dois lados.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- adesão: cartão -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3.5" y="6" width="17" height="12.5" rx="2"/>
+            <path d="M3.5 10h17" stroke="#a07d1c"/>
+            <path d="M6.5 14.5h3.5M13 14.5h4.5"/>
+          </svg>
+        </span>
+        <span class="num">03</span>
+        <div>
+          <h3>Adesão com cobrança recorrente</h3>
+          <p>O paciente aderiria com Pix ou cartão em cobrança automática, com aviso antes de cada cobrança — sem boleto perdido e sem constrangimento na recepção.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- carteirinha: cartão de identificação -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3.5" y="5.5" width="17" height="13" rx="2"/>
+            <circle cx="8.5" cy="10.5" r="1.8"/>
+            <path d="M6.2 15.5a2.4 2.4 0 0 1 4.6 0"/>
+            <path d="M13.5 9.5h4" stroke="#a07d1c"/>
+            <path d="M13.5 12.5h4"/>
+          </svg>
+        </span>
+        <span class="num">04</span>
+        <div>
+          <h3>Carteirinha de membro</h3>
+          <p>Carteirinha virtual com plano e validação na recepção: o paciente se apresenta como membro e a equipe sabe, na hora, o que a assinatura dele inclui.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- benefícios: coração com + -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20s-7-4.4-7-9.8A4 4 0 0 1 12 7.4a4 4 0 0 1 7 2.8C19 15.6 12 20 12 20z"/>
+            <path d="M12 10.5v4M10 12.5h4" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">05</span>
+        <div>
+          <h3>Benefícios em uso</h3>
+          <p>Consultas periódicas, revisão de exames, lembretes e canal de dúvidas, no ritmo do protocolo. Interações remotas observariam a Resolução CFM nº 2.314/2022.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- loop de renovação: setas circulares -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18.9 13.5A7 7 0 0 1 6.2 15.2"/>
+            <path d="M6.4 11.9l-.2 3.3 3.2.2"/>
+            <path d="M5.1 10.5A7 7 0 0 1 17.8 8.8" stroke="#a07d1c"/>
+            <path d="M17.6 12.1l.2-3.3-3.2-.2" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">06</span>
+        <div>
+          <h3>Loop de renovação</h3>
+          <p>Renovações, lembretes, follow-up de quem esfriou e nova tentativa em falha de pagamento: o software cuidaria do ciclo — a equipe cuidaria do paciente.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- painel: barras -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="4" width="16" height="16" rx="2.5"/>
+            <path d="M8.5 15.8v-3.6"/>
+            <path d="M12 15.8V8.6" stroke="#a07d1c"/>
+            <path d="M15.5 15.8v-2.4"/>
+          </svg>
+        </span>
+        <span class="num">07</span>
+        <div>
+          <h3>Painel da clínica</h3>
+          <p>Receita recorrente, adimplência, membros ativos e risco de cancelamento — os números da operação num painel, sem planilha de quem pagou.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- cancelamento livre: porta com seta de saída -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 4H6.5A1.5 1.5 0 0 0 5 5.5v13A1.5 1.5 0 0 0 6.5 20H13"/>
+            <path d="M16 8.5 19.5 12 16 15.5" stroke="#a07d1c"/>
+            <path d="M19.5 12H10" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">08</span>
+        <div>
+          <h3>Cancelamento livre</h3>
+          <p>Princípio da tese: os dois lados poderiam encerrar conforme o contrato, sem fidelidade forçada. Recorrência forçada não é fidelização — é armadilha.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5 · O que um plano poderia incluir -->
+  <section class="fade" aria-labelledby="t-inclui">
+    <div class="sec-head">
+      <h2 id="t-inclui">O que um plano poderia incluir</h2>
+      <p class="sub">Benefícios possíveis do conceito — sempre serviços definidos em contrato pela própria clínica, nunca cobertura assistencial.</p>
+    </div>
+    <div class="chips">
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="4" y="5.5" width="16" height="14" rx="2.5"/>
+          <path d="M8 3.5v4M16 3.5v4M4 10.5h16"/>
+          <circle cx="12" cy="14.5" r="1.6" fill="#a07d1c" stroke="none"/>
+        </svg>
+        <span>Consultas periódicas<br><small>estrutura possível</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M13.5 3.5h-6A1.5 1.5 0 0 0 6 5v14a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19V8z"/>
+          <path d="M13.5 3.5V8H18"/>
+          <circle cx="11.5" cy="13" r="2.6" stroke="#a07d1c"/>
+          <path d="m13.4 14.9 2 2" stroke="#a07d1c"/>
+        </svg>
+        <span>Revisão de exames<br><small>estrutura possível</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 4.5c-4.7 0-8 3-8 6.7 0 2 1 3.8 2.6 5l-.6 3.3 3.5-1.6c.8.2 1.6.3 2.5.3 4.7 0 8-3 8-6.7s-3.3-7-8-7z"/>
+          <circle cx="9" cy="11.3" r="0.9" fill="#a07d1c" stroke="none"/>
+          <circle cx="12" cy="11.3" r="0.9" fill="#a07d1c" stroke="none"/>
+          <circle cx="15" cy="11.3" r="0.9" fill="#a07d1c" stroke="none"/>
+        </svg>
+        <span>Canal de dúvidas<br><small>estrutura possível</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 16.5h12l-1.6-2.2V10a4.4 4.4 0 0 0-8.8 0v4.3z"/>
+          <path d="M10.5 19a1.5 1.5 0 0 0 3 0" stroke="#a07d1c"/>
+        </svg>
+        <span>Lembretes e recall<br><small>estrutura possível</small></span>
+      </span>
+    </div>
+    <p class="nota-proposta">Nada disso está definido nem prometido. O escopo de cada plano — o que entra, com que cadência e por quanto — seria decisão exclusiva do profissional, dentro das normas do CFM. A tese se aplica a práticas de acompanhamento contínuo; especialidades puramente pontuais aproveitariam menos.</p>
+  </section>
+
+  <!-- 6 · Estruturas possíveis de plano -->
+  <section class="fade" aria-labelledby="t-estruturas">
+    <div class="sec-head">
+      <h2 id="t-estruturas">Estruturas possíveis — sem preço, nada à venda</h2>
+      <p class="sub">Por decisão de governança, esta página não exibe valores: não há preço definido, nem para o software, nem para as assinaturas. O que existe são estruturas possíveis de desenho, a validar com clínicas reais.</p>
+    </div>
+    <div class="gov-grid">
+      <div class="gov">
+        <span class="tag ouro">Estrutura possível</span>
+        <h3>Individual</h3>
+        <p>Um paciente, um protocolo: acompanhamento contínuo com a cadência que a clínica já pratica, contratado às claras.</p>
+      </div>
+      <div class="gov">
+        <span class="tag ouro">Estrutura possível</span>
+        <h3>Família</h3>
+        <p>Dependentes na mesma assinatura, com benefícios por membro definidos em contrato — do check-up dos pais à pediatria de rotina.</p>
+      </div>
+      <div class="gov">
+        <span class="tag ouro">Estrutura possível</span>
+        <h3>Por protocolo</h3>
+        <p>Planos temáticos — hipertensão, emagrecimento, saúde mental, dor crônica — construídos sobre a rotina clínica de cada nicho.</p>
       </div>
     </div>
-  </div>
-</section>
+    <p class="nota-proposta">Preço, escopo e condições só seriam comunicados se — e quando — o produto existisse, após validação. Quem quiser acompanhar a construção pode entrar na lista de interesse abaixo; não há qualquer compromisso comercial.</p>
+  </section>
 
-<section id="dor">
-  <div class="wrap">
+  <!-- 7 · Governança e limites -->
+  <section class="fade" aria-labelledby="t-governanca">
     <div class="sec-head">
-      <span class="eyebrow">O problema</span>
-      <h2>Consulta avulsa é receita que <em>zera</em> no dia 1º</h2>
-      <p>Você entrega acompanhamento, mas cobra como se entregasse eventos isolados. O resultado é conhecido: mês bom, mês ruim, e o tratamento do paciente no meio do caminho.</p>
+      <h2 id="t-governanca">Governança e limites</h2>
+      <p class="sub">Recorrência não é truque de cobrança — é continuidade de cuidado. A tese só faz sentido se for ética, transparente e contratada às claras. Estes são os limites que a sustentam.</p>
     </div>
-    <div class="cards3">
-      <div class="card"><div class="ico">🔁</div><h3>O contador reinicia todo mês</h3><p>Consulta avulsa não acumula. Cada mês começa com receita zero e a mesma pergunta: quantos pacientes vão aparecer? Dez anos de consultório e nenhum mês garantido.</p></div>
-      <div class="card"><div class="ico">🚪</div><h3>O paciente some na metade</h3><p>Vem na primeira consulta, leva o pedido de exames — e desaparece. O tratamento fica incompleto, o resultado clínico não acontece e o retorno nunca é marcado.</p></div>
-      <div class="card"><div class="ico">⛔</div><h3>Imprevisibilidade trava tudo</h3><p>Sem saber quanto entra no mês que vem, você não contrata secretária, não investe em equipamento, não tira férias. A agenda manda em você — deveria ser o contrário.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="como">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Como funcionaria</span>
-      <h2>Do protocolo clínico à <em>assinatura de cuidado</em> em 4 passos</h2>
-      <p>Inspirado nos modelos de cuidado direto médico–paciente que já funcionam lá fora — adaptado à realidade e à regulação brasileiras.</p>
-    </div>
-    <div class="steps">
-      <div class="step"><span class="n"></span><div><h3>Escolha o protocolo do seu nicho</h3><p>Emagrecimento, longevidade, hipertensão, saúde mental, dor crônica, pediatria de acompanhamento — parta de um protocolo da biblioteca ou monte o seu do zero, com a cadência clínica que você já pratica.</p></div></div>
-      <div class="step"><span class="n"></span><div><h3>Monte o pacote de acompanhamento com preço mensal</h3><p>Defina o que entra na assinatura — consultas trimestrais, revisão de exames, canal de dúvidas, ajustes de conduta — e o valor mensal da assinatura de serviços. O CareLoop gera a página da assinatura e o contrato de prestação de serviços.</p></div></div>
-      <div class="step"><span class="n"></span><div><h3>Paciente assina com cobrança automática</h3><p>Pix ou cartão, recorrente, sem boleto perdido e sem cobrança constrangedora na recepção. O paciente aceita o contrato digital e o valor da assinatura passa a cair sozinho.</p></div></div>
-      <div class="step"><span class="n"></span><div><h3>O CareLoop cuida do loop — você cuida do paciente</h3><p>Renovações, lembretes de consulta e exames, follow-up de quem esfriou, aviso de cartão recusado: tudo automático. Sua parte é a única que importa — a medicina.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<section id="produto">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Funcionalidades previstas</span>
-      <h2>Tudo que a recorrência exige, <em>num lugar só</em></h2>
-      <p>Não é gateway de pagamento com outro nome. É o desenho da operação completa da assinatura — clínica, financeira e de relacionamento. Nada abaixo está em operação hoje.</p>
-    </div>
-    <div class="cards3">
-      <div class="card"><div class="ico">📚</div><h3>Biblioteca de protocolos</h3><p>Modelos de acompanhamento por especialidade, com cadência de consultas, exames e entregáveis sugeridos. Ajuste ao seu jeito de atender — o protocolo é seu, a estrutura é pronta.</p></div>
-      <div class="card"><div class="ico">💳</div><h3>Cobrança recorrente automática</h3><p>Pix e cartão com renovação automática, retry inteligente em falha de pagamento e aviso ao paciente antes de cada cobrança. Sem planilha de quem pagou, sem constrangimento.</p></div>
-      <div class="card"><div class="ico">💬</div><h3>Jornada do assinante no WhatsApp</h3><p>Lembrete de consulta, aviso de exame pendente, check-in entre encontros e recall de renovação — mensagens no canal que o paciente realmente lê.</p></div>
-      <div class="card"><div class="ico">📊</div><h3>Painel de MRR, churn e renovações</h3><p>Receita recorrente, adimplência, assinaturas a renovar e quem está em risco de cancelar — os números do consultório recorrente, atualizados todo dia.</p></div>
-      <div class="card"><div class="ico">📝</div><h3>Contratos digitais de prestação de serviço</h3><p>Contrato de serviços médicos recorrentes entre você e o paciente, com aceite digital, escopo claro dos serviços incluídos e não incluídos na assinatura. Transparência que protege os dois lados.</p></div>
-      <div class="card"><div class="ico">🧩</div><h3>Ecossistema Zatheon</h3><p>Agenda integrada com o <a href="../sosmed/index.html" style="color:var(--em-light)">SosMed</a>; captação e crescimento com <a href="../clinicnow/index.html" style="color:var(--em-light)">ClinicNow</a> e <a href="../medgroth/index.html" style="color:var(--em-light)">MedGroth</a>. O funil traz o paciente; o CareLoop faz ele ficar.</p></div>
-    </div>
-    <div style="margin-top:34px; display:flex; gap:14px; flex-wrap:wrap; align-items:center">
-      <a class="btn btn-em" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20entrar%20na%20lista%20de%20interesse%20do%20CareLoop." target="_blank" rel="noopener">Quero acompanhar a construção →</a>
-      <span class="selo">🇧🇷 Desenho da tese: dados no Brasil · LGPD</span>
-    </div>
-  </div>
-</section>
-
-<section id="planos">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Previsão de planos</span>
-      <h2>Você cobraria recorrente. <em>Nós também</em> — e barato.</h2>
-      <p><strong style="color:var(--gold-light)">Previsão de lançamento — nada está à venda hoje.</strong> Os valores abaixo são a intenção de preço para quando o produto existir: sem taxa por assinante escondida, sem fidelidade, cancelamento livre. Por ora, o único passo possível é a lista de interesse.</p>
-    </div>
-    <div class="plans">
-      <div class="plan">
-        <h3>Início</h3>
-        <div class="for">Para lançar sua primeira assinatura de cuidado</div>
-        <div class="price">R$ 147<small>/mês · previsão de lançamento</small></div>
-        <ul>
-          <li>Até 30 assinantes ativos</li>
-          <li>Biblioteca de protocolos por especialidade</li>
-          <li>Cobrança recorrente Pix e cartão</li>
-          <li>Contratos digitais com aceite</li>
-          <li>Painel básico de receita recorrente</li>
-          <li class="no">Automações de WhatsApp</li>
-          <li class="no">Multi-profissional</li>
-        </ul>
-        <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20entrar%20na%20lista%20de%20interesse%20do%20CareLoop." target="_blank" rel="noopener">Entrar na lista de interesse</a>
+    <div class="gov-grid">
+      <div class="gov">
+        <span class="tag">Não é plano de saúde</span>
+        <h3>Contrato direto, sem cobertura</h3>
+        <p>Sem rede, sem mutualização de risco, sem atividade regulada pela ANS: apenas contratos de prestação de serviços entre clínica e paciente, com escopo explícito no aceite digital.</p>
       </div>
-      <div class="plan hot">
-        <span class="tag">Recomendado</span>
-        <h3>Prática</h3>
-        <div class="for">Para quem quer a recorrência como motor do consultório</div>
-        <div class="price">R$ 297<small>/mês · previsão de lançamento</small></div>
-        <ul>
-          <li>Tudo do Início</li>
-          <li>Até 200 assinantes ativos</li>
-          <li>Automações de WhatsApp (lembretes, recall, renovação)</li>
-          <li>Painel completo: MRR, churn, adimplência, risco</li>
-          <li>Follow-up automático de assinante esfriando</li>
-          <li>Integração com agenda SosMed</li>
-          <li class="no">Multi-profissional e API</li>
-        </ul>
-        <a class="btn btn-em" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20entrar%20na%20lista%20de%20interesse%20do%20CareLoop." target="_blank" rel="noopener">Entrar na lista de interesse →</a>
+      <div class="gov">
+        <span class="tag">Regulação</span>
+        <h3>CFM à frente do software</h3>
+        <p>Escopo clínico, comunicação e preço de cada plano seriam responsabilidade do profissional, dentro das normas do CFM. Interações remotas observariam a Resolução CFM nº 2.314/2022.</p>
       </div>
-      <div class="plan">
-        <h3>Clínica</h3>
-        <div class="for">Para clínicas com mais de um profissional</div>
-        <div class="price">R$ 597<small>/mês · previsão de lançamento</small></div>
-        <ul>
-          <li>Tudo do Prática</li>
-          <li>Assinantes ilimitados</li>
-          <li>Multi-profissional com painéis por médico</li>
-          <li>API e integrações com ClinicNow/MedGroth</li>
-          <li>Relatórios consolidados da clínica</li>
-          <li>Suporte prioritário de implantação</li>
-        </ul>
-        <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20tenho%20uma%20cl%C3%ADnica%20e%20quero%20entrar%20na%20lista%20de%20interesse%20do%20CareLoop." target="_blank" rel="noopener">Entrar na lista de interesse</a>
+      <div class="gov">
+        <span class="tag">LGPD</span>
+        <h3>Dados do paciente, não nossos</h3>
+        <p>Desenho com hospedagem no Brasil, criptografia em trânsito e em repouso, consentimento registrado e a clínica como controladora — exportação e exclusão a qualquer momento.</p>
       </div>
     </div>
-    <div class="founder">★ Intenção de preço de fundador: quem entrar na lista de interesse terá prioridade nas condições de lançamento.</div>
-  </div>
-</section>
-
-<section id="prova">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">A tese</span>
-      <h2>Recorrência não é truque de cobrança. É <em>continuidade de cuidado</em>.</h2>
+    <div class="limites-box">
+      <h3>O que esta página não pode prometer</h3>
+      <ul class="limites">
+        <li>Nenhum produto em operação: não há infraestrutura de cobrança, contratos ou clientes.</li>
+        <li>Nenhum preço, plano ou condição comercial — as estruturas citadas são possibilidades de desenho, não oferta.</li>
+        <li>Nenhuma promessa de receita, adimplência, retenção, resultado clínico ou financeiro.</li>
+        <li>Nada entraria em operação antes de contratos, governança e validação com clínicas reais.</li>
+      </ul>
     </div>
-    <blockquote class="quote">
-      "Todo tratamento sério já é recorrente — só o pagamento que não é. Quando o paciente assina o acompanhamento, ele para de sumir na metade e o médico para de recomeçar o mês do zero. O CareLoop existe para alinhar as duas coisas: um modelo clínico contínuo tende a ser também um modelo de negócio saudável, desde que a recorrência seja ética, transparente e contratada às claras."
-      <span class="who">Sóstenes Costa Paiva · fundador · Zatheon</span>
-    </blockquote>
-  </div>
-</section>
+  </section>
 
-<section id="faq">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">FAQ</span>
-      <h2>Perguntas diretas, respostas diretas</h2>
+  <!-- 8 · CTA -->
+  <div class="cta fade">
+    <h2>Ajude a validar (ou derrubar) esta tese</h2>
+    <p>Se a fidelização própria da clínica resolve um problema seu — ou se você acha que a tese está errada — queremos conversar. Lista de interesse e parceria de design abertas, sem qualquer compromisso comercial. No ecossistema Zatheon, o CareLoop conversaria com a agenda do <a href="../sosmed/">SosMed</a> e a captação do <a href="../clinicnow/">ClinicNow</a> e do <a href="../medgroth/">MedGroth</a>: o funil traria o paciente; o CareLoop faria ele ficar.</p>
+    <div class="btns">
+      <a class="btn btn-primario" href="mailto:drsostenescosta@gmail.com?subject=Lista%20de%20interesse%20%E2%80%94%20CareLoop">Entrar na lista de interesse</a>
+      <a class="btn btn-zap" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20entrar%20na%20lista%20de%20interesse%20do%20CareLoop." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.9L3.5 20.5l4.2-1.1A8.5 8.5 0 1 0 12 3.5z"/>
+          <path d="M9 8.8c.3-.7.9-.7 1.2 0l.5 1.2c.1.3 0 .7-.2.9l-.5.5c.5 1.1 1.5 2.1 2.6 2.6l.5-.5c.2-.2.6-.3.9-.2l1.2.5c.7.3.7.9 0 1.2-3.5 1.6-8.3-3.2-6.2-6.2z"/>
+        </svg>
+        Conversar no WhatsApp
+      </a>
     </div>
-    <details><summary>Isso é plano de saúde?</summary><p>Não — e essa diferença é inegociável. Plano de saúde é atividade de operadora, regulada pela ANS, com rede, cobertura e mutualização de risco. O CareLoop é um software que operacionaliza <strong>contratos diretos de prestação de serviços médicos recorrentes</strong> entre você e o seu paciente: escopo definido em contrato, sem intermediário, sem promessa de cobertura. Cada assinatura deixa isso explícito no aceite digital.</p></details>
-    <details><summary>Como o paciente pagaria?</summary><p>No desenho da tese: Pix recorrente ou cartão de crédito, com cobrança automática na data combinada, aviso antes de cada cobrança e retry automático com notificação em caso de falha — sem a secretária precisar cobrar ninguém. Nada disso está construído ainda.</p></details>
-    <details><summary>O paciente (ou eu) poderia cancelar?</summary><p>Sim, os dois lados — esse é um princípio da tese. O paciente cancelaria a assinatura pelo próprio link, conforme as condições do contrato aceito. E o médico cancelaria o CareLoop quando quisesse, sem multa e sem fidelidade. Recorrência forçada não é recorrência — é armadilha.</p></details>
-    <details><summary>Serviria para a minha especialidade?</summary><p>Se a sua prática envolve acompanhamento ao longo do tempo — emagrecimento, longevidade, doenças crônicas, saúde mental, dor, pediatria, ginecologia de rotina — a tese se aplica. A biblioteca traria protocolos de partida por nicho, com a cadência adaptável ao seu jeito de atender. Especialidades puramente pontuais (um procedimento e fim) aproveitariam menos.</p></details>
-    <details><summary>E a LGPD?</summary><p>Dados de saúde são dados sensíveis e o desenho parte disso: hospedagem no Brasil, criptografia em trânsito e em repouso, consentimento registrado no aceite do contrato e o médico como controlador dos dados dos seus pacientes. Exportação e exclusão a qualquer momento — os dados seriam seus e deles, não nossos.</p></details>
-    <details><summary>Precisaria do MedGroth junto?</summary><p>Não. O CareLoop é pensado para funcionar sozinho. Mas eles se completariam: o <a href="../medgroth/index.html" style="color:var(--em-light)">MedGroth</a> constrói a máquina que atrai e converte pacientes; o CareLoop transformaria esses pacientes em assinantes de longo prazo. Um enche o funil, o outro fecha o ciclo.</p></details>
   </div>
-</section>
 
-<section class="cta-final">
-  <div class="wrap">
-    <span class="eyebrow" style="justify-content:center">Acompanhe a construção</span>
-    <h2>A tese: parar de vender consultas.<br>Passar a <em>assinar cuidado</em>.</h2>
-    <p>O CareLoop ainda não existe como produto. Se essa tese resolve um problema seu, chame no WhatsApp, conte seu nicho e entre na lista de interesse — ou candidate-se a parceiro de design para desenhar o produto junto.</p>
-    <a class="btn btn-em btn-lg" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20entrar%20na%20lista%20de%20interesse%20do%20CareLoop." target="_blank" rel="noopener">Entrar na lista de interesse →</a>
-    <a class="btn btn-ghost btn-lg" href="mailto:drsostenescosta@gmail.com?subject=Parceiro%20de%20design%20%E2%80%94%20CareLoop">Ser parceiro de design</a>
-    <div style="margin-top:26px"><span class="selo">🇧🇷 Desenho da tese: dados no Brasil · LGPD</span></div>
-  </div>
-</section>
+</div>
+</main>
 
 <footer>
-  <div class="wrap foot">
-    <div>© 2026 CareLoop · Zatheon · <a href="../index.html">Sóstenes Costa Paiva</a></div>
-    <div style="display:flex; gap:18px; flex-wrap:wrap">
-      <a href="../medgroth/">MedGroth</a>
-      <a href="../sosmed/">SosMed</a>
-      <a href="../medverse/">MedVerse</a>
-      <a href="../clinicnow/">ClinicNow</a>
-      <a href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20saber%20mais%20sobre%20o%20CareLoop." target="_blank" rel="noopener">WhatsApp</a>
-      <a href="../privacidade.html">Privacidade</a>
-    </div>
+  <div>ZATHEON · CARELOOP — NOME DE TRABALHO, SEM REGISTRO FORMAL · IDEIA MAPEADA · CONTEÚDO ILUSTRATIVO</div>
+  <div class="foot-links">
+    <a href="../index.html">© 2026 · Sóstenes Costa Paiva</a>
+    <a href="../medgroth/">MedGroth</a>
+    <a href="../sosmed/">SosMed</a>
+    <a href="../medverse/">MedVerse</a>
+    <a href="../clinicnow/">ClinicNow</a>
+    <a href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20saber%20mais%20sobre%20o%20CareLoop." target="_blank" rel="noopener">WhatsApp</a>
+    <a href="../privacidade.html">Privacidade</a>
   </div>
-  <div class="wrap disclaimer">O CareLoop é uma ideia mapeada do ecossistema Zatheon: o desenho de um software de gestão de contratos de prestação de serviços médicos recorrentes, celebrados diretamente entre médico e paciente. Não é um produto em operação, não há infraestrutura de cobrança ou contratos em funcionamento, e os valores citados são previsão de lançamento. Não é plano de saúde, não é operadora, não realiza atividade regulada pela ANS e não oferece cobertura assistencial. A definição de escopo clínico, preços e comunicação de cada assinatura seria responsabilidade exclusiva do profissional, dentro das normas do CFM e dos conselhos de classe. Nenhuma informação nesta página constitui promessa de resultado clínico ou financeiro.</div>
+  <p class="foot-disc">O CareLoop é uma ideia mapeada do ecossistema Zatheon: o desenho de um software para clínicas e médicos operarem a própria assinatura de fidelização, por meio de contratos de prestação de serviços recorrentes celebrados diretamente entre profissional e paciente. Não é um produto em operação: não há infraestrutura de cobrança, contratos ou clientes, não há preços definidos e nada está à venda. Não é plano de saúde, não é operadora, não realiza atividade regulada pela ANS e não oferece cobertura assistencial. A definição de escopo clínico, preços e comunicação de cada assinatura seria responsabilidade exclusiva do profissional, dentro das normas do CFM e dos conselhos de classe. Nenhuma informação nesta página constitui promessa de resultado clínico ou financeiro.</p>
 </footer>
 </body>
 </html>

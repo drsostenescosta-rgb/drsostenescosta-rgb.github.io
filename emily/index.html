@@ -5,80 +5,150 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <title>Emily — a secretária de IA que vende pela clínica · Zatheon</title>
-<meta name="description" content="Tese em estruturação: Emily atende por voz e WhatsApp como se fosse a secretária do próprio médico — responde, agenda, converte, faz follow-up e alimenta o CRM do ClinicNow. Protótipo interno; buscando clínicas parceiras de design." />
+<meta name="description" content="Em estruturação: Emily atende por voz e WhatsApp como se fosse a secretária do próprio médico — responde, agenda, converte, faz follow-up e alimenta o CRM do ClinicNow. Protótipo interno; buscando clínicas parceiras de design." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #faf8f3; --bg-soft: #f2efe7; --ink: #1f2421; --ink-soft: #5b615c;
-    --line: #e3ded2; --accent: #1d7a55; --accent-soft: #e7f2ec; --gold: #806313; --gold-soft: #f4ecdc; /* dourado de texto escurecido para contraste AA */
-    --serif: 'Fraunces', serif; --sans: 'Inter', sans-serif; --mono: 'JetBrains Mono', monospace;
+    --bg:#faf8f3; --bg-soft:#f2efe7; --card:#ffffff;
+    --ink:#1f2421; --ink-soft:#5b615c;
+    --line:#e3ded2; --line-strong:#cfc9ba;
+    --green:#1d7a55; --green-soft:#e7f2ec;
+    --gold:#a07d1c; --gold-text:#806313; --gold-soft:#f5efdd;
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.7; font-size: 16px; -webkit-font-smoothing: antialiased; }
-  a { color: var(--accent); text-decoration: none; }
-  .wrap { max-width: 860px; margin: 0 auto; padding: 0 22px; }
-  header.nav { position: sticky; top: 0; background: rgba(250,248,243,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); z-index: 10; }
-  .nav-inner { max-width: 860px; margin: 0 auto; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-  .brand { font-family: var(--serif); font-weight: 600; color: var(--ink); font-size: 1.02rem; }
-  .brand small { display: block; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; color: var(--gold); font-weight: 500; }
-  .nav a.back { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.05em; white-space: nowrap; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.7; font-size:16.5px; -webkit-font-smoothing:antialiased; }
+  img { display:block; max-width:100%; height:auto; }
+  a { color:var(--green); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  :focus-visible { outline:2px solid var(--green); outline-offset:3px; }
 
-  .hero { padding: 56px 0 24px; }
-  .kicker { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.18em; color: var(--gold); display: block; margin-bottom: 12px; }
-  h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(1.7rem, 4.5vw, 2.5rem); line-height: 1.2; margin-bottom: 14px; }
-  h1 em { color: var(--accent); font-style: italic; }
-  .hero p.lead { color: var(--ink-soft); max-width: 660px; font-size: 1.04rem; }
-  .selo { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; color: var(--accent); background: var(--accent-soft); border: 1px solid rgba(29,122,85,0.25); border-radius: 999px; padding: 6px 14px; }
-  .aviso { margin: 20px 0 0; padding: 13px 16px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; font-size: 0.85rem; color: var(--ink-soft); max-width: 700px; }
-  .aviso strong { color: var(--ink); }
+  .wrap { max-width:940px; margin:0 auto; padding:0 22px; }
 
-  section { padding: 34px 0 8px; }
-  h2 { font-family: var(--serif); font-weight: 600; font-size: 1.35rem; margin-bottom: 8px; }
-  .sub { color: var(--ink-soft); font-size: 0.92rem; margin-bottom: 18px; max-width: 660px; }
+  /* ---- Header ---- */
+  header.nav { position:sticky; top:0; z-index:50; background:rgba(250,248,243,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav-inner { max-width:940px; margin:0 auto; padding:13px 22px; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+  .brand { font-family:var(--serif); font-weight:600; font-size:1.02rem; line-height:1.2; }
+  .brand small { display:block; font-family:var(--mono); font-weight:400; font-size:0.6rem; letter-spacing:0.16em; color:var(--gold-text); }
+  .nav-right { display:flex; align-items:center; gap:14px; }
+  .selo-tese { font-family:var(--mono); font-size:0.62rem; letter-spacing:0.12em; color:var(--gold-text); border:1px solid var(--gold); border-radius:999px; padding:4px 12px; background:var(--gold-soft); white-space:nowrap; }
+  a.back { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.08em; color:var(--ink-soft); white-space:nowrap; }
+  a.back:hover { color:var(--green); text-decoration:none; }
+  @media (max-width:560px){ .selo-tese { display:none; } }
 
-  .vertentes { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
-  .vert { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 10px; }
-  .vert.clinica { border-top: 3px solid var(--accent); }
-  .vert.pessoal { border-top: 3px solid var(--gold); }
-  .vert .tag { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; padding: 3px 9px; border-radius: 99px; align-self: flex-start; }
-  .vert.clinica .tag { background: var(--accent-soft); color: var(--accent); }
-  .vert.pessoal .tag { background: var(--gold-soft); color: var(--gold); }
-  .vert h3 { font-family: var(--serif); font-size: 1.14rem; font-weight: 600; }
-  .vert p.desc { font-size: 0.9rem; color: var(--ink-soft); }
-  .vert ul { list-style: none; display: grid; gap: 7px; margin-top: 2px; }
-  .vert li { font-size: 0.88rem; color: var(--ink-soft); padding-left: 20px; position: relative; }
-  .vert.clinica li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
-  .vert.pessoal li::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
-  .vert li strong { color: var(--ink); font-weight: 600; }
-  .uso-interno { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; color: var(--gold); border-top: 1px dashed var(--line); padding-top: 10px; margin-top: 4px; }
+  /* ---- Hero ---- */
+  .hero { padding:72px 0 20px; }
+  .kicker { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-text); display:block; margin-bottom:16px; }
+  h1 { font-family:var(--serif); font-weight:500; font-size:clamp(2rem,5vw,3rem); line-height:1.15; letter-spacing:-0.01em; margin-bottom:18px; max-width:18ch; }
+  h1 em { font-style:italic; color:var(--green); }
+  .hero p.lead { color:var(--ink-soft); font-size:1.05rem; max-width:58ch; }
+  .aviso { margin:30px 0 0; padding:16px 20px; background:var(--card); border:1px solid var(--line); border-left:3px solid var(--gold); border-radius:10px; font-size:0.86rem; color:var(--ink-soft); max-width:760px; }
+  .aviso strong { color:var(--ink); }
 
-  .diagrama { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-top: 6px; overflow-x: auto; }
-  .diagrama svg { display: block; width: 100%; height: auto; min-width: 560px; }
-  .diagrama-nota { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.06em; color: var(--ink-soft); text-align: center; margin-top: 10px; }
+  /* ---- Sections ---- */
+  section { padding:58px 0 6px; }
+  section + section { margin-top:26px; }
+  .sec-head { margin-bottom:28px; }
+  h2 { font-family:var(--serif); font-weight:500; font-size:clamp(1.45rem,3vw,1.85rem); margin-bottom:8px; }
+  .sub { color:var(--ink-soft); font-size:0.94rem; max-width:64ch; }
 
-  .mercado { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
-  .fato { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
-  .fato h3 { font-family: var(--serif); font-size: 1.02rem; font-weight: 600; margin-bottom: 6px; }
-  .fato p { font-size: 0.86rem; color: var(--ink-soft); }
-  .fato p strong { color: var(--ink); font-weight: 600; }
-  .fonte { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.05em; color: var(--ink-soft); margin-top: 12px; max-width: 700px; }
+  /* ---- Galeria conceito (ilustrações) ---- */
+  .galeria { display:grid; gap:18px; }
+  @media (min-width:760px){
+    .galeria { grid-template-columns:1fr 1fr; }
+    .g-full { grid-column:1 / -1; }
+  }
+  .gcard { background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; }
+  .gcard svg.ilus { display:block; width:100%; height:auto; background:#fcfbf6; border-bottom:1px solid var(--line); }
+  .gcard .gbody { padding:16px 20px 18px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .gcard h3 { font-family:var(--serif); font-weight:500; font-size:1.06rem; line-height:1.35; }
+  .gcard p { color:var(--ink-soft); font-size:0.88rem; }
+  .selo-conceito { margin-top:auto; align-self:flex-start; font-family:var(--mono); font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-text); border:1px solid var(--gold); border-radius:6px; padding:3px 9px; background:var(--gold-soft); }
 
-  ul.status-lista { list-style: none; display: grid; gap: 8px; max-width: 660px; }
-  ul.status-lista li { font-size: 0.9rem; color: var(--ink-soft); padding-left: 22px; position: relative; }
-  ul.status-lista li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
-  ul.status-lista li strong { color: var(--ink); font-weight: 600; }
+  /* ---- Vertentes ---- */
+  .vertentes { display:grid; gap:16px; }
+  @media (min-width:720px){ .vertentes { grid-template-columns:1fr 1fr; } }
+  .vert { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 24px; display:flex; flex-direction:column; gap:10px; }
+  .vert.clinica { border-top:3px solid var(--green); }
+  .vert.pessoal { border-top:3px solid var(--gold); }
+  .vert .tag { font-family:var(--mono); font-size:0.6rem; letter-spacing:0.12em; padding:3px 9px; border-radius:99px; align-self:flex-start; }
+  .vert.clinica .tag { background:var(--green-soft); color:var(--green); }
+  .vert.pessoal .tag { background:var(--gold-soft); color:var(--gold-text); }
+  .vert h3 { font-family:var(--serif); font-weight:500; font-size:1.14rem; }
+  .vert p.desc { font-size:0.9rem; color:var(--ink-soft); }
+  .vert ul { list-style:none; display:grid; gap:7px; margin-top:2px; }
+  .vert li { font-size:0.88rem; color:var(--ink-soft); padding-left:20px; position:relative; }
+  .vert.clinica li::before { content:'—'; position:absolute; left:0; color:var(--green); }
+  .vert.pessoal li::before { content:'—'; position:absolute; left:0; color:var(--gold); }
+  .vert li strong { color:var(--ink); font-weight:600; }
+  .uso-interno { font-family:var(--mono); font-size:0.66rem; letter-spacing:0.08em; color:var(--gold-text); border-top:1px dashed var(--line); padding-top:10px; margin-top:4px; }
 
-  .cta { margin: 40px 0 56px; padding: 26px; background: var(--ink); border-radius: 16px; color: #f2efe7; }
-  .cta h2 { color: #f2efe7; margin-bottom: 8px; }
-  .cta p { font-size: 0.92rem; opacity: 0.85; margin-bottom: 16px; max-width: 620px; }
-  .cta a.b { display: inline-block; background: var(--accent); color: #fff; padding: 11px 22px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; margin: 0 10px 10px 0; }
-  .cta a.g { display: inline-block; border: 1px solid rgba(242,239,231,0.4); color: #f2efe7; padding: 11px 22px; border-radius: 10px; font-size: 0.9rem; }
+  /* ---- Circuito em passos ---- */
+  .passos { display:grid; gap:14px; }
+  @media (min-width:700px){ .passos { grid-template-columns:1fr 1fr; } }
+  .passo { position:relative; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px 18px; display:flex; gap:16px; align-items:flex-start; }
+  .passo .ico { flex:none; width:44px; height:44px; border-radius:11px; background:var(--green-soft); border:1px solid rgba(29,122,85,0.25); display:flex; align-items:center; justify-content:center; }
+  .passo .ico svg { width:24px; height:24px; }
+  .passo .num { position:absolute; top:14px; right:16px; font-family:var(--mono); font-size:0.66rem; letter-spacing:0.08em; color:var(--line-strong); }
+  .passo h3 { font-family:var(--serif); font-weight:500; font-size:1rem; margin-bottom:4px; padding-right:28px; }
+  .passo p { color:var(--ink-soft); font-size:0.87rem; }
 
-  footer { border-top: 1px solid var(--line); padding: 26px 22px 40px; text-align: center; color: var(--ink-soft); font-size: 0.74rem; font-family: var(--mono); letter-spacing: 0.06em; }
-  footer .eco-links { margin-bottom: 10px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; font-family: var(--sans); font-size: 0.82rem; letter-spacing: 0; }
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .diagrama { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; margin-top:18px; overflow-x:auto; }
+  .diagrama svg { display:block; width:100%; height:auto; min-width:560px; }
+  .diagrama-nota { font-family:var(--mono); font-size:0.66rem; letter-spacing:0.06em; color:var(--ink-soft); text-align:center; margin-top:10px; }
+
+  /* ---- Chips ---- */
+  .chips { display:flex; flex-wrap:wrap; gap:12px; margin-top:6px; }
+  .chip { display:inline-flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:10px 20px 10px 14px; font-size:0.9rem; font-weight:500; }
+  .chip svg { width:22px; height:22px; flex:none; }
+  .chip small { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-text); }
+  .nota-proposta { margin-top:16px; font-size:0.8rem; color:var(--ink-soft); max-width:64ch; }
+
+  /* ---- Mercado ---- */
+  .mercado { display:grid; gap:14px; }
+  @media (min-width:700px){ .mercado { grid-template-columns:repeat(3,1fr); } }
+  .fato { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; }
+  .fato h3 { font-family:var(--serif); font-weight:500; font-size:1.02rem; margin-bottom:6px; }
+  .fato p { font-size:0.86rem; color:var(--ink-soft); }
+  .fato p strong { color:var(--ink); font-weight:600; }
+  .fonte { font-family:var(--mono); font-size:0.66rem; letter-spacing:0.05em; color:var(--ink-soft); margin-top:14px; max-width:760px; }
+
+  /* ---- Governança ---- */
+  .gov-grid { display:grid; gap:14px; margin-bottom:22px; }
+  @media (min-width:700px){ .gov-grid { grid-template-columns:repeat(3,1fr); } }
+  .gov { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; }
+  .gov .tag { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--green); display:block; margin-bottom:8px; }
+  .gov h3 { font-family:var(--serif); font-weight:500; font-size:1rem; margin-bottom:6px; }
+  .gov p { color:var(--ink-soft); font-size:0.85rem; }
+  .limites-box { background:var(--bg-soft); border:1px solid var(--line); border-radius:14px; padding:22px 26px; }
+  .limites-box h3 { font-family:var(--serif); font-weight:500; font-size:1.05rem; margin-bottom:12px; }
+  ul.limites { list-style:none; display:grid; gap:9px; }
+  ul.limites li { font-size:0.88rem; color:var(--ink-soft); padding-left:24px; position:relative; }
+  ul.limites li::before { content:'—'; position:absolute; left:0; color:var(--green); }
+  ul.limites li strong { color:var(--ink); font-weight:600; }
+
+  /* ---- CTA ---- */
+  .cta { margin:56px 0 64px; padding:34px 30px; background:var(--card); border:1px solid var(--line); border-radius:16px; }
+  .cta h2 { margin-bottom:10px; }
+  .cta p { color:var(--ink-soft); font-size:0.93rem; max-width:62ch; margin-bottom:22px; }
+  .btns { display:flex; flex-wrap:wrap; gap:12px; }
+  a.btn { display:inline-flex; align-items:center; gap:9px; padding:12px 24px; border-radius:10px; font-weight:600; font-size:0.9rem; text-decoration:none; }
+  a.btn:hover { text-decoration:none; filter:brightness(1.05); }
+  a.btn-primario { background:var(--green); color:#ffffff; }
+  a.btn-zap { border:1px solid var(--line-strong); color:var(--ink); background:var(--bg); }
+  a.btn-zap:hover { border-color:var(--green); color:var(--green); }
+  a.btn svg { width:17px; height:17px; }
+
+  footer { border-top:1px solid var(--line); padding:28px 22px 44px; text-align:center; color:var(--ink-soft); font-size:0.7rem; font-family:var(--mono); letter-spacing:0.08em; }
+  footer .eco-links { margin-bottom:12px; display:flex; justify-content:center; gap:16px; flex-wrap:wrap; font-family:var(--sans); font-size:0.82rem; letter-spacing:0; }
+
+  @media (prefers-reduced-motion:no-preference){
+    .fade { animation:f .6s ease both; }
+    @keyframes f { from { opacity:0; transform:translateY(8px); } to { opacity:1; } }
+  }
 </style>
 </head>
 <body>
@@ -86,25 +156,235 @@
 <header class="nav">
   <div class="nav-inner">
     <div class="brand">Emily <small>ECOSSISTEMA CLINICNOW · ZATHEON</small></div>
-    <a class="back" href="../">← VOLTAR</a>
+    <div class="nav-right">
+      <span class="selo-tese">EM ESTRUTURAÇÃO</span>
+      <a class="back" href="../">← VOLTAR</a>
+    </div>
   </div>
 </header>
 
+<main>
 <div class="wrap">
 
-  <div class="hero">
-    <span class="kicker">EMILY · EM ESTRUTURAÇÃO · PROTÓTIPO INTERNO</span>
-    <h1>A secretária de IA que <em>vende pela clínica</em>.</h1>
+  <!-- Hero -->
+  <div class="hero fade">
+    <span class="kicker">✦ Em estruturação · Protótipo interno</span>
+    <h1>A secretária de IA que <em>vende pela clínica.</em></h1>
     <p class="lead">A Emily atende por voz e WhatsApp como se fosse a secretária do próprio médico: responde, agenda, converte, faz follow-up e alimenta o CRM do ClinicNow.</p>
-    <span class="selo">EM ESTRUTURAÇÃO — PROTÓTIPO INTERNO · BUSCANDO CLÍNICAS PARCEIRAS DE DESIGN</span>
-    <div class="aviso">
-      <strong>O que esta página é (e não é):</strong> uma tese em estruturação, apresentada a quem quiser construí-la junto. Não há produto lançado, preço, SLA ou clientes — e nada aqui promete resultado. Demonstrações usam apenas casos sintéticos. A vertente de secretária executiva pessoal é o sistema real em uso interno pelo fundador.
-    </div>
+    <div class="aviso"><strong>O que esta página é (e não é):</strong> um projeto em estruturação, apresentado a quem quiser construí-lo junto. Não há produto lançado, preço, SLA ou clientes — e nada aqui promete resultado. Demonstrações e ilustrações usam apenas casos sintéticos e nomes fictícios. A vertente de secretária executiva pessoal é o sistema real em uso interno pelo fundador.</div>
   </div>
 
-  <section>
-    <h2>Duas vertentes, uma mesma secretária</h2>
-    <p class="sub">A Emily nasce de dois lados do mesmo problema: a clínica que perde o lead no primeiro contato — e o fundador que precisa de um gabinete que funcione sozinho.</p>
+  <!-- Como seria na prática -->
+  <section class="fade" aria-labelledby="t-pratica">
+    <div class="sec-head">
+      <h2 id="t-pratica">Como seria na prática</h2>
+      <p class="sub">Três momentos do conceito, ilustrados: a conversa que converte, a voz que vira registro e o funil que a Emily conduz de ponta a ponta.</p>
+    </div>
+    <div class="galeria">
+
+      <!-- Ilustração 1: conversa WhatsApp → CRM -->
+      <figure class="gcard g-full">
+        <svg class="ilus" viewBox="0 0 1000 580" xmlns="http://www.w3.org/2000/svg" role="img"
+             aria-label="Ilustração conceitual: celular exibindo uma conversa fictícia de WhatsApp em que uma paciente pergunta valor e horário, a Emily responde com empatia e agenda; ao lado, o registro correspondente aparece no CRM do ClinicNow.">
+          <!-- ===== celular ===== -->
+          <rect x="60" y="24" width="310" height="520" rx="30" fill="#ffffff" stroke="#cfc9ba" stroke-width="2"/>
+          <rect x="74" y="38" width="282" height="492" rx="16" fill="#faf8f3" stroke="#e3ded2" stroke-width="1"/>
+          <!-- header do chat -->
+          <path d="M74 54a16 16 0 0 1 16-16h250a16 16 0 0 1 16 16v36H74z" fill="#e7f2ec"/>
+          <line x1="74" y1="90" x2="356" y2="90" stroke="#d5e8dd" stroke-width="1"/>
+          <circle cx="98" cy="64" r="13" fill="#1d7a55"/>
+          <text x="98" y="68.5" text-anchor="middle" font-family="Fraunces, serif" font-size="13" font-weight="600" fill="#ffffff">E</text>
+          <text x="119" y="61" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1f2421">Emily · Clínica Exemplo</text>
+          <text x="119" y="77" font-family="Inter, sans-serif" font-size="8.5" fill="#5b615c">atendimento com consentimento registrado</text>
+          <!-- bolha 1: paciente -->
+          <rect x="84" y="102" width="176" height="62" rx="12" fill="#ffffff" stroke="#e3ded2" stroke-width="1"/>
+          <text font-family="Inter, sans-serif" font-size="9.5" fill="#1f2421">
+            <tspan x="96" y="121">Oi! Queria saber o valor da</tspan>
+            <tspan x="96" y="135">consulta e se tem horário</tspan>
+            <tspan x="96" y="149">essa semana.</tspan>
+          </text>
+          <!-- bolha 2: Emily -->
+          <rect x="110" y="176" width="236" height="94" rx="12" fill="#e7f2ec" stroke="rgba(29,122,85,0.3)" stroke-width="1"/>
+          <text font-family="Inter, sans-serif" font-size="9.5" fill="#1f2421">
+            <tspan x="122" y="195">Oi, Marina! Que bom falar com você.</tspan>
+            <tspan x="122" y="209">O valor da consulta é R$ — * e a</tspan>
+            <tspan x="122" y="223">Dra. tem quinta às 10h ou sexta</tspan>
+            <tspan x="122" y="237">às 15h.</tspan>
+            <tspan x="122" y="257">Qual fica melhor para você?</tspan>
+          </text>
+          <!-- bolha 3: paciente -->
+          <rect x="84" y="282" width="118" height="32" rx="12" fill="#ffffff" stroke="#e3ded2" stroke-width="1"/>
+          <text x="96" y="302" font-family="Inter, sans-serif" font-size="9.5" fill="#1f2421">Quinta às 10h!</text>
+          <!-- bolha 4: Emily -->
+          <rect x="126" y="326" width="220" height="60" rx="12" fill="#e7f2ec" stroke="rgba(29,122,85,0.3)" stroke-width="1"/>
+          <text font-family="Inter, sans-serif" font-size="9.5" fill="#1f2421">
+            <tspan x="138" y="345">Perfeito! Agendei quinta às 10h</tspan>
+            <tspan x="138" y="359">e já deixei tudo registrado.</tspan>
+          </text>
+          <path d="m310 374 3 3 5-6 m-16 3 3 3 5-6" fill="none" stroke="#a07d1c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- barra de mensagem -->
+          <rect x="84" y="486" width="238" height="30" rx="15" fill="#ffffff" stroke="#e3ded2" stroke-width="1"/>
+          <text x="98" y="505" font-family="Inter, sans-serif" font-size="9.5" fill="#9aa09b">Mensagem</text>
+          <circle cx="341" cy="501" r="15" fill="#1d7a55"/>
+          <rect x="337.5" y="492.5" width="7" height="11" rx="3.5" fill="#ffffff"/>
+          <path d="M335.5 501a5.5 5.5 0 0 0 11 0" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- nota de preço -->
+          <text x="215" y="568" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" fill="#806313">* valor definido pela clínica — a Emily nunca inventa preço</text>
+          <!-- ===== seta ===== -->
+          <path d="M 384 260 C 450 260 480 255 536 255" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-dasharray="3 5" stroke-linecap="round"/>
+          <path d="m530 249 8 6-8 6" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="462" y="240" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#5b615c">registra no CRM</text>
+          <!-- ===== painel CRM ===== -->
+          <rect x="560" y="110" width="390" height="330" rx="14" fill="#ffffff" stroke="#e3ded2" stroke-width="1.5"/>
+          <circle cx="584" cy="128" r="4.5" fill="#e3ded2"/>
+          <circle cx="600" cy="128" r="4.5" fill="#e3ded2"/>
+          <circle cx="616" cy="128" r="4.5" fill="#e3ded2"/>
+          <text x="932" y="132" text-anchor="end" font-family="'JetBrains Mono', monospace" font-size="9.5" fill="#5b615c">CRM CLINICNOW</text>
+          <line x1="560" y1="144" x2="950" y2="144" stroke="#e3ded2" stroke-width="1"/>
+          <!-- ficha do lead -->
+          <rect x="580" y="160" width="350" height="84" rx="10" fill="#faf8f3" stroke="#e3ded2" stroke-width="1"/>
+          <circle cx="608" cy="192" r="14" fill="#e7f2ec" stroke="#1d7a55" stroke-width="1.5"/>
+          <text x="608" y="196" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#1d7a55">MC</text>
+          <text x="632" y="186" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#1f2421">Marina C. — novo contato</text>
+          <text x="632" y="201" font-family="Inter, sans-serif" font-size="9" fill="#5b615c">origem: WhatsApp · primeira conversa</text>
+          <rect x="632" y="211" width="106" height="19" rx="9.5" fill="#e7f2ec"/>
+          <text x="685" y="224" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.5" fill="#1d7a55">consulta · qui 10h</text>
+          <rect x="748" y="211" width="96" height="19" rx="9.5" fill="#f5efdd"/>
+          <text x="796" y="224" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.5" fill="#806313">follow-up ativo</text>
+          <!-- linha do tempo -->
+          <g fill="none" stroke="#1d7a55" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="592" cy="272" r="8"/>
+            <path d="m588.5 272 2.5 2.5 4.5-5"/>
+            <circle cx="592" cy="306" r="8"/>
+            <path d="m588.5 306 2.5 2.5 4.5-5"/>
+            <circle cx="592" cy="340" r="8" stroke="#a07d1c"/>
+            <path d="m588.5 340 2.5 2.5 4.5-5" stroke="#a07d1c"/>
+          </g>
+          <text x="612" y="276" font-family="Inter, sans-serif" font-size="10" fill="#1f2421">Conversa registrada na íntegra</text>
+          <text x="612" y="310" font-family="Inter, sans-serif" font-size="10" fill="#1f2421">Agendamento confirmado — quinta, 10h</text>
+          <text x="612" y="344" font-family="Inter, sans-serif" font-size="10" fill="#1f2421">Follow-up de véspera programado</text>
+          <!-- placeholders -->
+          <rect x="580" y="376" width="280" height="8" rx="4" fill="#f2efe7"/>
+          <rect x="580" y="394" width="220" height="8" rx="4" fill="#f2efe7"/>
+          <rect x="580" y="412" width="252" height="8" rx="4" fill="#f2efe7"/>
+        </svg>
+        <figcaption class="gbody">
+          <h3>A conversa que converte — e vira dado no CRM</h3>
+          <p>A paciente pergunta valor e horário; a Emily responde com empatia, no tom da clínica, agenda e registra tudo no CRM do ClinicNow. Conversa fictícia, com nomes sintéticos — o preço é sempre o definido pela clínica, nunca inventado pela IA.</p>
+          <span class="selo-conceito">Visualização conceitual — não é um produto existente</span>
+        </figcaption>
+      </figure>
+
+      <!-- Ilustração 2: voz → transcrição -->
+      <figure class="gcard">
+        <svg class="ilus" viewBox="0 0 480 380" xmlns="http://www.w3.org/2000/svg" role="img"
+             aria-label="Ilustração conceitual: forma de onda de uma chamada de voz que se transforma em transcrição esquemática, com a intenção da paciente identificada em etiquetas.">
+          <circle cx="48" cy="46" r="16" fill="#e7f2ec" stroke="#1d7a55" stroke-width="1.5"/>
+          <path d="M42.5 41.5c.9-1.9 2.4-1.9 3.3 0l1 2.2c.3.7.1 1.6-.4 2.1l-.9.9c1.1 2.4 3.3 4.6 5.7 5.7l.9-.9c.5-.5 1.4-.7 2.1-.4l2.2 1c1.9.9 1.9 2.4 0 3.3-7.6 3.4-17.3-6.3-13.9-13.9z" fill="none" stroke="#1d7a55" stroke-width="1.6" stroke-linejoin="round"/>
+          <text x="76" y="42" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" fill="#806313">CHAMADA · VOZ</text>
+          <text x="76" y="58" font-family="Inter, sans-serif" font-size="9.5" fill="#5b615c">a paciente liga para o número da própria clínica</text>
+          <!-- forma de onda -->
+          <g stroke="#1d7a55" stroke-width="5" stroke-linecap="round">
+            <line x1="52"  y1="105" x2="52"  y2="115"/>
+            <line x1="64"  y1="101" x2="64"  y2="119"/>
+            <line x1="76"  y1="95"  x2="76"  y2="125"/>
+            <line x1="88"  y1="89"  x2="88"  y2="131" stroke="#a07d1c"/>
+            <line x1="100" y1="97"  x2="100" y2="123"/>
+            <line x1="112" y1="103" x2="112" y2="117"/>
+            <line x1="124" y1="99"  x2="124" y2="121"/>
+            <line x1="136" y1="92"  x2="136" y2="128"/>
+            <line x1="148" y1="86"  x2="148" y2="134" stroke="#a07d1c"/>
+            <line x1="160" y1="95"  x2="160" y2="125"/>
+            <line x1="172" y1="102" x2="172" y2="118"/>
+            <line x1="184" y1="105" x2="184" y2="115"/>
+            <line x1="196" y1="98"  x2="196" y2="122"/>
+            <line x1="208" y1="90"  x2="208" y2="130"/>
+            <line x1="220" y1="94"  x2="220" y2="126" stroke="#a07d1c"/>
+            <line x1="232" y1="101" x2="232" y2="119"/>
+            <line x1="244" y1="104" x2="244" y2="116"/>
+            <line x1="256" y1="96"  x2="256" y2="124"/>
+            <line x1="268" y1="88"  x2="268" y2="132"/>
+            <line x1="280" y1="93"  x2="280" y2="127" stroke="#a07d1c"/>
+            <line x1="292" y1="100" x2="292" y2="120"/>
+            <line x1="304" y1="104" x2="304" y2="116"/>
+            <line x1="316" y1="97"  x2="316" y2="123"/>
+            <line x1="328" y1="91"  x2="328" y2="129"/>
+            <line x1="340" y1="98"  x2="340" y2="122"/>
+            <line x1="352" y1="103" x2="352" y2="117" stroke="#a07d1c"/>
+            <line x1="364" y1="99"  x2="364" y2="121"/>
+            <line x1="376" y1="94"  x2="376" y2="126"/>
+            <line x1="388" y1="101" x2="388" y2="119"/>
+            <line x1="400" y1="105" x2="400" y2="115"/>
+            <line x1="412" y1="102" x2="412" y2="118"/>
+            <line x1="424" y1="106" x2="424" y2="114"/>
+          </g>
+          <!-- seta -->
+          <line x1="240" y1="152" x2="240" y2="174" stroke="#1d7a55" stroke-width="1.7" stroke-dasharray="3 5" stroke-linecap="round"/>
+          <path d="m234 170 6 8 6-8" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- transcrição -->
+          <rect x="48" y="188" width="384" height="108" rx="12" fill="#ffffff" stroke="#e3ded2" stroke-width="1.5"/>
+          <text x="64" y="210" font-family="'JetBrains Mono', monospace" font-size="8.5" letter-spacing="2" fill="#806313">TRANSCRIÇÃO AUTOMÁTICA</text>
+          <text x="64" y="232" font-family="Inter, sans-serif" font-size="11" font-style="italic" fill="#1f2421">“Queria remarcar o retorno do mês passado…”</text>
+          <rect x="64" y="246" width="300" height="7" rx="3.5" fill="#f2efe7"/>
+          <rect x="64" y="260" width="340" height="7" rx="3.5" fill="#f2efe7"/>
+          <rect x="64" y="274" width="256" height="7" rx="3.5" fill="#f2efe7"/>
+          <!-- etiquetas extraídas -->
+          <rect x="48" y="316" width="126" height="26" rx="13" fill="#e7f2ec" stroke="rgba(29,122,85,0.3)" stroke-width="1"/>
+          <text x="111" y="333" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#1d7a55">intenção: remarcar</text>
+          <rect x="186" y="316" width="112" height="26" rx="13" fill="#ffffff" stroke="#e3ded2" stroke-width="1"/>
+          <text x="242" y="333" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#5b615c">retorno vencido</text>
+          <rect x="310" y="316" width="112" height="26" rx="13" fill="#f5efdd" stroke="#a07d1c" stroke-width="1"/>
+          <text x="366" y="333" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#806313">agenda sugerida</text>
+          <text x="240" y="368" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#5b615c">VOZ VIRA REGISTRO — NADA SE PERDE NA LIGAÇÃO</text>
+        </svg>
+        <figcaption class="gbody">
+          <h3>A voz que vira registro</h3>
+          <p>A ligação é transcrita e interpretada: intenção, pendências e oportunidade de agenda aparecem como dado estruturado — com handoff humano sempre disponível quando a conversa exigir.</p>
+          <span class="selo-conceito">Visualização conceitual — não é um produto existente</span>
+        </figcaption>
+      </figure>
+
+      <!-- Ilustração 3: funil -->
+      <figure class="gcard">
+        <svg class="ilus" viewBox="0 0 480 380" xmlns="http://www.w3.org/2000/svg" role="img"
+             aria-label="Ilustração conceitual: funil em quatro etapas — conversa, agendamento, follow-up e renovação — conduzido pela Emily.">
+          <g stroke-width="1.7" stroke-linejoin="round">
+            <polygon points="48,36 432,36 414,94 66,94" fill="#e7f2ec" stroke="#1d7a55"/>
+            <polygon points="84,122 396,122 378,180 102,180" fill="#ffffff" stroke="#1d7a55"/>
+            <polygon points="120,208 360,208 342,266 138,266" fill="#ffffff" stroke="#a07d1c"/>
+            <polygon points="156,294 324,294 310,348 170,348" fill="#f5efdd" stroke="#a07d1c"/>
+          </g>
+          <g fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m232 102 8 8 8-8"/>
+            <path d="m232 188 8 8 8-8"/>
+            <path d="m232 274 8 8 8-8" stroke="#a07d1c"/>
+          </g>
+          <text x="240" y="61" text-anchor="middle" font-family="Fraunces, serif" font-size="15" font-weight="600" fill="#1f2421">Conversa</text>
+          <text x="240" y="79" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#5b615c">voz + WhatsApp · a Emily responde e entende</text>
+          <text x="240" y="147" text-anchor="middle" font-family="Fraunces, serif" font-size="15" font-weight="600" fill="#1f2421">Agendamento</text>
+          <text x="240" y="165" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#5b615c">do interesse ao horário confirmado</text>
+          <text x="240" y="233" text-anchor="middle" font-family="Fraunces, serif" font-size="15" font-weight="600" fill="#1f2421">Follow-up</text>
+          <text x="240" y="251" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#5b615c">véspera, retorno, pendência — sem cair</text>
+          <text x="240" y="318" text-anchor="middle" font-family="Fraunces, serif" font-size="15" font-weight="600" fill="#1f2421">Renovação</text>
+          <text x="240" y="335" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#5b615c">o ciclo recomeça</text>
+          <text x="240" y="372" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#806313">A PRÓPRIA EMILY CONDUZ CADA PASSAGEM · HANDOFF HUMANO SEMPRE DISPONÍVEL</text>
+        </svg>
+        <figcaption class="gbody">
+          <h3>O funil que a Emily conduz</h3>
+          <p>Da primeira conversa à renovação: cada passagem é conduzida pela mesma secretária, e cada etapa fica registrada no CRM — funil de conceito, sem números próprios porque ainda não os temos.</p>
+          <span class="selo-conceito">Visualização conceitual — não é um produto existente</span>
+        </figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <!-- Duas vertentes -->
+  <section class="fade" aria-labelledby="t-vertentes">
+    <div class="sec-head">
+      <h2 id="t-vertentes">Duas vertentes, uma mesma secretária</h2>
+      <p class="sub">A Emily nasce de dois lados do mesmo problema: a clínica que perde o lead no primeiro contato — e o fundador que precisa de um gabinete que funcione sozinho.</p>
+    </div>
     <div class="vertentes">
       <div class="vert clinica">
         <span class="tag">SELLING FOR CLINICS · CLINIC NEGOTIATION</span>
@@ -133,9 +413,79 @@
     </div>
   </section>
 
-  <section>
-    <h2>O circuito com o ecossistema</h2>
-    <p class="sub">A Emily não é um chatbot avulso: é o fio de conversa que liga venda, relação e recorrência dentro do ecossistema ClinicNow.</p>
+  <!-- Circuito -->
+  <section class="fade" aria-labelledby="t-circuito">
+    <div class="sec-head">
+      <h2 id="t-circuito">O circuito com o ecossistema</h2>
+      <p class="sub">A Emily não é um chatbot avulso: é o fio de conversa que liga venda, relação e recorrência dentro do ecossistema ClinicNow.</p>
+    </div>
+    <div class="passos">
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- conversa: balão com onda de voz -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6.5 4.5h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-7l-4 3.5v-3.5a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2z"/>
+            <path d="M8.5 9v2M11 7.5v5M13.5 8.5v3M16 9v2" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">01</span>
+        <div>
+          <h3>Emily conversa e converte</h3>
+          <p>Voz e WhatsApp, no tom da clínica: entende a demanda, responde com empatia e conduz até o agendamento.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- CRM: documento com check -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13.5 3.5h-6A1.5 1.5 0 0 0 6 5v14a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19V8z"/>
+            <path d="M13.5 3.5V8H18"/>
+            <path d="m9.3 14 2 2 3.5-4" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">02</span>
+        <div>
+          <h3>CRM ClinicNow registra</h3>
+          <p>Cada conversa vira registro estruturado — origem, intenção, pendências — não histórico perdido no celular da recepção.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- CareLoop: ciclo com coração -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12a7 7 0 1 1-2.05-4.95"/>
+            <path d="M17.2 4.4l-.25 2.9 2.9.25"/>
+            <path d="M12 14.6s-2.5-1.6-2.5-3.4a1.45 1.45 0 0 1 2.5-1 1.45 1.45 0 0 1 2.5 1c0 1.8-2.5 3.4-2.5 3.4z" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">03</span>
+        <div>
+          <h3>CareLoop abre a oferta</h3>
+          <p>Com o registro no CRM, a oferta de assinatura do CareLoop nasce dentro da própria conversa — no momento certo, nunca empurrada.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- follow-up: rota entre dois pontos -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="6" cy="4.8" r="1.8"/>
+            <circle cx="18.2" cy="18.5" r="1.8" stroke="#a07d1c"/>
+            <path d="M8 4.8h8a3.5 3.5 0 0 1 0 7H8a3.5 3.5 0 0 0 0 7h8" stroke-dasharray="2.5 3.2"/>
+          </svg>
+        </span>
+        <span class="num">04</span>
+        <div>
+          <h3>Follow-up de renovação</h3>
+          <p>A própria Emily acompanha véspera, retorno e renovação — e o ciclo recomeça, sem que ninguém caia no vazio.</p>
+        </div>
+      </div>
+
+    </div>
+
     <div class="diagrama">
       <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama do circuito: Emily conversa e converte, alimenta o CRM do ClinicNow, que abre a oferta de assinatura do CareLoop; a própria Emily faz o follow-up de renovação, fechando o ciclo.">
         <defs>
@@ -180,9 +530,62 @@
     </div>
   </section>
 
-  <section>
-    <h2>Contexto de mercado</h2>
-    <p class="sub">Fatos públicos e verificáveis — sem números próprios, porque ainda não os temos.</p>
+  <!-- O que a Emily se propõe a fazer -->
+  <section class="fade" aria-labelledby="t-capacidades">
+    <div class="sec-head">
+      <h2 id="t-capacidades">O que a Emily se propõe a fazer</h2>
+      <p class="sub">Capacidades propostas do conceito para a vertente de clínicas — a serem desenhadas e validadas com as parceiras de design.</p>
+    </div>
+    <div class="chips">
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9.5" y="3.5" width="5" height="10.5" rx="2.5"/>
+          <path d="M6.5 11.5a5.5 5.5 0 0 0 11 0" stroke="#a07d1c"/>
+          <path d="M12 17v3.5"/>
+        </svg>
+        <span>Atendimento por voz<br><small>proposta do conceito</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.9L3.5 20.5l4.2-1.1A8.5 8.5 0 1 0 12 3.5z"/>
+          <path d="M9 8.8c.3-.7.9-.7 1.2 0l.5 1.2c.1.3 0 .7-.2.9l-.5.5c.5 1.1 1.5 2.1 2.6 2.6l.5-.5c.2-.2.6-.3.9-.2l1.2.5c.7.3.7.9 0 1.2-3.5 1.6-8.3-3.2-6.2-6.2z" stroke="#a07d1c"/>
+        </svg>
+        <span>WhatsApp<br><small>proposta do conceito</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="4.5" y="6" width="15" height="13.5" rx="2"/>
+          <path d="M4.5 10.5h15M8.5 3.8v3.4M15.5 3.8v3.4"/>
+          <circle cx="12" cy="15" r="1.2" fill="#a07d1c" stroke="none"/>
+        </svg>
+        <span>Agendamento<br><small>proposta do conceito</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M13.5 3.5h-6A1.5 1.5 0 0 0 6 5v14a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19V8z"/>
+          <path d="M13.5 3.5V8H18"/>
+          <path d="m9.3 14 2 2 3.5-4" stroke="#a07d1c"/>
+        </svg>
+        <span>Registro no CRM<br><small>proposta do conceito</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="6" cy="4.8" r="1.8"/>
+          <circle cx="18.2" cy="18.5" r="1.8" stroke="#a07d1c"/>
+          <path d="M8 4.8h8a3.5 3.5 0 0 1 0 7H8a3.5 3.5 0 0 0 0 7h8" stroke-dasharray="2.5 3.2"/>
+        </svg>
+        <span>Follow-up<br><small>proposta do conceito</small></span>
+      </span>
+    </div>
+    <p class="nota-proposta">Nenhuma dessas capacidades está lançada, integrada ou prometida para a vertente de clínicas. O que entra — e como — será desenhado com as clínicas parceiras de design e validado antes de qualquer compromisso. A vertente de secretária executiva pessoal é o sistema real em uso interno pelo fundador.</p>
+  </section>
+
+  <!-- Contexto de mercado -->
+  <section class="fade" aria-labelledby="t-mercado">
+    <div class="sec-head">
+      <h2 id="t-mercado">Contexto de mercado</h2>
+      <p class="sub">Fatos públicos e verificáveis — sem números próprios, porque ainda não os temos.</p>
+    </div>
     <div class="mercado">
       <div class="fato">
         <h3>A categoria é real lá fora</h3>
@@ -200,24 +603,58 @@
     <p class="fonte">FONTES: ANÚNCIOS PÚBLICOS DE CAPTAÇÃO DAS PRÓPRIAS EMPRESAS CITADAS (ASSORT HEALTH, HYRO, INFINITUS, CARECODE/A16Z) E MATERIAL PÚBLICO DA CLOUDIA. NENHUM NÚMERO PRÓPRIO DE TRAÇÃO É DECLARADO NESTA PÁGINA.</p>
   </section>
 
-  <section>
-    <h2>Status honesto</h2>
-    <ul class="status-lista">
-      <li><strong>Em estruturação:</strong> protótipo interno — a vertente de secretária executiva pessoal já opera no dia a dia do fundador; a vertente de vendas para clínicas está em prototipagem.</li>
-      <li><strong>Guardrails desde o primeiro dia:</strong> consentimento explícito, opt-out vence sempre, handoff humano quando a conversa exige, preço nunca inventado pela IA.</li>
-      <li><strong>O que não existe ainda:</strong> produto lançado, preço definido, SLA, clientes ou resultados a apresentar — e esta página não afirma nada disso.</li>
-      <li><strong>Próximo passo:</strong> clínicas parceiras de design para desenhar a vendedora com quem vive o problema, antes de qualquer promessa.</li>
-    </ul>
+  <!-- Governança e limites -->
+  <section class="fade" aria-labelledby="t-governanca">
+    <div class="sec-head">
+      <h2 id="t-governanca">Governança e limites</h2>
+      <p class="sub">Guardrails desde o primeiro dia — não como recurso futuro, mas como condição para a Emily existir.</p>
+    </div>
+    <div class="gov-grid">
+      <div class="gov">
+        <span class="tag">Consentimento</span>
+        <h3>Opt-in antes de tudo</h3>
+        <p>Consentimento explícito registrado antes de qualquer conversa — e o opt-out vence sempre, sem insistência e sem letra miúda.</p>
+      </div>
+      <div class="gov">
+        <span class="tag">Handoff humano</span>
+        <h3>Gente entra quando precisa</h3>
+        <p>Dúvida clínica, reclamação, hesitação: quando a conversa exige, a Emily passa o bastão para um humano — nunca finge dar conta.</p>
+      </div>
+      <div class="gov">
+        <span class="tag">Preço</span>
+        <h3>Nunca inventado pela IA</h3>
+        <p>A Emily só informa valores definidos pela clínica. Sem valor cadastrado, ela encaminha — não estima, não negocia por conta própria.</p>
+      </div>
+    </div>
+    <div class="limites-box">
+      <h3>Status honesto — o que existe e o que não existe</h3>
+      <ul class="limites">
+        <li><strong>Em estruturação:</strong> a vertente de secretária executiva pessoal já opera no dia a dia do fundador; a vertente de vendas para clínicas está em prototipagem.</li>
+        <li><strong>O que não existe ainda:</strong> produto lançado, preço definido, SLA, clientes ou resultados a apresentar — e esta página não afirma nada disso.</li>
+        <li><strong>Demonstrações e ilustrações</strong> usam apenas casos sintéticos e nomes fictícios.</li>
+        <li><strong>Próximo passo:</strong> clínicas parceiras de design para desenhar a vendedora com quem vive o problema, antes de qualquer promessa.</li>
+      </ul>
+    </div>
   </section>
 
-  <div class="cta">
+  <!-- CTA -->
+  <div class="cta fade">
     <h2>Vamos conversar?</h2>
     <p>Se você tem uma clínica que perde lead no primeiro contato — ou quer acompanhar a construção da Emily de perto — a conversa começa simples: sem compromisso, sem venda, só o problema real na mesa.</p>
-    <a class="b" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20conversar%20sobre%20a%20Emily%20%E2%80%94%20a%20secret%C3%A1ria%20de%20IA%20do%20ecossistema%20ClinicNow." target="_blank" rel="noopener">Conversar no WhatsApp</a>
-    <a class="g" href="mailto:drsostenescosta@gmail.com?subject=Parceiro%20de%20design%20%E2%80%94%20Emily">Tornar-me parceiro de design</a>
+    <div class="btns">
+      <a class="btn btn-primario" href="mailto:drsostenescosta@gmail.com?subject=Parceiro%20de%20design%20%E2%80%94%20Emily">Tornar-me parceiro de design</a>
+      <a class="btn btn-zap" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20da%20Emily%20e%20quero%20conversar%20sobre%20a%20secret%C3%A1ria%20de%20IA%20do%20ecossistema%20ClinicNow." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.9L3.5 20.5l4.2-1.1A8.5 8.5 0 1 0 12 3.5z"/>
+          <path d="M9 8.8c.3-.7.9-.7 1.2 0l.5 1.2c.1.3 0 .7-.2.9l-.5.5c.5 1.1 1.5 2.1 2.6 2.6l.5-.5c.2-.2.6-.3.9-.2l1.2.5c.7.3.7.9 0 1.2-3.5 1.6-8.3-3.2-6.2-6.2z"/>
+        </svg>
+        Conversar no WhatsApp
+      </a>
+    </div>
   </div>
 
 </div>
+</main>
 
 <footer>
   <div class="eco-links">

@@ -1,436 +1,644 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <title>MedVerse — Estude medicina como quem joga. Pratique como quem pesquisa.</title>
-<meta name="description" content="MedVerse é a plataforma de ensino médico do ecossistema Zatheon: trilhas gamificadas de questões, revisão espaçada, rede social médica de estudo, protocolos atualizados de fontes seguras e o Laboratório de Artigos com integridade acadêmica." />
-<meta property="og:title" content="MedVerse — Estude medicina como quem joga. Pratique como quem pesquisa." />
-<meta property="og:description" content="Trilhas gamificadas, revisão espaçada, rede de estudo com validação por referência, protocolos revisados continuamente a partir de bases reconhecidas e escrita científica acelerada — sem atalhos éticos." />
+<meta name="description" content="Ideia mapeada do ecossistema Zatheon: um Atlas de Medicina gamificado por perfil comportamental — do estudante à pesquisa — com escrita científica de integridade acadêmica e ensino de IA para profissionais de saúde. Não é um produto em operação." />
 <meta name="robots" content="noindex" /><!-- produto adiado pelo comitê 28/07/2026 — indexar apenas após gatilho de lançamento e busca INPI -->
+<meta property="og:title" content="MedVerse — Estude medicina como quem joga. Pratique como quem pesquisa." />
+<meta property="og:description" content="Ideia mapeada: Atlas de Medicina gamificado por perfil comportamental, rede de estudo com validação por referência, artigos com integridade acadêmica e ensino de IA para profissionais de saúde." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:#06050c; --bg-2:#0a0815; --card:rgba(21,16,38,0.6); --card-solid:#130f22;
-    --em:#8b5cf6; --em-light:#a78bfa; --em-dark:#6d28d9;
-    --gold:#c9a227; --gold-light:#e2c464;
-    --text:#ece9f4; --muted:#9b93b0; --border:rgba(236,233,244,0.09); --border-strong:rgba(236,233,244,0.18);
+    --bg:#faf8f3; --bg-soft:#f2efe7; --card:#ffffff;
+    --ink:#1f2421; --ink-soft:#5b615c;
+    --line:#e3ded2; --line-strong:#cfc9ba;
+    --green:#1d7a55; --green-soft:#e7f2ec;
+    --gold:#a07d1c; --gold-text:#806313; --gold-soft:#f5efdd;
     --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
   }
   * { box-sizing:border-box; margin:0; padding:0; }
   html { scroll-behavior:smooth; }
-  body { background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.6; overflow-x:hidden; }
-  a { color:inherit; text-decoration:none; }
-  h1,h2,h3 { font-family:var(--serif); font-weight:500; line-height:1.15; }
-  em { font-style:italic; color:var(--em-light); }
-  .wrap { max-width:1120px; margin:0 auto; padding:0 24px; position:relative; z-index:2; }
-  .bg-orbs { position:fixed; inset:0; z-index:-2; overflow:hidden; pointer-events:none; }
-  .orb { position:absolute; border-radius:50%; filter:blur(100px); opacity:0.45; }
-  .orb-a { width:620px; height:620px; top:-14%; left:-10%; background:radial-gradient(circle,rgba(139,92,246,0.30),transparent 70%); animation:d1 26s ease-in-out infinite; }
-  .orb-b { width:540px; height:540px; bottom:-16%; right:-10%; background:radial-gradient(circle,rgba(201,162,39,0.20),transparent 70%); animation:d2 32s ease-in-out infinite; }
-  @keyframes d1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(60px,50px)} }
-  @keyframes d2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-50px,-40px)} }
-  @media (prefers-reduced-motion:reduce){ .orb{animation:none} }
-  .eyebrow { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--em-light); font-weight:600; display:inline-flex; align-items:center; gap:10px; }
-  .eyebrow::before { content:''; width:26px; height:1px; background:linear-gradient(90deg,var(--em),transparent); }
-  .grad { background:linear-gradient(115deg,#fff 0%,#e6ddfb 45%,var(--em-light) 75%,var(--em) 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  body { background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.7; font-size:16.5px; -webkit-font-smoothing:antialiased; }
+  img { display:block; max-width:100%; height:auto; }
+  a { color:var(--green); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  :focus-visible { outline:2px solid var(--green); outline-offset:3px; }
 
-  header.nav { position:fixed; top:0; left:0; right:0; z-index:100; backdrop-filter:blur(18px); background:rgba(6,5,12,0.65); border-bottom:1px solid var(--border); }
-  .nav-inner { display:flex; align-items:center; justify-content:space-between; padding:13px 24px; max-width:1120px; margin:0 auto; gap:14px; }
-  .brand { display:flex; align-items:center; gap:11px; }
-  .logo { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:1.05rem; color:var(--em-light); background:linear-gradient(145deg,rgba(139,92,246,0.16),rgba(139,92,246,0.03)); border:1px solid rgba(139,92,246,0.45); box-shadow:0 0 18px rgba(139,92,246,0.18); }
-  .brand-name { font-family:var(--serif); font-size:1.1rem; font-weight:600; white-space:nowrap; }
-  .brand-sub { font-family:var(--sans); font-size:0.74rem; letter-spacing:0; text-transform:none; color:var(--muted); border:1px solid var(--border-strong); padding:2px 9px; border-radius:6px; white-space:nowrap; }
-  .nav-links { display:flex; gap:20px; }
-  .nav-links a { font-size:0.88rem; font-weight:500; white-space:nowrap; color:var(--muted); transition:color .2s; }
-  .nav-links a:hover { color:var(--em-light); }
-  @media (max-width:820px){ .nav-links{display:none} }
+  .wrap { max-width:940px; margin:0 auto; padding:0 22px; }
 
-  .btn { display:inline-flex; align-items:center; gap:8px; padding:12px 24px; border-radius:999px; font-weight:700; font-size:0.92rem; cursor:pointer; border:1px solid transparent; white-space:nowrap; transition:transform .2s, box-shadow .3s, filter .2s; }
-  .btn-em { background:linear-gradient(135deg,var(--em-light),var(--em-dark)); color:#0d0518; box-shadow:0 4px 22px rgba(139,92,246,0.3); }
-  .btn-em:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(139,92,246,0.5); filter:brightness(1.05); }
-  .btn-ghost { border-color:var(--border-strong); color:var(--text); background:rgba(255,255,255,0.02); }
-  .btn-ghost:hover { border-color:var(--em); color:var(--em-light); transform:translateY(-2px); }
-  .btn-lg { padding:15px 30px; font-size:1rem; }
+  /* ---- Header ---- */
+  header.nav { position:sticky; top:0; z-index:50; background:rgba(250,248,243,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav-inner { max-width:940px; margin:0 auto; padding:13px 22px; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+  .brand { font-family:var(--serif); font-weight:600; font-size:1.02rem; line-height:1.2; }
+  .brand small { display:block; font-family:var(--mono); font-weight:400; font-size:0.6rem; letter-spacing:0.16em; color:var(--gold-text); }
+  .nav-right { display:flex; align-items:center; gap:14px; }
+  .selo-tese { font-family:var(--mono); font-size:0.62rem; letter-spacing:0.12em; color:var(--gold-text); border:1px solid var(--gold); border-radius:999px; padding:4px 12px; background:var(--gold-soft); white-space:nowrap; }
+  a.back { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.08em; color:var(--ink-soft); white-space:nowrap; }
+  a.back:hover { color:var(--green); text-decoration:none; }
+  @media (max-width:560px){ .selo-tese { display:none; } }
 
-  .hero { padding:150px 0 70px; }
-  .hero-grid { display:grid; grid-template-columns:1.05fr 0.95fr; gap:52px; align-items:center; }
-  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr} }
-  .hero h1 { font-size:clamp(2.3rem,4.8vw,3.6rem); margin:20px 0; letter-spacing:-0.01em; }
-  .hero-sub { color:var(--muted); font-size:1.08rem; max-width:50ch; margin-bottom:30px; }
-  .hero-ctas { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:22px; }
-  .hero-note { font-size:0.78rem; color:var(--muted); font-family:var(--mono); }
+  /* ---- Hero ---- */
+  .hero { padding:72px 0 20px; }
+  .kicker { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-text); display:block; margin-bottom:16px; }
+  h1 { font-family:var(--serif); font-weight:500; font-size:clamp(2rem,5vw,3rem); line-height:1.15; letter-spacing:-0.01em; margin-bottom:18px; max-width:20ch; }
+  h1 em { font-style:italic; color:var(--green); }
+  .hero p.lead { color:var(--ink-soft); font-size:1.05rem; max-width:58ch; }
+  .aviso { margin:30px 0 0; padding:16px 20px; background:var(--card); border:1px solid var(--line); border-left:3px solid var(--gold); border-radius:10px; font-size:0.86rem; color:var(--ink-soft); max-width:760px; }
+  .aviso strong { color:var(--ink); }
 
-  .mock { border-radius:20px; border:1px solid var(--border-strong); background:linear-gradient(160deg,rgba(21,16,38,0.92),rgba(9,7,17,0.92)); box-shadow:0 30px 80px rgba(0,0,0,0.55); overflow:hidden; }
-  .mock-bar { display:flex; gap:7px; padding:12px 16px; border-bottom:1px solid var(--border); }
-  .mock-dot { width:10px; height:10px; border-radius:50%; background:rgba(236,233,244,0.16); }
-  .mock-dot.e { background:var(--em); } .mock-dot.g { background:var(--gold); }
-  .mock-body { padding:20px; display:grid; gap:10px; }
-  .m-row { display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:11px; background:rgba(255,255,255,0.025); border:1px solid var(--border); }
-  .m-label { font-size:0.82rem; color:var(--muted); }
-  .m-val { font-family:var(--mono); font-weight:600; font-size:0.95rem; }
-  .m-val.up { color:var(--em-light); }
-  .m-val.gd { color:var(--gold-light); }
-  .m-bar { height:8px; border-radius:99px; background:rgba(255,255,255,0.06); overflow:hidden; }
-  .m-fill { height:100%; border-radius:99px; background:linear-gradient(90deg,var(--em-dark),var(--em-light)); }
+  /* ---- Sections ---- */
+  section { padding:58px 0 6px; }
+  section + section { margin-top:26px; }
+  .sec-head { margin-bottom:28px; }
+  h2 { font-family:var(--serif); font-weight:500; font-size:clamp(1.45rem,3vw,1.85rem); margin-bottom:8px; }
+  .sub { color:var(--ink-soft); font-size:0.94rem; max-width:64ch; }
 
-  section { padding:74px 0; }
-  section + section { border-top:1px solid var(--border); }
-  .sec-head { max-width:640px; margin-bottom:44px; }
-  .sec-head h2 { font-size:clamp(1.7rem,3.4vw,2.4rem); margin:16px 0 14px; }
-  .sec-head p { color:var(--muted); }
+  /* ---- Galeria conceito ---- */
+  .galeria { display:grid; gap:18px; }
+  @media (min-width:760px){
+    .galeria { grid-template-columns:1fr 1fr; }
+    .g-full { grid-column:1 / -1; }
+  }
+  .gcard { background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; }
+  .gcard svg.ill { display:block; width:100%; height:auto; background:var(--bg-soft); border-bottom:1px solid var(--line); }
+  .gcard .gbody { padding:16px 20px 18px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .gcard h3 { font-family:var(--serif); font-weight:500; font-size:1.06rem; line-height:1.35; }
+  .gcard p { color:var(--ink-soft); font-size:0.88rem; }
+  .selo-conceito { margin-top:auto; align-self:flex-start; font-family:var(--mono); font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-text); border:1px solid var(--gold); border-radius:6px; padding:3px 9px; background:var(--gold-soft); }
 
-  .cards3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-  @media (max-width:860px){ .cards3{grid-template-columns:1fr} }
-  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:26px; }
-  .card .ico { font-size:1.5rem; margin-bottom:12px; }
-  .card h3 { font-size:1.1rem; margin-bottom:8px; }
-  .card p { color:var(--muted); font-size:0.92rem; }
-  .card ul { margin:12px 0 0 18px; color:var(--muted); font-size:0.9rem; display:grid; gap:6px; }
+  /* texto dentro das ilustrações */
+  .ill text { user-select:none; }
+  .ill .tk { font-family:var(--mono); font-weight:500; letter-spacing:0.08em; fill:#806313; }
+  .ill .tk2 { font-family:var(--mono); font-weight:500; letter-spacing:0.08em; fill:#1f2421; }
+  .ill .tt { font-family:var(--sans); font-weight:600; fill:#1f2421; }
+  .ill .tm { font-family:var(--sans); font-weight:400; fill:#5b615c; }
+  .ill .tg { font-family:var(--mono); font-weight:500; letter-spacing:0.04em; fill:#1d7a55; }
+  .ill .ts { font-family:var(--serif); font-weight:500; fill:#1f2421; }
 
-  .modes { display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:stretch; }
-  @media (max-width:860px){ .modes{grid-template-columns:1fr} }
-  .mode { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:32px 28px; display:flex; flex-direction:column; }
-  .mode.stu { border-color:rgba(139,92,246,0.45); box-shadow:0 0 40px rgba(139,92,246,0.10); }
-  .mode.doc { border-color:rgba(201,162,39,0.4); box-shadow:0 0 40px rgba(201,162,39,0.08); }
-  .mode .mode-tag { font-family:var(--mono); font-size:0.66rem; letter-spacing:0.16em; text-transform:uppercase; font-weight:600; margin-bottom:12px; }
-  .mode.stu .mode-tag { color:var(--em-light); }
-  .mode.doc .mode-tag { color:var(--gold-light); }
-  .mode h3 { font-size:1.4rem; margin-bottom:6px; }
-  .mode .mode-sub { color:var(--muted); font-size:0.9rem; margin-bottom:18px; }
-  .mode ul { list-style:none; display:grid; gap:10px; }
-  .mode li { font-size:0.9rem; color:var(--muted); padding-left:24px; position:relative; }
-  .mode.stu li::before { content:'✦'; position:absolute; left:0; color:var(--em-light); font-weight:700; }
-  .mode.doc li::before { content:'✦'; position:absolute; left:0; color:var(--gold-light); font-weight:700; }
-  .mode li strong { color:var(--text); }
+  /* ---- Jornada em 8 passos ---- */
+  .passos { display:grid; gap:14px; }
+  @media (min-width:700px){ .passos { grid-template-columns:1fr 1fr; } }
+  .passo { position:relative; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px 18px; display:flex; gap:16px; align-items:flex-start; }
+  .passo .ico { flex:none; width:44px; height:44px; border-radius:11px; background:var(--green-soft); border:1px solid rgba(29,122,85,0.25); display:flex; align-items:center; justify-content:center; }
+  .passo .ico svg { width:24px; height:24px; }
+  .passo .num { position:absolute; top:14px; right:16px; font-family:var(--mono); font-size:0.66rem; letter-spacing:0.08em; color:var(--line-strong); }
+  .passo h3 { font-family:var(--serif); font-weight:500; font-size:1rem; margin-bottom:4px; padding-right:28px; }
+  .passo p { color:var(--ink-soft); font-size:0.87rem; }
 
-  .steps { display:grid; gap:14px; counter-reset:st; }
-  .step { display:flex; gap:18px; align-items:flex-start; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 22px; }
-  .step .n { counter-increment:st; flex-shrink:0; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-weight:600; color:var(--em-light); background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.4); }
-  .step .n::before { content:counter(st); }
-  .step h3 { font-size:1.02rem; margin-bottom:4px; }
-  .step p { color:var(--muted); font-size:0.9rem; }
+  /* ---- Mecânicas (chips) ---- */
+  .chips { display:flex; flex-wrap:wrap; gap:12px; margin-top:6px; }
+  .chip { display:inline-flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:10px 20px 10px 14px; font-size:0.9rem; font-weight:500; }
+  .chip svg { width:22px; height:22px; flex:none; }
+  .chip small { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-text); }
+  .nota-proposta { margin-top:16px; font-size:0.8rem; color:var(--ink-soft); max-width:64ch; }
 
-  .game-chips { display:flex; gap:12px; flex-wrap:wrap; margin-top:24px; }
-  .chip { font-family:var(--mono); font-size:0.8rem; font-weight:600; padding:10px 18px; border-radius:999px; background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.4); color:var(--em-light); }
-  .chip.gd { background:rgba(201,162,39,0.1); border-color:rgba(201,162,39,0.4); color:var(--gold-light); }
+  /* ---- Governança ---- */
+  .gov-grid { display:grid; gap:14px; margin-bottom:22px; }
+  @media (min-width:700px){ .gov-grid { grid-template-columns:repeat(3,1fr); } }
+  .gov { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; }
+  .gov .tag { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--green); display:block; margin-bottom:8px; }
+  .gov h3 { font-family:var(--serif); font-weight:500; font-size:1rem; margin-bottom:6px; }
+  .gov p { color:var(--ink-soft); font-size:0.85rem; }
+  .limites-box { background:var(--bg-soft); border:1px solid var(--line); border-radius:14px; padding:22px 26px; }
+  .limites-box h3 { font-family:var(--serif); font-weight:500; font-size:1.05rem; margin-bottom:12px; }
+  ul.limites { list-style:none; display:grid; gap:9px; }
+  ul.limites li { font-size:0.88rem; color:var(--ink-soft); padding-left:24px; position:relative; }
+  ul.limites li::before { content:'—'; position:absolute; left:0; color:var(--green); }
 
-  .integrity { background:var(--card); border:1px solid rgba(201,162,39,0.4); border-radius:18px; padding:34px 32px; box-shadow:0 0 40px rgba(201,162,39,0.08); max-width:820px; }
-  .integrity h3 { font-size:1.3rem; margin:12px 0 12px; }
-  .integrity p { color:var(--muted); font-size:0.95rem; }
-  .integrity ul { list-style:none; margin-top:16px; display:grid; gap:9px; }
-  .integrity li { font-size:0.9rem; color:var(--muted); padding-left:24px; position:relative; }
-  .integrity li::before { content:'✓'; position:absolute; left:0; color:var(--gold-light); font-weight:700; }
-  .integrity li strong { color:var(--text); }
+  /* ---- CTA ---- */
+  .cta { margin:56px 0 64px; padding:34px 30px; background:var(--card); border:1px solid var(--line); border-radius:16px; }
+  .cta h2 { margin-bottom:10px; }
+  .cta p { color:var(--ink-soft); font-size:0.93rem; max-width:62ch; margin-bottom:22px; }
+  .btns { display:flex; flex-wrap:wrap; gap:12px; }
+  a.btn { display:inline-flex; align-items:center; gap:9px; padding:12px 24px; border-radius:10px; font-weight:600; font-size:0.9rem; text-decoration:none; }
+  a.btn:hover { text-decoration:none; filter:brightness(1.05); }
+  a.btn-primario { background:var(--green); color:#ffffff; }
+  a.btn-zap { border:1px solid var(--line-strong); color:var(--ink); background:var(--bg); }
+  a.btn-zap:hover { border-color:var(--green); color:var(--green); }
+  a.btn svg { width:17px; height:17px; }
 
-  .plans { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:stretch; }
-  @media (max-width:900px){ .plans{grid-template-columns:1fr} }
-  .plan { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:30px 26px; display:flex; flex-direction:column; position:relative; }
-  .plan.hot { border-color:rgba(139,92,246,0.55); box-shadow:0 0 40px rgba(139,92,246,0.12); }
-  .plan .tag { position:absolute; top:-12px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; background:linear-gradient(135deg,var(--em-light),var(--em-dark)); color:#0d0518; font-weight:700; padding:5px 14px; border-radius:999px; }
-  .plan h3 { font-size:1.15rem; }
-  .plan .for { color:var(--muted); font-size:0.82rem; margin:4px 0 16px; }
-  .price { font-family:var(--serif); font-size:2.2rem; }
-  .price small { font-size:0.85rem; color:var(--muted); font-family:var(--sans); }
-  .plan ul { list-style:none; margin:18px 0 24px; display:grid; gap:9px; flex:1; }
-  .plan li { font-size:0.89rem; color:var(--muted); padding-left:24px; position:relative; }
-  .plan li::before { content:'✓'; position:absolute; left:0; color:var(--em-light); font-weight:700; }
-  .plan li.no::before { content:'—'; color:rgba(236,233,244,0.25); }
-  .plan .btn { justify-content:center; }
-  .founder { margin-top:22px; text-align:center; font-size:0.85rem; color:var(--gold-light); font-family:var(--mono); }
+  footer { border-top:1px solid var(--line); padding:28px 22px 44px; text-align:center; color:var(--ink-soft); font-size:0.7rem; font-family:var(--mono); letter-spacing:0.08em; }
+  .foot-links { display:flex; justify-content:center; flex-wrap:wrap; gap:8px 18px; margin-bottom:14px; }
+  .foot-links a { color:var(--ink-soft); }
+  .foot-links a:hover { color:var(--green); }
+  .foot-disc { margin:16px auto 0; max-width:72ch; font-family:var(--sans); letter-spacing:0; font-size:0.74rem; line-height:1.6; color:var(--ink-soft); }
 
-  .quote { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:26px 30px; font-family:var(--serif); font-size:1.15rem; font-style:italic; max-width:760px; }
-  .quote .who { display:block; margin-top:14px; font-family:var(--mono); font-style:normal; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
-
-  details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 22px; margin-bottom:10px; }
-  summary { cursor:pointer; font-weight:600; font-size:0.95rem; }
-  details p { color:var(--muted); font-size:0.9rem; margin-top:10px; }
-
-  .cta-final { text-align:center; padding:90px 0; }
-  .cta-final h2 { font-size:clamp(1.8rem,3.6vw,2.6rem); margin-bottom:14px; }
-  .cta-final p { color:var(--muted); max-width:52ch; margin:0 auto 30px; }
-
-  .selo-status { display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-light); border:1px solid rgba(201,162,39,0.45); border-radius:999px; padding:6px 14px; background:rgba(201,162,39,0.08); margin-bottom:14px; }
-  .aviso-estagio { margin:18px 0 0; padding:14px 18px; background:rgba(201,162,39,0.06); border:1px solid rgba(201,162,39,0.35); border-radius:12px; font-size:0.85rem; color:var(--muted); max-width:60ch; }
-  .aviso-estagio strong { color:var(--text); }
-
-  footer { border-top:1px solid var(--border); padding:34px 0; }
-  .foot { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center; color:var(--muted); font-size:0.82rem; }
-  .foot a { color:var(--muted); border-bottom:1px solid transparent; }
-  .foot a:hover { color:var(--em-light); }
-  .seal { font-family:var(--mono); font-size:0.72rem; color:var(--gold-light); }
-  .disclaimer { margin-top:14px; font-size:0.72rem; color:rgba(155,147,176,0.7); max-width:70ch; }
+  @media (prefers-reduced-motion:no-preference){
+    .fade { animation:f .6s ease both; }
+    @keyframes f { from { opacity:0; transform:translateY(8px); } to { opacity:1; } }
+  }
 </style>
 </head>
 <body>
-<div class="bg-orbs"><div class="orb orb-a"></div><div class="orb orb-b"></div></div>
 
 <header class="nav">
   <div class="nav-inner">
-    <a class="brand" href="#top">
-      <span class="logo">Mv</span>
-      <span class="brand-name">MedVerse</span> <span class="brand-sub">por Zatheon</span>
-    </a>
-    <nav class="nav-links">
-      <a href="#modos">Modos</a>
-      <a href="#metodo">Como funciona</a>
-      <a href="#gamificacao">Gamificação</a>
-      <a href="#planos">Previsão de planos</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-    <a class="btn btn-em" href="https://wa.me/5584999869468?text=Ol%C3%A1!%20Quero%20entrar%20na%20lista%20de%20espera%20do%20MedVerse." target="_blank" rel="noopener">Entrar na lista de espera</a>
+    <div class="brand">MedVerse <small>ECOSSISTEMA ZATHEON</small></div>
+    <div class="nav-right">
+      <span class="selo-tese">IDEIA MAPEADA</span>
+      <a class="back" href="../">← VOLTAR</a>
+    </div>
   </div>
 </header>
 
-<section class="hero" id="top">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="eyebrow">Do primeiro período à primeira publicação</span><br>
-      <span class="selo-status" style="margin-top:14px">IDEIA MAPEADA — NÃO É UM PRODUTO EM OPERAÇÃO</span>
-      <h1><span class="grad">Estude medicina como quem joga.</span><br>Pratique como quem <em>pesquisa</em>.</h1>
-      <p class="hero-sub">A tese do MedVerse: juntar sua vida acadêmica num só lugar — trilhas de questões gamificadas com revisão espaçada, rede social médica de estudo com validação por referência — e, quando você se formar, <strong>protocolos revisados continuamente a partir de bases reconhecidas e um laboratório de escrita científica</strong> que respeita a ciência.</p>
-      <div class="hero-ctas">
-        <a class="btn btn-em btn-lg" href="https://wa.me/5584999869468?text=Ol%C3%A1!%20Quero%20entrar%20na%20lista%20de%20espera%20do%20MedVerse." target="_blank" rel="noopener">Entrar na lista de espera →</a>
-        <a class="btn btn-ghost btn-lg" href="#modos">Conhecer os módulos</a>
-      </div>
-      <div class="hero-note">lista de espera fundadora · condições especiais previstas para o lançamento</div>
-      <div class="aviso-estagio">
-        <strong>O que esta página é (e não é):</strong> uma ideia mapeada do ecossistema Zatheon, apresentada a quem quiser acompanhá-la ou construí-la junto. Não há produto lançado, preço definido, período de teste ou clientes — o painel ao lado é mockup ilustrativo e os valores citados são previsão de lançamento. O desenvolvimento foi adiado por decisão do comitê até o gatilho de lançamento.
-      </div>
+<main>
+<div class="wrap">
+
+  <!-- Hero -->
+  <div class="hero fade">
+    <span class="kicker">Ideia mapeada · Do primeiro período à primeira publicação</span>
+    <h1>Estude medicina como quem joga. <em>Pratique como quem pesquisa.</em></h1>
+    <p class="lead">Um Atlas de Medicina gamificado que se adapta ao perfil comportamental de quem estuda — trilhas de questões com revisão espaçada na graduação, rede de estudo com validação por referência, escrita científica com integridade acadêmica e ensino de IA para profissionais de saúde.</p>
+    <div class="aviso"><strong>O que esta página é (e não é):</strong> uma ideia mapeada do ecossistema Zatheon, apresentada a quem quiser acompanhá-la ou construí-la junto. Não há produto lançado, preço definido, período de teste ou clientes. O desenvolvimento foi adiado por decisão do comitê (28/07/2026) até o gatilho de lançamento. As ilustrações abaixo são visualizações conceituais, não telas de um produto existente.</div>
+  </div>
+
+  <!-- Como seria na prática -->
+  <section class="fade" aria-labelledby="t-pratica">
+    <div class="sec-head">
+      <h2 id="t-pratica">Como seria na prática</h2>
+      <p class="sub">Três momentos do conceito, ilustrados de forma esquemática: a trilha gamificada, o perfil comportamental que a calibra e o fluxo de escrita científica com integridade verificável.</p>
     </div>
-    <div class="mock" aria-hidden="true">
-      <div class="mock-bar"><span class="mock-dot e"></span><span class="mock-dot g"></span><span class="mock-dot"></span></div>
-      <div class="mock-body">
-        <div class="m-row"><span class="m-label">Ofensiva</span><span class="m-val up">🔥 23 dias</span></div>
-        <div class="m-row" style="display:block">
-          <div style="display:flex; justify-content:space-between; margin-bottom:8px"><span class="m-label">XP da semana</span><span class="m-val up">1.240 / 1.500</span></div>
-          <div class="m-bar"><div class="m-fill" style="width:83%"></div></div>
+    <div class="galeria">
+
+      <figure class="gcard g-full">
+        <svg class="ill" viewBox="0 0 720 405" role="img" aria-labelledby="ill1-t">
+          <title id="ill1-t">Ilustração conceitual: celular exibindo uma trilha gamificada de estudo com nós de progresso, ao lado de cartões esquemáticos de ofensiva, liga semanal, revisão espaçada e conquista.</title>
+          <rect width="720" height="405" fill="#f2efe7"/>
+          <!-- conectores pontilhados -->
+          <line x1="254" y1="116" x2="290" y2="140" stroke="#cfc9ba" stroke-width="1.5" stroke-dasharray="2 4" stroke-linecap="round"/>
+          <line x1="254" y1="266" x2="290" y2="250" stroke="#cfc9ba" stroke-width="1.5" stroke-dasharray="2 4" stroke-linecap="round"/>
+          <line x1="468" y1="128" x2="432" y2="150" stroke="#cfc9ba" stroke-width="1.5" stroke-dasharray="2 4" stroke-linecap="round"/>
+          <line x1="476" y1="280" x2="432" y2="298" stroke="#cfc9ba" stroke-width="1.5" stroke-dasharray="2 4" stroke-linecap="round"/>
+          <!-- celular -->
+          <rect x="292" y="30" width="136" height="345" rx="22" fill="#ffffff" stroke="#5b615c" stroke-width="1.7"/>
+          <rect x="342" y="42" width="36" height="5" rx="2.5" fill="#e3ded2"/>
+          <text class="tk" x="310" y="70" font-size="8">ATLAS · CARDIOLOGIA</text>
+          <rect x="310" y="78" width="100" height="5" rx="2.5" fill="#e7f2ec"/>
+          <rect x="310" y="78" width="62" height="5" rx="2.5" fill="#1d7a55"/>
+          <!-- trilha -->
+          <path d="M332 330 C368 324 392 316 392 298 C392 280 352 278 346 260 C340 242 388 238 391 220 C394 202 348 198 342 180 C336 162 392 161 396 143 C400 125 358 122 354 106" fill="none" stroke="#cfc9ba" stroke-width="1.7" stroke-dasharray="3 4.5" stroke-linecap="round"/>
+          <!-- nós concluídos -->
+          <circle cx="332" cy="330" r="11" fill="#1d7a55"/>
+          <path d="m327.8 330.2 2.6 2.6 5-5.4" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="392" cy="298" r="11" fill="#1d7a55"/>
+          <path d="m387.8 298.2 2.6 2.6 5-5.4" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="346" cy="260" r="11" fill="#1d7a55"/>
+          <path d="m341.8 260.2 2.6 2.6 5-5.4" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="391" cy="220" r="11" fill="#1d7a55"/>
+          <path d="m386.8 220.2 2.6 2.6 5-5.4" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- nó atual -->
+          <circle cx="342" cy="180" r="13" fill="#f5efdd" stroke="#a07d1c" stroke-width="1.7"/>
+          <path d="M342 173.6l1.5 3.9 3.9 1.5-3.9 1.5-1.5 3.9-1.5-3.9-3.9-1.5 3.9-1.5z" fill="#a07d1c"/>
+          <!-- nós bloqueados -->
+          <circle cx="396" cy="143" r="10" fill="#ffffff" stroke="#cfc9ba" stroke-width="1.7"/>
+          <rect x="392.5" y="142" width="7" height="6" rx="1.5" fill="none" stroke="#cfc9ba" stroke-width="1.4"/>
+          <path d="M393.8 142v-1.6a2.2 2.2 0 0 1 4.4 0V142" fill="none" stroke="#cfc9ba" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="354" cy="106" r="10" fill="#ffffff" stroke="#cfc9ba" stroke-width="1.7"/>
+          <rect x="350.5" y="105" width="7" height="6" rx="1.5" fill="none" stroke="#cfc9ba" stroke-width="1.4"/>
+          <path d="M351.8 105v-1.6a2.2 2.2 0 0 1 4.4 0V105" fill="none" stroke="#cfc9ba" stroke-width="1.4" stroke-linecap="round"/>
+          <!-- xp -->
+          <text class="tk" x="310" y="356" font-size="8">XP 1.240 / 1.500</text>
+          <rect x="310" y="362" width="100" height="5" rx="2.5" fill="#e7f2ec"/>
+          <rect x="310" y="362" width="83" height="5" rx="2.5" fill="#a07d1c"/>
+          <!-- cartão: ofensiva -->
+          <rect x="78" y="88" width="176" height="56" rx="12" fill="#ffffff" stroke="#e3ded2"/>
+          <circle cx="106" cy="116" r="15" fill="#f5efdd"/>
+          <path d="M106 108.5c.6 2.6-3.4 4-3.4 7a3.4 3.4 0 0 0 6.8 0c0-1.4-.6-2.6-1.4-3.8-.3.8-.8 1.4-1.6 1.9.3-1.7 0-3.4-.4-5.1z" fill="none" stroke="#a07d1c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <text class="tk" x="130" y="111" font-size="7.5">OFENSIVA</text>
+          <text class="tt" x="130" y="128" font-size="11.5">23 dias seguidos</text>
+          <!-- cartão: revisão espaçada -->
+          <rect x="64" y="238" width="190" height="56" rx="12" fill="#ffffff" stroke="#e3ded2"/>
+          <circle cx="92" cy="266" r="15" fill="#e7f2ec"/>
+          <circle cx="92" cy="266" r="7" fill="none" stroke="#1d7a55" stroke-width="1.6"/>
+          <path d="M92 262.4v3.8l2.6 1.5" fill="none" stroke="#1d7a55" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <text class="tk" x="116" y="261" font-size="7.5">REVISÃO ESPAÇADA</text>
+          <text class="tt" x="116" y="278" font-size="11.5">Cardio · em 2 h</text>
+          <!-- cartão: liga -->
+          <rect x="468" y="100" width="176" height="56" rx="12" fill="#ffffff" stroke="#e3ded2"/>
+          <circle cx="496" cy="128" r="15" fill="#f5efdd"/>
+          <path d="M492 121.5h8v3.6a4 4 0 0 1-8 0zM496 129.6v2.4M493 134h6" fill="none" stroke="#a07d1c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <text class="tk" x="520" y="123" font-size="7.5">LIGA SEMANAL</text>
+          <text class="tt" x="520" y="140" font-size="11.5">Ouro · 4º lugar</text>
+          <!-- cartão: conquista -->
+          <rect x="476" y="252" width="190" height="56" rx="12" fill="#ffffff" stroke="#e3ded2"/>
+          <circle cx="504" cy="280" r="15" fill="#e7f2ec"/>
+          <circle cx="504" cy="277.5" r="5.5" fill="none" stroke="#1d7a55" stroke-width="1.6"/>
+          <path d="M501.2 282.4 499.6 288M506.8 282.4 508.4 288" fill="none" stroke="#1d7a55" stroke-width="1.6" stroke-linecap="round"/>
+          <text class="tk" x="528" y="275" font-size="7.5">CONQUISTA</text>
+          <text class="tt" x="528" y="292" font-size="11.5">Anatomia sem erros</text>
+        </svg>
+        <figcaption class="gbody">
+          <h3>A trilha do Atlas no bolso: constância de jogo, conteúdo com fonte</h3>
+          <p>Cada disciplina viraria uma trilha de questões comentadas — do primeiro período à residência. Ofensiva, XP e ligas sustentam a constância; a revisão espaçada decide o que você revê e quando, antes de esquecer.</p>
+          <span class="selo-conceito">Visualização conceitual — não é um produto existente</span>
+        </figcaption>
+      </figure>
+
+      <figure class="gcard">
+        <svg class="ill" viewBox="0 0 720 405" role="img" aria-labelledby="ill2-t">
+          <title id="ill2-t">Ilustração conceitual: gráfico radar de estilos de aprendizagem — visual, prático, social, analítico, ritmo e competitivo — ao lado de um cartão com o perfil resultante.</title>
+          <rect width="720" height="405" fill="#f2efe7"/>
+          <!-- eixos -->
+          <g stroke="#e3ded2" stroke-width="1">
+            <line x1="255" y1="210" x2="255" y2="75"/>
+            <line x1="255" y1="210" x2="372" y2="142.5"/>
+            <line x1="255" y1="210" x2="372" y2="277.5"/>
+            <line x1="255" y1="210" x2="255" y2="345"/>
+            <line x1="255" y1="210" x2="138" y2="277.5"/>
+            <line x1="255" y1="210" x2="138" y2="142.5"/>
+          </g>
+          <!-- grades -->
+          <g fill="none" stroke="#d8d2c2" stroke-width="1">
+            <polygon points="255,75 372,142.5 372,277.5 255,345 138,277.5 138,142.5"/>
+            <polygon points="255,120 333,165 333,255 255,300 177,255 177,165"/>
+            <polygon points="255,165 294,187.5 294,232.5 255,255 216,232.5 216,187.5"/>
+          </g>
+          <!-- polígono do perfil -->
+          <polygon points="255,95 325,170 366,274 255,284 173,257 161,156" fill="#1d7a55" fill-opacity="0.12" stroke="#1d7a55" stroke-width="1.7" stroke-linejoin="round"/>
+          <g fill="#a07d1c" stroke="#faf8f3" stroke-width="1.5">
+            <circle cx="255" cy="95" r="3.5"/>
+            <circle cx="325" cy="170" r="3.5"/>
+            <circle cx="366" cy="274" r="3.5"/>
+            <circle cx="255" cy="284" r="3.5"/>
+            <circle cx="173" cy="257" r="3.5"/>
+            <circle cx="161" cy="156" r="3.5"/>
+          </g>
+          <!-- rótulos dos eixos -->
+          <text class="tk2" x="255" y="62" font-size="9" text-anchor="middle" fill="#5b615c">VISUAL</text>
+          <text class="tk2" x="382" y="140" font-size="9" text-anchor="start" fill="#5b615c">PRÁTICO</text>
+          <text class="tk2" x="382" y="286" font-size="9" text-anchor="start" fill="#5b615c">SOCIAL</text>
+          <text class="tk2" x="255" y="366" font-size="9" text-anchor="middle" fill="#5b615c">ANALÍTICO</text>
+          <text class="tk2" x="128" y="286" font-size="9" text-anchor="end" fill="#5b615c">RITMO</text>
+          <text class="tk2" x="128" y="140" font-size="9" text-anchor="end" fill="#5b615c">COMPETITIVO</text>
+          <!-- conector -->
+          <line x1="380" y1="212" x2="464" y2="200" stroke="#cfc9ba" stroke-width="1.5" stroke-dasharray="2 4" stroke-linecap="round"/>
+          <!-- cartão do perfil -->
+          <rect x="470" y="96" width="200" height="212" rx="14" fill="#ffffff" stroke="#e3ded2"/>
+          <text class="tk" x="488" y="122" font-size="7.5">PERFIL DE APRENDIZAGEM</text>
+          <text class="ts" x="488" y="146" font-size="16">Explorador social</text>
+          <line x1="488" y1="158" x2="652" y2="158" stroke="#e3ded2"/>
+          <circle cx="494" cy="176" r="2.5" fill="#1d7a55"/>
+          <text class="tm" x="504" y="180" font-size="10.5">Trilhas em grupo</text>
+          <circle cx="494" cy="198" r="2.5" fill="#1d7a55"/>
+          <text class="tm" x="504" y="202" font-size="10.5">Metas curtas e frequentes</text>
+          <circle cx="494" cy="220" r="2.5" fill="#1d7a55"/>
+          <text class="tm" x="504" y="224" font-size="10.5">Ranking como motivação</text>
+          <rect x="488" y="238" width="164" height="52" rx="8" fill="#e7f2ec"/>
+          <text class="tg" x="498" y="259" font-size="8.5">A trilha se adapta ao perfil:</text>
+          <text class="tg" x="498" y="273" font-size="8.5">ritmo, formato e desafios.</text>
+        </svg>
+        <figcaption class="gbody">
+          <h3>O perfil comportamental que calibra a jornada</h3>
+          <p>Um mapeamento de estilo de aprendizagem — ritmo, formato, motivação — ajustaria trilha, metas e desafios. O mesmo Atlas, percursos diferentes para cada pessoa.</p>
+          <span class="selo-conceito">Visualização conceitual — não é um produto existente</span>
+        </figcaption>
+      </figure>
+
+      <figure class="gcard">
+        <svg class="ill" viewBox="0 0 720 405" role="img" aria-labelledby="ill3-t">
+          <title id="ill3-t">Ilustração conceitual: fluxo de escrita científica em quatro etapas — rascunho, checagem de fontes, consenso e artigo — com faixa de integridade acadêmica.</title>
+          <rect width="720" height="405" fill="#f2efe7"/>
+          <!-- moldura de navegador -->
+          <rect x="36" y="36" width="648" height="333" rx="12" fill="#ffffff" stroke="#cfc9ba" stroke-width="1.7"/>
+          <line x1="36" y1="74" x2="684" y2="74" stroke="#e3ded2"/>
+          <circle cx="58" cy="55" r="4.5" fill="#1d7a55"/>
+          <circle cx="76" cy="55" r="4.5" fill="#a07d1c"/>
+          <circle cx="94" cy="55" r="4.5" fill="#e3ded2"/>
+          <rect x="112" y="47" width="230" height="16" rx="8" fill="#f2efe7"/>
+          <text class="tk2" x="122" y="58.5" font-size="8" fill="#5b615c">medverse · laboratório de artigos</text>
+          <!-- etapa 1: rascunho -->
+          <rect x="65" y="100" width="126" height="170" rx="10" fill="#faf8f3" stroke="#e3ded2"/>
+          <rect x="104" y="112" width="48" height="62" rx="7" fill="#ffffff" stroke="#1d7a55" stroke-width="1.7"/>
+          <path d="M114 128h28M114 138h28M114 148h20" fill="none" stroke="#cfc9ba" stroke-width="1.7" stroke-linecap="round"/>
+          <path d="M114 160h16" fill="none" stroke="#a07d1c" stroke-width="1.7" stroke-linecap="round"/>
+          <text class="tk" x="128" y="208" font-size="8" text-anchor="middle">01</text>
+          <text class="tk2" x="128" y="224" font-size="9" text-anchor="middle">RASCUNHO</text>
+          <text class="tm" x="128" y="242" font-size="8.5" text-anchor="middle">suas ideias, seus dados</text>
+          <!-- seta -->
+          <path d="M197 185h14m-5-5 6 5-6 5" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- etapa 2: checagem de fontes -->
+          <rect x="220" y="100" width="126" height="170" rx="10" fill="#faf8f3" stroke="#e3ded2"/>
+          <rect x="255" y="112" width="44" height="62" rx="7" fill="#ffffff" stroke="#1d7a55" stroke-width="1.7"/>
+          <path d="m262 125 2 2 3.4-3.7" fill="none" stroke="#1d7a55" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M272 125h18" fill="none" stroke="#cfc9ba" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="m262 140 2 2 3.4-3.7" fill="none" stroke="#1d7a55" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M272 140h18" fill="none" stroke="#cfc9ba" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="264.5" cy="155" r="3" fill="none" stroke="#a07d1c" stroke-width="1.5"/>
+          <path d="M272 155h18" fill="none" stroke="#cfc9ba" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="294" cy="168" r="10" fill="#f5efdd" stroke="#a07d1c" stroke-width="1.7"/>
+          <path d="m301 175 7 7" stroke="#a07d1c" stroke-width="1.7" stroke-linecap="round"/>
+          <text class="tk" x="283" y="208" font-size="8" text-anchor="middle">02</text>
+          <text class="tk2" x="283" y="224" font-size="8.5" text-anchor="middle">CHECAGEM DE FONTES</text>
+          <text class="tm" x="283" y="242" font-size="8.5" text-anchor="middle">toda citação na fonte</text>
+          <!-- seta -->
+          <path d="M352 185h14m-5-5 6 5-6 5" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- etapa 3: consenso -->
+          <rect x="375" y="100" width="126" height="170" rx="10" fill="#faf8f3" stroke="#e3ded2"/>
+          <circle cx="416" cy="120" r="8" fill="#e7f2ec" stroke="#1d7a55" stroke-width="1.6"/>
+          <circle cx="394" cy="138" r="8" fill="#e7f2ec" stroke="#1d7a55" stroke-width="1.6"/>
+          <circle cx="438" cy="138" r="8" fill="#f5efdd" stroke="#a07d1c" stroke-width="1.6"/>
+          <g stroke="#cfc9ba" stroke-width="1.4" stroke-dasharray="2 3" stroke-linecap="round">
+            <line x1="416" y1="129" x2="416" y2="152"/>
+            <line x1="399" y1="145" x2="410" y2="157"/>
+            <line x1="433" y1="145" x2="422" y2="157"/>
+          </g>
+          <circle cx="416" cy="164" r="11" fill="#1d7a55"/>
+          <path d="m411.6 164.2 2.7 2.7 5.2-5.6" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <text class="tk" x="438" y="208" font-size="8" text-anchor="middle">03</text>
+          <text class="tk2" x="438" y="224" font-size="9" text-anchor="middle">CONSENSO</text>
+          <text class="tm" x="438" y="242" font-size="8.5" text-anchor="middle">revisões independentes</text>
+          <!-- seta -->
+          <path d="M507 185h14m-5-5 6 5-6 5" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- etapa 4: artigo -->
+          <rect x="530" y="100" width="126" height="170" rx="10" fill="#faf8f3" stroke="#e3ded2"/>
+          <rect x="569" y="112" width="48" height="62" rx="7" fill="#ffffff" stroke="#1d7a55" stroke-width="1.7"/>
+          <path d="M579 126h28" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round"/>
+          <path d="M579 136h28M579 146h28" fill="none" stroke="#cfc9ba" stroke-width="1.7" stroke-linecap="round"/>
+          <circle cx="605" cy="162" r="9" fill="#f5efdd" stroke="#a07d1c" stroke-width="1.7"/>
+          <path d="m601.4 162 2.4 2.4 4.6-5" fill="none" stroke="#a07d1c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M601 170l-2.5 6M609 170l2.5 6" fill="none" stroke="#a07d1c" stroke-width="1.5" stroke-linecap="round"/>
+          <text class="tk" x="593" y="208" font-size="8" text-anchor="middle">04</text>
+          <text class="tk2" x="593" y="224" font-size="9" text-anchor="middle">ARTIGO</text>
+          <text class="tm" x="593" y="242" font-size="8.5" text-anchor="middle">pronto para submeter</text>
+          <!-- faixa de integridade -->
+          <rect x="65" y="292" width="591" height="52" rx="10" fill="#f5efdd" stroke="#a07d1c" stroke-opacity="0.3"/>
+          <path d="M92 306l7 2.6v5.4c0 4.5-3 7.8-7 9.5-4-1.7-7-5-7-9.5v-5.4z" fill="none" stroke="#a07d1c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="m88.8 315 2.2 2.2 3.9-4.2" fill="none" stroke="#a07d1c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <text class="tk" x="112" y="314" font-size="8">INTEGRIDADE ACADÊMICA</text>
+          <text class="tm" x="112" y="330" font-size="9.5">A IA organiza, estrutura e confere — nunca fabrica dados, resultados ou referências.</text>
+        </svg>
+        <figcaption class="gbody">
+          <h3>Do rascunho ao artigo, com integridade verificável</h3>
+          <p>Fluxo inspirado no Chagas AI: rascunho → checagem de fontes → consenso → artigo. A IA acelera a parte operacional; autoria, análise e conclusões permanecem do pesquisador.</p>
+          <span class="selo-conceito">Visualização conceitual — não é um produto existente</span>
+        </figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <!-- Jornada em 8 passos -->
+  <section class="fade" aria-labelledby="t-jornada">
+    <div class="sec-head">
+      <h2 id="t-jornada">A jornada em 8 passos</h2>
+      <p class="sub">O mecanismo proposto da tese — do calouro que quer passar em anatomia ao profissional que quer publicar e dominar IA. Nada disto está em operação.</p>
+    </div>
+    <div class="passos">
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- perfil comportamental: hexágono radar -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3.4 19.4 7.7v8.6L12 20.6 4.6 16.3V7.7z"/>
+            <path d="M12 8.4l3.4 2.4-1.3 3.8h-4.2L8.6 10.8z" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">01</span>
+        <div>
+          <h3>Perfil comportamental</h3>
+          <p>Um mapeamento de estilo de aprendizagem — ritmo, formato, motivação — calibraria trilhas, metas e desafios para cada pessoa.</p>
         </div>
-        <div class="m-row"><span class="m-label">Liga semanal</span><span class="m-val gd">Ouro · 4º lugar</span></div>
-        <div class="m-row"><span class="m-label">Próxima revisão espaçada</span><span class="m-val">Cardio · em 2h</span></div>
-        <div class="m-row"><span class="m-label">Questão do dia</span><span class="m-val up">IAM sem supra ▸</span></div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- vida acadêmica: agenda com check -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4.5" y="6" width="15" height="13.5" rx="2"/>
+            <path d="M4.5 10h15M8.5 3.8v3M15.5 3.8v3"/>
+            <path d="m9 14.2 1.9 1.9 3.4-3.7" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">02</span>
+        <div>
+          <h3>Vida acadêmica num só painel</h3>
+          <p>Notas, materiais, planos de ensino e agenda de aulas e provas reunidos — o semestre inteiro num só lugar, sem sistema paralelo na cabeça.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- atlas: mapa dobrado -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4.5 6.8l5-2.3 5 2.3 5-2.3v12.7l-5 2.3-5-2.3-5 2.3z"/>
+            <path d="M9.5 4.5v12.7M14.5 6.8v12.7"/>
+            <circle cx="12" cy="11" r="1.5" fill="#a07d1c" stroke="none"/>
+          </svg>
+        </span>
+        <span class="num">03</span>
+        <div>
+          <h3>Atlas de Medicina gamificado</h3>
+          <p>Cada disciplina vira uma trilha de questões com explicação comentada — um Atlas para percorrer, não para decorar, do primeiro período à residência.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- constância: chama -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20.5a5.5 5.5 0 0 0 5.5-5.5c0-2.3-1-4.2-2.1-5.9-.5 1.1-1.2 2-2.3 2.7.4-2.8-.3-5.6-2.6-8.3-.3 3.1-1.5 4.9-2.9 6.6-1 1.3-2.1 2.9-2.1 4.9A5.5 5.5 0 0 0 12 20.5z"/>
+            <path d="M12 20.5c1.7 0 3-1.3 3-3 0-1.5-1.3-2.5-3-4.2-1.7 1.7-3 2.7-3 4.2 0 1.7 1.3 3 3 3z" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">04</span>
+        <div>
+          <h3>Constância em bando</h3>
+          <p>XP, ofensiva, ligas semanais e metas coletivas em grupos de estudo via WhatsApp — além de oportunidades de estágio, ligas acadêmicas e extensão.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- rede com validação: balão com check -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4.5 7A2.5 2.5 0 0 1 7 4.5h10A2.5 2.5 0 0 1 19.5 7v6a2.5 2.5 0 0 1-2.5 2.5H9.5l-5 4.5z"/>
+            <path d="m9.3 9.7 2 2 3.5-3.8" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">05</span>
+        <div>
+          <h3>Rede de estudo com validação</h3>
+          <p>Resumos, flashcards e casos comentados circulam com validação por referência — o que a comunidade compartilha tem fonte, não achismo.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- provas: medalha -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="9.5" r="5"/>
+            <path d="M9.5 13.8 8 20l4-2.4 4 2.4-1.5-6.2"/>
+            <path d="M12 7.4l.6 1.5 1.5.6-1.5.6-.6 1.5-.6-1.5-1.5-.6 1.5-.6z" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">06</span>
+        <div>
+          <h3>Preparação para provas</h3>
+          <p>Residência, títulos de especialista e USMLE — trilhas dirigidas por desempenho, com a revisão espaçada trabalhando nos bastidores.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- laboratório de artigos: documento + faísca -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13.5 3.5h-6A1.5 1.5 0 0 0 6 5v14a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19V8z"/>
+            <path d="M13.5 3.5V8H18"/>
+            <path d="M11.5 11l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">07</span>
+        <div>
+          <h3>Laboratório de Artigos</h3>
+          <p>Da revisão de literatura à submissão: rascunho → checagem de fontes → consenso → artigo. A IA nunca fabrica dados nem referências.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- ensino de IA: chip com faísca -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="7" y="7" width="10" height="10" rx="2"/>
+            <path d="M9.5 7V4.5M14.5 7V4.5M9.5 19.5V17M14.5 19.5V17M7 9.5H4.5M7 14.5H4.5M19.5 9.5H17M19.5 14.5H17"/>
+            <path d="M12 9.6l.7 1.7 1.7.7-1.7.7-.7 1.7-.7-1.7-1.7-.7 1.7-.7z" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">08</span>
+        <div>
+          <h3>Ensino de IA para a saúde</h3>
+          <p>Formação prática em IA para profissionais de saúde: o que a ferramenta faz, onde erra e como usá-la com responsabilidade clínica e acadêmica.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Mecânicas propostas -->
+  <section class="fade" aria-labelledby="t-mecanicas">
+    <div class="sec-head">
+      <h2 id="t-mecanicas">O que a gamificação propõe</h2>
+      <p class="sub">Mecânicas propostas do conceito — a mesma lógica que faz milhões praticarem um idioma todo dia, aplicada a questões de medicina com explicação comentada em cada alternativa.</p>
+    </div>
+    <div class="chips">
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 20.5a5.5 5.5 0 0 0 5.5-5.5c0-2.3-1-4.2-2.1-5.9-.5 1.1-1.2 2-2.3 2.7.4-2.8-.3-5.6-2.6-8.3-.3 3.1-1.5 4.9-2.9 6.6-1 1.3-2.1 2.9-2.1 4.9A5.5 5.5 0 0 0 12 20.5z"/>
+          <path d="M12 20.5c1.7 0 3-1.3 3-3 0-1.5-1.3-2.5-3-4.2-1.7 1.7-3 2.7-3 4.2 0 1.7 1.3 3 3 3z" stroke="#a07d1c"/>
+        </svg>
+        <span>Ofensiva diária<br><small>proposta do conceito</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M13.2 3.5 6.5 13.5h4.3L10.8 20.5l6.7-10h-4.3z"/>
+          <circle cx="17.8" cy="5.8" r="1.2" fill="#a07d1c" stroke="none"/>
+        </svg>
+        <span>XP por questão<br><small>proposta do conceito</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M8 4.5h8v4a4 4 0 0 1-8 0z"/>
+          <path d="M8 5.5H5a3 3 0 0 0 3.2 3.2M16 5.5h3a3 3 0 0 1-3.2 3.2M12 12.5v3M9 18.5h6"/>
+          <path d="M12 5.6l.5 1.2 1.2.5-1.2.5-.5 1.2-.5-1.2-1.2-.5 1.2-.5z" stroke="#a07d1c"/>
+        </svg>
+        <span>Ligas semanais<br><small>proposta do conceito</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12.5" r="7.5"/>
+          <path d="M12 8.5v4l2.7 1.6" stroke="#a07d1c"/>
+        </svg>
+        <span>Revisão espaçada<br><small>proposta do conceito</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="7.5"/>
+          <circle cx="12" cy="12" r="3.8"/>
+          <circle cx="12" cy="12" r="1.2" fill="#a07d1c" stroke="none"/>
+        </svg>
+        <span>Metas diárias<br><small>proposta do conceito</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4.5 7A2.5 2.5 0 0 1 7 4.5h10A2.5 2.5 0 0 1 19.5 7v6a2.5 2.5 0 0 1-2.5 2.5H9.5l-5 4.5z"/>
+          <path d="M8 9h8M8 12h5" stroke="#a07d1c"/>
+        </svg>
+        <span>Explicação comentada<br><small>proposta do conceito</small></span>
+      </span>
+    </div>
+    <p class="nota-proposta">Nenhuma dessas mecânicas está implementada ou prometida. O que entra no desenho final será definido na validação, com os primeiros usuários, disciplina a disciplina — constância sem banalizar o conteúdo.</p>
+  </section>
+
+  <!-- Governança e limites -->
+  <section class="fade" aria-labelledby="t-governanca">
+    <div class="sec-head">
+      <h2 id="t-governanca">Governança e integridade</h2>
+      <p class="sub">Três compromissos de desenho que valem antes de qualquer linha de produto — e que não mudam com o crescimento.</p>
+    </div>
+    <div class="gov-grid">
+      <div class="gov">
+        <span class="tag">Integridade acadêmica</span>
+        <h3>A IA nunca inventa ciência</h3>
+        <p>Organiza, estrutura e confere; não fabrica dados, resultados nem referências — nem para "completar" um rascunho. Autoria, análise e conclusões são sempre do pesquisador.</p>
+      </div>
+      <div class="gov">
+        <span class="tag">Fontes</span>
+        <h3>Referência rastreável, sempre</h3>
+        <p>Conteúdo clínico nasceria de bases reconhecidas — PubMed, SciELO, Cochrane e diretrizes de sociedades — com data da última revisão visível e link para o trabalho original.</p>
+      </div>
+      <div class="gov">
+        <span class="tag">Dados e LGPD</span>
+        <h3>Seus dados são seus</h3>
+        <p>Hospedagem no Brasil, tratamento conforme a LGPD, sem venda de dados. Notas e desempenho visíveis apenas a quem você autorizar, com exportação e exclusão quando quiser.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<section id="dor">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">O problema</span>
-      <h2>Muito conteúdo. Pouco <em>sistema</em>.</h2>
-      <p>Da graduação à residência, todo mundo estuda muito. Quase ninguém estuda com método, constância e fontes em que dá para confiar.</p>
-    </div>
-    <div class="cards3">
-      <div class="card"><div class="ico">🗂️</div><h3>Conteúdo em 10 lugares</h3><p>PDF no drive, resumo no grupo, questão num app, protocolo num site — e metade já está desatualizada quando você abre. Ninguém sabe qual versão vale.</p></div>
-      <div class="card"><div class="ico">🏝️</div><h3>Estudar sozinho, sem método</h3><p>Sem revisão espaçada, sem constância, sem ninguém para validar o que você entendeu. A motivação dura duas semanas e o conteúdo evapora antes da prova.</p></div>
-      <div class="card"><div class="ico">⏳</div><h3>Meses no processo, não na ciência</h3><p>Escrever um artigo vira uma maratona de formatação, referência e burocracia de submissão. O tempo vai para o processo — não para a pergunta científica.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="modos">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Dois modos, uma jornada</span>
-      <h2>Do <em>Modo Estudante</em> ao <em>Modo Médico</em> — sem trocar de plataforma</h2>
-      <p>O MedVerse cresce com você: começa organizando sua vida universitária e termina acelerando sua produção científica.</p>
-    </div>
-    <div class="modes">
-      <div class="mode stu">
-        <span class="mode-tag">Modo Estudante</span>
-        <h3>Para quem está na graduação</h3>
-        <div class="mode-sub">Sua vida acadêmica inteira, com a constância de um jogo.</div>
-        <ul>
-          <li><strong>Perfil acadêmico completo</strong> — com foto, imagens, conquistas e histórico de evolução</li>
-          <li><strong>Integração com a vida universitária</strong> — notas, materiais, planos de ensino, agenda de aulas e provas</li>
-          <li><strong>Banco de questões gamificado</strong> — trilhas por disciplina, XP, ofensiva, ligas semanais e revisão espaçada</li>
-          <li><strong>Oportunidades reais</strong> — estágios, ligas acadêmicas e projetos de extensão</li>
-          <li><strong>Grupos de estudo via WhatsApp</strong> — metas coletivas e constância em bando</li>
-          <li><strong>Rede social médica de estudo</strong> — resumos, flashcards e casos comentados, sempre com validação por referência</li>
-        </ul>
-      </div>
-      <div class="mode doc">
-        <span class="mode-tag">Modo Médico</span>
-        <h3>Para quem já está na prática</h3>
-        <div class="mode-sub">Atualização confiável, preparação para provas e ciência acelerada.</div>
-        <ul>
-          <li><strong>Procedimentos, técnicas e protocolos</strong> revisados continuamente a partir de bases reconhecidas — PubMed, SciELO, Cochrane e diretrizes de sociedades — com data da última revisão visível</li>
-          <li><strong>Preparação para provas</strong> — residência, títulos de especialista e USMLE, com trilhas dirigidas por desempenho</li>
-          <li><strong>Laboratório de Artigos</strong> — assistente de escrita científica que acelera revisão de literatura, estrutura, formatação e submissão</li>
-          <li><strong>Integridade acadêmica explícita</strong> — a IA organiza e revisa; nunca fabrica dados ou referências. Toda citação é verificável na fonte</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="metodo">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Como funciona</span>
-      <h2>Perfil → Trilhas → Rede → <em>Pesquisa</em></h2>
-      <p>Uma jornada única, do calouro que quer passar em anatomia ao médico que quer publicar.</p>
-    </div>
-    <div class="steps">
-      <div class="step"><span class="n"></span><div><h3>Monte seu perfil e conecte sua rotina acadêmica</h3><p>Foto, universidade, período, disciplinas. Notas, materiais, planos de ensino e agenda de aulas e provas entram na plataforma — o semestre inteiro num só painel.</p></div></div>
-      <div class="step"><span class="n"></span><div><h3>Estude em trilhas gamificadas com revisão espaçada</h3><p>Cada disciplina vira uma trilha de questões comentadas. XP, ofensiva e ligas semanais mantêm a constância; a revisão espaçada decide o que você revê e quando — antes de esquecer.</p></div></div>
-      <div class="step"><span class="n"></span><div><h3>Compartilhe e valide conhecimento na rede de estudo</h3><p>Publique resumos, flashcards e casos comentados. A comunidade e as referências validam cada material — o que circula na rede tem fonte, não achismo.</p></div></div>
-      <div class="step"><span class="n"></span><div><h3>Evolua para pesquisa com o Laboratório de Artigos</h3><p>Da revisão de literatura à submissão: estrutura, formatação e checklist de periódico acelerados por IA — com você no comando da ciência e toda citação verificável.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<section id="gamificacao">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Gamificação</span>
-      <h2>A constância de um jogo, a seriedade de um <em>banco de questões</em></h2>
-      <p>A mesma mecânica que faz milhões de pessoas praticarem um idioma todo dia — aplicada a questões de medicina com explicação comentada em cada alternativa. Meta diária curta, progresso visível, e a revisão espaçada trabalhando nos bastidores para que o que você acertou hoje ainda esteja lá na prova.</p>
-    </div>
-    <div class="game-chips">
-      <span class="chip">🔥 Ofensiva diária</span>
-      <span class="chip">⚡ XP por questão</span>
-      <span class="chip gd">🏆 Ligas semanais</span>
-      <span class="chip">🎯 Metas diárias</span>
-      <span class="chip">🧠 Revisão espaçada</span>
-      <span class="chip gd">💬 Explicação comentada</span>
-    </div>
-  </div>
-</section>
-
-<section id="integridade">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Integridade acadêmica</span>
-      <h2>IA que <em>acelera</em> a ciência — nunca a inventa</h2>
-    </div>
-    <div class="integrity">
-      <span class="eyebrow" style="color:var(--gold-light)">Compromisso MedVerse</span>
-      <h3>Fontes validadas. Citações verificáveis. Zero atalho ético.</h3>
-      <p>Todo conteúdo clínico do MedVerse nasce de bases seguras — PubMed, SciELO, Cochrane e diretrizes de sociedades — e carrega a referência junto. No Laboratório de Artigos, o compromisso é explícito:</p>
-      <ul>
-        <li><strong>A IA organiza, estrutura e revisa</strong> — a autoria, a análise e as conclusões são suas</li>
-        <li><strong>Nunca fabrica dados, resultados ou referências</strong> — nem para "completar" um rascunho</li>
-        <li><strong>Toda citação é verificável na fonte</strong> — com link direto para o trabalho original</li>
-        <li><strong>Sem atalhos éticos em trabalhos acadêmicos</strong> — a plataforma foi desenhada para acelerar o processo, não para substituir o pesquisador</li>
+    <div class="limites-box">
+      <h3>O que esta página não pode prometer</h3>
+      <ul class="limites">
+        <li>Nenhum produto em operação: o MedVerse é uma ideia mapeada, com desenvolvimento adiado por decisão do comitê (28/07/2026) até o gatilho de lançamento.</li>
+        <li>Nenhum preço, plano, desconto, prazo ou condição comercial — nada está à venda hoje.</li>
+        <li>Nenhuma substituição da formação médica formal, dos livros, da supervisão docente ou da responsabilidade profissional e regulatória de cada usuário.</li>
+        <li>Nenhuma conduta clínica decidida por IA — todo conteúdo clínico referencia fontes públicas reconhecidas e a decisão final é sempre do profissional habilitado.</li>
       </ul>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="planos">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Previsão de planos</span>
-      <h2>Um preço para cada fase da sua <em>jornada</em></h2>
-      <p><strong style="color:var(--gold-light)">Previsão de lançamento — nada está à venda hoje.</strong> Os valores abaixo são a intenção de preço para quando o produto existir, sem fidelidade e com cancelamento livre. A intenção é que as 50 primeiras vagas da lista de espera fundadora tenham 50% de desconto no lançamento.</p>
+  <!-- CTA -->
+  <div class="cta fade">
+    <h2>Quer acompanhar a construção?</h2>
+    <p>O MedVerse ainda não existe como produto. Se a tese fala com você — estudante, docente, médico ou pesquisador — escreva contando de onde vem o seu interesse: são essas conversas que decidem o que a validação testa primeiro.</p>
+    <div class="btns">
+      <a class="btn btn-primario" href="mailto:drsostenescosta@gmail.com?subject=MedVerse%20%E2%80%94%20Quero%20acompanhar%20a%20tese">Quero acompanhar o MedVerse</a>
+      <a class="btn btn-zap" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20do%20MedVerse%20e%20quero%20acompanhar%20a%20constru%C3%A7%C3%A3o." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.9L3.5 20.5l4.2-1.1A8.5 8.5 0 1 0 12 3.5z"/>
+          <path d="M9 8.8c.3-.7.9-.7 1.2 0l.5 1.2c.1.3 0 .7-.2.9l-.5.5c.5 1.1 1.5 2.1 2.6 2.6l.5-.5c.2-.2.6-.3.9-.2l1.2.5c.7.3.7.9 0 1.2-3.5 1.6-8.3-3.2-6.2-6.2z"/>
+        </svg>
+        Conversar no WhatsApp
+      </a>
     </div>
-    <div class="plans">
-      <div class="plan">
-        <h3>Estudante</h3>
-        <div class="for">Do 1º ao 8º período — construa a base</div>
-        <div class="price">R$ 39<small>/mês · previsão de lançamento</small></div>
-        <ul>
-          <li>Perfil acadêmico completo</li>
-          <li>Notas, materiais e agenda de aulas e provas</li>
-          <li>Trilhas gamificadas por disciplina</li>
-          <li>XP, ofensiva e revisão espaçada</li>
-          <li>Grupos de estudo via WhatsApp</li>
-          <li class="no">Banco de questões completo e ligas</li>
-          <li class="no">Laboratório de Artigos</li>
-        </ul>
-        <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Ol%C3%A1!%20Quero%20entrar%20na%20lista%20de%20espera%20do%20MedVerse." target="_blank" rel="noopener">Entrar na lista de espera</a>
-      </div>
-      <div class="plan hot">
-        <span class="tag">Recomendado para o internato</span>
-        <h3>Interno</h3>
-        <div class="for">Internato e reta final — hora de acelerar</div>
-        <div class="price">R$ 79<small>/mês · previsão de lançamento</small></div>
-        <ul>
-          <li>Tudo do Estudante</li>
-          <li>Banco de questões completo com ligas semanais</li>
-          <li>Rede social médica de estudo (resumos, flashcards, casos)</li>
-          <li>Integrações completas com a vida universitária</li>
-          <li>Oportunidades de estágio, ligas acadêmicas e extensão</li>
-          <li class="no">Protocolos atualizados e USMLE</li>
-          <li class="no">Laboratório de Artigos</li>
-        </ul>
-        <a class="btn btn-em" href="https://wa.me/5584999869468?text=Ol%C3%A1!%20Quero%20entrar%20na%20lista%20de%20espera%20do%20MedVerse." target="_blank" rel="noopener">Entrar na lista de espera →</a>
-      </div>
-      <div class="plan">
-        <h3>Residente / Médico</h3>
-        <div class="for">Prática, provas e publicação</div>
-        <div class="price">R$ 129<small>/mês · previsão de lançamento</small></div>
-        <ul>
-          <li>Tudo do Interno</li>
-          <li>Protocolos, técnicas e procedimentos revisados continuamente</li>
-          <li>Preparação para residência, títulos e USMLE</li>
-          <li>Laboratório de Artigos com integridade acadêmica</li>
-          <li>Citações verificáveis em PubMed, SciELO e Cochrane</li>
-        </ul>
-        <a class="btn btn-ghost" href="https://wa.me/5584999869468?text=Ol%C3%A1!%20Quero%20entrar%20na%20lista%20de%20espera%20do%20MedVerse." target="_blank" rel="noopener">Entrar na lista de espera</a>
-      </div>
-    </div>
-    <div class="founder">★ Lista de espera fundadora: a intenção é que as 50 primeiras vagas tenham 50% de desconto no lançamento.</div>
   </div>
-</section>
 
-<section id="prova">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Por que existe</span>
-      <h2>Feito por quem ensina — e <em>nunca parou</em> de estudar</h2>
-    </div>
-    <blockquote class="quote">
-      "Passei anos vendo alunos brilhantes estudarem do jeito mais difícil: sozinhos, sem método e com material espalhado. O MedVerse nasce de uma tese simples: <em>conhecimento médico cresce quando é compartilhado com método</em> — com fonte, com constância e com gente junto."
-      <span class="who">Sóstenes Costa Paiva · educador e fundador · Zatheon</span>
-    </blockquote>
-  </div>
-</section>
-
-<section id="faq">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">FAQ</span>
-      <h2>Perguntas diretas, respostas diretas</h2>
-    </div>
-    <details><summary>O MedVerse vai substituir meus livros e as aulas da faculdade?</summary><p>Não — e nem quer. Livro e aula continuam sendo a base. O MedVerse está sendo desenhado como o sistema em volta: organizar o semestre, transformar o conteúdo em questões com revisão espaçada e garantir que o que você aprendeu não evapore até a prova.</p></details>
-    <details><summary>As questões serão validadas?</summary><p>Esse é o compromisso de desenho: cada questão terá explicação comentada e referência rastreável a fontes seguras (livros-texto, diretrizes, PubMed, SciELO, Cochrane). Na rede de estudo, resumos e flashcards da comunidade passarão por validação por referência antes de ganhar o selo de verificado.</p></details>
-    <details><summary>A IA vai escrever meu artigo por mim?</summary><p>Não — e isso é inegociável. O Laboratório de Artigos está sendo desenhado para acelerar a parte operacional: revisão de literatura, estrutura, formatação e checklist de submissão. A análise, os dados e as conclusões serão sempre seus. A IA nunca fabricará dados nem referências, e toda citação sugerida será verificável na fonte original.</p></details>
-    <details><summary>Vai funcionar na minha universidade?</summary><p>É para isso que está sendo desenhado: você cadastraria suas disciplinas, notas e agenda manualmente ou importaria os materiais — a proposta é se adaptar a qualquer grade. Integrações automáticas com sistemas acadêmicos viriam depois, universidade a universidade, com membros da lista de espera votando nas próximas.</p></details>
-    <details><summary>Terá versão gratuita?</summary><p>Está prevista uma versão de teste gratuita no lançamento, para você conhecer as trilhas e a rede de estudo. Depois, a previsão de planos começa em R$ 39/mês — e a intenção é que quem entrar na lista de espera fundadora (50 vagas) pague metade disso. Nada está à venda hoje.</p></details>
-    <details><summary>E meus dados acadêmicos? (LGPD)</summary><p>Princípio de desenho: seus dados serão seus. Hospedagem no Brasil, tratamento conforme a LGPD, nada de venda de dados, e exportação ou exclusão quando você quiser. Notas e desempenho só apareceriam para quem você autorizar.</p></details>
-  </div>
-</section>
-
-<section class="cta-final">
-  <div class="wrap">
-    <span class="eyebrow" style="justify-content:center">Lista de espera aberta</span>
-    <h2>Uma ideia mapeada.<br><em>Quer ajudar a construí-la?</em></h2>
-    <p>O MedVerse ainda não existe como produto. Entre na lista de espera pelo WhatsApp para acompanhar a construção, garantir prioridade nas condições de lançamento e ajudar a decidir quais universidades e integrações viriam primeiro.</p>
-    <a class="btn btn-em btn-lg" href="https://wa.me/5584999869468?text=Ol%C3%A1!%20Quero%20entrar%20na%20lista%20de%20espera%20do%20MedVerse." target="_blank" rel="noopener">Entrar na lista de espera →</a>
-  </div>
-</section>
+</div>
+</main>
 
 <footer>
-  <div class="wrap foot">
-    <div>© 2026 MedVerse · Zatheon · <a href="../index.html">Sóstenes Costa Paiva</a></div>
-    <div style="display:flex; gap:18px; flex-wrap:wrap; align-items:center">
-      <a href="../medgroth/">MedGroth</a>
-      <a href="../clinicnow/">ClinicNow</a>
-      <a href="../careloop/">CareLoop</a>
-      <a href="../sosmed/">SosMed</a>
-      <a href="https://wa.me/5584999869468?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20MedVerse." target="_blank" rel="noopener">WhatsApp</a>
-      <a href="../privacidade.html">Privacidade</a>
-      <span class="seal">🇧🇷 Dados no Brasil · LGPD</span>
-    </div>
-  </div>
-  <div class="wrap disclaimer">O MedVerse é uma ideia mapeada do ecossistema Zatheon: o desenho de uma plataforma de ensino e apoio ao estudo, ainda sem produto lançado, preço definido ou clientes — os valores citados são previsão de lançamento. Não substituirá a formação médica formal, a supervisão docente nem a responsabilidade profissional e regulatória de cada usuário. Conteúdos clínicos referenciariam fontes públicas reconhecidas; a conduta final é sempre decisão do profissional habilitado.</div>
+  <nav class="foot-links" aria-label="Links do ecossistema">
+    <a href="../index.html">Sóstenes Costa Paiva</a>
+    <a href="../medgroth/">MedGroth</a>
+    <a href="../clinicnow/">ClinicNow</a>
+    <a href="../careloop/">CareLoop</a>
+    <a href="../sosmed/">SosMed</a>
+    <a href="https://wa.me/5584999869468?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20MedVerse." target="_blank" rel="noopener">WhatsApp</a>
+    <a href="../privacidade.html">Privacidade</a>
+  </nav>
+  <div>© 2026 MEDVERSE · ZATHEON — NOME DE TRABALHO, SEM REGISTRO FORMAL · IDEIA MAPEADA · DADOS NO BRASIL · LGPD</div>
+  <p class="foot-disc">O MedVerse é uma ideia mapeada do ecossistema Zatheon: o desenho de uma plataforma de ensino e apoio ao estudo, sem produto lançado, preço definido ou clientes. Não substituirá a formação médica formal, a supervisão docente nem a responsabilidade profissional e regulatória de cada usuário. Conteúdos clínicos referenciariam fontes públicas reconhecidas; a conduta final é sempre decisão do profissional habilitado. As ilustrações desta página são visualizações conceituais.</p>
 </footer>
 </body>
 </html>
