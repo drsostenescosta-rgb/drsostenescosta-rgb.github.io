@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<title>Ecossistema Zatheon — como os projetos se retroalimentam</title>
+<meta name="description" content="O mapa do ecossistema Zatheon: como ClinicNow, Emily, CareLoop, MedEasy, Cabin, MedVerse e Genecys se conectam, as oportunidades entre eles e o benchmark dos players do mercado." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f3; --bg-soft: #f2efe7; --ink: #1f2421; --ink-soft: #5b615c;
+    --line: #e3ded2; --accent: #1d7a55; --accent-soft: #e7f2ec; --gold: #a07d1c;
+    --serif: 'Fraunces', serif; --sans: 'Inter', sans-serif; --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.7; font-size: 16px; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 22px; }
+  header.nav { position: sticky; top: 0; background: rgba(250,248,243,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); z-index: 10; }
+  .nav-inner { max-width: 900px; margin: 0 auto; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; }
+  .nav-name { font-family: var(--serif); font-weight: 600; color: var(--ink); }
+  .nav a.back { font-family: var(--mono); font-size: 0.76rem; letter-spacing: 0.05em; }
+  .hero { padding: 52px 0 20px; }
+  .kicker { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.18em; color: var(--gold); display: block; margin-bottom: 12px; }
+  h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(1.6rem, 4.5vw, 2.4rem); line-height: 1.2; margin-bottom: 12px; }
+  .hero p { color: var(--ink-soft); max-width: 660px; }
+  section { padding: 30px 0 8px; }
+  h2 { font-family: var(--serif); font-weight: 600; font-size: 1.3rem; margin-bottom: 6px; }
+  .sub { color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 18px; max-width: 660px; }
+  .mapa { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 12px; overflow-x: auto; }
+  .mapa svg { display: block; margin: 0 auto; min-width: 640px; }
+  .loops { display: grid; gap: 10px; }
+  .loop { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; font-size: 0.92rem; }
+  .loop b { color: var(--accent); }
+  .loop .seq { font-family: var(--mono); font-size: 0.74rem; color: var(--ink-soft); display: block; margin-top: 4px; }
+  .gaps { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 12px; }
+  .gap { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .gap h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+  .gap h3::before { content: '◆ '; color: var(--gold); font-size: 0.7rem; vertical-align: 2px; }
+  .gap p { font-size: 0.85rem; color: var(--ink-soft); }
+  .gap .acao { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.04em; color: var(--accent); display:block; margin-top: 8px; }
+  .bench { display: grid; gap: 12px; }
+  .player { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+  .player h3 { font-family: var(--serif); font-size: 1.05rem; }
+  .player .alvo { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.08em; color: var(--gold); }
+  .player p { font-size: 0.88rem; color: var(--ink-soft); margin-top: 6px; }
+  .player .tese { margin-top: 8px; padding: 10px 12px; background: var(--accent-soft); border-radius: 8px; font-size: 0.86rem; color: var(--ink); }
+  .player .tese b { color: var(--accent); }
+  .player a.fonte { font-family: var(--mono); font-size: 0.68rem; }
+  .cta { margin: 40px 0 56px; padding: 24px; background: var(--ink); border-radius: 16px; color: #f2efe7; }
+  .cta h2 { color: #f2efe7; margin-bottom: 6px; }
+  .cta p { font-size: 0.9rem; opacity: 0.85; margin-bottom: 12px; }
+  .cta a { display: inline-block; background: var(--accent); color: #fff; padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 0.88rem; }
+  footer { border-top: 1px solid var(--line); padding: 26px 22px 40px; text-align: center; color: var(--ink-soft); font-size: 0.74rem; font-family: var(--mono); letter-spacing: 0.06em; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-name" href="../index.html">Sóstenes Costa Paiva</a>
+    <a class="back" href="./">← MAPA DE PROJETOS</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <span class="kicker">ZATHEON · VISÃO DE ECOSSISTEMA</span>
+    <h1>Um ecossistema que se retroalimenta — não sete produtos soltos.</h1>
+    <p>Cada projeto existe para alimentar os outros: quem forma o médico o traz para dentro, quem vende alimenta o CRM, quem fideliza gera dados, quem dá acesso gera demanda. Este mapa mostra os fluxos, as oportunidades entre projetos, o que ainda está em aberto e o que o mercado já provou que funciona.</p>
+  </div>
+
+  <section>
+    <h2>O mapa</h2>
+    <p class="sub">ClinicNow é o centro operacional; os demais são órgãos do mesmo organismo. Linhas cheias = fluxo já desenhado; tracejadas = tese.</p>
+    <div class="mapa">
+      <svg viewBox="0 0 720 460" width="100%" role="img" aria-label="Mapa do ecossistema Zatheon: ClinicNow ao centro, conectado a Emily, CareLoop, MedEasy, Cabin, MedVerse e Genecys">
+        <defs>
+          <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#5b615c"/>
+          </marker>
+        </defs>
+        <!-- ligações -->
+        <g stroke="#5b615c" stroke-width="1.4" fill="none" marker-end="url(#seta)">
+          <path d="M360,150 L360,196"/>                      <!-- Emily -> ClinicNow -->
+          <path d="M214,262 L286,244"/>                      <!-- MedEasy -> ClinicNow -->
+          <path d="M508,262 L436,244"/>                      <!-- CareLoop <- (venda) na verdade ClinicNow->CareLoop -->
+          <path d="M360,284 L360,330" stroke-dasharray="5 4"/>   <!-- ClinicNow -> Cabin (tese) -->
+          <path d="M160,120 L300,208" stroke-dasharray="5 4"/>   <!-- MedVerse -> ClinicNow (tese) -->
+          <path d="M562,120 L422,208" stroke-dasharray="5 4"/>   <!-- Genecys -> ClinicNow (tese) -->
+          <path d="M420,124 C470,110 500,180 528,236" />     <!-- Emily -> CareLoop (Emily vende recorrência) -->
+        </g>
+        <!-- rótulos de fluxo -->
+        <g font-family="JetBrains Mono, monospace" font-size="10" fill="#5b615c">
+          <text x="368" y="178">converte &amp; alimenta CRM</text>
+          <text x="180" y="240">dados clínicos</text>
+          <text x="452" y="290">recorrência</text>
+          <text x="368" y="316">demanda de acesso</text>
+          <text x="178" y="170">forma médicos</text>
+          <text x="486" y="170">famílias</text>
+          <text x="478" y="150">Emily vende</text>
+        </g>
+        <!-- nós -->
+        <g text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600">
+          <g><rect x="286" y="196" width="150" height="88" rx="14" fill="#1d7a55"/>
+             <text x="361" y="232" fill="#fff" font-family="Fraunces, serif" font-size="17">ClinicNow</text>
+             <text x="361" y="252" fill="#d7ecdf" font-size="10" font-weight="400">cockpit · Farol + Lia + Groth</text>
+             <text x="361" y="268" fill="#d7ecdf" font-size="10" font-weight="400">CRM · agenda · follow-up</text></g>
+          <g><rect x="296" y="96" width="130" height="54" rx="12" fill="#b8556e"/>
+             <text x="361" y="119" fill="#fff">Emily</text>
+             <text x="361" y="136" fill="#f4dbe2" font-size="10" font-weight="400">voz · WhatsApp · vendas</text></g>
+          <g><rect x="86" y="236" width="128" height="54" rx="12" fill="#6e7f5c"/>
+             <text x="150" y="259" fill="#fff">MedEasy</text>
+             <text x="150" y="276" fill="#e3e9dc" font-size="10" font-weight="400">consulta documentada</text></g>
+          <g><rect x="508" y="236" width="128" height="54" rx="12" fill="#a07d1c"/>
+             <text x="572" y="259" fill="#fff">CareLoop</text>
+             <text x="572" y="276" fill="#f0e6cc" font-size="10" font-weight="400">assinaturas de cuidado</text></g>
+          <g><rect x="290" y="330" width="142" height="54" rx="12" fill="#2e6e63"/>
+             <text x="361" y="353" fill="#fff">ClinicNow Cabin</text>
+             <text x="361" y="370" fill="#d3e6e2" font-size="10" font-weight="400">acesso · eConsult · cabines</text></g>
+          <g><rect x="66" y="66" width="128" height="54" rx="12" fill="#5b4a9e"/>
+             <text x="130" y="89" fill="#fff">MedVerse</text>
+             <text x="130" y="106" fill="#e2ddf2" font-size="10" font-weight="400">educação · atlas · artigos</text></g>
+          <g><rect x="528" y="66" width="128" height="54" rx="12" fill="#3d6b8e"/>
+             <text x="592" y="89" fill="#fff">Genecys</text>
+             <text x="592" y="106" fill="#dbe7f0" font-size="10" font-weight="400">cuidado do idoso em casa</text></g>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section>
+    <h2>Os circuitos de retroalimentação</h2>
+    <p class="sub">Cinco loops — cada um transforma o resultado de um projeto em combustível de outro:</p>
+    <div class="loops">
+      <div class="loop"><b>Loop da receita:</b> Emily atende o lead → converte em paciente → CareLoop fideliza em assinatura → a receita recorrente aparece no Cofre do ClinicNow → o número medido vira argumento de venda para o próximo médico.
+        <span class="seq">EMILY → CLINICNOW → CARELOOP → COFRE → NOVO CLIENTE</span></div>
+      <div class="loop"><b>Loop do dado clínico:</b> MedEasy documenta a consulta → alimenta o prontuário e o Índice de Saúde → o recall do CareLoop usa o dado certo na hora certa → o paciente volta e gera novo dado.
+        <span class="seq">MEDEASY → PRONTUÁRIO → RECALL → RETORNO</span></div>
+      <div class="loop"><b>Loop da formação:</b> MedVerse forma o estudante com atlas + questões + artigos → o médico formado entra no ClinicNow com preço de aluno → seus casos (anonimizados e autorizados) viram conteúdo de ensino.
+        <span class="seq">MEDVERSE → CLINICNOW → CASOS → MEDVERSE</span></div>
+      <div class="loop"><b>Loop do acesso:</b> Cabin capta a demanda de quem não tem canal digital → o corredor eConsult encaminha ao especialista da rede ClinicNow → o desfecho documentado prova o valor para a operadora pagar mais corredores.
+        <span class="seq">CABIN → ECONSULT → REDE CLINICNOW → OPERADORA</span></div>
+      <div class="loop"><b>Loop da família:</b> Genecys acompanha o idoso em casa → a exceção vira consulta com o médico da rede → a família (que paga a Genecys) conhece o ecossistema e entra pelo MedEasy/CareLoop.
+        <span class="seq">GENECYS → CONSULTA → FAMÍLIA → ECOSSISTEMA</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Pontos em aberto & oportunidades que podem se perder</h2>
+    <p class="sub">Levantados dos próprios documentos de governança e do estado real dos repositórios — cada um com a ação que resolve:</p>
+    <div class="gaps">
+      <div class="gap"><h3>Emily não está versionada</h3><p>O código da Emily e do agente de voz vive só no seu computador. Um problema no disco perde o projeto inteiro.</p><span class="acao">AÇÃO: subir para o GitHub esta semana</span></div>
+      <div class="gap"><h3>A chave da IA continua desligada</h3><p>As funções /api/lia, /api/soap e /api/copiloto respondem 501 esperando a ANTHROPIC_API_KEY na Vercel. Sem isso, toda a camada de IA é regra local.</p><span class="acao">AÇÃO: 1 hora no painel da Vercel (só você)</span></div>
+      <div class="gap"><h3>Funil sem médicos reais</h3><p>Regra do comitê: Sprint 1 é bloqueador absoluto — 5 médicos percorrendo o funil completo antes de qualquer expansão.</p><span class="acao">AÇÃO: 5 conversas da sua rede esta semana</span></div>
+      <div class="gap"><h3>Demanda não vem de graça</h3><p>"Loja aberta" não gera paciente sozinha: ou tráfego pago (CAC), ou SEO/conteúdo (meses), ou base própria dos médicos. O plano assume os três, mas nenhum está rodando.</p><span class="acao">AÇÃO: ativar o repositório de artigos (SEO) — custo zero</span></div>
+      <div class="gap"><h3>Marcas e domínios pendentes</h3><p>Buscas INPI (classes 9/42/44) e registro dos domínios das 4 marcas têm prazo 31/ago. zatheon.ai respondia 404 na última auditoria.</p><span class="acao">AÇÃO: registro + DNS antes de material público</span></div>
+      <div class="gap"><h3>Duas narrativas públicas convivendo</h3><p>O site ainda mostra SosMed/MedGroth como produtos "no ar" com preços, enquanto a governança pede linguagem de tese. Investidor que ler os dois vai estranhar.</p><span class="acao">AÇÃO: saneamento das páginas legadas (aba Projetos já usa selos honestos)</span></div>
+      <div class="gap"><h3>Cobrança não conectada</h3><p>Assinaturas e sinal Pix estão especificados e com tabelas prontas, mas nenhum gateway (Mercado Pago/Asaas) foi contratado.</p><span class="acao">AÇÃO: abrir conta no gateway com o CNPJ</span></div>
+      <div class="gap"><h3>Genecys sem episódio real</h3><p>A tese C0 só avança se uma organização trouxer 20 episódios homogêneos com dono, SLA e backup. Sem isso, permanece conceito.</p><span class="acao">AÇÃO: 1 conversa com home care / ILPI da sua rede</span></div>
+    </div>
+  </section>
+
+  <section id="benchmark">
+    <h2>Benchmark — 10 players que provam (e desafiam) o ecossistema</h2>
+    <p class="sub">Quem já opera em cada território, o que fazem bem, onde deixam espaço — e a melhoria concreta que cada um inspira. Pesquisa de 06/08/2026.</p>
+    <div class="bench" id="bench-lista">
+      <!-- BENCHMARK_PLACEHOLDER -->
+    </div>
+  </section>
+
+  <div class="cta">
+    <h2>Quer construir uma parte disso?</h2>
+    <p>Procuro co-founders e design partners por projeto — médicos, engenheiros, gente de operação. O mapa é grande de propósito; a execução é um circuito por vez.</p>
+    <a href="mailto:drsostenescosta@gmail.com?subject=Ecossistema%20Zatheon%20—%20quero%20construir%20junto">Falar com o Sóstenes</a>
+  </div>
+</div>
+
+<footer>ZATHEON · ECOSSISTEMA EM CONSTRUÇÃO ABERTA · SELOS DE STATUS HONESTOS EM /PROJETOS/</footer>
+</body>
+</html>

@@ -3,14 +3,50 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sóstenes Costa Paiva — cuidar, explorar, construir</title>
-<meta name="description" content="Cuidar sempre foi meu chamado. Construir virou meu caminho. Blog pessoal de um jovem empreendedor brasileiro no Vale do Silício, criando ferramentas de IA para a saúde." />
-<meta property="og:title" content="Sóstenes Costa Paiva — cuidar, explorar, construir" />
-<meta property="og:description" content="Cuidar sempre foi meu chamado. Construir virou meu caminho. Minha história, meus medos e o que estou criando na Zetheon." />
+<title>Sóstenes Costa Paiva — Zatheon · healthcare + IA</title>
+<meta name="description" content="Zatheon é o ecossistema de healthcare + IA construído em público por Sóstenes Costa Paiva: ClinicNow, ClinicNow Cabin, Emily, CareLoop, MedVerse e Genecys — teses em validação, com selos de status honestos — e o blog do fundador." />
+<meta property="og:title" content="Sóstenes Costa Paiva — Zatheon · healthcare + IA" />
+<meta property="og:description" content="Um ecossistema de healthcare + inteligência artificial, construído em público: ClinicNow, Emily, CareLoop, MedVerse, Genecys e a história do fundador — com honestidade sobre o estágio de cada projeto." />
 <meta property="og:type" content="website" />
+<meta property="og:image" content="https://drsostenescosta-rgb.github.io/assets/sostenes-brooklyn-portrait.jpeg" />
+<meta property="og:url" content="https://drsostenescosta-rgb.github.io/" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://drsostenescosta-rgb.github.io/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/assets/marca/apple-touch.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://drsostenescosta-rgb.github.io/#sostenes",
+      "name": "Sóstenes Costa Paiva",
+      "url": "https://drsostenescosta-rgb.github.io/",
+      "image": "https://drsostenescosta-rgb.github.io/assets/sostenes-brooklyn-portrait.jpeg",
+      "jobTitle": "Fundador da Zatheon",
+      "description": "Fisioterapeuta, biomédico e empreendedor brasileiro. Fundador da Zatheon, ecossistema de healthcare + IA em construção aberta.",
+      "sameAs": [
+        "https://www.linkedin.com/in/s%C3%B3stenes-costa-paiva-184137165/",
+        "https://www.instagram.com/drsostenes/",
+        "https://www.youtube.com/channel/UC2d-BgBasNZ1nldwCLJ9zGw"
+      ],
+      "worksFor": { "@id": "https://drsostenescosta-rgb.github.io/#zatheon" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://drsostenescosta-rgb.github.io/#zatheon",
+      "name": "Zatheon",
+      "url": "https://drsostenescosta-rgb.github.io/",
+      "description": "Ecossistema de healthcare + IA construído em público.",
+      "founder": { "@id": "https://drsostenescosta-rgb.github.io/#sostenes" }
+    }
+  ]
+}
+</script>
 <style>
   :root {
     --bg: #faf8f3;
@@ -20,14 +56,14 @@
     --line: #e3ded2;
     --accent: #1d7a55;
     --accent-soft: #e7f2ec;
-    --gold: #a07d1c;
+    --gold: #806313; /* dourado para texto — passa contraste AA sobre creme e gold-soft; decorativo pode usar #a07d1c */
     --serif: 'Fraunces', serif;
     --sans: 'Inter', sans-serif;
     --mono: 'JetBrains Mono', monospace;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 70px; }
   body {
     background: var(--bg); color: var(--ink);
     font-family: var(--sans); line-height: 1.75; font-size: 16.5px;
@@ -38,6 +74,7 @@
   a:hover { border-bottom-color: var(--accent); }
 
   .wrap { max-width: 720px; margin: 0 auto; padding: 0 22px; }
+  .wrap-wide { max-width: 980px; margin: 0 auto; padding: 0 22px; }
 
   [data-lang="pt"] .en { display: none; }
   [data-lang="en"] .pt { display: none; }
@@ -53,8 +90,12 @@
 
   /* Nav */
   header.nav { border-bottom: 1px solid var(--line); background: rgba(250,248,243,0.9); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 50; }
-  .nav-inner { max-width: 720px; margin: 0 auto; padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  .nav-name { font-family: var(--serif); font-size: 1rem; color: var(--ink); border: none; }
+  .nav-inner { max-width: 980px; margin: 0 auto; padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .nav-name { font-family: var(--serif); font-size: 1rem; color: var(--ink); border: none; white-space: nowrap; }
+  .nav-links { display: flex; align-items: center; gap: 16px; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .nav-links a { border-bottom: none; color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--accent); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
   .lang-toggle { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
   .lang-toggle button {
     background: transparent; border: none; color: var(--ink-soft); padding: 5px 12px;
@@ -65,25 +106,111 @@
   /* Sections */
   section { padding: 56px 0; }
   section + section { border-top: 1px solid var(--line); }
+  .prose p { color: var(--ink-soft); margin-bottom: 16px; }
+  .prose p strong { color: var(--ink); font-weight: 600; }
 
-  .intro { padding-top: 64px; }
-  .intro h1 { font-size: clamp(1.9rem, 4.6vw, 2.7rem); margin-bottom: 20px; letter-spacing: -0.01em; }
-  .intro p, .prose p { color: var(--ink-soft); margin-bottom: 16px; }
-  .intro p strong, .prose p strong { color: var(--ink); font-weight: 600; }
-  .foto {
-    width: 124px; height: 124px; border-radius: 50%; object-fit: cover; object-position: center;
-    border: 3px solid #fff; box-shadow: 0 6px 24px rgba(31,36,33,0.14); margin-bottom: 26px;
-    filter: grayscale(1);
+  /* Hero Zatheon */
+  /* Órbita 3D das logos ao redor do hero */
+  .hero-z { padding: 72px 0 60px; position: relative; }
+  .orbit { position: absolute; inset: 0; overflow: hidden; pointer-events: none; perspective: 1200px; display: none; }
+  @media (min-width: 1000px) { .orbit { display: block; } }
+  .orbit-ring { position: absolute; top: 40%; left: 79%; width: 0; height: 0; transform-style: preserve-3d; animation: orbitSpin 48s linear infinite; }
+  .orbit-item { position: absolute; left: -21px; top: -21px; width: 42px; height: 42px; transform: rotateY(var(--a)) translateZ(min(15vw, 205px)); opacity: .95; filter: drop-shadow(0 6px 14px rgba(29,37,35,.18)); }
+  .orbit-item svg { width: 100%; height: 100%; display: block; border-radius: 12px; }
+  @keyframes orbitSpin { from { transform: translate(0,0) rotateX(12deg) rotateY(0deg); } to { transform: translate(0,0) rotateX(12deg) rotateY(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .orbit-ring { animation: none; } }
+  .orbit-foto { position: absolute; top: 40%; left: 79%; transform: translate(-50%,-50%); width: 112px; height: 112px; border-radius: 50%; }
+  .orbit-marca { display: flex; align-items: center; justify-content: center; background: #fff; border: 3px solid #e3ded2; box-shadow: 0 10px 30px rgba(29,37,35,.22); color: #1d7a55; }
+  .orbit-marca svg { width: 62px; height: 62px; }
+
+  .hero-z h1 { font-size: clamp(2rem, 5.2vw, 3rem); margin-bottom: 20px; letter-spacing: -0.01em; max-width: 820px; }
+  .hero-z .missao {
+    font-family: var(--serif); font-style: italic; font-size: clamp(1.08rem, 2.6vw, 1.3rem);
+    color: var(--ink); margin-bottom: 18px; max-width: 640px;
   }
+  .hero-z p.sub { color: var(--ink-soft); max-width: 640px; margin-bottom: 6px; }
   .agora {
-    display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; margin-bottom: 22px;
+    display: inline-flex; align-items: center; gap: 8px; margin: 4px 0 20px;
     background: var(--accent-soft); color: var(--accent); border-radius: 999px;
     padding: 6px 14px; font-size: 0.8rem; font-weight: 600;
   }
   .agora .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
 
-  /* Timeline */
+  /* Cards de projetos */
+  .grid-proj { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); grid-auto-rows: 1fr; gap: 16px; margin-top: 22px; }
+  .card {
+    background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: box-shadow .2s ease, transform .2s ease;
+  }
+  .card:hover { box-shadow: 0 8px 26px rgba(31,36,33,0.09); transform: translateY(-2px); }
+  .card-top { display: flex; align-items: center; gap: 12px; }
+  .card-logo { width: 46px; height: 46px; flex: none; }
+  .card-logo svg { width: 100%; height: 100%; display: block; }
+  .card h3 { font-size: 1.12rem; font-weight: 600; }
+  .badge {
+    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em;
+    padding: 3px 8px; border-radius: 99px; border: 1px solid var(--line);
+    color: var(--ink-soft); white-space: nowrap; display: inline-block; margin-top: 4px;
+  }
+  .badge.b-produto { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+  .badge.b-tese { background: #f4ecdc; color: var(--gold); border-color: transparent; }
+  .badge.b-ideia { background: #ece9f5; color: #5b4a9e; border-color: transparent; }
+  .card p { color: var(--ink-soft); font-size: 0.92rem; flex: 1; }
+  .card .card-link {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.06em;
+    border: 1px solid var(--line); border-radius: 8px; padding: 6px 11px;
+    align-self: flex-start; border-bottom-width: 1px;
+  }
+  .card .card-link:hover { border-color: var(--accent); }
+
+  /* Faixa Emily — a agente que atravessa o ecossistema */
+  .card-emily {
+    margin-top: 16px; flex-direction: row; align-items: center; gap: 24px;
+    padding: 22px 26px;
+    background: linear-gradient(120deg, #fff 58%, var(--accent-soft));
+  }
+  .card-emily .card-top { flex: none; }
+  .card-emily .card-logo { width: 54px; height: 54px; }
+  .card-emily .emily-body { flex: 1; }
+  .card-emily .emily-body .kicker { margin-bottom: 4px; font-size: 0.64rem; }
+  .card-emily .emily-body p { flex: none; margin: 0; }
+  .card-emily .card-link { align-self: center; white-space: nowrap; flex: none; }
+  @media (max-width: 760px) {
+    .card-emily { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .card-emily .card-link { align-self: flex-start; }
+  }
+
+  .disclaimer {
+    margin-top: 20px; padding: 14px 18px; background: var(--bg-soft);
+    border: 1px solid var(--line); border-radius: 10px;
+    font-size: 0.85rem; color: var(--ink-soft);
+  }
+  .disclaimer strong { color: var(--ink); }
+  .mapa-links { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 22px; font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.08em; }
+  .mapa-links a { border-bottom: none; }
+  /* Portfólio fora do ecossistema */
+  .portfolio { margin-top: 36px; }
+  .grid-port { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 12px; }
+  .card-sec { padding: 16px 18px; gap: 8px; }
+  .card-sec h3 { font-size: 1rem; font-weight: 600; display: inline-block; margin-right: 8px; }
+  .card-sec p { font-size: 0.88rem; }
+  .bastidores { margin-top: 14px; font-size: 0.82rem; color: var(--ink-soft); }
+
+  /* Fundador */
+  .fundador-grid { display: grid; grid-template-columns: 260px 1fr; gap: 36px; align-items: start; margin-top: 8px; }
+  @media (max-width: 720px) { .fundador-grid { grid-template-columns: 1fr; } .fundador-foto { max-width: 320px; } }
+  .fundador-foto { border-radius: 16px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(31,36,33,0.12); }
+  .fundador-foto img { width: 100%; height: auto; }
+  .fundador-foto figcaption { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em; color: var(--ink-soft); padding: 8px 12px; background: #fff; border-top: 1px solid var(--line); }
+  .formacao {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.06em; color: var(--ink-soft);
+    background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px;
+    margin: 14px 0 18px; line-height: 1.9;
+  }
+
+  /* Timeline do blog */
   .story { border-left: 2px solid var(--line); margin-left: 6px; padding-left: 26px; display: grid; gap: 30px; }
   .story-item { position: relative; }
   .story-item::before {
@@ -100,16 +227,6 @@
   .skill h3 { font-size: 1rem; margin-bottom: 6px; }
   .skill p { color: var(--ink-soft); font-size: 0.9rem; }
   @media (max-width: 640px) { .skills { grid-template-columns: 1fr; } }
-
-  /* Projects */
-  .proj { display: grid; gap: 14px; }
-  .proj-card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; display: block; color: inherit; border-bottom: 1px solid var(--line); transition: box-shadow .2s ease, transform .2s ease; }
-  .proj-card:hover { box-shadow: 0 8px 26px rgba(31,36,33,0.09); transform: translateY(-2px); border-bottom-color: var(--line); }
-  .proj-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-  .proj-card h3 { font-size: 1.08rem; }
-  .proj-tag { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 3px 10px; }
-  .proj-tag.quiet { color: var(--ink-soft); background: var(--bg-soft); }
-  .proj-card p { color: var(--ink-soft); font-size: 0.92rem; margin-top: 6px; }
 
   blockquote {
     border-left: 3px solid var(--accent); background: var(--accent-soft);
@@ -140,6 +257,13 @@
 <header class="nav">
   <div class="nav-inner">
     <a class="nav-name" href="#">Sóstenes Costa Paiva</a>
+    <nav class="nav-links" aria-label="Navegação principal">
+      <a href="#projetos"><span class="pt">Projetos</span><span class="en">Projects</span></a>
+      <a href="#fundador"><span class="pt">Fundador</span><span class="en">Founder</span></a>
+      <a href="#blog">Blog</a>
+      <a href="avaliacoes/"><span class="pt">Avaliações</span><span class="en">Reviews</span></a>
+      <a href="#contato"><span class="pt">Contato</span><span class="en">Contact</span></a>
+    </nav>
     <div style="display:flex; align-items:center; gap:12px;">
       <div class="lang-toggle" role="group" aria-label="Language toggle">
         <button type="button" data-set-lang="pt" class="active">PT</button>
@@ -152,36 +276,275 @@
   </div>
 </header>
 
-<!-- INTRO -->
-<section class="intro">
-  <div class="wrap reveal">
-    <img class="foto" src="assets/insta-perfil.jpg" alt="Sóstenes Costa Paiva" />
-    <span class="kicker pt">BLOG PESSOAL</span>
-    <span class="kicker en">PERSONAL BLOG</span>
+<!-- HERO ZATHEON -->
+<section class="hero-z">
+<div class="orbit" aria-hidden="true"><div class="orbit-foto orbit-marca"><svg viewBox="0 0 64 64" role="img" aria-label="Zatheon"><path fill="currentColor" fill-rule="evenodd" d="M18 4h28c7.732 0 14 6.268 14 14v40H46v-8H18v8H4V18C4 10.268 10.268 4 18 4Zm-2 13h32v7L29 41h19v7H16v-7l19-17H16v-7Z"/></svg></div><div class="orbit-ring" id="orbitRing"></div></div>
+  <div class="wrap-wide reveal">
+    <span class="kicker">ZATHEON · HEALTHCARE + IA</span>
     <h1>
-      <span class="pt">Cuidar sempre foi meu chamado. <em>Construir</em> virou meu caminho.</span>
-      <span class="en">Caring was always my calling. <em>Building</em> became my path.</span>
+      <span class="pt">Zatheon — um ecossistema de <em>healthcare + inteligência artificial</em>, construído em público.</span>
+      <span class="en">Zatheon — a <em>healthcare + artificial intelligence</em> ecosystem, built in public.</span>
     </h1>
+    <p class="missao">
+      <span class="pt">Inteligência a serviço da vida: ferramentas que ajudam quem cuida — e quem é cuidado — numa escala que o consultório sozinho nunca alcançaria.</span>
+      <span class="en">Intelligence in service of life: tools that help those who care — and those being cared for — at a scale a single practice could never reach.</span>
+    </p>
     <div class="agora"><span class="dot"></span>
       <span class="pt">Agora: aprendendo e construindo no ecossistema do Vale do Silício</span>
       <span class="en">Now: learning and building in the Silicon Valley ecosystem</span>
     </div>
-    <p class="pt">Oi, eu sou o Sóstenes — um jovem empreendedor do interior do Brasil. Passei quase dez anos cuidando de gente dentro da saúde, como fisioterapeuta e biomédico. Hoje estou do outro lado do mundo, no ecossistema do Vale do Silício, aprendendo a transformar esse cuidado em <strong>ferramentas de tecnologia e IA que alcançam muito mais pessoas</strong>.</p>
-    <p class="en">Hi, I'm Sóstenes — a young entrepreneur from the Brazilian countryside. I spent almost ten years caring for people in healthcare, as a physiotherapist and biomedical scientist. Today I'm on the other side of the world, in the Silicon Valley ecosystem, learning to turn that care into <strong>technology and AI tools that reach far more people</strong>.</p>
-    <p class="pt">No meio desse caminho, tomei uma decisão difícil — pausar a faculdade de medicina para me dedicar a isso por inteiro. Se eu tivesse que me resumir em três palavras, seriam estas: <strong>cuidar, explorar, construir</strong>.</p>
-    <p class="en">Along the way, I made a hard decision — pausing med school to give this my whole self. If I had to sum myself up in three words, they would be: <strong>care, explore, build</strong>.</p>
-    <p class="pt">Não foi um abandono. Foi uma aposta: como médico, eu cuidaria de um paciente por vez. Construindo boas ferramentas, posso ajudar quem cuida — e quem é cuidado — em uma escala que o consultório sozinho nunca alcançaria.</p>
-    <p class="en">It wasn't quitting. It was a bet: as a doctor, I would care for one patient at a time. By building good tools, I can help those who care — and those being cared for — at a scale a single practice could never reach.</p>
-    <p class="pt">E vou ser honesto desde a primeira linha: <strong>eu tive medo</strong>. Ainda tenho, alguns dias. Este blog existe para contar essa história como ela é — com as dúvidas dentro.</p>
-    <p class="en">And I'll be honest from the very first line: <strong>I was afraid</strong>. Some days I still am. This blog exists to tell that story as it is — doubts included.</p>
+    <p class="sub pt">Nada aqui é promessa de produto pronto. São projetos e teses em validação, com selos de status honestos — a evidência vem antes da escala, e os erros ficam visíveis junto com os acertos.</p>
+    <p class="sub en">Nothing here is a finished-product promise. These are projects and theses under validation, with honest status badges — evidence comes before scale, and mistakes stay visible next to the wins.</p>
+    <div class="cta-row">
+      <a class="btn btn-solid" href="#projetos"><span class="pt">Ver os projetos</span><span class="en">See the projects</span></a>
+      <a class="btn btn-line" href="projetos/ecossistema.html"><span class="pt">Como tudo se conecta</span><span class="en">How it all connects</span></a>
+    </div>
   </div>
 </section>
 
-<!-- A DECISAO -->
-<section>
+<!-- PROJETOS -->
+<section id="projetos">
+  <div class="wrap-wide reveal">
+    <span class="kicker pt">O ECOSSISTEMA</span>
+    <span class="kicker en">THE ECOSYSTEM</span>
+    <h2>
+      <span class="pt">Cinco frentes de saúde, um organismo só — e uma agente que atravessa tudo.</span>
+      <span class="en">Five health fronts, one organism — and one agent running through it all.</span>
+    </h2>
+    <p style="color:var(--ink-soft); max-width:660px;">
+      <span class="pt">O ClinicNow é o centro operacional; os demais existem para alimentá-lo e ser alimentados por ele — quem vende preenche o CRM, quem fideliza gera dados, quem forma médicos os traz para dentro, quem dá acesso gera demanda.</span>
+      <span class="en">ClinicNow is the operational center; the others exist to feed it and be fed by it — selling fills the CRM, loyalty generates data, education brings doctors in, access creates demand.</span>
+    </p>
+
+    <div class="grid-proj">
+      <!-- ClinicNow -->
+      <article class="card">
+        <div class="card-top">
+          <span class="card-logo" aria-hidden="true">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <rect width="48" height="48" rx="12" fill="#1d7a55"/>
+              <path d="M8 34 L15 34 L19 26 L24 37 L28 18 L32 24 L40 11" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M34 11 H40 V17" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <div>
+            <h3>ClinicNow</h3>
+            <span class="badge b-produto"><span class="pt">EM ESTRUTURAÇÃO</span><span class="en">IN STRUCTURING</span></span>
+          </div>
+        </div>
+        <p class="pt">A clínica que não depende de indicação. Funil, IA de atendimento e CRM num só motor — cada lead vira consulta, cada consulta vira dado, cada dado vira crescimento. Inclui o Radar Criativo: benchmark do que roda melhor no marketing médico.</p>
+        <p class="en">The clinic that doesn't depend on referrals. Funnel, front-desk AI and CRM in one engine — every lead becomes a visit, every visit becomes data, every data point becomes growth. Includes Radar Criativo: a benchmark of what performs best in medical marketing.</p>
+        <a class="card-link" href="clinicnow/"><span class="pt">PÁGINA DO PROJETO →</span><span class="en">PROJECT PAGE →</span></a>
+      </article>
+
+      <!-- ClinicNow Cabin -->
+      <article class="card">
+        <div class="card-top">
+          <span class="card-logo" aria-hidden="true">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <rect width="48" height="48" rx="12" fill="#2e6e63"/>
+              <rect x="14" y="7" width="20" height="30" rx="3" fill="none" stroke="#fff" stroke-width="2.2"/>
+              <circle cx="24" cy="18" r="3.2" fill="none" stroke="#fff" stroke-width="2"/>
+              <path d="M18.5 30 c1 -4.5 10 -4.5 11 0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+              <path d="M10 41 H38" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <div>
+            <h3>ClinicNow Cabin</h3>
+            <span class="badge b-tese"><span class="pt">TESE EM VALIDAÇÃO</span><span class="en">THESIS IN VALIDATION</span></span>
+          </div>
+        </div>
+        <p class="pt">Especialista a minutos de qualquer lugar. A cabine que transforma fila de encaminhamento em próximo passo documentado — com aferição de sinais no local, do aeroporto à farmácia.</p>
+        <p class="en">A specialist minutes away from anywhere. The booth that turns referral queues into a documented next step — with on-site vital-sign readings, from the airport to the pharmacy.</p>
+        <a class="card-link" href="clinicnow/cabin.html"><span class="pt">PÁGINA DA TESE →</span><span class="en">THESIS PAGE →</span></a>
+      </article>
+
+      <!-- CareLoop -->
+      <article class="card">
+        <div class="card-top">
+          <span class="card-logo" aria-hidden="true">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <rect width="48" height="48" rx="12" fill="#a07d1c"/>
+              <path d="M24 10 a14 14 0 1 1 -14 14" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M4.5 28.5 L10 24 L14.5 29.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="24" cy="24" r="3" fill="#fff"/>
+            </svg>
+          </span>
+          <div>
+            <h3>CareLoop</h3>
+            <span class="badge b-ideia"><span class="pt">IDEIA MAPEADA</span><span class="en">MAPPED IDEA</span></span>
+          </div>
+        </div>
+        <p class="pt">Receita previsível para a clínica, cuidado contínuo para o paciente. O plano de assinatura próprio, com cobrança automática — o modelo que o Brasil já provou que paga.</p>
+        <p class="en">Predictable revenue for the clinic, continuous care for the patient. The clinic's own subscription plan, with automatic billing — the model Brazil has already proven it pays for.</p>
+        <a class="card-link" href="careloop/"><span class="pt">PÁGINA DO PROJETO →</span><span class="en">PROJECT PAGE →</span></a>
+      </article>
+
+      <!-- MedVerse -->
+      <article class="card">
+        <div class="card-top">
+          <span class="card-logo" aria-hidden="true">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <rect width="48" height="48" rx="12" fill="#5b4a9e"/>
+              <path d="M24 15 C20 11 13 10.5 9.5 12.5 V33.5 C13 31.5 20 32 24 36" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M24 15 C28 11 35 10.5 38.5 12.5 V33.5 C35 31.5 28 32 24 36" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M24 15 V36" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <div>
+            <h3>MedVerse</h3>
+            <span class="badge b-ideia"><span class="pt">IDEIA MAPEADA</span><span class="en">MAPPED IDEA</span></span>
+          </div>
+        </div>
+        <p class="pt">O atlas que forma o médico do futuro: gamificação por perfil comportamental, ciência com integridade e IA aplicada à rotina — do primeiro ano à pesquisa.</p>
+        <p class="en">The atlas shaping the doctor of the future: gamification by behavioral profile, science with integrity, and AI applied to daily practice — from year one to research.</p>
+        <a class="card-link" href="medverse/"><span class="pt">PÁGINA DO PROJETO →</span><span class="en">PROJECT PAGE →</span></a>
+      </article>
+
+      <!-- Genecys -->
+      <article class="card">
+        <div class="card-top">
+          <span class="card-logo" aria-hidden="true">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <rect width="48" height="48" rx="12" fill="#3d6b8e"/>
+              <path d="M9.5 22.5 L24 10 L38.5 22.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13 24 V38 H35 V24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M24 33.5 c-3.4 -2.9 -5.1 -5 -3.6 -7.1 c1.2 -1.6 3.6 -0.9 3.6 0.9 c0 -1.8 2.4 -2.5 3.6 -0.9 c1.5 2.1 -0.2 4.2 -3.6 7.1 z" fill="#fff"/>
+            </svg>
+          </span>
+          <div>
+            <h3>Genecys</h3>
+            <span class="badge b-tese"><span class="pt">TESE EM VALIDAÇÃO</span><span class="en">THESIS IN VALIDATION</span></span>
+          </div>
+        </div>
+        <p class="pt">Envelhecer em casa, com a família vendo tudo e a medicina a um alerta de distância. Monitoramento que termina em desfecho clínico, não em notificação ignorada.</p>
+        <p class="en">Aging at home, with the family seeing everything and medicine one alert away. Monitoring that ends in a clinical outcome — not in an ignored notification.</p>
+        <a class="card-link" href="genecys/"><span class="pt">PÁGINA DO PROJETO →</span><span class="en">PROJECT PAGE →</span></a>
+      </article>
+    </div>
+
+    <!-- Emily — a agente que atravessa o ecossistema -->
+    <article class="card card-emily">
+      <div class="card-top">
+        <span class="card-logo" aria-hidden="true">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="12" fill="#b8556e"/>
+            <rect x="8" y="9" width="32" height="22" rx="8" fill="none" stroke="#fff" stroke-width="2.2"/>
+            <path d="M15 30.5 L12 39 L22 31" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17 17v6 M24 14.5v11 M31 17v6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div>
+          <h3>Emily</h3>
+          <span class="badge b-produto"><span class="pt">EM ESTRUTURAÇÃO</span><span class="en">IN STRUCTURING</span></span>
+        </div>
+      </div>
+      <div class="emily-body">
+        <span class="kicker pt">A AGENTE QUE ATRAVESSA O ECOSSISTEMA</span>
+        <span class="kicker en">THE AGENT RUNNING THROUGH THE ECOSYSTEM</span>
+        <p class="pt">A voz que vende pela clínica e organiza a vida do fundador — duas vertentes, um cérebro. Atende por voz e WhatsApp como a secretária do próprio médico: responde, agenda, converte, faz follow-up e alimenta o CRM do ClinicNow.</p>
+        <p class="en">The voice that sells for the clinic and runs the founder's life — two fronts, one brain. She answers by voice and WhatsApp like the doctor's own secretary: replying, scheduling, converting, following up and feeding ClinicNow's CRM.</p>
+      </div>
+      <a class="card-link" href="emily/"><span class="pt">PÁGINA DO PROJETO →</span><span class="en">PROJECT PAGE →</span></a>
+    </article>
+
+    <article class="card card-emily card-elevo">
+      <div class="card-top">
+        <span class="card-logo" aria-hidden="true">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="12" fill="#c2703d"/>
+            <polyline points="9,36 18,27 25,31 39,15" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="18" cy="27" r="2.6" fill="#fff"/><circle cx="25" cy="31" r="2.6" fill="#fff"/>
+            <circle cx="36.5" cy="10.5" r="3.4" fill="none" stroke="#fff" stroke-width="2"/>
+          </svg>
+        </span>
+        <div>
+          <h3>Elevo</h3>
+          <span class="badge b-tese"><span class="pt">BETA FECHADO — TURMA FUNDADORA</span><span class="en">CLOSED BETA — FOUNDING COHORT</span></span>
+        </div>
+      </div>
+      <div class="emily-body">
+        <span class="kicker pt">A REDE SOCIAL DA EVOLUÇÃO PESSOAL</span>
+        <span class="kicker en">THE PERSONAL-EVOLUTION SOCIAL NETWORK</span>
+        <p class="pt">O Strava da evolução pessoal: a rede social onde a prática diária de mente, corpo e propósito vira treino registrado, comunidade e uma Bússola privada de evolução. Algoritmos que motivam sem manipular — seu estado emocional nunca vira ranking.</p>
+        <p class="en">The Strava of personal evolution: the social network where daily practice of mind, body and purpose becomes a logged workout, community and a private evolution Compass. Algorithms that motivate without manipulating — your emotional state never becomes a ranking.</p>
+      </div>
+      <a class="card-link" href="elevo/"><span class="pt">PÁGINA DO PROJETO →</span><span class="en">PROJECT PAGE →</span></a>
+    </article>
+
+    <div class="disclaimer">
+      <strong class="pt">Honestidade primeiro:</strong><strong class="en">Honesty first:</strong>
+      <span class="pt"> os selos dizem o estado real de cada projeto. “Em estruturação”, “tese” e “ideia” significam exatamente isso — ainda não são produtos validados com clientes. Demos usam dados fictícios. Nenhuma ferramenta aqui substitui a decisão de um profissional de saúde licenciado.</span>
+      <span class="en"> the badges state each project's real stage. “In structuring”, “thesis” and “idea” mean exactly that — these are not yet client-validated products. Demos use fictional data. No tool here replaces the judgment of a licensed health professional.</span>
+    </div>
+
+    <div class="mapa-links">
+      <a href="projetos/"><span class="pt">MAPA COMPLETO DE PROJETOS →</span><span class="en">FULL PROJECT MAP →</span></a>
+      <a href="projetos/ecossistema.html"><span class="pt">O ECOSSISTEMA — COMO TUDO SE CONECTA →</span><span class="en">THE ECOSYSTEM — HOW IT CONNECTS →</span></a>
+    </div>
+
+    <div class="portfolio">
+      <span class="kicker pt">FORA DO ECOSSISTEMA · PORTFÓLIO</span>
+      <span class="kicker en">BEYOND THE ECOSYSTEM · PORTFOLIO</span>
+      <div class="grid-port">
+        <article class="card card-sec">
+          <div>
+            <h3><span class="pt">Monitoramento inteligente de e-mails</span><span class="en">Intelligent e-mail monitoring</span></h3>
+            <span class="badge"><span class="pt">EM USO INTERNO</span><span class="en">INTERNAL USE</span></span>
+          </div>
+          <p class="pt">IA que lê e interpreta os e-mails recebidos e devolve um feedback completo ao cliente — o que chegou, o que importa e o que fazer. Em uso interno; produto em estruturação.</p>
+          <p class="en">AI that reads and interprets incoming e-mail and returns complete feedback to the client — what arrived, what matters and what to do next. In internal use; product being structured.</p>
+        </article>
+      </div>
+      <p class="bastidores">
+        <span class="pt">Nos bastidores: o pitch da Zatheon vive organizado num painel 3D de agentes — o Zatheon Pitch App, ferramenta interna.</span>
+        <span class="en">Behind the scenes: Zatheon's pitch lives organized in a 3D agent panel — the Zatheon Pitch App, an internal tool.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FUNDADOR -->
+<section id="fundador">
+  <div class="wrap-wide reveal">
+    <span class="kicker pt">FUNDADOR</span>
+    <span class="kicker en">FOUNDER</span>
+    <h2>
+      <span class="pt">Quem está construindo isso.</span>
+      <span class="en">Who is building this.</span>
+    </h2>
+    <div class="fundador-grid">
+      <figure class="fundador-foto">
+        <img src="assets/sostenes-brooklyn-portrait.jpeg" alt="Sóstenes Costa Paiva diante da Manhattan Bridge, em Brooklyn, Nova York" width="720" height="1280" loading="lazy" />
+        <figcaption>BROOKLYN · NEW YORK</figcaption>
+      </figure>
+      <div class="prose">
+        <p class="pt">Oi, eu sou o Sóstenes — um jovem empreendedor do interior do Brasil. Passei quase dez anos cuidando de gente dentro da saúde, como fisioterapeuta e biomédico. Hoje estou do outro lado do mundo, no ecossistema do Vale do Silício, aprendendo a transformar esse cuidado em <strong>ferramentas de tecnologia e IA que alcançam muito mais pessoas</strong>.</p>
+        <p class="en">Hi, I'm Sóstenes — a young entrepreneur from the Brazilian countryside. I spent almost ten years caring for people in healthcare, as a physiotherapist and biomedical scientist. Today I'm on the other side of the world, in the Silicon Valley ecosystem, learning to turn that care into <strong>technology and AI tools that reach far more people</strong>.</p>
+        <p class="pt">No meio desse caminho, tomei uma decisão difícil — pausar a faculdade de medicina para me dedicar a isso por inteiro. Para deixar claro desde já: <strong>não sou médico</strong>. Sou fisioterapeuta e biomédico, e é dessa prática — e dos seus problemas reais — que a Zatheon nasce. Se eu tivesse que me resumir em três palavras, seriam estas: <strong>cuidar, explorar, construir</strong>.</p>
+        <p class="en">Along the way, I made a hard decision — pausing med school to give this my whole self. To be clear from the start: <strong>I am not a physician</strong>. I am a physiotherapist and biomedical scientist, and Zatheon is born from that practice — and its real problems. If I had to sum myself up in three words, they would be: <strong>care, explore, build</strong>.</p>
+        <p class="pt">Não foi um abandono. Foi uma aposta: como médico, eu cuidaria de um paciente por vez. Construindo boas ferramentas, posso ajudar quem cuida — e quem é cuidado — em uma escala que o consultório sozinho nunca alcançaria.</p>
+        <p class="en">It wasn't quitting. It was a bet: as a doctor, I would care for one patient at a time. By building good tools, I can help those who care — and those being cared for — at a scale a single practice could never reach.</p>
+        <div class="formacao">
+          <span class="pt">FORMAÇÃO · Fisioterapia (Universidade Potiguar) · Biomedicina (UNIBTA) · Medicina — pausada em 2026 · AI Fluency: Framework &amp; Foundations (Anthropic, 2026)</span>
+          <span class="en">EDUCATION · Physiotherapy (Universidade Potiguar) · Biomedical Science (UNIBTA) · Medicine — paused in 2026 · AI Fluency: Framework &amp; Foundations (Anthropic, 2026)</span>
+        </div>
+        <p class="pt">E vou ser honesto desde a primeira linha: <strong>eu tive medo</strong>. Ainda tenho, alguns dias. O <a href="#blog">blog</a> abaixo existe para contar essa história como ela é — com as dúvidas dentro.</p>
+        <p class="en">And I'll be honest from the very first line: <strong>I was afraid</strong>. Some days I still am. The <a href="#blog">blog</a> below exists to tell that story as it is — doubts included.</p>
+        <div class="cta-row">
+          <a class="btn btn-line" href="https://www.linkedin.com/in/s%C3%B3stenes-costa-paiva-184137165/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn-line" href="#blog"><span class="pt">Ler a história completa</span><span class="en">Read the full story</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG: A DECISAO -->
+<section id="blog">
   <div class="wrap prose reveal">
-    <span class="kicker pt">A DECISÃO</span>
-    <span class="kicker en">THE DECISION</span>
+    <span class="kicker pt">BLOG · A DECISÃO</span>
+    <span class="kicker en">BLOG · THE DECISION</span>
     <h2>
       <span class="pt">A conta que não fechava</span>
       <span class="en">The math that didn't add up</span>
@@ -201,7 +564,7 @@
   </div>
 </section>
 
-<!-- HISTORIA -->
+<!-- BLOG: HISTORIA -->
 <section>
   <div class="wrap reveal">
     <span class="kicker pt">DE ONDE EU VENHO</span>
@@ -251,7 +614,7 @@
   </div>
 </section>
 
-<!-- NO QUE SOU BOM -->
+<!-- BLOG: NO QUE SOU BOM -->
 <section>
   <div class="wrap reveal">
     <span class="kicker pt">NO QUE SOU BOM</span>
@@ -289,57 +652,7 @@
   </div>
 </section>
 
-<!-- O QUE ESTOU CONSTRUINDO -->
-<section>
-  <div class="wrap reveal">
-    <span class="kicker pt">O QUE ESTOU CONSTRUINDO</span>
-    <span class="kicker en">WHAT I'M BUILDING</span>
-    <h2>
-      <span class="pt">Ferramentas reais, em construção aberta</span>
-      <span class="en">Real tools, built in the open</span>
-    </h2>
-    <p style="color:var(--ink-soft); margin-bottom:20px;">
-      <span class="pt">A <strong style="color:var(--ink);">Zetheon</strong> é a empresa que registrei para abrigar esse trabalho — uma marca aberta: construo em público, mostro o processo e os erros. Estes são os projetos:</span>
-      <span class="en"><strong style="color:var(--ink);">Zetheon</strong> is the company I registered to house this work — an open brand: I build in public, showing the process and the mistakes. These are the projects:</span>
-    </p>
-    <div class="proj">
-      <a class="proj-card" href="sosmed/index.html">
-        <div class="proj-top">
-          <h3>Dr. SOS Med IA</h3>
-          <span class="proj-tag pt">RODANDO AGORA</span><span class="proj-tag en">LIVE NOW</span>
-        </div>
-        <p class="pt">A IA médica da Zetheon, em operação. O objetivo é grande — ajudar milhões de vidas — mas o caminho é um passo por vez: hoje ela já trabalha ajudando clínicas a atender e acompanhar melhor.</p>
-        <p class="en">Zetheon's medical AI, in operation. The goal is big — helping millions of lives — but the path is one step at a time: today it already helps clinics serve and follow up with patients better.</p>
-      </a>
-      <a class="proj-card" href="medgroth/index.html">
-        <div class="proj-top">
-          <h3>MedGroth</h3>
-          <span class="proj-tag pt">NO AR</span><span class="proj-tag en">LIVE</span>
-        </div>
-        <p class="pt">A máquina de crescimento para médicos e clínicas: diagnóstico em 3 minutos, plano de 4 semanas, funil de leads e metas de receita. Página de vendas, captura e memorando para investidores — tudo aberto.</p>
-        <p class="en">The growth machine for doctors and clinics: a 3-minute diagnosis, a 4-week plan, a lead funnel and revenue goals. Sales page, lead capture and investor memo — all in the open.</p>
-      </a>
-      <a class="proj-card" href="medeasy.html">
-        <div class="proj-top">
-          <h3>MedEasy</h3>
-          <span class="proj-tag quiet pt">EM CONSTRUÇÃO</span><span class="proj-tag quiet en">IN PROGRESS</span>
-        </div>
-        <p class="pt">A consulta que se documenta sozinha: escuta, transcreve e gera a papelada clínica, com um Índice de Saúde de A a F e um app para o paciente.</p>
-        <p class="en">The consultation that documents itself: it listens, transcribes and generates clinical paperwork, with an A–F Health Index and a patient app.</p>
-      </a>
-      <a class="proj-card" href="https://drsostenescosta-rgb.github.io/chatgosipt/" target="_blank" rel="noopener">
-        <div class="proj-top">
-          <h3>ChatGosipt</h3>
-          <span class="proj-tag quiet pt">LANÇADO</span><span class="proj-tag quiet en">SHIPPED</span>
-        </div>
-        <p class="pt">Transcrição por IA, 100% local e privada. Meu primeiro produto lançado — simples, útil e funcionando.</p>
-        <p class="en">AI transcription, 100% local and private. My first shipped product — simple, useful, and working.</p>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- PARA QUEM SENTE O CHAMADO -->
+<!-- BLOG: PARA QUEM SENTE O CHAMADO -->
 <section>
   <div class="wrap prose reveal">
     <span class="kicker pt">PARA VOCÊ, QUE SENTE ALGO PARECIDO</span>
@@ -362,7 +675,7 @@
 </section>
 
 <!-- CONTATO -->
-<section>
+<section id="contato">
   <div class="wrap prose reveal">
     <span class="kicker pt">VAMOS CONVERSAR</span>
     <span class="kicker en">LET'S TALK</span>
@@ -370,21 +683,22 @@
       <span class="pt">Se algo aqui fez sentido para você</span>
       <span class="en">If any of this resonated with you</span>
     </h2>
-    <p class="pt">Escrevo este blog para documentar o caminho — os acertos e os tropeços. Se você é profissional de saúde, empreendedor, ou só alguém curioso sobre IA e medicina: me chama. Eu respondo.</p>
-    <p class="en">I write this blog to document the journey — the wins and the stumbles. If you're a health professional, an entrepreneur, or just curious about AI and medicine: reach out. I reply.</p>
+    <p class="pt">Escrevo este blog para documentar o caminho — os acertos e os tropeços. Se você é profissional de saúde, empreendedor, investidor ou só alguém curioso sobre IA e saúde: me chama. Eu respondo.</p>
+    <p class="en">I write this blog to document the journey — the wins and the stumbles. If you're a health professional, an entrepreneur, an investor, or just curious about AI and healthcare: reach out. I reply.</p>
+    <p><a href="avaliacoes/"><span class="pt">Veja o que dizem sobre trabalhar comigo →</span><span class="en">See what people say about working with me →</span></a></p>
     <div class="cta-row">
       <a class="btn btn-solid" href="https://wa.me/5584999869468" target="_blank" rel="noopener">WhatsApp</a>
       <a class="btn btn-line" href="mailto:drsostenescosta@gmail.com">E-mail</a>
       <a class="btn btn-line" href="https://www.instagram.com/drsostenes/" target="_blank" rel="noopener">Instagram</a>
-      <a class="btn btn-line" href="https://uk.linkedin.com/in/s%C3%B3stenes-costa-paiva-184137165/en" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn btn-line" href="https://www.linkedin.com/in/s%C3%B3stenes-costa-paiva-184137165/" target="_blank" rel="noopener">LinkedIn</a>
       <a class="btn btn-line" href="https://www.youtube.com/channel/UC2d-BgBasNZ1nldwCLJ9zGw" target="_blank" rel="noopener">YouTube</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <span class="pt">&copy; 2026 SÓSTENES COSTA PAIVA · ZETHEON · CONSTRUINDO EM PÚBLICO</span>
-  <span class="en">&copy; 2026 SÓSTENES COSTA PAIVA · ZETHEON · BUILDING IN PUBLIC</span>
+  <span class="pt">&copy; 2026 SÓSTENES COSTA PAIVA · ZATHEON · CONSTRUINDO EM PÚBLICO · <a href="avaliacoes/" style="color:inherit; border-bottom:1px solid currentColor">AVALIAÇÕES</a> · <a href="privacidade.html" style="color:inherit; border-bottom:1px solid currentColor">PRIVACIDADE</a> · <span style="opacity:.55;font-variant-numeric:tabular-nums">ATUALIZADO EM 06.08.2026</span></span>
+  <span class="en">&copy; 2026 SÓSTENES COSTA PAIVA · ZATHEON · BUILDING IN PUBLIC · <a href="avaliacoes/" style="color:inherit; border-bottom:1px solid currentColor">REVIEWS</a> · <a href="privacidade.html" style="color:inherit; border-bottom:1px solid currentColor">PRIVACY</a> · <span style="opacity:.55;font-variant-numeric:tabular-nums">UPDATED AUG 6, 2026</span></span>
 </footer>
 
 <script>
@@ -412,5 +726,20 @@
   }
 </script>
 
+<script>
+(function () {
+  var ring = document.getElementById('orbitRing');
+  if (!ring) return;
+  var logos = document.querySelectorAll('#projetos .card-logo svg');
+  if (!logos.length) return;
+  logos.forEach(function (svg, i) {
+    var item = document.createElement('div');
+    item.className = 'orbit-item';
+    item.style.setProperty('--a', (i * 360 / logos.length) + 'deg');
+    item.appendChild(svg.cloneNode(true));
+    ring.appendChild(item);
+  });
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<title>Elevo — O Strava da evolução pessoal · Beta fechado, Turma Fundadora</title>
+<meta name="description" content="Elevo: a rede social onde a prática diária de mente, corpo e propósito vira treino registrado, comunidade e uma Bússola privada de evolução. Beta fechado — Turma Fundadora. Não é terapia nem produto de saúde mental clínico." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#faf8f3; --bg-soft:#f2efe7; --card:#ffffff;
+    --ink:#1f2421; --ink-soft:#5b615c;
+    --line:#e3ded2; --line-strong:#cfc9ba;
+    --green:#1d7a55; --green-soft:#e7f2ec;
+    --gold:#a07d1c; --gold-text:#806313; --gold-soft:#f5efdd;
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.7; font-size:16.5px; -webkit-font-smoothing:antialiased; }
+  img { display:block; max-width:100%; height:auto; }
+  a { color:var(--green); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  :focus-visible { outline:2px solid var(--green); outline-offset:3px; }
+
+  .wrap { max-width:940px; margin:0 auto; padding:0 22px; }
+
+  /* ---- Header ---- */
+  header.nav { position:sticky; top:0; z-index:50; background:rgba(250,248,243,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav-inner { max-width:940px; margin:0 auto; padding:13px 22px; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+  .brand { font-family:var(--serif); font-weight:600; font-size:1.02rem; line-height:1.2; }
+  .brand small { display:block; font-family:var(--mono); font-weight:400; font-size:0.6rem; letter-spacing:0.16em; color:var(--gold-text); }
+  .nav-right { display:flex; align-items:center; gap:14px; }
+  .selo-tese { font-family:var(--mono); font-size:0.62rem; letter-spacing:0.12em; color:var(--gold-text); border:1px solid var(--gold); border-radius:999px; padding:4px 12px; background:var(--gold-soft); white-space:nowrap; }
+  a.back { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.08em; color:var(--ink-soft); white-space:nowrap; }
+  a.back:hover { color:var(--green); text-decoration:none; }
+  @media (max-width:560px){ .selo-tese { display:none; } }
+
+  /* ---- Hero ---- */
+  .hero { padding:72px 0 20px; }
+  .kicker { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-text); display:block; margin-bottom:16px; }
+  h1 { font-family:var(--serif); font-weight:500; font-size:clamp(2rem,5vw,3rem); line-height:1.15; letter-spacing:-0.01em; margin-bottom:18px; max-width:18ch; }
+  h1 em { font-style:italic; color:var(--green); }
+  .hero p.lead { color:var(--ink-soft); font-size:1.05rem; max-width:58ch; }
+  .aviso { margin:30px 0 0; padding:16px 20px; background:var(--card); border:1px solid var(--line); border-left:3px solid var(--gold); border-radius:10px; font-size:0.86rem; color:var(--ink-soft); max-width:760px; }
+  .aviso strong { color:var(--ink); }
+
+  /* ---- Sections ---- */
+  section { padding:58px 0 6px; }
+  section + section { margin-top:26px; }
+  .sec-head { margin-bottom:28px; }
+  h2 { font-family:var(--serif); font-weight:500; font-size:clamp(1.45rem,3vw,1.85rem); margin-bottom:8px; }
+  .sub { color:var(--ink-soft); font-size:0.94rem; max-width:64ch; }
+
+  /* ---- Galeria ---- */
+  .galeria { display:grid; gap:18px; }
+  @media (min-width:760px){
+    .galeria { grid-template-columns:1fr 1fr; }
+    .g-full { grid-column:1 / -1; }
+  }
+  .gcard { background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; }
+  .gcard svg.gart { width:100%; height:auto; display:block; border-bottom:1px solid var(--line); background:#f7f4ec; }
+  .gcard .gbody { padding:16px 20px 18px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .gcard h3 { font-family:var(--serif); font-weight:500; font-size:1.06rem; line-height:1.35; }
+  .gcard p { color:var(--ink-soft); font-size:0.88rem; }
+  .selo-conceito { margin-top:auto; align-self:flex-start; font-family:var(--mono); font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-text); border:1px solid var(--gold); border-radius:6px; padding:3px 9px; background:var(--gold-soft); }
+  .selo-real { margin-top:auto; align-self:flex-start; font-family:var(--mono); font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--green); border:1px solid var(--green); border-radius:6px; padding:3px 9px; background:var(--green-soft); }
+
+  /* ---- Circuito ---- */
+  .passos { display:grid; gap:14px; }
+  @media (min-width:700px){ .passos { grid-template-columns:1fr 1fr; } }
+  .passo { position:relative; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px 18px; display:flex; gap:16px; align-items:flex-start; }
+  .passo .ico { flex:none; width:44px; height:44px; border-radius:11px; background:var(--green-soft); border:1px solid rgba(29,122,85,0.25); display:flex; align-items:center; justify-content:center; }
+  .passo .ico svg { width:24px; height:24px; }
+  .passo .num { position:absolute; top:14px; right:16px; font-family:var(--mono); font-size:0.66rem; letter-spacing:0.08em; color:var(--line-strong); }
+  .passo h3 { font-family:var(--serif); font-weight:500; font-size:1rem; margin-bottom:4px; padding-right:28px; }
+  .passo p { color:var(--ink-soft); font-size:0.87rem; }
+
+  /* ---- Chips ---- */
+  .chips { display:flex; flex-wrap:wrap; gap:12px; margin-top:6px; }
+  .chip { display:inline-flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:10px 20px 10px 14px; font-size:0.9rem; font-weight:500; }
+  .chip svg { width:22px; height:22px; flex:none; }
+  .chip small { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--green); }
+  .nota-proposta { margin-top:16px; font-size:0.8rem; color:var(--ink-soft); max-width:64ch; }
+
+  /* ---- Governança ---- */
+  .gov-grid { display:grid; gap:14px; margin-bottom:22px; }
+  @media (min-width:700px){ .gov-grid { grid-template-columns:repeat(3,1fr); } }
+  .gov { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; }
+  .gov .tag { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--green); display:block; margin-bottom:8px; }
+  .gov h3 { font-family:var(--serif); font-weight:500; font-size:1rem; margin-bottom:6px; }
+  .gov p { color:var(--ink-soft); font-size:0.85rem; }
+  .limites-box { background:var(--bg-soft); border:1px solid var(--line); border-radius:14px; padding:22px 26px; }
+  .limites-box h3 { font-family:var(--serif); font-weight:500; font-size:1.05rem; margin-bottom:12px; }
+  ul.limites { list-style:none; display:grid; gap:9px; }
+  ul.limites li { font-size:0.88rem; color:var(--ink-soft); padding-left:24px; position:relative; }
+  ul.limites li::before { content:'—'; position:absolute; left:0; color:var(--green); }
+
+  /* ---- CTA ---- */
+  .cta { margin:56px 0 64px; padding:34px 30px; background:var(--card); border:1px solid var(--line); border-radius:16px; }
+  .cta h2 { margin-bottom:10px; }
+  .cta p { color:var(--ink-soft); font-size:0.93rem; max-width:62ch; margin-bottom:22px; }
+  .btns { display:flex; flex-wrap:wrap; gap:12px; }
+  a.btn { display:inline-flex; align-items:center; gap:9px; padding:12px 24px; border-radius:10px; font-weight:600; font-size:0.9rem; text-decoration:none; }
+  a.btn:hover { text-decoration:none; filter:brightness(1.05); }
+  a.btn-primario { background:var(--green); color:#ffffff; }
+  a.btn-zap { border:1px solid var(--line-strong); color:var(--ink); background:var(--bg); }
+  a.btn-zap:hover { border-color:var(--green); color:var(--green); }
+  a.btn svg { width:17px; height:17px; }
+
+  footer { border-top:1px solid var(--line); padding:28px 22px 44px; text-align:center; color:var(--ink-soft); font-size:0.7rem; font-family:var(--mono); letter-spacing:0.08em; }
+  .foot-links { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; margin-top:14px; }
+  .foot-links a { color:var(--ink-soft); }
+  .foot-links a:hover { color:var(--green); }
+  .foot-disc { margin:18px auto 0; max-width:74ch; font-family:var(--sans); letter-spacing:0; font-size:0.72rem; line-height:1.65; color:var(--ink-soft); }
+
+  @media (prefers-reduced-motion:no-preference){
+    .fade { animation:f .6s ease both; }
+    @keyframes f { from { opacity:0; transform:translateY(8px); } to { opacity:1; } }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">Elevo <small>ECOSSISTEMA ZATHEON</small></div>
+    <div class="nav-right">
+      <span class="selo-tese">BETA FECHADO · TURMA FUNDADORA</span>
+      <a class="back" href="../">← VOLTAR</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- 1 · Hero -->
+  <div class="hero fade">
+    <span class="kicker">App real · Beta fechado · Turma Fundadora</span>
+    <h1>O Strava da <em>evolução pessoal.</em></h1>
+    <p class="lead">A rede social onde a prática diária de mente, corpo e propósito vira treino registrado, comunidade e uma Bússola de evolução — a retenção do Duolingo, com gentileza, para pessoas de mentalidade expandida que querem motivação e direção na rotina, com algoritmos que respeitam o usuário.</p>
+    <div class="aviso"><strong>O que esta página é (e não é):</strong> a apresentação de um aplicativo real, hoje em beta fechado com a Turma Fundadora — não está lançado ao público e não há preço definido. O Elevo não é terapia nem produto de saúde mental clínico: não diagnostica, não trata e não promete resultado terapêutico. As imagens abaixo são ilustrações desenhadas para esta página, não capturas de tela.</div>
+  </div>
+
+  <!-- 2 · Como é na prática -->
+  <section class="fade" aria-labelledby="t-pratica">
+    <div class="sec-head">
+      <h2 id="t-pratica">Como é na prática</h2>
+      <p class="sub">Três momentos do app, ilustrados. Tudo o que aparece aqui já roda no beta fechado — as imagens são desenhos desta página, não fotografias de produto.</p>
+    </div>
+    <div class="galeria">
+
+      <figure class="gcard g-full">
+        <svg class="gart" viewBox="0 0 1200 580" role="img" aria-label="Ilustração do circuito diário do Elevo em três telas de celular: check-in com cinco estados de mesmo tamanho, prática do dia da trilha e post automático no Círculo, com o preview do amanhã fechando o loop.">
+          <rect x="0" y="0" width="1200" height="580" fill="#f7f4ec"/>
+
+          <!-- Telefone 1 · Check-in -->
+          <rect x="80" y="50" width="250" height="440" rx="26" fill="#ffffff" stroke="#cfc9ba" stroke-width="2"/>
+          <rect x="170" y="62" width="70" height="8" rx="4" fill="#e3ded2"/>
+          <text x="205" y="100" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="12" letter-spacing="2" fill="#806313">CHECK-IN DO DIA</text>
+          <text x="205" y="130" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#1f2421">Como você chega hoje?</text>
+          <g stroke="#1d7a55" stroke-width="2" fill="#e7f2ec">
+            <circle cx="117" cy="180" r="17"/>
+            <circle cx="161" cy="180" r="17"/>
+            <circle cx="205" cy="180" r="17"/>
+            <circle cx="249" cy="180" r="17"/>
+            <circle cx="293" cy="180" r="17"/>
+          </g>
+          <g stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" fill="none">
+            <path d="M111 177h0.1M123 177h0.1M111.5 187a7 7 0 0 1 11 0"/>
+            <path d="M155 177h0.1M167 177h0.1M156 186.5a10 10 0 0 1 10 0"/>
+            <path d="M199 177h0.1M211 177h0.1M200 186h10"/>
+            <path d="M243 177h0.1M255 177h0.1M244 185a10 10 0 0 0 10 0"/>
+            <path d="M287 177h0.1M299 177h0.1M287.5 184a7 7 0 0 0 11 0"/>
+          </g>
+          <text x="205" y="226" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="1.2" fill="#5b615c">TODOS VALEM O MESMO</text>
+          <line x1="100" y1="246" x2="310" y2="246" stroke="#e3ded2"/>
+          <rect x="100" y="265" width="210" height="92" rx="10" fill="#faf8f3" stroke="#e3ded2"/>
+          <text x="205" y="292" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing="1.2" fill="#806313">SEM PONTOS POR EMOÇÃO</text>
+          <text x="205" y="316" text-anchor="middle" font-family="'Inter',sans-serif" font-size="11.5" fill="#5b615c">O estado nunca vira score —</text>
+          <text x="205" y="334" text-anchor="middle" font-family="'Inter',sans-serif" font-size="11.5" fill="#5b615c">só orienta o seu dia.</text>
+          <rect x="100" y="390" width="210" height="44" rx="10" fill="#1d7a55"/>
+          <text x="205" y="417" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="600" fill="#ffffff">Registrar e começar</text>
+          <text x="205" y="516" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="1.2" fill="#5b615c">1 · CHECK-IN DE ESTADO</text>
+
+          <!-- Seta 1 -->
+          <path d="M342 270H452" stroke="#a07d1c" stroke-width="1.7" stroke-dasharray="4 5" fill="none"/>
+          <path d="m452 264 10 6-10 6" fill="none" stroke="#a07d1c" stroke-width="1.7" stroke-linejoin="round"/>
+          <text x="400" y="252" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="1" fill="#806313">VIRA TREINO</text>
+
+          <!-- Telefone 2 · Prática -->
+          <rect x="475" y="50" width="250" height="440" rx="26" fill="#ffffff" stroke="#cfc9ba" stroke-width="2"/>
+          <rect x="565" y="62" width="70" height="8" rx="4" fill="#e3ded2"/>
+          <text x="600" y="100" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="12" letter-spacing="2" fill="#806313">PRÁTICA DO DIA</text>
+          <rect x="495" y="116" width="106" height="22" rx="11" fill="#f5efdd" stroke="#a07d1c"/>
+          <text x="548" y="131" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" letter-spacing="0.6" fill="#806313">DIA 9 · CULTIVAR</text>
+          <rect x="609" y="116" width="82" height="22" rx="11" fill="#e7f2ec" stroke="#1d7a55"/>
+          <text x="650" y="131" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" letter-spacing="0.6" fill="#1d7a55">EVIDÊNCIA</text>
+          <text x="495" y="172" font-family="'Fraunces',serif" font-size="16" fill="#1f2421">Saborear um momento</text>
+          <text x="495" y="192" font-family="'Fraunces',serif" font-size="16" fill="#1f2421">bom do seu dia</text>
+          <rect x="495" y="208" width="210" height="8" rx="4" fill="#eee9dd"/>
+          <rect x="495" y="224" width="180" height="8" rx="4" fill="#eee9dd"/>
+          <rect x="495" y="240" width="196" height="8" rx="4" fill="#eee9dd"/>
+          <text x="495" y="272" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="#5b615c">Fonte: Bryant &amp; Veroff (2007)</text>
+          <rect x="495" y="288" width="210" height="34" rx="9" fill="#faf8f3" stroke="#e3ded2" stroke-dasharray="3 3"/>
+          <text x="600" y="309" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10.5" fill="#1d7a55">dia difícil? rota de autocompaixão</text>
+          <text x="600" y="374" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing="1" fill="#806313">+ LUMENS AO CONCLUIR</text>
+          <rect x="495" y="390" width="210" height="44" rx="10" fill="#1d7a55"/>
+          <text x="600" y="417" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="600" fill="#ffffff">Concluir prática</text>
+          <text x="600" y="516" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="1.2" fill="#5b615c">2 · PRÁTICA DO DIA</text>
+
+          <!-- Seta 2 -->
+          <path d="M737 270H847" stroke="#a07d1c" stroke-width="1.7" stroke-dasharray="4 5" fill="none"/>
+          <path d="m847 264 10 6-10 6" fill="none" stroke="#a07d1c" stroke-width="1.7" stroke-linejoin="round"/>
+          <text x="795" y="252" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="1" fill="#806313">VIRA POST</text>
+
+          <!-- Telefone 3 · Círculo -->
+          <rect x="870" y="50" width="250" height="440" rx="26" fill="#ffffff" stroke="#cfc9ba" stroke-width="2"/>
+          <rect x="960" y="62" width="70" height="8" rx="4" fill="#e3ded2"/>
+          <text x="995" y="100" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="12" letter-spacing="2" fill="#806313">CÍRCULO</text>
+          <rect x="890" y="118" width="210" height="176" rx="12" fill="#faf8f3" stroke="#e3ded2"/>
+          <circle cx="916" cy="148" r="14" fill="#e7f2ec" stroke="#1d7a55" stroke-width="1.7"/>
+          <circle cx="916" cy="144" r="4.5" fill="none" stroke="#1d7a55" stroke-width="1.5"/>
+          <path d="M908 156a8 8 0 0 1 16 0" fill="none" stroke="#1d7a55" stroke-width="1.5"/>
+          <rect x="940" y="138" width="90" height="8" rx="4" fill="#ddd7c8"/>
+          <rect x="940" y="152" width="60" height="6" rx="3" fill="#eee9dd"/>
+          <text x="906" y="192" font-family="'Inter',sans-serif" font-size="11.5" fill="#1f2421">Prática do dia 9 concluída</text>
+          <text x="906" y="210" font-family="'Inter',sans-serif" font-size="10" fill="#5b615c">Frequência da Alegria · Cultivar</text>
+          <line x1="906" y1="228" x2="1084" y2="228" stroke="#e3ded2"/>
+          <rect x="906" y="244" width="96" height="30" rx="15" fill="#f5efdd" stroke="#a07d1c"/>
+          <path d="m922 252 1.6 3.6 3.6 1.6-3.6 1.6-1.6 3.6-1.6-3.6-3.6-1.6 3.6-1.6z" fill="none" stroke="#a07d1c" stroke-width="1.5" stroke-linejoin="round"/>
+          <text x="963" y="263" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.6" fill="#806313">ELEVA · 12</text>
+          <path d="M1022 250h34a5 5 0 0 1 5 5v9a5 5 0 0 1-5 5h-22l-8 6v-6h-4a5 5 0 0 1-5-5v-9a5 5 0 0 1 5-5z" fill="none" stroke="#1d7a55" stroke-width="1.5" stroke-linejoin="round"/>
+          <text x="1040" y="264" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="#1d7a55">3</text>
+          <rect x="890" y="330" width="210" height="58" rx="10" fill="#e7f2ec" stroke="#1d7a55"/>
+          <rect x="906" y="349" width="12" height="10" rx="2" fill="none" stroke="#1d7a55" stroke-width="1.5"/>
+          <path d="M908.5 349v-3a3.5 3.5 0 0 1 7 0v3" fill="none" stroke="#1d7a55" stroke-width="1.5"/>
+          <text x="932" y="352" font-family="'Inter',sans-serif" font-size="10.5" fill="#1d7a55">post automático, sem expor</text>
+          <text x="932" y="370" font-family="'Inter',sans-serif" font-size="10.5" fill="#1d7a55">seu estado emocional</text>
+          <rect x="890" y="404" width="210" height="30" rx="9" fill="#faf8f3" stroke="#e3ded2"/>
+          <text x="995" y="423" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing="0.8" fill="#5b615c">AMANHÃ · DIA 10 · PREVIEW</text>
+          <text x="995" y="516" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="1.2" fill="#5b615c">3 · POST NO CÍRCULO</text>
+
+          <!-- Loop de retorno -->
+          <path d="M1090 540 H 130" stroke="#a07d1c" stroke-width="1.5" stroke-dasharray="4 6" fill="none" opacity="0.85"/>
+          <path d="m140 534-10 6 10 6" fill="none" stroke="#a07d1c" stroke-width="1.5" stroke-linejoin="round"/>
+          <text x="600" y="564" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="1.2" fill="#806313">O PREVIEW DO AMANHÃ FECHA O LOOP</text>
+        </svg>
+        <figcaption class="gbody">
+          <h3>O ritual diário: check-in de 5 estados, prática e Círculo</h3>
+          <p>Um gesto por dia: você registra como chega — os 5 estados valem exatamente o mesmo, porque a valência emocional nunca pontua —, faz a prática do dia e o Elevo publica no Círculo sem expor seu estado. O preview do amanhã fecha o loop.</p>
+          <span class="selo-real">Do beta real — Turma Fundadora</span>
+        </figcaption>
+      </figure>
+
+      <figure class="gcard">
+        <svg class="gart" viewBox="0 0 600 420" role="img" aria-label="Ilustração da trilha de 21 dias Frequência da Alegria: mapa de nós em serpentina com os capítulos Notar, Cultivar e Irradiar e Portais dourados nos dias 7, 14 e 21.">
+          <rect x="0" y="0" width="600" height="420" fill="#f7f4ec"/>
+          <text x="300" y="36" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="1.6" fill="#806313">TRILHA VIVA · FREQUÊNCIA DA ALEGRIA · 21 DIAS</text>
+
+          <path d="M60 120 H540 V210 H60 V300 H540" fill="none" stroke="#1d7a55" stroke-width="2" stroke-dasharray="3 5" opacity="0.35"/>
+
+          <text x="60" y="84" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="1" fill="#1d7a55">CAPÍTULO 1 — NOTAR · DIAS 1–7</text>
+          <text x="540" y="174" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="1" fill="#1d7a55">CAPÍTULO 2 — CULTIVAR · DIAS 8–14</text>
+          <text x="60" y="264" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="1" fill="#1d7a55">CAPÍTULO 3 — IRRADIAR · DIAS 15–21</text>
+
+          <!-- Linha 1 · dias 1–6 -->
+          <g font-family="'JetBrains Mono',monospace" font-size="9" text-anchor="middle">
+            <circle cx="60" cy="120" r="11" fill="#1d7a55"/><text x="60" y="123.5" fill="#ffffff">1</text>
+            <circle cx="140" cy="120" r="11" fill="#ffffff" stroke="#1d7a55" stroke-width="1.7"/><text x="140" y="123.5" fill="#1d7a55">2</text>
+            <circle cx="220" cy="120" r="11" fill="#f5efdd" stroke="#a07d1c" stroke-width="1.7"/><text x="220" y="123.5" fill="#806313">3</text>
+            <circle cx="300" cy="120" r="11" fill="#1d7a55"/><text x="300" y="123.5" fill="#ffffff">4</text>
+            <circle cx="380" cy="120" r="11" fill="#ffffff" stroke="#1d7a55" stroke-width="1.7"/><text x="380" y="123.5" fill="#1d7a55">5</text>
+            <circle cx="460" cy="120" r="11" fill="#1d7a55"/><text x="460" y="123.5" fill="#ffffff">6</text>
+          </g>
+          <!-- Portal dia 7 -->
+          <g>
+            <rect x="527" y="107" width="26" height="26" rx="4" transform="rotate(45 540 120)" fill="#f5efdd" stroke="#a07d1c" stroke-width="2"/>
+            <text x="540" y="124" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="#806313">7</text>
+            <text x="522" y="147" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="8.5" letter-spacing="0.8" fill="#806313">PORTAL 7</text>
+          </g>
+
+          <!-- Linha 2 · dias 8–13 -->
+          <g font-family="'JetBrains Mono',monospace" font-size="9" text-anchor="middle">
+            <circle cx="460" cy="210" r="11" fill="#f5efdd" stroke="#a07d1c" stroke-width="1.7"/><text x="460" y="213.5" fill="#806313">9</text>
+            <circle cx="540" cy="210" r="11" fill="#1d7a55"/><text x="540" y="213.5" fill="#ffffff">8</text>
+            <circle cx="380" cy="210" r="11" fill="#ffffff" stroke="#1d7a55" stroke-width="1.7"/><text x="380" y="213.5" fill="#1d7a55">10</text>
+            <circle cx="300" cy="210" r="11" fill="#1d7a55"/><text x="300" y="213.5" fill="#ffffff">11</text>
+            <circle cx="220" cy="210" r="11" fill="#f5efdd" stroke="#a07d1c" stroke-width="1.7"/><text x="220" y="213.5" fill="#806313">12</text>
+            <circle cx="140" cy="210" r="11" fill="#ffffff" stroke="#1d7a55" stroke-width="1.7"/><text x="140" y="213.5" fill="#1d7a55">13</text>
+          </g>
+          <!-- Portal dia 14 -->
+          <g>
+            <rect x="47" y="197" width="26" height="26" rx="4" transform="rotate(45 60 210)" fill="#f5efdd" stroke="#a07d1c" stroke-width="2"/>
+            <text x="60" y="214" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="#806313">14</text>
+            <text x="80" y="237" font-family="'JetBrains Mono',monospace" font-size="8.5" letter-spacing="0.8" fill="#806313">PORTAL 14</text>
+          </g>
+
+          <!-- Linha 3 · dias 15–20 -->
+          <g font-family="'JetBrains Mono',monospace" font-size="9" text-anchor="middle">
+            <circle cx="60" cy="300" r="11" fill="#1d7a55"/><text x="60" y="303.5" fill="#ffffff">15</text>
+            <circle cx="140" cy="300" r="11" fill="#f5efdd" stroke="#a07d1c" stroke-width="1.7"/><text x="140" y="303.5" fill="#806313">16</text>
+            <circle cx="220" cy="300" r="11" fill="#ffffff" stroke="#1d7a55" stroke-width="1.7"/><text x="220" y="303.5" fill="#1d7a55">17</text>
+            <circle cx="300" cy="300" r="11" fill="#1d7a55"/><text x="300" y="303.5" fill="#ffffff">18</text>
+            <circle cx="380" cy="300" r="11" fill="#f5efdd" stroke="#a07d1c" stroke-width="1.7"/><text x="380" y="303.5" fill="#806313">19</text>
+            <circle cx="460" cy="300" r="11" fill="#ffffff" stroke="#1d7a55" stroke-width="1.7"/><text x="460" y="303.5" fill="#1d7a55">20</text>
+          </g>
+          <!-- Portal dia 21 -->
+          <g>
+            <rect x="524" y="284" width="32" height="32" rx="5" transform="rotate(45 540 300)" fill="#f5efdd" stroke="#a07d1c" stroke-width="2.4"/>
+            <text x="540" y="305" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#806313">21</text>
+            <path d="M540 268v-8M566 274l6-6M572 300h8" stroke="#a07d1c" stroke-width="1.5" stroke-linecap="round"/>
+            <text x="540" y="344" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" letter-spacing="0.8" fill="#806313">PORTAL 21</text>
+          </g>
+
+          <!-- Legenda -->
+          <g font-family="'JetBrains Mono',monospace" font-size="9" fill="#5b615c">
+            <circle cx="120" cy="378" r="6" fill="#1d7a55"/>
+            <text x="134" y="381.5">EVIDÊNCIA</text>
+            <circle cx="252" cy="378" r="6" fill="#ffffff" stroke="#1d7a55" stroke-width="1.7"/>
+            <text x="266" y="381.5">SIMBÓLICO</text>
+            <circle cx="390" cy="378" r="6" fill="#f5efdd" stroke="#a07d1c" stroke-width="1.7"/>
+            <text x="404" y="381.5">AÇÃO</text>
+          </g>
+          <text x="300" y="406" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" letter-spacing="0.8" fill="#5b615c">ROTA DE AUTOCOMPAIXÃO DISPONÍVEL EM TODOS OS DIAS</text>
+        </svg>
+        <figcaption class="gbody">
+          <h3>A trilha viva de 21 dias</h3>
+          <p>Frequência da Alegria: capítulos Notar, Cultivar e Irradiar, Portais nos dias 7, 14 e 21 e cada dia etiquetado como evidência, simbólico ou ação — com fontes científicas reais (Emmons &amp; McCullough 2003; Fredrickson 2001; Bryant &amp; Veroff 2007) e rota de autocompaixão em todos os dias.</p>
+          <span class="selo-real">Do beta real — Turma Fundadora</span>
+        </figcaption>
+      </figure>
+
+      <figure class="gcard">
+        <svg class="gart" viewBox="0 0 600 420" role="img" aria-label="Ilustração da Bússola do Elevo: radar hexagonal com os seis setores Mente, Corpo, Prosperidade, Relações, Sonhos e Metas e Propósito e Todo, com o selo Privada — nunca vira ranking.">
+          <rect x="0" y="0" width="600" height="420" fill="#f7f4ec"/>
+          <text x="300" y="36" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="1.6" fill="#806313">BÚSSOLA · 6 SETORES · SCORE PRIVADO</text>
+
+          <!-- Grades hexagonais -->
+          <polygon points="300,65 403.9,125 403.9,245 300,305 196.1,245 196.1,125" fill="none" stroke="#cfc9ba" stroke-width="1.4"/>
+          <polygon points="300,105 369.3,145 369.3,225 300,265 230.7,225 230.7,145" fill="none" stroke="#e3ded2" stroke-width="1.2"/>
+          <polygon points="300,145 334.6,165 334.6,205 300,225 265.4,205 265.4,165" fill="none" stroke="#e3ded2" stroke-width="1.2"/>
+          <g stroke="#e3ded2" stroke-width="1">
+            <line x1="300" y1="185" x2="300" y2="65"/>
+            <line x1="300" y1="185" x2="403.9" y2="125"/>
+            <line x1="300" y1="185" x2="403.9" y2="245"/>
+            <line x1="300" y1="185" x2="300" y2="305"/>
+            <line x1="300" y1="185" x2="196.1" y2="245"/>
+            <line x1="300" y1="185" x2="196.1" y2="125"/>
+          </g>
+
+          <!-- Polígono de tendência -->
+          <polygon points="300,90 360.6,150 347.6,212.5 300,270 243.7,217.5 222.1,140" fill="rgba(29,122,85,0.14)" stroke="#1d7a55" stroke-width="2" stroke-linejoin="round"/>
+          <g fill="#1d7a55">
+            <circle cx="300" cy="90" r="3.5"/>
+            <circle cx="360.6" cy="150" r="3.5"/>
+            <circle cx="347.6" cy="212.5" r="3.5"/>
+            <circle cx="300" cy="270" r="3.5"/>
+            <circle cx="243.7" cy="217.5" r="3.5"/>
+            <circle cx="222.1" cy="140" r="3.5"/>
+          </g>
+
+          <!-- Rótulos dos setores -->
+          <g font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="0.6" fill="#1f2421">
+            <text x="300" y="54" text-anchor="middle">MENTE</text>
+            <text x="414" y="122" text-anchor="start">CORPO</text>
+            <text x="414" y="254" text-anchor="start">PROSPERIDADE</text>
+            <text x="300" y="326" text-anchor="middle">RELAÇÕES</text>
+            <text x="186" y="254" text-anchor="end">SONHOS &amp; METAS</text>
+            <text x="186" y="122" text-anchor="end">PROPÓSITO &amp; TODO</text>
+          </g>
+
+          <!-- Chip de tendência -->
+          <rect x="428" y="66" width="126" height="30" rx="15" fill="#f5efdd" stroke="#a07d1c" stroke-width="1.5"/>
+          <path d="M442 86l8-8M450 78h-6M450 78v6" stroke="#a07d1c" stroke-width="1.7" stroke-linecap="round" fill="none"/>
+          <text x="504" y="85.5" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.8" fill="#806313">TENDÊNCIA</text>
+          <text x="491" y="114" text-anchor="middle" font-family="'Inter',sans-serif" font-size="9.5" fill="#5b615c">acima de número</text>
+
+          <!-- Selo de privacidade -->
+          <rect x="145" y="352" width="310" height="36" rx="18" fill="#f5efdd" stroke="#a07d1c" stroke-width="1.5"/>
+          <rect x="168" y="365" width="13" height="11" rx="2" fill="none" stroke="#a07d1c" stroke-width="1.6"/>
+          <path d="M170.5 365v-3.2a4 4 0 0 1 8 0v3.2" fill="none" stroke="#a07d1c" stroke-width="1.6"/>
+          <text x="318" y="374.5" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="1" fill="#806313">PRIVADA — NUNCA VIRA RANKING</text>
+          <text x="300" y="410" text-anchor="middle" font-family="'Inter',sans-serif" font-size="9.5" fill="#5b615c">jamais aparece em feed ou comparação</text>
+        </svg>
+        <figcaption class="gbody">
+          <h3>A Bússola de 6 setores</h3>
+          <p>Mente, Corpo, Prosperidade, Relações, Sonhos &amp; Metas e Propósito &amp; Todo. Tendência acima de número — e privada por construção: o score jamais aparece em feed ou ranking.</p>
+          <span class="selo-real">Do beta real — Turma Fundadora</span>
+        </figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <!-- 3 · O circuito diário -->
+  <section class="fade" aria-labelledby="t-circuito">
+    <div class="sec-head">
+      <h2 id="t-circuito">O circuito diário</h2>
+      <p class="sub">O core loop que roda hoje no beta fechado: um gesto por dia, do check-in ao preview do amanhã — com a comunidade e a Bússola acompanhando por trás.</p>
+    </div>
+    <div class="passos">
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- check-in: equalizador de estado -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 5v14M12 5v14M18 5v14"/>
+            <circle cx="6" cy="10" r="2" fill="#e7f2ec"/>
+            <circle cx="12" cy="14" r="2" fill="#e7f2ec" stroke="#a07d1c"/>
+            <circle cx="18" cy="9" r="2" fill="#e7f2ec"/>
+          </svg>
+        </span>
+        <span class="num">01</span>
+        <div>
+          <h3>Check-in de estado</h3>
+          <p>Cinco estados, todos valendo o mesmo: a valência emocional nunca pontua. O check-in orienta o dia — não vira score.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- prática: broto -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20v-7"/>
+            <path d="M12 13c0-3.5 2.6-6 6.5-6 0 3.9-2.6 6-6.5 6z"/>
+            <path d="M12 13c0-2.8-2.1-5-5.5-5 0 3.2 2.2 5 5.5 5z" stroke="#a07d1c"/>
+            <path d="M7 20h10"/>
+          </svg>
+        </span>
+        <span class="num">02</span>
+        <div>
+          <h3>Prática do dia</h3>
+          <p>A trilha entrega a prática de hoje — etiquetada como evidência, simbólico ou ação — com rota de autocompaixão sempre disponível.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- post: balão com seta -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 5.5H5A1.5 1.5 0 0 0 3.5 7v8A1.5 1.5 0 0 0 5 16.5h1.5v3l3.8-3H19a1.5 1.5 0 0 0 1.5-1.5V7A1.5 1.5 0 0 0 19 5.5z"/>
+            <path d="M12 13.5V8.8M9.8 10.9 12 8.7l2.2 2.2" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">03</span>
+        <div>
+          <h3>Post automático no Círculo</h3>
+          <p>A prática concluída vira post no feed — sem nunca expor o estado emocional registrado no check-in.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- elevas: seta com faíscas -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V9"/>
+            <path d="m8.5 12.5 3.5-3.5 3.5 3.5"/>
+            <path d="m6 6.5.6 1.4 1.4.6-1.4.6L6 10.5l-.6-1.4L4 8.5l1.4-.6z" stroke="#a07d1c"/>
+            <path d="m18 4.5.5 1.2 1.2.5-1.2.5-.5 1.2-.5-1.2-1.2-.5 1.2-.5z" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">04</span>
+        <div>
+          <h3>Elevas e comentários</h3>
+          <p>A comunidade responde com Elevas (kudos) e comentários — com denúncia e bloqueio a um toque, como todo feed sério.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- bússola com cadeado -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="12" r="7.5"/>
+            <path d="M11 7.5 13.3 12 11 16.5 8.7 12z" stroke="#a07d1c"/>
+            <rect x="15.5" y="15" width="6" height="5" rx="1.2" stroke="#a07d1c"/>
+            <path d="M16.8 15v-1.3a1.7 1.7 0 0 1 3.4 0V15" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">05</span>
+        <div>
+          <h3>Bússola atualiza — em privado</h3>
+          <p>Os 6 setores registram tendência, não nota. O score é privado por construção e jamais aparece em feed ou ranking.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- constância: chama + estrela -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 4.5c1.6 2.3 3.8 4.2 3.8 7A3.9 3.9 0 0 1 10 15.4a3.9 3.9 0 0 1-3.8-3.9c0-2.8 2.2-4.7 3.8-7z"/>
+            <path d="M6 20.5h8"/>
+            <path d="m18 13 .7 1.7 1.7.7-1.7.7-.7 1.7-.7-1.7-1.7-.7 1.7-.7z" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">06</span>
+        <div>
+          <h3>Constância e Lumens</h3>
+          <p>A sequência cresce com gentileza: Dia de Integração (2 freezes/mês), Lumens de experiência e 9 conquistas — sem punição.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- preview: calendário com seta -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="5.5" width="16" height="14" rx="2"/>
+            <path d="M4 10h16M8.5 3.5v3M15.5 3.5v3"/>
+            <path d="M9.5 15h5M12.7 12.8 15 15l-2.3 2.2" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">07</span>
+        <div>
+          <h3>Preview do amanhã</h3>
+          <p>O dia fecha com um vislumbre da próxima prática — o convite gentil que traz você de volta amanhã.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- portal: arco -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5.5 20v-9a6.5 6.5 0 0 1 13 0v9"/>
+            <path d="M4 20h16"/>
+            <path d="M8.5 20v-8.5a3.5 3.5 0 0 1 7 0V20" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">08</span>
+        <div>
+          <h3>Portais 7, 14 e 21</h3>
+          <p>Nos marcos da trilha, um rito de passagem fecha cada capítulo — Notar, Cultivar, Irradiar — e celebra o caminho percorrido.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4 · O que já roda no beta -->
+  <section class="fade" aria-labelledby="t-beta">
+    <div class="sec-head">
+      <h2 id="t-beta">O que já roda no beta</h2>
+      <p class="sub">Recursos em uso hoje pela Turma Fundadora — isto não é roadmap, é o que existe.</p>
+    </div>
+    <div class="chips">
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="5.5" cy="5.5" r="1.8"/>
+          <circle cx="18.5" cy="18.5" r="1.8" stroke="#a07d1c"/>
+          <path d="M7.5 5.5h7a3.5 3.5 0 0 1 0 7h-7a3.5 3.5 0 0 0 0 7h7" stroke-dasharray="2.5 3.2"/>
+        </svg>
+        <span>Trilha Frequência da Alegria<br><small>21 dias · no beta</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="9" r="3"/>
+          <path d="M4 19a5 5 0 0 1 10 0"/>
+          <circle cx="16.5" cy="9.5" r="2.4" stroke="#a07d1c"/>
+          <path d="M15.5 14.7a4.6 4.6 0 0 1 4.5 4.3" stroke="#a07d1c"/>
+        </svg>
+        <span>Círculo com Elevas<br><small>feed + comentários · no beta</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3.5 19 7.7v8.6L12 20.5 5 16.3V7.7z"/>
+          <circle cx="12" cy="12" r="2" stroke="#a07d1c"/>
+        </svg>
+        <span>Bússola de 6 setores<br><small>privada · no beta</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9.5 5c1.5 2.2 3.5 4 3.5 6.6A3.6 3.6 0 0 1 9.5 15a3.6 3.6 0 0 1-3.5-3.4C6 9 8 7.2 9.5 5z"/>
+          <path d="M17.5 13.5v6M15 15l5 3M20 15l-5 3" stroke="#a07d1c"/>
+        </svg>
+        <span>Constância + Dia de Integração<br><small>2 freezes/mês · no beta</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="10" r="5.5"/>
+          <path d="m12 7.6.9 1.8 2 .3-1.4 1.4.3 2-1.8-.9-1.8.9.3-2-1.4-1.4 2-.3z" stroke="#a07d1c"/>
+          <path d="m9 15-1.5 5 4.5-2.5L16.5 20 15 15"/>
+        </svg>
+        <span>Lumens e 9 conquistas<br><small>no beta</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3.5 18.5 6v5.2c0 4.2-2.8 7.3-6.5 8.9-3.7-1.6-6.5-4.7-6.5-8.9V6z"/>
+          <path d="M9.7 9.7l4.6 4.6M14.3 9.7l-4.6 4.6" stroke="#a07d1c"/>
+        </svg>
+        <span>Denúncia e bloqueio<br><small>no beta</small></span>
+      </span>
+    </div>
+    <p class="nota-proposta">Todas as frases motivacionais do app são originais e assinadas "Elevo" — zero citações fabricadas ou atribuídas a terceiros. As fontes científicas citadas na trilha são reais e referenciadas dia a dia.</p>
+  </section>
+
+  <!-- 5 · Governança -->
+  <section class="fade" aria-labelledby="t-governanca">
+    <div class="sec-head">
+      <h2 id="t-governanca">Governança: gentileza também na engenharia</h2>
+      <p class="sub">O diferencial do Elevo não é só o produto — é o que ele se recusa a fazer com os seus dados e com a sua atenção.</p>
+    </div>
+    <div class="gov-grid">
+      <div class="gov">
+        <span class="tag">LGPD</span>
+        <h3>Dados emocionais com consentimento</h3>
+        <p>Consentimento destacado e específico para dados emocionais antes de qualquer registro. O diário é só-do-dono: ninguém mais lê, nem o feed.</p>
+      </div>
+      <div class="gov">
+        <span class="tag">Segurança</span>
+        <h3>Deny-by-default</h3>
+        <p>RLS nega tudo por padrão; progresso só muda por RPC SECURITY DEFINER auditável. Não existe caminho de escrita fora das regras.</p>
+      </div>
+      <div class="gov">
+        <span class="tag">Gamificação ética</span>
+        <h3>Retenção sem manipulação</h3>
+        <p>A valência emocional nunca pontua, o streak perdoa com o Dia de Integração e nenhuma mecânica explora ansiedade para gerar engajamento.</p>
+      </div>
+    </div>
+    <div class="limites-box">
+      <h3>O que esta página não pode prometer</h3>
+      <ul class="limites">
+        <li>O Elevo não é terapia nem produto de saúde mental clínico: não diagnostica, não trata e não substitui acompanhamento profissional.</li>
+        <li>Nenhuma promessa de resultado terapêutico ou de bem-estar garantido — as fontes científicas informam o desenho da trilha, não garantem desfechos individuais.</li>
+        <li>Beta fechado (Turma Fundadora): não está lançado ao público e não há preço, plano ou condição comercial definida.</li>
+        <li>A Bússola é privada por construção — jamais aparecerá em feed, comparação ou ranking.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6 · CTA -->
+  <div class="cta fade">
+    <h2>Acompanhe a Turma Fundadora</h2>
+    <p>O beta é fechado e as vagas entram por convite, em pequenos grupos. Se a ideia de treinar a própria evolução — com comunidade, gentileza e algoritmos que respeitam você — fala com o seu momento, peça um convite ou venha conversar.</p>
+    <div class="btns">
+      <a class="btn btn-primario" href="mailto:drsostenescosta@gmail.com?subject=Convite%20%E2%80%94%20Turma%20Fundadora%20do%20Elevo">Pedir convite para o beta</a>
+      <a class="btn btn-zap" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20do%20Elevo%20e%20quero%20saber%20mais%20sobre%20a%20Turma%20Fundadora." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.9L3.5 20.5l4.2-1.1A8.5 8.5 0 1 0 12 3.5z"/>
+          <path d="M9 8.8c.3-.7.9-.7 1.2 0l.5 1.2c.1.3 0 .7-.2.9l-.5.5c.5 1.1 1.5 2.1 2.6 2.6l.5-.5c.2-.2.6-.3.9-.2l1.2.5c.7.3.7.9 0 1.2-3.5 1.6-8.3-3.2-6.2-6.2z"/>
+        </svg>
+        Conversar no WhatsApp
+      </a>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <div>ZATHEON · ELEVO — BETA FECHADO · TURMA FUNDADORA · ILUSTRAÇÕES DESTA PÁGINA, NÃO CAPTURAS DE TELA</div>
+  <div class="foot-links">
+    <a href="../index.html">© 2026 · Sóstenes Costa Paiva</a>
+    <a href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20quero%20saber%20mais%20sobre%20o%20Elevo." target="_blank" rel="noopener">WhatsApp</a>
+    <a href="../privacidade.html">Privacidade</a>
+  </div>
+  <p class="foot-disc">O Elevo é um aplicativo do ecossistema Zatheon, hoje em beta fechado com a Turma Fundadora: uma rede social de evolução pessoal com trilhas de prática diária, comunidade e uma bússola privada de tendência. Não é terapia, não é produto de saúde mental clínico, não realiza diagnóstico nem tratamento e não substitui acompanhamento profissional de saúde. Não está lançado ao público e não há preço ou oferta comercial definida. As referências científicas citadas informam o desenho das trilhas e não constituem promessa de resultado terapêutico. Dados emocionais são tratados com consentimento específico (LGPD), o diário pessoal é acessível apenas ao próprio usuário e o score da Bússola jamais aparece em feed ou ranking.</p>
+</footer>
+</body>
+</html>

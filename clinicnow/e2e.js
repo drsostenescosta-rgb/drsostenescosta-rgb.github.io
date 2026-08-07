@@ -1,6 +1,6 @@
 /* Teste e2e do funil DocGrow (Playwright).
    Rodar: python3 -m http.server 8811 --directory <raiz do repo> &
-          node docgrow/e2e.js */
+          node clinicnow/e2e.js */
 const { chromium } = require('playwright');
 (async () => {
   const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' }).catch(() => chromium.launch());
@@ -12,7 +12,7 @@ const { chromium } = require('playwright');
   const base = 'http://127.0.0.1:8811';
 
   // 1. onboarding do app
-  await page.goto(base + '/docgrow/app.html');
+  await page.goto(base + '/clinicnow/app.html');
   await page.fill('#a-nome', 'Dra. Teste E2E');
   await page.fill('#a-zap', '(84) 99999-0000');
   await page.fill('#a-esp', 'Endocrinologia');
@@ -81,7 +81,7 @@ const { chromium } = require('playwright');
   await page.screenshot({ path: 'cockpit.png', fullPage: false });
 
   // 8. landing + demo
-  await page.goto(base + '/docgrow/index.html');
+  await page.goto(base + '/clinicnow/index.html');
   await page.fill('#demo-input', 'Sou endocrinologista, dependo de indicação e minha agenda tem buracos');
   await page.click('#demo button.btn-em');
   await page.waitForSelector('#demo-out', { state: 'visible' });
@@ -89,12 +89,12 @@ const { chromium } = require('playwright');
   await page.screenshot({ path: 'landing.png' });
 
   // 9. aplicação (não envia — só valida render)
-  await page.goto(base + '/docgrow/aplicacao.html');
+  await page.goto(base + '/clinicnow/aplicacao.html');
   await page.waitForSelector('#form');
   console.log('aplicacao OK');
 
   // 10. painel (render do login)
-  await page.goto(base + '/docgrow/painel.html');
+  await page.goto(base + '/clinicnow/painel.html');
   await page.waitForSelector('#login');
   console.log('painel OK');
 

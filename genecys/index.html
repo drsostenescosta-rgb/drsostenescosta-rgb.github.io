@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<title>Genecys — A companhia é voluntária. O cuidado é confiável.</title>
+<meta name="description" content="Tese em validação: cuidado de idosos com IA em duas formulações em estudo — companhia voluntária e confiabilidade de cuidado B2B2C — sem vigilância, com humano no circuito e escalonamento para teleconsulta no ClinicNow Cabin. Não é um serviço de saúde em operação." />
+<meta name="robots" content="noindex" /><!-- tese em validação — indexar apenas após gatilho definido pelo comitê -->
+<meta property="og:title" content="Genecys — A companhia é voluntária. O cuidado é confiável." />
+<meta property="og:description" content="Tese em validação do ecossistema Zatheon: cuidado de idosos com IA, sem vigilância, com humano no circuito e desfecho clínico documentado via ClinicNow Cabin. Buscando parceiros de validação." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#faf8f3; --bg-soft:#f2efe7; --card:#ffffff;
+    --ink:#1f2421; --ink-soft:#5b615c;
+    --line:#e3ded2; --line-strong:#cfc9ba;
+    --green:#1d7a55; --green-soft:#e7f2ec;
+    --gold:#a07d1c; --gold-text:#806313; --gold-soft:#f5efdd;
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.7; font-size:16.5px; -webkit-font-smoothing:antialiased; }
+  img { display:block; max-width:100%; height:auto; }
+  a { color:var(--green); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  :focus-visible { outline:2px solid var(--green); outline-offset:3px; }
+
+  .wrap { max-width:940px; margin:0 auto; padding:0 22px; }
+
+  /* ---- Header ---- */
+  header.nav { position:sticky; top:0; z-index:50; background:rgba(250,248,243,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav-inner { max-width:940px; margin:0 auto; padding:13px 22px; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+  .brand { font-family:var(--serif); font-weight:600; font-size:1.02rem; line-height:1.2; }
+  .brand small { display:block; font-family:var(--mono); font-weight:400; font-size:0.6rem; letter-spacing:0.16em; color:var(--gold-text); }
+  .nav-right { display:flex; align-items:center; gap:14px; }
+  .selo-tese { font-family:var(--mono); font-size:0.62rem; letter-spacing:0.12em; color:var(--gold-text); border:1px solid var(--gold); border-radius:999px; padding:4px 12px; background:var(--gold-soft); white-space:nowrap; }
+  a.back { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.08em; color:var(--ink-soft); white-space:nowrap; }
+  a.back:hover { color:var(--green); text-decoration:none; }
+  @media (max-width:560px){ .selo-tese { display:none; } }
+
+  /* ---- Hero ---- */
+  .hero { padding:72px 0 20px; }
+  .kicker { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-text); display:block; margin-bottom:16px; }
+  h1 { font-family:var(--serif); font-weight:500; font-size:clamp(2rem,5vw,3rem); line-height:1.15; letter-spacing:-0.01em; margin-bottom:18px; max-width:20ch; }
+  h1 em { font-style:italic; color:var(--green); }
+  .hero p.lead { color:var(--ink-soft); font-size:1.05rem; max-width:58ch; }
+  .aviso { margin:30px 0 0; padding:16px 20px; background:var(--card); border:1px solid var(--line); border-left:3px solid var(--gold); border-radius:10px; font-size:0.86rem; color:var(--ink-soft); max-width:760px; }
+  .aviso strong { color:var(--ink); }
+
+  /* ---- Sections ---- */
+  section { padding:58px 0 6px; }
+  section + section { margin-top:26px; }
+  .sec-head { margin-bottom:28px; }
+  h2 { font-family:var(--serif); font-weight:500; font-size:clamp(1.45rem,3vw,1.85rem); margin-bottom:8px; }
+  .sub { color:var(--ink-soft); font-size:0.94rem; max-width:64ch; }
+
+  /* ---- Galeria conceito ---- */
+  .galeria { display:grid; gap:18px; }
+  @media (min-width:760px){
+    .galeria { grid-template-columns:1fr 1fr; }
+    .g-full { grid-column:1 / -1; }
+  }
+  .gcard { background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; }
+  .gcard .illus { width:100%; height:auto; display:block; border-bottom:1px solid var(--line); background:#fdfcf9; }
+  .gcard .gbody { padding:16px 20px 18px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .gcard h3 { font-family:var(--serif); font-weight:500; font-size:1.06rem; line-height:1.35; }
+  .gcard p { color:var(--ink-soft); font-size:0.88rem; }
+  .selo-conceito { margin-top:auto; align-self:flex-start; font-family:var(--mono); font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-text); border:1px solid var(--gold); border-radius:6px; padding:3px 9px; background:var(--gold-soft); }
+
+  /* ---- Formulações ---- */
+  .form-grid { display:grid; gap:14px; }
+  @media (min-width:700px){ .form-grid { grid-template-columns:1fr 1fr; } }
+
+  /* ---- Circuito ---- */
+  .passos { display:grid; gap:14px; }
+  @media (min-width:700px){ .passos { grid-template-columns:1fr 1fr; } }
+  .passo { position:relative; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px 18px; display:flex; gap:16px; align-items:flex-start; }
+  .passo .ico { flex:none; width:44px; height:44px; border-radius:11px; background:var(--green-soft); border:1px solid rgba(29,122,85,0.25); display:flex; align-items:center; justify-content:center; }
+  .passo .ico svg { width:24px; height:24px; }
+  .passo .num { position:absolute; top:14px; right:16px; font-family:var(--mono); font-size:0.66rem; letter-spacing:0.08em; color:var(--line-strong); }
+  .passo h3 { font-family:var(--serif); font-weight:500; font-size:1rem; margin-bottom:4px; padding-right:28px; }
+  .passo p { color:var(--ink-soft); font-size:0.87rem; }
+
+  /* ---- Chips ---- */
+  .chips { display:flex; flex-wrap:wrap; gap:12px; margin-top:6px; }
+  .chip { display:inline-flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:10px 20px 10px 14px; font-size:0.9rem; font-weight:500; }
+  .chip svg { width:22px; height:22px; flex:none; }
+  .chip small { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-text); }
+  .nota-proposta { margin-top:16px; font-size:0.8rem; color:var(--ink-soft); max-width:64ch; }
+
+  /* ---- Governança / cartões com tag ---- */
+  .gov-grid { display:grid; gap:14px; margin-bottom:22px; }
+  @media (min-width:700px){ .gov-grid { grid-template-columns:repeat(3,1fr); } }
+  .gov { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; }
+  .gov .tag { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--green); display:block; margin-bottom:8px; }
+  .gov .tag.gold { color:var(--gold-text); }
+  .gov h3 { font-family:var(--serif); font-weight:500; font-size:1rem; margin-bottom:6px; }
+  .gov p { color:var(--ink-soft); font-size:0.85rem; }
+  .gov p strong { color:var(--ink); }
+  .limites-box { background:var(--bg-soft); border:1px solid var(--line); border-radius:14px; padding:22px 26px; }
+  .limites-box h3 { font-family:var(--serif); font-weight:500; font-size:1.05rem; margin-bottom:12px; }
+  ul.limites { list-style:none; display:grid; gap:9px; }
+  ul.limites li { font-size:0.88rem; color:var(--ink-soft); padding-left:24px; position:relative; }
+  ul.limites li::before { content:'—'; position:absolute; left:0; color:var(--green); }
+  ul.limites li strong { color:var(--ink); }
+
+  /* ---- Ecossistema ---- */
+  .eco { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 24px; }
+  .eco p { color:var(--ink-soft); font-size:0.9rem; }
+  .eco p strong { color:var(--ink); }
+  .eco-links { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .eco-links a { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.04em; padding:5px 10px; border:1px solid var(--line); border-radius:8px; color:var(--green); }
+  .eco-links a:hover { border-color:var(--green); text-decoration:none; }
+
+  /* ---- CTA ---- */
+  .cta { margin:56px 0 64px; padding:34px 30px; background:var(--card); border:1px solid var(--line); border-radius:16px; }
+  .cta h2 { margin-bottom:10px; }
+  .cta p { color:var(--ink-soft); font-size:0.93rem; max-width:62ch; margin-bottom:22px; }
+  .cta p strong { color:var(--ink); }
+  .btns { display:flex; flex-wrap:wrap; gap:12px; }
+  a.btn { display:inline-flex; align-items:center; gap:9px; padding:12px 24px; border-radius:10px; font-weight:600; font-size:0.9rem; text-decoration:none; }
+  a.btn:hover { text-decoration:none; filter:brightness(1.05); }
+  a.btn-primario { background:var(--green); color:#ffffff; }
+  a.btn-zap { border:1px solid var(--line-strong); color:var(--ink); background:var(--bg); }
+  a.btn-zap:hover { border-color:var(--green); color:var(--green); }
+  a.btn svg { width:17px; height:17px; }
+
+  footer { border-top:1px solid var(--line); padding:28px 22px 44px; text-align:center; color:var(--ink-soft); font-size:0.7rem; font-family:var(--mono); letter-spacing:0.08em; }
+  footer .foot-links { margin-top:12px; display:flex; justify-content:center; flex-wrap:wrap; gap:14px; font-family:var(--sans); letter-spacing:0; font-size:0.78rem; }
+  footer .foot-links a { color:var(--ink-soft); }
+  footer .foot-links a:hover { color:var(--green); }
+
+  @media (prefers-reduced-motion:no-preference){
+    .fade { animation:f .6s ease both; }
+    @keyframes f { from { opacity:0; transform:translateY(8px); } to { opacity:1; } }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">Genecys <small>ECOSSISTEMA ZATHEON</small></div>
+    <div class="nav-right">
+      <span class="selo-tese">TESE EM VALIDAÇÃO</span>
+      <a class="back" href="../">← VOLTAR</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- Hero -->
+  <div class="hero fade">
+    <span class="kicker">◆ Tese em validação · Cuidado de idosos com IA</span>
+    <h1>A companhia é voluntária. <em>O cuidado é confiável.</em></h1>
+    <p class="lead">Cuidado de idosos com IA, sem vigilância: a conversa acontece só quando o idoso escolhe; a confiabilidade vem de tarefas de cuidado confirmadas, exceções decididas por um humano nomeado e escalonamento para teleconsulta no ClinicNow Cabin — até o próximo passo documentado.</p>
+    <div class="aviso"><strong>O que esta página é (e não é):</strong> uma tese em validação do ecossistema Zatheon. Não presta atendimento, não recebe dados de pacientes e não afirma existir produto implantado, rede de médicos, parceiro, tração ou resultado clínico. Nada aqui substitui a decisão de um profissional de saúde licenciado. As ilustrações abaixo são visualização de conceito, não capturas de um produto existente.</div>
+  </div>
+
+  <!-- Como seria na prática -->
+  <section class="fade" aria-labelledby="t-pratica">
+    <div class="sec-head">
+      <h2 id="t-pratica">Como seria na prática</h2>
+      <p class="sub">Três momentos do conceito, ilustrados: a casa do idoso, um dia de cuidado e o caminho de um alerta até a conduta clínica.</p>
+    </div>
+    <div class="galeria">
+
+      <figure class="gcard g-full">
+        <svg class="illus" viewBox="0 0 960 440" role="img" aria-labelledby="illus1-t" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <title id="illus1-t">Cena esquemática: casa do idoso com voz voluntária, botão de chamada e rotina combinada; ao lado, o celular da família com o quadro do dia.</title>
+          <rect x="0" y="0" width="960" height="440" fill="#fdfcf9"/>
+
+          <!-- casa -->
+          <path d="M70 150 250 58 430 150" stroke="#b5ae9e" stroke-width="2.5"/>
+          <path d="M86 158v226h328V158" stroke="#b5ae9e" stroke-width="2.5"/>
+          <path d="M60 384h390" stroke="#b5ae9e" stroke-width="2.5"/>
+
+          <!-- botão de chamada na parede -->
+          <rect x="104" y="188" width="42" height="42" rx="10" stroke="#1d7a55" stroke-width="2.2"/>
+          <circle cx="125" cy="209" r="8.5" stroke="#a07d1c" stroke-width="2.2"/>
+          <text x="125" y="252" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="1" fill="#5b615c">BOTÃO</text>
+
+          <!-- cartão de rotina na parede -->
+          <rect x="330" y="168" width="64" height="82" rx="8" stroke="#1d7a55" stroke-width="2.2"/>
+          <circle cx="344" cy="186" r="5" stroke="#1d7a55" stroke-width="1.8"/>
+          <path d="m341.6 186 1.8 1.8 3-3.4" stroke="#a07d1c" stroke-width="1.8"/>
+          <path d="M354 186h30" stroke="#cfc9ba" stroke-width="2.2"/>
+          <circle cx="344" cy="208" r="5" stroke="#1d7a55" stroke-width="1.8"/>
+          <path d="m341.6 208 1.8 1.8 3-3.4" stroke="#a07d1c" stroke-width="1.8"/>
+          <path d="M354 208h30" stroke="#cfc9ba" stroke-width="2.2"/>
+          <circle cx="344" cy="230" r="5" stroke="#1d7a55" stroke-width="1.8"/>
+          <path d="M354 230h30" stroke="#cfc9ba" stroke-width="2.2"/>
+          <text x="362" y="272" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="1" fill="#5b615c">ROTINA</text>
+
+          <!-- poltrona + idoso -->
+          <rect x="148" y="308" width="116" height="58" rx="14" stroke="#8b857a" stroke-width="2.2"/>
+          <rect x="148" y="248" width="26" height="112" rx="13" stroke="#8b857a" stroke-width="2.2"/>
+          <rect x="246" y="292" width="26" height="74" rx="13" stroke="#8b857a" stroke-width="2.2"/>
+          <circle cx="210" cy="242" r="19" stroke="#1d7a55" stroke-width="2.2"/>
+          <path d="M184 306a26 26 0 0 1 52 0" stroke="#1d7a55" stroke-width="2.2"/>
+
+          <!-- aparelho de voz sobre a mesinha -->
+          <path d="M296 322h76" stroke="#8b857a" stroke-width="2.2"/>
+          <path d="M306 322v40M362 322v40" stroke="#8b857a" stroke-width="2.2"/>
+          <rect x="312" y="286" width="44" height="32" rx="9" stroke="#1d7a55" stroke-width="2.2"/>
+          <circle cx="327" cy="302" r="2.2" fill="#1d7a55" stroke="none"/>
+          <circle cx="335" cy="302" r="2.2" fill="#1d7a55" stroke="none"/>
+          <circle cx="343" cy="302" r="2.2" fill="#a07d1c" stroke="none"/>
+          <path d="M302 310a16 16 0 0 0 0-18" stroke="#a07d1c" stroke-width="2"/>
+          <path d="M292 316a26 26 0 0 0 0-30" stroke="#a07d1c" stroke-width="2"/>
+          <rect x="278" y="336" width="132" height="24" rx="12" fill="#f5efdd" stroke="#a07d1c" stroke-width="1.2"/>
+          <text x="344" y="352" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10.5" letter-spacing="0.6" fill="#806313">VOZ VOLUNTÁRIA</text>
+
+          <text x="250" y="418" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11.5" letter-spacing="1.4" fill="#5b615c">A CASA DO IDOSO — A IA SÓ PARTICIPA QUANDO CONVIDADA</text>
+
+          <!-- ligação casa → família -->
+          <path d="M436 252C520 240 560 250 632 258" stroke="#a07d1c" stroke-width="2" stroke-dasharray="2 9"/>
+          <path d="m622 250 12 8-13 6" stroke="#a07d1c" stroke-width="2"/>
+
+          <!-- família -->
+          <circle cx="700" cy="84" r="10" stroke="#1d7a55" stroke-width="2.2"/>
+          <path d="M685 108a15 15 0 0 1 30 0" stroke="#1d7a55" stroke-width="2.2"/>
+          <circle cx="736" cy="88" r="8" stroke="#1d7a55" stroke-width="2.2"/>
+          <path d="M724 108a12 12 0 0 1 24 0" stroke="#1d7a55" stroke-width="2.2"/>
+
+          <!-- celular da família -->
+          <rect x="646" y="126" width="168" height="272" rx="24" stroke="#1d7a55" stroke-width="2.5"/>
+          <path d="M712 142h36" stroke="#cfc9ba" stroke-width="2.5"/>
+          <rect x="666" y="160" width="128" height="16" rx="8" fill="#e7f2ec" stroke="none"/>
+          <rect x="666" y="190" width="102" height="22" rx="11" stroke="#1d7a55" stroke-width="1.6"/>
+          <text x="717" y="205" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="0.6" fill="#1d7a55">DIA CONFIRMADO</text>
+          <circle cx="678" cy="238" r="8" stroke="#1d7a55" stroke-width="1.8"/>
+          <path d="m674.4 238 2.6 2.6 4.6-5.2" stroke="#1d7a55" stroke-width="1.8"/>
+          <rect x="696" y="233" width="86" height="9" rx="4.5" fill="#eceadf" stroke="none"/>
+          <circle cx="678" cy="272" r="8" stroke="#1d7a55" stroke-width="1.8"/>
+          <path d="m674.4 272 2.6 2.6 4.6-5.2" stroke="#1d7a55" stroke-width="1.8"/>
+          <rect x="696" y="267" width="70" height="9" rx="4.5" fill="#eceadf" stroke="none"/>
+          <circle cx="678" cy="306" r="8" stroke="#1d7a55" stroke-width="1.8"/>
+          <path d="m674.4 306 2.6 2.6 4.6-5.2" stroke="#1d7a55" stroke-width="1.8"/>
+          <rect x="696" y="301" width="80" height="9" rx="4.5" fill="#eceadf" stroke="none"/>
+          <circle cx="678" cy="340" r="8" stroke="#a07d1c" stroke-width="1.8"/>
+          <path d="M678 335.5v5M678 344.2v.6" stroke="#a07d1c" stroke-width="1.8"/>
+          <rect x="696" y="335" width="92" height="9" rx="4.5" fill="#f5efdd" stroke="#a07d1c" stroke-width="1"/>
+          <text x="730" y="374" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="0.6" fill="#806313">1 EXCEÇÃO → HUMANO</text>
+          <text x="730" y="424" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11.5" letter-spacing="1.4" fill="#5b615c">A FAMÍLIA — O ESSENCIAL, SEM ENXURRADA</text>
+        </svg>
+        <figcaption class="gbody">
+          <h3>A casa do idoso: pontos de contato por escolha — e a família com o quadro completo</h3>
+          <p>Voz voluntária, botão de chamada e rotina combinada dentro de casa; no celular da família, o essencial do dia — sem enxurrada de notificações, sem câmeras e sem escuta contínua.</p>
+          <span class="selo-conceito">Visualização conceitual — não é um produto existente</span>
+        </figcaption>
+      </figure>
+
+      <figure class="gcard">
+        <svg class="illus" viewBox="0 0 600 400" role="img" aria-labelledby="illus2-t" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <title id="illus2-t">Linha do tempo de um dia: tarefas de cuidado confirmadas às 8h, 12h e 20h; às 16h, uma exceção sem confirmação segue para um humano nomeado.</title>
+          <rect x="0" y="0" width="600" height="400" fill="#fdfcf9"/>
+
+          <!-- chip do humano nomeado -->
+          <rect x="290" y="52" width="234" height="60" rx="14" fill="#ffffff" stroke="#a07d1c" stroke-width="1.6"/>
+          <circle cx="320" cy="76" r="9" stroke="#a07d1c" stroke-width="2"/>
+          <path d="M306 100a14 14 0 0 1 28 0" stroke="#a07d1c" stroke-width="2"/>
+          <text x="346" y="78" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="0.6" fill="#5b615c">SEM CONFIRMAÇÃO</text>
+          <text x="346" y="98" font-family="'JetBrains Mono',monospace" font-size="11.5" letter-spacing="0.6" fill="#806313">→ HUMANO NOMEADO</text>
+
+          <!-- linha do tempo -->
+          <path d="M46 230h508" stroke="#b5ae9e" stroke-width="2.5"/>
+          <path d="M390 214V118" stroke="#a07d1c" stroke-width="2" stroke-dasharray="2 8"/>
+
+          <text x="110" y="196" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="1" fill="#5b615c">REMÉDIO</text>
+          <circle cx="110" cy="230" r="14" fill="#e7f2ec" stroke="#1d7a55" stroke-width="2.2"/>
+          <path d="m104 230 4.4 4.4 7.4-8.6" stroke="#1d7a55" stroke-width="2.2"/>
+          <text x="110" y="264" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#8b857a">08H</text>
+
+          <text x="250" y="196" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="1" fill="#5b615c">ALMOÇO</text>
+          <circle cx="250" cy="230" r="14" fill="#e7f2ec" stroke="#1d7a55" stroke-width="2.2"/>
+          <path d="m244 230 4.4 4.4 7.4-8.6" stroke="#1d7a55" stroke-width="2.2"/>
+          <text x="250" y="264" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#8b857a">12H</text>
+
+          <circle cx="390" cy="230" r="14" fill="#f5efdd" stroke="#a07d1c" stroke-width="2.2"/>
+          <path d="M390 222.5v9M390 236.5v.8" stroke="#a07d1c" stroke-width="2.2"/>
+          <text x="390" y="264" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#8b857a">16H</text>
+
+          <text x="510" y="196" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="1" fill="#5b615c">CONVERSA</text>
+          <circle cx="510" cy="230" r="14" fill="#e7f2ec" stroke="#1d7a55" stroke-width="2.2"/>
+          <path d="m504 230 4.4 4.4 7.4-8.6" stroke="#1d7a55" stroke-width="2.2"/>
+          <text x="510" y="264" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#8b857a">20H</text>
+
+          <!-- legenda -->
+          <circle cx="66" cy="316" r="9" fill="#e7f2ec" stroke="#1d7a55" stroke-width="1.8"/>
+          <path d="m62 316 2.8 2.8 4.8-5.6" stroke="#1d7a55" stroke-width="1.8"/>
+          <text x="84" y="321" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="0.6" fill="#5b615c">TAREFA DE CUIDADO CONFIRMADA</text>
+          <circle cx="66" cy="344" r="9" fill="#f5efdd" stroke="#a07d1c" stroke-width="1.8"/>
+          <path d="M66 339.5v5.5M66 348.5v.5" stroke="#a07d1c" stroke-width="1.8"/>
+          <text x="84" y="349" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="0.6" fill="#5b615c">EXCEÇÃO → PESSOA COM NOME</text>
+          <text x="300" y="382" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="1" fill="#806313">SILÊNCIO = DESCONHECIDO, NUNCA SEGURANÇA</text>
+        </svg>
+        <figcaption class="gbody">
+          <h3>Um dia com o Genecys: confirmado ou exceção</h3>
+          <p>As tarefas combinadas do dia terminam confirmadas; o que foge do combinado vira exceção e vai para um humano nomeado. A conversa das 20h só acontece porque o idoso quis.</p>
+          <span class="selo-conceito">Visualização conceitual — não é um produto existente</span>
+        </figcaption>
+      </figure>
+
+      <figure class="gcard">
+        <svg class="illus" viewBox="0 0 600 430" role="img" aria-labelledby="illus3-t" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <title id="illus3-t">Fluxo de escalonamento: sinal fora do combinado, humano nomeado decide, teleconsulta no ClinicNow Cabin e próximo passo documentado.</title>
+          <rect x="0" y="0" width="600" height="430" fill="#fdfcf9"/>
+
+          <!-- 1 · sinal -->
+          <rect x="110" y="20" width="380" height="76" rx="14" fill="#ffffff" stroke="#e3ded2" stroke-width="1.6"/>
+          <rect x="128" y="36" width="44" height="44" rx="11" fill="#e7f2ec" stroke="#1d7a55" stroke-opacity="0.25" stroke-width="1.4"/>
+          <path d="M141 68h18M143 66c0-4-.4-6.6 1-9.4a7.6 7.6 0 0 1 12 0c1.4 2.8 1 5.4 1 9.4" stroke="#1d7a55" stroke-width="1.9"/>
+          <circle cx="150" cy="72.5" r="1.8" fill="#a07d1c" stroke="none"/>
+          <text x="190" y="53" font-family="'JetBrains Mono',monospace" font-size="12" letter-spacing="0.6" fill="#1f2421">SINAL FORA DO COMBINADO</text>
+          <text x="190" y="74" font-family="'JetBrains Mono',monospace" font-size="10.5" letter-spacing="0.4" fill="#8b857a">ALERTA PREPARADO PELA IA — SEM DECIDIR NADA</text>
+
+          <path d="M300 100v22" stroke="#a07d1c" stroke-width="2"/>
+          <path d="m293 115 7 8 7-8" stroke="#a07d1c" stroke-width="2"/>
+
+          <!-- 2 · humano -->
+          <rect x="110" y="126" width="380" height="76" rx="14" fill="#ffffff" stroke="#e3ded2" stroke-width="1.6"/>
+          <rect x="128" y="142" width="44" height="44" rx="11" fill="#e7f2ec" stroke="#1d7a55" stroke-opacity="0.25" stroke-width="1.4"/>
+          <circle cx="150" cy="158" r="6.5" stroke="#1d7a55" stroke-width="1.9"/>
+          <path d="M139 179a11 11 0 0 1 22 0" stroke="#1d7a55" stroke-width="1.9"/>
+          <circle cx="161" cy="151" r="3.4" stroke="#a07d1c" stroke-width="1.6"/>
+          <text x="190" y="159" font-family="'JetBrains Mono',monospace" font-size="12" letter-spacing="0.6" fill="#1f2421">HUMANO NOMEADO DECIDE</text>
+          <text x="190" y="180" font-family="'JetBrains Mono',monospace" font-size="10.5" letter-spacing="0.4" fill="#8b857a">FAMILIAR OU PROFISSIONAL DO OPERADOR</text>
+
+          <path d="M300 206v22" stroke="#a07d1c" stroke-width="2"/>
+          <path d="m293 221 7 8 7-8" stroke="#a07d1c" stroke-width="2"/>
+
+          <!-- 3 · teleconsulta -->
+          <rect x="110" y="232" width="380" height="76" rx="14" fill="#ffffff" stroke="#1d7a55" stroke-width="1.8"/>
+          <rect x="128" y="248" width="44" height="44" rx="11" fill="#e7f2ec" stroke="#1d7a55" stroke-opacity="0.25" stroke-width="1.4"/>
+          <rect x="136" y="256" width="28" height="20" rx="3.5" stroke="#1d7a55" stroke-width="1.9"/>
+          <path d="M150 276v4.5M143 283h14" stroke="#1d7a55" stroke-width="1.9"/>
+          <path d="M150 261.5v9M145.5 266h9" stroke="#a07d1c" stroke-width="1.9"/>
+          <text x="190" y="265" font-family="'JetBrains Mono',monospace" font-size="12" letter-spacing="0.6" fill="#1f2421">TELECONSULTA — CLINICNOW CABIN</text>
+          <text x="190" y="286" font-family="'JetBrains Mono',monospace" font-size="10.5" letter-spacing="0.4" fill="#8b857a">PROFISSIONAL LICENCIADO DECIDE A CONDUTA</text>
+
+          <path d="M300 312v22" stroke="#a07d1c" stroke-width="2"/>
+          <path d="m293 327 7 8 7-8" stroke="#a07d1c" stroke-width="2"/>
+
+          <!-- 4 · desfecho -->
+          <rect x="110" y="338" width="380" height="76" rx="14" fill="#ffffff" stroke="#e3ded2" stroke-width="1.6"/>
+          <rect x="128" y="354" width="44" height="44" rx="11" fill="#e7f2ec" stroke="#1d7a55" stroke-opacity="0.25" stroke-width="1.4"/>
+          <path d="M153 359h-11a3 3 0 0 0-3 3v29a3 3 0 0 0 3 3h16a3 3 0 0 0 3-3V367z" stroke="#1d7a55" stroke-width="1.9"/>
+          <path d="M153 359v8h8" stroke="#1d7a55" stroke-width="1.9"/>
+          <path d="m145 381 3.6 3.6 6.4-7.2" stroke="#a07d1c" stroke-width="1.9"/>
+          <text x="190" y="371" font-family="'JetBrains Mono',monospace" font-size="12" letter-spacing="0.6" fill="#1f2421">PRÓXIMO PASSO DOCUMENTADO</text>
+          <text x="190" y="392" font-family="'JetBrains Mono',monospace" font-size="10.5" letter-spacing="0.4" fill="#8b857a">ACOMPANHADO ATÉ O DESFECHO</text>
+        </svg>
+        <figcaption class="gbody">
+          <h3>O escalonamento: do alerta ao próximo passo documentado</h3>
+          <p>Quando algo exige cuidado, o alerta passa por um humano, vira teleconsulta no ClinicNow Cabin e termina com conduta registrada — o sinal não morre num aviso.</p>
+          <span class="selo-conceito">Visualização conceitual — não é um produto existente</span>
+        </figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <!-- Duas formulações -->
+  <section class="fade" aria-labelledby="t-formulacoes">
+    <div class="sec-head">
+      <h2 id="t-formulacoes">Duas formulações em estudo</h2>
+      <p class="sub">Podem convergir num único produto ou seguir separadas — quem decide é a evidência da validação, não a preferência de quem escreve esta página.</p>
+    </div>
+    <div class="form-grid">
+      <div class="gov">
+        <span class="tag gold">Formulação A · em estudo</span>
+        <h3>Companhia voluntária</h3>
+        <p>Para o idoso: uma presença que conversa <strong>quando ele escolhe</strong> — nunca o contrário. O aprendizado do caso Papa é o ponto de partida: companhia sozinha alivia a solidão, mas sem fechar o circuito de cuidado o valor não se comprova para quem paga.</p>
+      </div>
+      <div class="gov">
+        <span class="tag gold">Formulação B · em estudo</span>
+        <h3>Confiabilidade de cuidado (B2B2C)</h3>
+        <p>Para famílias e operadores de cuidado: <strong>tarefas do dia confirmadas, exceções decididas por um humano nomeado e desfecho documentado</strong> — distribuída por operadoras, home care e poder público, não porta a porta.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- O circuito -->
+  <section class="fade" aria-labelledby="t-circuito">
+    <div class="sec-head">
+      <h2 id="t-circuito">O circuito do cuidado em 6 passos</h2>
+      <p class="sub">O que estamos desenhando — do convite ao desfecho clínico documentado, com humano no circuito em todo passo com consequência.</p>
+    </div>
+    <div class="passos">
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- convite: balão de conversa -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 5h14a1.5 1.5 0 0 1 1.5 1.5v7A1.5 1.5 0 0 1 19 15h-8.5L7 18v-3H5a1.5 1.5 0 0 1-1.5-1.5v-7A1.5 1.5 0 0 1 5 5z"/>
+            <circle cx="8.8" cy="10" r="0.4" fill="#1d7a55"/>
+            <circle cx="12" cy="10" r="0.4" fill="#a07d1c" stroke="#a07d1c"/>
+            <circle cx="15.2" cy="10" r="0.4" fill="#1d7a55"/>
+          </svg>
+        </span>
+        <span class="num">01</span>
+        <div>
+          <h3>Convite, nunca vigilância</h3>
+          <p>Sem escuta contínua e sem câmeras: a IA conversa quando o idoso escolhe — por voz, botão ou no momento combinado da rotina.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- rotina combinada: lista com checks -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4.5" y="4" width="15" height="16" rx="2.5"/>
+            <path d="m7.6 9 1.2 1.2 2-2.3" stroke="#a07d1c"/>
+            <path d="M13 9.2h3.5"/>
+            <path d="m7.6 14 1.2 1.2 2-2.3" stroke="#a07d1c"/>
+            <path d="M13 14.2h3.5"/>
+          </svg>
+        </span>
+        <span class="num">02</span>
+        <div>
+          <h3>Rotina combinada</h3>
+          <p>Idoso, família e operador definem o que será confirmado a cada dia — medicação, refeição, hidratação, visita. O combinado vira lista verificável.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- exceção: onda com pico -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3.5 13.5h3l1.8-3.5 2 6.5"/>
+            <path d="m10.3 16.5 2-9 1.9 6" stroke="#a07d1c"/>
+            <path d="m14.2 13.5 1.2 0h5.1"/>
+          </svg>
+        </span>
+        <span class="num">03</span>
+        <div>
+          <h3>Confirmado ou exceção</h3>
+          <p>Cada tarefa termina confirmada — ou vira exceção. O que não foi confirmado aparece como desconhecido; nunca é tratado como "tudo bem".</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- humano nomeado: pessoa com marca -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11.5" cy="8.5" r="3.2"/>
+            <path d="M5.5 19.5a6 6 0 0 1 12 0"/>
+            <circle cx="17.8" cy="6.2" r="1.9" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">04</span>
+        <div>
+          <h3>Humano nomeado decide</h3>
+          <p>Toda exceção vai para uma pessoa com nome — familiar ou profissional do operador. A IA prepara o contexto; não decide nada com consequência.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- teleconsulta: tela com cruz -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="5" width="16" height="11" rx="2"/>
+            <path d="M12 16v3M8.5 19h7"/>
+            <path d="M12 8v5M9.5 10.5h5" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">05</span>
+        <div>
+          <h3>Escalonamento clínico</h3>
+          <p>Quando algo exige cuidado, o alerta vira teleconsulta no <a href="../clinicnow/cabin.html">ClinicNow Cabin</a> — com profissional de saúde licenciado decidindo a conduta.</p>
+        </div>
+      </div>
+
+      <div class="passo">
+        <span class="ico" aria-hidden="true">
+          <!-- desfecho documentado: arquivo com check -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13.5 3.5h-6A1.5 1.5 0 0 0 6 5v14a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19V8z"/>
+            <path d="M13.5 3.5V8H18"/>
+            <path d="m9.3 14 2 2 3.5-4" stroke="#a07d1c"/>
+          </svg>
+        </span>
+        <span class="num">06</span>
+        <div>
+          <h3>Próximo passo documentado</h3>
+          <p>O caso não morre num aviso: termina com conduta registrada e acompanhamento até o desfecho. É isso que diferencia o Genecys de monitoramento puro.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Pontos de contato -->
+  <section class="fade" aria-labelledby="t-contato">
+    <div class="sec-head">
+      <h2 id="t-contato">Pontos de contato em estudo</h2>
+      <p class="sub">Formas propostas de o idoso e a família participarem do circuito — nenhuma definida ou prometida.</p>
+    </div>
+    <div class="chips">
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="3.5" width="6" height="10.5" rx="3"/>
+          <path d="M6 11.5a6 6 0 0 0 12 0" stroke="#a07d1c"/>
+          <path d="M12 17.5v3M9 20.5h6"/>
+        </svg>
+        <span>Voz voluntária<br><small>por escolha do idoso</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="4.5" y="4.5" width="15" height="15" rx="4"/>
+          <circle cx="12" cy="12" r="3.4" stroke="#a07d1c"/>
+        </svg>
+        <span>Botão de chamada<br><small>proposta do conceito</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="4" y="5" width="16" height="15" rx="2.5"/>
+          <path d="M4 9.5h16M8.5 3.5v3M15.5 3.5v3"/>
+          <path d="m9.5 14.5 1.8 1.8 3.2-3.6" stroke="#a07d1c"/>
+        </svg>
+        <span>Rotina combinada<br><small>proposta do conceito</small></span>
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d7a55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="7" y="3.5" width="10" height="17" rx="2.5"/>
+          <path d="M10.5 6h3"/>
+          <path d="m9.8 12.5 1.4 1.4 3-3.4" stroke="#a07d1c"/>
+        </svg>
+        <span>Quadro da família<br><small>proposta do conceito</small></span>
+      </span>
+    </div>
+    <p class="nota-proposta">Nenhum dispositivo está definido, homologado ou prometido. Os pontos de contato serão escolhidos com os parceiros de validação — e um princípio não muda: nada de escuta contínua; a IA só participa quando convidada ou no que foi combinado.</p>
+  </section>
+
+  <!-- Por que agora -->
+  <section class="fade" aria-labelledby="t-porque">
+    <div class="sec-head">
+      <h2 id="t-porque">Por que agora</h2>
+      <p class="sub">Fatos do mercado — com o nome da fonte, sem números próprios.</p>
+    </div>
+    <div class="gov-grid">
+      <div class="gov">
+        <span class="tag gold">Caso Papa · EUA</span>
+        <h3>Companhia sem desfecho não se sustenta</h3>
+        <p>A trajetória da Papa, startup americana de companhia para idosos, mostrou que conversa e visita aliviam a solidão — mas, sem fechar o circuito de cuidado, o valor não se comprova para quem paga.</p>
+      </div>
+      <div class="gov">
+        <span class="tag gold">Sensi.AI · ElliQ</span>
+        <h3>A categoria é real; falta fechar o circuito</h3>
+        <p>Sensi.AI e ElliQ provaram duas coisas: monitoramento de idosos por IA funciona e existe canal por governo e pagador — a ElliQ chegou a idosos por meio de agências públicas de envelhecimento nos EUA.</p>
+      </div>
+      <div class="gov">
+        <span class="tag gold">Sebrae · Brasil</span>
+        <h3>O Brasil envelhece rápido</h3>
+        <p>O mercado de cuidadores de idosos cresceu cerca de 74% em 5 anos, segundo o Sebrae. Ainda assim, não há player que feche o circuito clínico: do sinal em casa ao próximo passo documentado por um profissional.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ecossistema -->
+  <section class="fade" aria-labelledby="t-eco">
+    <div class="sec-head">
+      <h2 id="t-eco">Conexão com o ecossistema Zatheon</h2>
+    </div>
+    <div class="eco">
+      <p>O Genecys traz <strong>a família inteira para o circuito de cuidado</strong>. O médico opera no <strong>ClinicNow</strong>; o acesso de quem não tem canal digital passa pelo <strong>ClinicNow Cabin</strong>; o acompanhamento contínuo vira recorrência ética no <strong>CareLoop</strong>. O Genecys é a porta de entrada da família nesse mesmo circuito — o idoso em casa, os filhos informados e o profissional de saúde com o próximo passo documentado.</p>
+      <div class="eco-links">
+        <a href="../clinicnow/">ClinicNow</a>
+        <a href="../clinicnow/cabin.html">ClinicNow Cabin</a>
+        <a href="../careloop/">CareLoop</a>
+        <a href="../projetos/">Mapa de projetos</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Governança e limites -->
+  <section class="fade" aria-labelledby="t-governanca">
+    <div class="sec-head">
+      <h2 id="t-governanca">Governança e limites</h2>
+      <p class="sub">Três princípios que valem antes de qualquer produto — e uma lista do que esta página não pode prometer.</p>
+    </div>
+    <div class="gov-grid">
+      <div class="gov">
+        <span class="tag">Sem vigilância</span>
+        <h3>Convite, não escuta</h3>
+        <p>Sem escuta contínua e sem câmeras. A presença da IA é sempre visível, combinada com o idoso e revogável por ele.</p>
+      </div>
+      <div class="gov">
+        <span class="tag">Humano no circuito</span>
+        <h3>Exceção tem dono com nome</h3>
+        <p>Toda exceção vai para um humano nomeado. Autoridade clínica humana explícita em todo passo com consequência — a IA prepara; pessoas decidem.</p>
+      </div>
+      <div class="gov">
+        <span class="tag">Desfecho clínico</span>
+        <h3>Escalonamento até a conduta</h3>
+        <p>Quando algo exige cuidado, vira teleconsulta no ClinicNow Cabin com próximo passo documentado. O sinal não morre num aviso.</p>
+      </div>
+    </div>
+    <div class="limites-box">
+      <h3>O que esta página não pode prometer</h3>
+      <ul class="limites">
+        <li><strong>Nenhum diagnóstico, prescrição ou triagem autônoma pela IA</strong> — autoridade clínica humana explícita em todo passo com consequência.</li>
+        <li><strong>Sem escuta contínua e sem vigilância.</strong> Silêncio significa "desconhecido", nunca segurança.</li>
+        <li><strong>Nenhum dado de saúde identificável</strong> antes de contratos, governança e revisão clínica.</li>
+        <li><strong>Nenhuma promessa</strong> de disponibilidade, resultado clínico, redução de custo ou de fila.</li>
+        <li><strong>O Genecys não é serviço de urgência</strong> e não substitui cuidadores, plantão de emergência ou o acompanhamento médico existente.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta fade">
+    <h2>Vamos validar junto?</h2>
+    <p>O Genecys está na fase de validação de tese: estudo do problema, das referências e do desenho do circuito. <strong>Buscamos parceiros para validar junto</strong> — operadoras de saúde, prefeituras, agências de home care e famílias que vivem esse problema por dentro. Sem promessa antes da evidência.</p>
+    <div class="btns">
+      <a class="btn btn-primario" href="mailto:drsostenescosta@gmail.com?subject=Parceiro%20de%20valida%C3%A7%C3%A3o%20%E2%80%94%20Genecys">Quero validar junto</a>
+      <a class="btn btn-zap" href="https://wa.me/5584999869468?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20do%20Genecys%20e%20quero%20conversar%20sobre%20a%20tese." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.9L3.5 20.5l4.2-1.1A8.5 8.5 0 1 0 12 3.5z"/>
+          <path d="M9 8.8c.3-.7.9-.7 1.2 0l.5 1.2c.1.3 0 .7-.2.9l-.5.5c.5 1.1 1.5 2.1 2.6 2.6l.5-.5c.2-.2.6-.3.9-.2l1.2.5c.7.3.7.9 0 1.2-3.5 1.6-8.3-3.2-6.2-6.2z"/>
+        </svg>
+        Conversar no WhatsApp
+      </a>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  ZATHEON · GENECYS — NOME DE TRABALHO, SEM REGISTRO FORMAL · TESE EM VALIDAÇÃO · SEM PRODUTO EM OPERAÇÃO
+  <div class="foot-links">
+    <a href="../index.html">Sóstenes Costa Paiva</a>
+    <a href="../projetos/">Mapa de projetos</a>
+    <a href="../clinicnow/">ClinicNow</a>
+    <a href="../careloop/">CareLoop</a>
+    <a href="../medverse/">MedVerse</a>
+    <a href="../privacidade.html">Privacidade</a>
+  </div>
+</footer>
+
+</body>
+</html>
