@@ -15,6 +15,7 @@
 | `2026-07-comite-aprovacao.md` | Atas do comitê: notas e aprovações | Comitê de avaliação | ✅ registradas · decisões incorporadas ao `medgroth/BACKLOG.md` (28/07) |
 | `2026-07-registro-prompt-docgrow.md` | Diretriz do fundador MedGroth→DocGrow (original + melhorada 100x) | Diretriz do fundador | ✅ executada (banco 5 camadas + pricing US$) |
 | `2026-07-docgrow-mvp-inovacoes.md` | 10 inovações além do básico (2 já no ar: Health Score + Cofre) | Agente de inovação | ✅ registradas · fila priorizada |
+| `2026-08-content-os-delegar-execucao.md` | Doutrina "delegar execução, manter julgamento" + expansão 10x (10 sistemas) | Ensaio de Bernardo Precht (X) | ✅ registrada · página didática em `2026-08-content-os.html` |
 
 ## Como registrar uma ideia nova
 
