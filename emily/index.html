@@ -149,6 +149,20 @@
     .fade { animation:f .6s ease both; }
     @keyframes f { from { opacity:0; transform:translateY(8px); } to { opacity:1; } }
   }
+
+  .emily-chat { margin-top: 18px; background: #fff; border: 1px solid #e3ded2; border-radius: 14px; overflow: hidden; }
+  .chat-status { font-family: "JetBrains Mono", monospace; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: #806313; background: #faf6ec; padding: 8px 14px; border-bottom: 1px solid #e3ded2; }
+  .chat-msgs { min-height: 120px; max-height: 380px; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .chat-msgs .msg { max-width: 82%; padding: 10px 14px; border-radius: 14px; font-size: .93rem; line-height: 1.5; }
+  .chat-msgs .msg.eu { align-self: flex-end; background: #1d7a55; color: #fff; border-bottom-right-radius: 4px; }
+  .chat-msgs .msg.emily { align-self: flex-start; background: #f4f1e8; color: #1d2523; border-bottom-left-radius: 4px; }
+  .chat-msgs .msg.pensando { color: #806313; font-style: italic; background: transparent; padding: 2px 4px; }
+  .chat-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid #e3ded2; }
+  .chat-form input { flex: 1; border: 1px solid #d8d2c2; border-radius: 10px; padding: 11px 14px; font: inherit; font-size: .93rem; background: #faf8f3; }
+  .chat-form input:focus { outline: 2px solid #1d7a55; outline-offset: 1px; }
+  .chat-send { background: #1d7a55; color: #fff; border: 0; border-radius: 10px; padding: 11px 18px; font: inherit; font-weight: 600; cursor: pointer; }
+  .chat-mute { background: #faf8f3; border: 1px solid #d8d2c2; border-radius: 10px; padding: 0 12px; font-size: 1rem; cursor: pointer; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 </style>
 </head>
 <body>
@@ -178,9 +192,19 @@
   <section class="fade" aria-labelledby="t-converse">
     <div class="sec-head">
       <h2 id="t-converse">Fale com a minha secretária Emily</h2>
-      <p class="sub">Demonstração ao vivo: esta é a mesma Emily que organiza o dia do fundador. Fale por voz ou escreva — ela responde com a própria voz. Use o botão flutuante no canto da tela para iniciar a conversa (o navegador vai pedir acesso ao microfone se você optar por voz).</p>
+      <p class="sub">Demonstração ao vivo: esta é a mesma Emily que organiza o dia do fundador. Escreva abaixo — ela responde por escrito e com a própria voz. Não precisa de microfone.</p>
     </div>
-    <div class="aviso"><strong>Transparência:</strong> a Emily é uma assistente virtual (IA) em protótipo. A conversa serve para demonstração — não colete aqui dados sensíveis nem informações de saúde; para assuntos pessoais, use o WhatsApp ao fim da página.</div>
+    <div class="aviso"><strong>Transparência:</strong> a Emily é uma assistente virtual (IA) em protótipo. A conversa serve para demonstração — não escreva aqui dados sensíveis nem informações de saúde; para assuntos pessoais, use o WhatsApp ao fim da página.</div>
+    <div class="emily-chat" id="emilyChat">
+      <div class="chat-status" id="chatStatus">Pronta — escreva sua primeira mensagem 👋</div>
+      <div class="chat-msgs" id="chatMsgs" aria-live="polite"></div>
+      <form class="chat-form" id="chatForm">
+        <label for="chatInput" class="sr-only">Mensagem para a Emily</label>
+        <input id="chatInput" type="text" placeholder="Escreva para a Emily…" autocomplete="off" maxlength="500" />
+        <button type="submit" class="chat-send">Enviar</button>
+        <button type="button" class="chat-mute" id="chatMute" aria-pressed="false" title="Voz da Emily: ligada">🔊</button>
+      </form>
+    </div>
   </section>
 
   <!-- Como seria na prática -->
@@ -676,8 +700,63 @@
   ZATHEON · EMILY — EM ESTRUTURAÇÃO · PROTÓTIPO INTERNO · SEM PREÇO, SLA, CLIENTES OU PROMESSA DE RESULTADO
 </footer>
 
-<elevenlabs-convai agent-id="agent_7501kzdamp08emhs7cc61avfg2nf"></elevenlabs-convai>
-<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<script>
+(function () {
+  var msgs = document.getElementById("chatMsgs"), form = document.getElementById("chatForm"),
+      input = document.getElementById("chatInput"), status = document.getElementById("chatStatus"),
+      muteBtn = document.getElementById("chatMute");
+  if (!form) return;
+  var ws = null, pronto = false, fila = [], actx = null, nextT = 0, mudo = false, pensando = null;
+
+  function bolha(texto, cls) { var d = document.createElement("div"); d.className = "msg " + cls; d.textContent = texto; msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight; return d; }
+  function setStatus(t) { status.textContent = t; }
+
+  function tocarPcm(b64) {
+    if (mudo) return;
+    try {
+      if (!actx) { actx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 }); nextT = 0; }
+      var bin = atob(b64), n = bin.length / 2, i16 = new Int16Array(n);
+      for (var i = 0; i < n; i++) { var lo = bin.charCodeAt(2*i), hi = bin.charCodeAt(2*i+1); var v = (hi << 8) | lo; i16[i] = v >= 32768 ? v - 65536 : v; }
+      var buf = actx.createBuffer(1, n, 16000), ch = buf.getChannelData(0);
+      for (var j = 0; j < n; j++) ch[j] = i16[j] / 32768;
+      var src = actx.createBufferSource(); src.buffer = buf; src.connect(actx.destination);
+      var t = Math.max(actx.currentTime + 0.05, nextT); src.start(t); nextT = t + buf.duration;
+    } catch (e) { /* áudio é bônus; texto continua */ }
+  }
+
+  function conectar() {
+    setStatus("Conectando com a Emily…");
+    return fetch("/api/emily-signed-url").then(function (r) { return r.json(); }).then(function (d) {
+      if (!d.signed_url) throw new Error(d.erro || "sem token");
+      ws = new WebSocket(d.signed_url); pronto = false;
+      ws.onmessage = function (ev) {
+        var m = JSON.parse(ev.data);
+        if (m.type === "ping") ws.send(JSON.stringify({ type: "pong", event_id: m.ping_event && m.ping_event.event_id }));
+        if (m.type === "conversation_initiation_metadata") { pronto = true; setStatus("Emily online — pode conversar"); while (fila.length) ws.send(fila.shift()); }
+        if (m.type === "agent_response") { if (pensando) { pensando.remove(); pensando = null; } bolha(m.agent_response_event.agent_response, "emily"); }
+        if (m.type === "audio") tocarPcm(m.audio_event.audio_base_64);
+      };
+      ws.onclose = function () { pronto = false; ws = null; setStatus("Conversa pausada — escreva para reconectar"); };
+      ws.onerror = function () { setStatus("Falha na conexão — tente de novo ou chame no WhatsApp (fim da página)"); };
+      ws.onopen = function () { ws.send(JSON.stringify({ type: "conversation_initiation_client_data" })); };
+    }).catch(function () { setStatus("Não consegui conectar — tente de novo ou chame no WhatsApp (fim da página)"); });
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var t = input.value.trim(); if (!t) return;
+    bolha(t, "eu"); input.value = "";
+    pensando = bolha("Emily está pensando…", "pensando");
+    var pacote = JSON.stringify({ type: "user_message", text: t });
+    if (ws && pronto) ws.send(pacote); else { fila.push(pacote); if (!ws) conectar(); }
+  });
+  muteBtn.addEventListener("click", function () {
+    mudo = !mudo; muteBtn.textContent = mudo ? "🔇" : "🔊";
+    muteBtn.setAttribute("aria-pressed", String(mudo));
+    muteBtn.title = "Voz da Emily: " + (mudo ? "desligada" : "ligada");
+  });
+})();
+</script>
 
 </body>
 </html>
