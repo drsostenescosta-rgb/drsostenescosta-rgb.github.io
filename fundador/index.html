@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>A história de Sóstenes Costa Paiva — do peso que eu carregava ao Vale do Silício</title>
+<meta name="description" content="A história verdadeira de Sóstenes Costa Paiva: obesidade, bariátrica, reganho, o método SOS Emagrecimento Comportamental, a clínica, os lançamentos digitais e a virada para IA aplicada à saúde — contada por ele mesmo." />
+<meta property="og:title" content="A minha história — Sóstenes Costa Paiva" />
+<meta property="og:description" content="Do gordinho que tinha vergonha de tirar a camisa na praia ao fundador construindo IA para a saúde no Vale do Silício. A história verdadeira, sem atalho." />
+<meta property="og:type" content="profile" />
+<meta property="og:image" content="https://drsostenescosta-rgb.github.io/assets/sostenes-brooklyn-portrait.jpeg" />
+<meta property="og:url" content="https://drsostenescosta-rgb.github.io/fundador/" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://drsostenescosta-rgb.github.io/fundador/" />
+<link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "mainEntity": {
+    "@type": "Person",
+    "@id": "https://drsostenescosta-rgb.github.io/#sostenes",
+    "name": "Sóstenes Costa Paiva",
+    "url": "https://drsostenescosta-rgb.github.io/fundador/",
+    "image": "https://drsostenescosta-rgb.github.io/assets/sostenes-brooklyn-portrait.jpeg",
+    "jobTitle": "Fundador da Zatheon",
+    "description": "Biomédico e fisioterapeuta brasileiro. Fundador da Zatheon — Clinic Now, Elevo e MedEasy. Construindo IA aplicada à saúde em público.",
+    "sameAs": [
+      "https://www.instagram.com/drsostenes/",
+      "https://www.linkedin.com/in/s%C3%B3stenes-costa-paiva-184137165/",
+      "https://www.youtube.com/channel/UC2d-BgBasNZ1nldwCLJ9zGw"
+    ]
+  }
+}
+</script>
+<style>
+  /* ============================================================
+     FUNDADOR — identidade própria, harmônica com o site-mãe.
+     O site-mãe é claro (creme/verde/dourado). Esta página é a
+     mesma paleta INVERTIDA: fundo escuro quente, texto creme,
+     dourado como fio condutor. Fraunces + Inter, como lá.
+     ============================================================ */
+  :root {
+    --bg: #191d1a;            /* verde-tinta profundo, quente */
+    --bg-soft: #20251f;
+    --bg-card: #232823;
+    --paper: #faf8f3;         /* o creme do site-mãe */
+    --paper-soft: #cfccc2;
+    --paper-dim: #9a978d;
+    --line: #383e36;
+    --gold: #d3ab3f;          /* dourado vivo — decorativo sobre escuro */
+    --gold-soft: #a07d1c;
+    --green: #6fbf94;         /* o verde do site-mãe, clareado p/ contraste */
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--paper);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--gold); color: var(--bg); }
+  img { max-width: 100%; display: block; }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .shell { max-width: 680px; margin: 0 auto; padding: 0 22px; }
+  .shell-wide { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+
+  /* ---------- topo ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner {
+    max-width: 980px; margin: 0 auto; padding: 14px 22px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .topbar .brand {
+    font-family: var(--serif); font-size: 1.02rem; font-weight: 500;
+    color: var(--paper); letter-spacing: .01em; white-space: nowrap;
+  }
+  .topbar .brand em { color: var(--gold); font-style: normal; }
+  .topbar nav { display: flex; gap: 18px; align-items: center; }
+  .topbar nav a {
+    color: var(--paper-soft); font-size: .82rem; font-weight: 500;
+    letter-spacing: .02em;
+  }
+  .topbar nav a.cta {
+    color: var(--bg); background: var(--gold); padding: 7px 14px;
+    border-radius: 999px; font-weight: 600;
+  }
+  .topbar nav a.cta:hover { text-decoration: none; filter: brightness(1.08); }
+  @media (max-width: 560px) { .topbar nav a.hide-m { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; padding: 72px 0 64px; overflow: hidden; }
+  .hero-grid {
+    max-width: 980px; margin: 0 auto; padding: 0 22px;
+    display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center;
+  }
+  .hero .kicker {
+    font-size: .78rem; font-weight: 600; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: var(--serif); font-weight: 500;
+    font-size: clamp(2.1rem, 5.4vw, 3.4rem);
+    line-height: 1.12; letter-spacing: -.01em; margin-bottom: 24px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero .lede {
+    font-size: 1.06rem; color: var(--paper-soft); max-width: 34em; margin-bottom: 30px;
+  }
+  .hero .lede strong { color: var(--paper); }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-block; padding: 12px 22px; border-radius: 999px;
+    font-weight: 600; font-size: .92rem; letter-spacing: .01em;
+  }
+  .btn-gold { background: var(--gold); color: var(--bg); }
+  .btn-gold:hover { text-decoration: none; filter: brightness(1.08); }
+  .btn-ghost { border: 1px solid var(--line); color: var(--paper); }
+  .btn-ghost:hover { text-decoration: none; border-color: var(--gold-soft); }
+  .hero-photo { position: relative; }
+  .hero-photo img {
+    border-radius: 14px; aspect-ratio: 3/4; object-fit: cover; width: 100%;
+    filter: saturate(.94);
+  }
+  .hero-photo figcaption {
+    margin-top: 10px; font-size: .78rem; color: var(--paper-dim); letter-spacing: .02em;
+  }
+  @media (max-width: 760px) {
+    .hero { padding: 48px 0 40px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+    .hero-photo { max-width: 340px; }
+  }
+
+  /* ---------- faixa de capítulos (índice) ---------- */
+  .chapters-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--bg-soft); }
+  .chapters-strip .inner {
+    max-width: 980px; margin: 0 auto; padding: 14px 22px;
+    display: flex; gap: 26px; overflow-x: auto; scrollbar-width: none;
+  }
+  .chapters-strip .inner::-webkit-scrollbar { display: none; }
+  .chapters-strip a {
+    color: var(--paper-dim); font-size: .8rem; font-weight: 500; white-space: nowrap;
+    letter-spacing: .03em;
+  }
+  .chapters-strip a b { color: var(--gold); font-weight: 600; margin-right: 6px; }
+  .chapters-strip a:hover { color: var(--paper); text-decoration: none; }
+
+  /* ---------- capítulos ---------- */
+  .chapter { padding: 74px 0 10px; }
+  .chapter-head { margin-bottom: 30px; }
+  .chapter-num {
+    font-family: var(--serif); font-style: italic; color: var(--gold);
+    font-size: .95rem; letter-spacing: .06em; display: block; margin-bottom: 10px;
+  }
+  .chapter h2 {
+    font-family: var(--serif); font-weight: 500;
+    font-size: clamp(1.65rem, 4vw, 2.3rem); line-height: 1.18; letter-spacing: -.01em;
+  }
+  .chapter p { color: var(--paper-soft); margin-bottom: 1.25em; }
+  .chapter p strong { color: var(--paper); }
+  .chapter .destaque {
+    font-family: var(--serif); font-size: 1.35rem; line-height: 1.45;
+    color: var(--paper); font-weight: 400; font-style: italic;
+    border-left: 2px solid var(--gold); padding-left: 22px; margin: 34px 0;
+  }
+  .chapter .destaque em { color: var(--gold); font-style: italic; }
+
+  /* método SOS — 3 passos */
+  .metodo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 30px 0 36px; }
+  .metodo div {
+    background: var(--bg-card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px 16px;
+  }
+  .metodo b {
+    display: block; font-family: var(--serif); font-size: 1.02rem; font-weight: 600;
+    color: var(--gold); margin-bottom: 6px;
+  }
+  .metodo span { font-size: .85rem; color: var(--paper-soft); line-height: 1.55; display: block; }
+  @media (max-width: 640px) { .metodo { grid-template-columns: 1fr; } }
+
+  /* lista de produtos (prova) */
+  .prova-lista { margin: 26px 0 34px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .prova-lista header {
+    background: var(--bg-card); padding: 14px 18px; font-size: .78rem; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--gold);
+    border-bottom: 1px solid var(--line);
+  }
+  .prova-lista ul { list-style: none; }
+  .prova-lista li {
+    padding: 11px 18px; font-size: .9rem; color: var(--paper-soft);
+    border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px;
+  }
+  .prova-lista li:last-child { border-bottom: none; }
+  .prova-lista li span { color: var(--paper-dim); font-size: .78rem; white-space: nowrap; }
+
+  /* foto solta no meio do texto */
+  .foto-meio { margin: 40px 0; }
+  .foto-meio img { border-radius: 14px; width: 100%; aspect-ratio: 16/10; object-fit: cover; filter: saturate(.94); }
+  .foto-meio figcaption { margin-top: 10px; font-size: .78rem; color: var(--paper-dim); }
+
+  /* ---------- linha do tempo compacta ---------- */
+  .timeline-band { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 64px 0; margin-top: 64px; }
+  .timeline-band h2 {
+    font-family: var(--serif); font-weight: 500; font-size: clamp(1.5rem, 3.6vw, 2rem);
+    margin-bottom: 8px;
+  }
+  .timeline-band .sub { color: var(--paper-dim); font-size: .9rem; margin-bottom: 36px; }
+  .tl { list-style: none; position: relative; padding-left: 26px; }
+  .tl::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: var(--line); }
+  .tl li { position: relative; padding-bottom: 22px; }
+  .tl li:last-child { padding-bottom: 0; }
+  .tl li::before {
+    content: ""; position: absolute; left: -25px; top: 8px; width: 9px; height: 9px;
+    border-radius: 50%; background: var(--bg); border: 2px solid var(--gold);
+  }
+  .tl time { font-size: .78rem; font-weight: 600; letter-spacing: .08em; color: var(--gold); display: block; }
+  .tl b { font-weight: 600; color: var(--paper); font-size: .95rem; }
+  .tl span { display: block; font-size: .85rem; color: var(--paper-dim); }
+
+  /* ---------- o agora / zatheon ---------- */
+  .agora-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 30px 0 10px; }
+  .agora-grid a {
+    background: var(--bg-card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 20px 18px; color: var(--paper); display: block;
+  }
+  .agora-grid a:hover { text-decoration: none; border-color: var(--gold-soft); }
+  .agora-grid b { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; display: block; margin-bottom: 6px; }
+  .agora-grid span { font-size: .84rem; color: var(--paper-soft); line-height: 1.55; display: block; }
+  .agora-grid .tag { margin-top: 12px; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+  @media (max-width: 640px) { .agora-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- fechamento ---------- */
+  .fim { padding: 90px 0 80px; text-align: center; }
+  .fim .aforismo {
+    font-family: var(--serif); font-style: italic; font-weight: 400;
+    font-size: clamp(1.5rem, 4.2vw, 2.2rem); line-height: 1.35; max-width: 21em;
+    margin: 0 auto 16px;
+  }
+  .fim .aforismo em { color: var(--gold); }
+  .fim .assina { color: var(--paper-dim); font-size: .88rem; margin-bottom: 40px; }
+  .fim-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  footer {
+    border-top: 1px solid var(--line); padding: 26px 0 34px;
+    font-size: .8rem; color: var(--paper-dim);
+  }
+  .footer-inner {
+    max-width: 980px; margin: 0 auto; padding: 0 22px;
+    display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  }
+  footer a { color: var(--paper-soft); }
+
+  /* reveal suave */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.on { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../">Sóstenes Costa Paiva <em>· fundador</em></a>
+    <nav>
+      <a class="hide-m" href="../">Site principal</a>
+      <a class="hide-m" href="#agora">O agora</a>
+      <a class="cta" href="https://www.instagram.com/drsostenes/" target="_blank" rel="noopener noreferrer">@drsostenes</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-grid">
+    <div>
+      <p class="kicker">A história verdadeira, sem atalho</p>
+      <h1>Eu tinha vergonha de tirar a camisa <em>na praia.</em></h1>
+      <p class="lede">Essa história começa num corpo que eu não queria ter — e chega, por enquanto, ao Vale do Silício, construindo IA para a saúde. No meio do caminho: uma bariátrica que não resolveu, um método que nasceu da minha própria dor, uma clínica, milhares de aulas dadas e uma decisão de <strong>recomeçar do zero em público.</strong> Bora?</p>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="#cap1">Ler a história</a>
+        <a class="btn btn-ghost" href="#agora">Ir direto pro agora</a>
+      </div>
+    </div>
+    <figure class="hero-photo">
+      <img src="../assets/sostenes-brooklyn-portrait.jpeg" alt="Sóstenes Costa Paiva em Brooklyn, Nova York" width="720" height="1280" fetchpriority="high" />
+      <figcaption>Brooklyn, NY — a caminho da temporada no Vale do Silício, 2026.</figcaption>
+    </figure>
+  </div>
+</header>
+
+<nav class="chapters-strip" aria-label="Capítulos">
+  <div class="inner">
+    <a href="#cap1"><b>01</b>O peso</a>
+    <a href="#cap2"><b>02</b>A virada e o método</a>
+    <a href="#cap3"><b>03</b>O professor</a>
+    <a href="#cap4"><b>04</b>No papel</a>
+    <a href="#cap5"><b>05</b>A aposta na IA</a>
+    <a href="#agora"><b>06</b>O agora</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ============ CAPÍTULO 1 — O PESO ============ -->
+  <section class="chapter" id="cap1">
+    <div class="shell">
+      <div class="chapter-head reveal">
+        <span class="chapter-num">Capítulo 01</span>
+        <h2>O peso que eu carregava não estava só no corpo.</h2>
+      </div>
+      <div class="reveal">
+        <p>Eu cresci em Mossoró, no interior do Rio Grande do Norte, sendo o gordinho da família. As piadas vinham de dentro de casa. As roupas que eu queria não fechavam. Praia, pra mim, era o lugar de ficar de camisa enquanto todo mundo entrava na água.</p>
+        <p>Eu fiz o que todo mundo faz: dieta. Depois outra. Depois outra. Emagrecia, engordava de novo — o famoso efeito sanfona, que não maltrata só o corpo, maltrata a esperança. Até que eu tomei a decisão que parecia ser a definitiva: <strong>a cirurgia bariátrica.</strong></p>
+        <p>E funcionou. Por um tempo.</p>
+        <p>Dois anos depois, a balança tinha me devolvido quase 20 quilos. Eu tinha operado o estômago — mas ninguém tinha operado a minha cabeça.</p>
+      </div>
+      <p class="destaque reveal">Foi aí que caiu a minha ficha: o meu problema nunca foi só o corpo. Era <em>comportamento.</em> E comportamento não se corta com bisturi — se reprograma.</p>
+    </div>
+  </section>
+
+  <!-- ============ CAPÍTULO 2 — A VIRADA E O MÉTODO ============ -->
+  <section class="chapter" id="cap2">
+    <div class="shell">
+      <div class="chapter-head reveal">
+        <span class="chapter-num">Capítulo 02</span>
+        <h2>Da minha dor nasceu um método. Do método, uma clínica.</h2>
+      </div>
+      <div class="reveal">
+        <p>Eu já era fisioterapeuta — formado pela Universidade Potiguar, com pós em fisioterapia dermatofuncional — e trabalhava de dia num banco, a Caixa Econômica, aprendendo na marra o que faculdade nenhuma ensina: atender gente, vender, resolver. À noite e nos fins de semana, eu estudava o que tinha me acontecido.</p>
+        <p>Dessa obsessão nasceu o <strong>SOS Emagrecimento Comportamental</strong>: um método que trata o emagrecimento pela raiz que ninguém queria encarar — o comportamento. Três etapas, na ordem que a minha própria história me ensinou:</p>
+      </div>
+      <div class="metodo reveal">
+        <div><b>1. Desprogramação</b><span>Desmontar os padrões que engordam: os gatilhos, os hábitos automáticos, as crenças que sabotam.</span></div>
+        <div><b>2. Reprogramação</b><span>Construir o comportamento novo no lugar do velho — com ciência, não com força de vontade.</span></div>
+        <div><b>3. Implementação</b><span>Fazer o novo padrão virar rotina, até que ele não precise mais de esforço pra existir.</span></div>
+      </div>
+      <div class="reveal">
+        <p>O método virou atendimento. O atendimento virou a minha clínica de saúde e estética em Mossoró — a <strong>Dr. SOS</strong> — com protocolos, equipe e uma esteira de cuidado que ia do emagrecimento à estética avançada.</p>
+        <p>E aí aconteceu uma coisa que eu não planejei: as pessoas começaram a pedir pra aprender comigo. Profissionais da saúde queriam o método, queriam os protocolos, queriam saber como a clínica funcionava por dentro. A demanda pelo online veio antes de eu ir atrás dela.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CAPÍTULO 3 — O PROFESSOR ============ -->
+  <section class="chapter" id="cap3">
+    <div class="shell">
+      <div class="chapter-head reveal">
+        <span class="chapter-num">Capítulo 03</span>
+        <h2>Virei professor — e depois aprendi a lançar.</h2>
+      </div>
+      <div class="reveal">
+        <p>Desde 2018 eu escrevo apostila, monto curso, dou aula. Comecei ensinando o que dominava: limpeza de pele, protocolos de estética, eletroterapia, ondas de choque. Cada turma me ensinava a ensinar melhor.</p>
+        <p>Quando o online abriu a porteira, eu entrei de vez no mundo dos <strong>lançamentos digitais</strong>. Estudei o jogo a sério — me formei em marketing pela V4 Company em 2022 — e construí, lançamento a lançamento, uma esteira de formações que já ajudou profissionais de estética do Brasil inteiro: a <strong>Estética 10X</strong>, a formação em harmonização corporal, a <strong>Máquina de Agendamento no WhatsApp</strong>, o Desafio Mente Magra, mentorias individuais e em grupo.</p>
+      </div>
+      <div class="prova-lista reveal">
+        <header>Formações publicadas — catálogo real na Hotmart</header>
+        <ul>
+          <li>Formação em Harmonização Corporal de Emagrecimento — Estética10X <span>curso</span></li>
+          <li>Bases da Estética10X <span>curso</span></li>
+          <li>Máquina de Agendamento no WhatsApp 5 em 7 <span>curso</span></li>
+          <li>Imersão Intradermo10X na Prática <span>curso</span></li>
+          <li>SOS Detox Ortomolecular <span>curso</span></li>
+          <li>SOS FlaciUP <span>curso</span></li>
+          <li>Hidrolipo <span>curso</span></li>
+          <li>Atualização em Criolipólise e Criotermogênese <span>curso</span></li>
+          <li>Mentoria Individual com Dr. Sóstenes <span>consultoria</span></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <p>Essa fase me deu algo que pouca gente da saúde tem: <strong>anos de prática real em marketing, copy, funil e venda</strong> — não a teoria, a operação. Eu escrevi as páginas, gravei os CPLs, montei as ofertas, olhei as métricas às 2h da manhã. Errei muito, ajustei sempre.</p>
+        <p>Sem essa fase, nada do que veio depois existiria.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CAPÍTULO 4 — NO PAPEL ============ -->
+  <section class="chapter" id="cap4">
+    <div class="shell">
+      <div class="chapter-head reveal">
+        <span class="chapter-num">Capítulo 04</span>
+        <h2>No papel: biomédico e fisioterapeuta. E faço questão da precisão.</h2>
+      </div>
+      <div class="reveal">
+        <p>Deixa eu dizer com todas as letras, porque eu mesmo corrijo quem erra: <strong>eu não sou médico. Sou biomédico e fisioterapeuta.</strong> Duas graduações completas — Fisioterapia pela Universidade Potiguar, Biomedicina pelo Centro Universitário UNIBTA — e uma pós em fisioterapia dermatofuncional e estética.</p>
+        <p>Em 2020, no auge da pandemia, servi como fisioterapeuta no serviço público de saúde do Rio Grande do Norte. Em 2025, comecei Medicina na Europa — e em 2026 tomei uma das decisões mais difíceis da minha vida: <strong>pausei o curso no segundo ano.</strong></p>
+        <p>Não porque desisti da saúde. Porque eu vi uma janela se abrindo que não ia esperar seis anos de faculdade: a inteligência artificial estava mudando a medicina agora, na minha frente. E parece que a gente tem que seguir aquilo que as pessoas esperam da gente — o diploma, a linha de produção profissional. Eu escolhi o caminho fora da média.</p>
+      </div>
+      <p class="destaque reveal">Credencial importa — por isso eu digo exatamente as que tenho. Mas quem decide o impacto que você causa não é o título. É a <em>coragem</em> de construir.</p>
+    </div>
+  </section>
+
+  <!-- ============ CAPÍTULO 5 — A APOSTA NA IA ============ -->
+  <section class="chapter" id="cap5">
+    <div class="shell">
+      <div class="chapter-head reveal">
+        <span class="chapter-num">Capítulo 05</span>
+        <h2>A aposta: IA aplicada à saúde — de verdade, não de modinha.</h2>
+      </div>
+      <div class="reveal">
+        <p>Eu não gosto de modinha. Quando eu decidi mergulhar em IA, não foi pra postar print de robô — foi pra responder uma pergunta que me persegue desde a clínica: <strong>por que o cuidado em saúde ainda perde tanto tempo, tanto paciente e tanta oportunidade em processo manual?</strong></p>
+        <p>Então eu fiz o que fiz a vida inteira: virei aluno de novo. Estudo diário, certificação pela Anthropic em 2026, e a regra que rege tudo que eu construo — a IA que importa não é a que impressiona em demo, é a que melhora o <em>serviço final</em>: o paciente melhor atendido, a agenda cheia, a clínica que não depende de indicação.</p>
+      </div>
+      <figure class="foto-meio reveal">
+        <img src="../assets/sostenes-stanford-palms.jpeg" alt="Sóstenes Costa Paiva em Stanford, Califórnia" loading="lazy" />
+        <figcaption>Stanford, Califórnia — estudando onde a fronteira da IA acontece, 2026.</figcaption>
+      </figure>
+      <div class="reveal">
+        <p>Uma coisa eu trouxe intacta da minha história: método. Do mesmo jeito que o SOS desprograma, reprograma e implementa comportamento, eu aplico IA em cima de problema real, testo pequeno, meço e só então escalo. <strong>Fui apresentado ao mundo de possibilidade através do estudo</strong> — e é pelo estudo que eu continuo entrando nas salas onde o futuro é construído.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LINHA DO TEMPO ============ -->
+  <section class="timeline-band">
+    <div class="shell">
+      <h2 class="reveal">A linha do tempo, sem inflar.</h2>
+      <p class="sub reveal">Cada data abaixo é verificável. O histórico completo está no <a href="https://www.linkedin.com/in/s%C3%B3stenes-costa-paiva-184137165/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.</p>
+      <ol class="tl reveal">
+        <li><time>2011–2015</time><b>Fisioterapia — Universidade Potiguar</b><span>Mossoró, RN. A base clínica de tudo.</span></li>
+        <li><time>2014–2021</time><b>Caixa Econômica Federal — gerente assistente</b><span>A escola de atendimento, processo e venda.</span></li>
+        <li><time>2016–2017</time><b>Pós em Fisioterapia Dermatofuncional e Estética</b><span>Unyleya.</span></li>
+        <li><time>2016 →</time><b>Clínica e gestão em saúde e estética — Dr. SOS / Trattare</b><span>Mossoró, RN. Método SOS, protocolos, equipe.</span></li>
+        <li><time>2018–2023</time><b>Biomedicina — Centro Universitário UNIBTA</b><span>Segunda graduação, ênfase em estética.</span></li>
+        <li><time>2018 →</time><b>Professor e mentor</b><span>Apostilas, cursos presenciais e as formações digitais (Estética 10X e catálogo Hotmart).</span></li>
+        <li><time>2020</time><b>Fisioterapeuta no serviço público — Governo do RN</b><span>Linha de frente na pandemia.</span></li>
+        <li><time>2022</time><b>Formação em marketing — V4 Company</b><span>TCC aplicado ao negócio real da clínica.</span></li>
+        <li><time>2025–2026</time><b>Medicina — iniciada e pausada no 2º ano</b><span>A decisão difícil que abriu a fase atual. Não sou médico.</span></li>
+        <li><time>2026</time><b>Certificação Anthropic + fundação da Zatheon</b><span>IA aplicada à saúde, construída em público.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ CAPÍTULO 6 — O AGORA ============ -->
+  <section class="chapter" id="agora">
+    <div class="shell">
+      <div class="chapter-head reveal">
+        <span class="chapter-num">Capítulo 06 — o agora</span>
+        <h2>45 dias no Vale do Silício, construindo em público.</h2>
+      </div>
+      <div class="reveal">
+        <p>Enquanto você lê isso, eu estou em San Francisco, numa imersão de 45 dias no coração da IA mundial — conhecendo fundadores, entrando em eventos, testando ferramenta no dia em que ela lança. E documentando <strong>tudo</strong>, um vídeo por dia, no <a href="https://www.instagram.com/drsostenes/" target="_blank" rel="noopener noreferrer">@drsostenes</a>, onde mais de 30 mil pessoas acompanham essa jornada.</p>
+        <p>Não vim passear. Vim construir a <strong>Zatheon</strong> — o ecossistema que une tudo que essa história me ensinou: saúde por dentro, venda na prática, ensino e IA aplicada.</p>
+      </div>
+      <div class="agora-grid reveal">
+        <a href="../clinicnow/">
+          <b>Clinic Now</b>
+          <span>A clínica que não depende de indicação: funil, CRM, agenda e a Emily — a assistente de IA — respondendo e agendando pelo WhatsApp.</span>
+          <span class="tag">Em estruturação · design partners</span>
+        </a>
+        <a href="../elevo/">
+          <b>Elevo</b>
+          <span>Rede social de evolução pessoal: o "Strava" do desenvolvimento humano, com trilhas guiadas por IA.</span>
+          <span class="tag">Beta · turma fundadora</span>
+        </a>
+        <a href="../medeasy.html">
+          <b>MedEasy</b>
+          <span>IA para o dia a dia de quem atende em saúde — do prontuário à comunicação com o paciente.</span>
+          <span class="tag">Em construção</span>
+        </a>
+      </div>
+      <figure class="foto-meio reveal">
+        <img src="../assets/sostenes-stanford-arcade.jpeg" alt="Sóstenes Costa Paiva nos arcos de Stanford, Califórnia" loading="lazy" />
+        <figcaption>Stanford, 2026 — a nova fase da jornada.</figcaption>
+      </figure>
+      <div class="reveal">
+        <p>O gordinho que escondia o corpo na praia virou o cara que constrói o próprio futuro em público, com o mundo assistindo. Não porque ficou fácil — porque eu aprendi, lá atrás, que vergonha não se vence escondendo. <strong>Se vence tomando coragem.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FECHAMENTO ============ -->
+  <section class="fim">
+    <div class="shell">
+      <p class="aforismo reveal">"Não deixe virar normal aquilo que um dia, para você, <em>parecia um milagre.</em>"</p>
+      <p class="assina reveal">— Sóstenes Costa Paiva, biomédico, fisioterapeuta e fundador da Zatheon</p>
+      <div class="fim-actions reveal">
+        <a class="btn btn-gold" href="https://www.instagram.com/drsostenes/" target="_blank" rel="noopener noreferrer">Acompanhar a jornada no @drsostenes</a>
+        <a class="btn btn-ghost" href="../">Conhecer a Zatheon</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2026 Sóstenes Costa Paiva · Zatheon</span>
+    <span>
+      <a href="../">Site principal</a> ·
+      <a href="https://www.instagram.com/drsostenes/" target="_blank" rel="noopener noreferrer">Instagram</a> ·
+      <a href="https://www.linkedin.com/in/s%C3%B3stenes-costa-paiva-184137165/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+  // Reveal suave ao rolar — vanilla, sem biblioteca.
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('on'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
