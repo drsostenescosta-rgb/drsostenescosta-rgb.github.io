@@ -31,6 +31,14 @@ Arquivos em `assets/marca/produtos/` (SVG fonte + PNG 300×300 para LinkedIn) + 
 
 Cadência 2 posts/semana. Sequência de estreia: (1) o post da decisão de deixar a medicina, (2) bastidor ClinicNow/Emily ("o silêncio entre consultas"), (3) Elevo beta fechado. Rascunhos prontos no artifact do kit.
 
+## Atualização 09/08/2026 — Sobre v2, baseado no dossiê do Notion
+
+Reescrito a partir do dossiê **História & Trajetória** (Mente Mestra, Notion, varredura do Drive de 08/08) e da curadoria pedida pelo fundador:
+
+- **Arco real da história no Sobre:** obesidade vivida → bariátrica → recaída de ~20kg → virada comportamental → metodologia própria (desprogramação/reprogramação/implementação) → clínica própria → professor com múltiplas edições e certificação própria (desde ~2018) → medicina até o 2º ano, deixada → Zatheon/ClinicNow no Vale do Silício.
+- **Curadoria de liderança (regra dos perfis de topo):** começo humilde em UMA linha no Sobre (grêmio estudantil + caixa→gerência); início de carreira como UMA entrada compacta na Experiência; liderança de igreja vai para a seção Voluntariado como liderança comunitária, sem proselitismo; imigração fora de tudo (ordem de 08/08); promessas de resultado dos produtos antigos (perda de peso em X dias) fora do perfil.
+- **Produto:** foco público 100% ClinicNow; Emily, Lia e MedGrowth descritos como módulos dele (decisão de 08/08).
+
 ## Próxima evolução possível
 
 - Handles de LinkedIn/Instagram por produto (pendência herdada de `2026-07-zatheon-naming.md`).
