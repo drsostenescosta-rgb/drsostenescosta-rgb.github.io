@@ -521,10 +521,21 @@
     }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+        if (e.isIntersecting || e.boundingClientRect.top < 0) { e.target.classList.add('on'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.05 });
     els.forEach(function (el) { io.observe(el); });
+    // Rede de segurança: rolagem rápida ou salto por âncora pode pular o observer.
+    function sweep() {
+      els.forEach(function (el) {
+        if (!el.classList.contains('on') && el.getBoundingClientRect().top < window.innerHeight * 0.96) {
+          el.classList.add('on'); io.unobserve(el);
+        }
+      });
+    }
+    window.addEventListener('scroll', sweep, { passive: true });
+    window.addEventListener('hashchange', function () { setTimeout(sweep, 60); });
+    sweep();
   })();
 </script>
 
