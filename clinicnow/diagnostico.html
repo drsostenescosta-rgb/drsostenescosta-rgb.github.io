@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<title>Clinic Now — Diagnóstico do negócio (v1)</title>
+<meta name="description" content="Questionário diagnóstico do Clinic Now: 25 perguntas em 5 eixos (marketing, gestão, vendas, serviço e comunicação) que geram, na hora e sem enviar nada a servidor, um relatório com vulnerabilidades, trilha de aprendizado e onde implementar IA." />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#faf8f3; --bg-soft:#f2efe7; --card:#ffffff;
+    --ink:#1f2421; --ink-soft:#5b615c;
+    --line:#e3ded2; --line-strong:#cfc9ba;
+    --green:#1d7a55; --green-soft:#e7f2ec;
+    --gold:#a07d1c; --gold-text:#806313; --gold-soft:#f5efdd;
+    --red:#a3401f; --red-soft:#f7e8e0;
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.7; font-size:16.5px; -webkit-font-smoothing:antialiased; }
+  a { color:var(--green); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  :focus-visible { outline:2px solid var(--green); outline-offset:3px; }
+  .wrap { max-width:860px; margin:0 auto; padding:0 22px; }
+
+  header.nav { position:sticky; top:0; z-index:50; background:rgba(250,248,243,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav-inner { max-width:860px; margin:0 auto; padding:13px 22px; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+  .brand { font-family:var(--serif); font-weight:600; font-size:1.02rem; line-height:1.2; }
+  .brand small { display:block; font-family:var(--mono); font-weight:400; font-size:0.6rem; letter-spacing:0.16em; color:var(--gold-text); }
+  a.back { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.08em; color:var(--ink-soft); white-space:nowrap; }
+  a.back:hover { color:var(--green); text-decoration:none; }
+
+  .hero { padding:56px 0 12px; }
+  .kicker { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-text); display:block; margin-bottom:14px; }
+  h1 { font-family:var(--serif); font-weight:500; font-size:clamp(1.8rem,4.5vw,2.6rem); line-height:1.18; letter-spacing:-0.01em; margin-bottom:14px; max-width:22ch; }
+  h1 em { font-style:italic; color:var(--green); }
+  .hero p.lead { color:var(--ink-soft); font-size:1.02rem; max-width:60ch; }
+  .aviso { margin:26px 0 0; padding:15px 20px; background:var(--card); border:1px solid var(--line); border-left:3px solid var(--gold); border-radius:10px; font-size:0.85rem; color:var(--ink-soft); }
+  .aviso strong { color:var(--ink); }
+
+  .escala-legenda { margin:34px 0 0; padding:16px 20px; background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; font-size:0.85rem; color:var(--ink-soft); }
+  .escala-legenda strong { color:var(--ink); }
+  .escala-legenda span.par { display:inline-block; margin-right:14px; white-space:nowrap; }
+  .escala-legenda b { font-family:var(--mono); font-size:0.78rem; color:var(--green); font-weight:500; }
+
+  section.eixo { padding:40px 0 4px; }
+  .eixo-head { display:flex; align-items:baseline; gap:12px; margin-bottom:6px; }
+  .eixo-num { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.14em; color:var(--gold-text); }
+  h2 { font-family:var(--serif); font-weight:500; font-size:clamp(1.3rem,3vw,1.6rem); }
+  .eixo-sub { color:var(--ink-soft); font-size:0.9rem; margin-bottom:20px; max-width:62ch; }
+
+  .q { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px 16px; margin-bottom:14px; }
+  .q.sem-resposta { border-color:var(--red); }
+  .q-top { display:flex; gap:10px; align-items:flex-start; margin-bottom:12px; }
+  .q-num { flex:none; font-family:var(--mono); font-size:0.66rem; letter-spacing:0.08em; color:var(--line-strong); padding-top:5px; }
+  .q-texto { font-size:0.95rem; font-weight:500; line-height:1.55; }
+  .q-tag-ia { display:inline-block; margin-left:8px; font-family:var(--mono); font-size:0.56rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-text); border:1px solid var(--gold); border-radius:6px; padding:2px 8px; background:var(--gold-soft); vertical-align:2px; }
+  .opcoes { display:flex; gap:8px; }
+  .opcoes label { flex:1; cursor:pointer; }
+  .opcoes input { position:absolute; opacity:0; pointer-events:none; }
+  .opcoes .pill { display:flex; align-items:center; justify-content:center; height:44px; border:1px solid var(--line-strong); border-radius:10px; font-family:var(--mono); font-size:0.9rem; color:var(--ink-soft); background:var(--bg); transition:all .15s ease; user-select:none; }
+  .opcoes label:hover .pill { border-color:var(--green); color:var(--green); }
+  .opcoes input:checked + .pill { background:var(--green); border-color:var(--green); color:#fff; font-weight:500; }
+  .opcoes input:focus-visible + .pill { outline:2px solid var(--green); outline-offset:2px; }
+  .opcoes-rotulos { display:flex; justify-content:space-between; margin-top:6px; font-family:var(--mono); font-size:0.6rem; letter-spacing:0.06em; color:var(--ink-soft); }
+
+  section.abertas { padding:40px 0 4px; }
+  .aberta { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px; margin-bottom:14px; }
+  .aberta label { display:block; font-size:0.95rem; font-weight:500; margin-bottom:10px; }
+  .aberta textarea { width:100%; min-height:64px; resize:vertical; border:1px solid var(--line-strong); border-radius:10px; padding:10px 14px; font-family:var(--sans); font-size:0.92rem; color:var(--ink); background:var(--bg); }
+  .aberta textarea:focus { outline:2px solid var(--green); outline-offset:1px; border-color:var(--green); }
+  .aberta .opcional { font-family:var(--mono); font-size:0.6rem; letter-spacing:0.1em; color:var(--gold-text); margin-left:8px; }
+
+  .acao { margin:36px 0 20px; text-align:center; }
+  .progresso { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.08em; color:var(--ink-soft); margin-bottom:14px; }
+  .progresso b { color:var(--green); font-weight:500; }
+  button.btn { display:inline-flex; align-items:center; gap:9px; padding:14px 30px; border-radius:10px; font-weight:600; font-size:0.95rem; font-family:var(--sans); border:none; cursor:pointer; background:var(--green); color:#fff; transition:filter .15s ease; }
+  button.btn:hover { filter:brightness(1.08); }
+  button.btn.sec { background:var(--bg); color:var(--ink); border:1px solid var(--line-strong); font-weight:500; }
+  button.btn.sec:hover { border-color:var(--green); color:var(--green); filter:none; }
+  .erro-msg { display:none; margin-top:14px; font-size:0.85rem; color:var(--red); }
+  .erro-msg.on { display:block; }
+
+  /* ---- Relatório ---- */
+  #relatorio { display:none; padding:20px 0 30px; }
+  #relatorio.on { display:block; }
+  .rel-head { margin:20px 0 26px; padding-top:34px; border-top:2px solid var(--line-strong); }
+  .rel-bloco { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:24px 26px; margin-bottom:18px; }
+  .rel-bloco h3 { font-family:var(--serif); font-weight:500; font-size:1.15rem; margin-bottom:6px; }
+  .rel-bloco .rel-sub { color:var(--ink-soft); font-size:0.85rem; margin-bottom:18px; }
+  .rel-tag { font-family:var(--mono); font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--green); display:block; margin-bottom:6px; }
+
+  .radar-grid { display:grid; gap:22px; align-items:center; }
+  @media (min-width:680px){ .radar-grid { grid-template-columns:300px 1fr; } }
+  .radar-box svg { display:block; width:100%; max-width:300px; height:auto; margin:0 auto; }
+  .barras { display:grid; gap:12px; }
+  .barra-linha { display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center; }
+  .barra-nome { font-size:0.85rem; font-weight:500; }
+  .barra-nome small { display:block; font-family:var(--mono); font-size:0.6rem; letter-spacing:0.08em; color:var(--ink-soft); font-weight:400; }
+  .barra-trilho { grid-column:1 / -1; height:10px; border-radius:5px; background:var(--bg-soft); overflow:hidden; }
+  .barra-fill { height:100%; border-radius:5px; background:var(--green); }
+  .barra-fill.nivel-critico { background:var(--red); }
+  .barra-fill.nivel-atencao { background:var(--gold); }
+  .barra-pct { font-family:var(--mono); font-size:0.85rem; color:var(--ink); }
+
+  .vuln { display:flex; gap:14px; padding:14px 0; border-top:1px solid var(--line); }
+  .vuln:first-of-type { border-top:none; padding-top:0; }
+  .vuln-rank { flex:none; width:34px; height:34px; border-radius:9px; background:var(--red-soft); border:1px solid rgba(163,64,31,0.3); display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:0.85rem; color:var(--red); }
+  .vuln h4 { font-size:0.93rem; font-weight:600; margin-bottom:2px; }
+  .vuln .vuln-eixo { font-family:var(--mono); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-text); }
+  .vuln p { color:var(--ink-soft); font-size:0.86rem; margin-top:4px; }
+
+  .trilha-item { display:flex; gap:14px; padding:16px 0; border-top:1px solid var(--line); }
+  .trilha-item:first-of-type { border-top:none; padding-top:0; }
+  .trilha-ord { flex:none; width:34px; height:34px; border-radius:9px; background:var(--green-soft); border:1px solid rgba(29,122,85,0.3); display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:0.85rem; color:var(--green); }
+  .trilha-item h4 { font-size:0.95rem; font-weight:600; }
+  .trilha-item .porque { font-size:0.84rem; color:var(--gold-text); margin:2px 0 6px; }
+  .trilha-item ul { list-style:none; display:grid; gap:4px; }
+  .trilha-item li { font-size:0.86rem; color:var(--ink-soft); padding-left:20px; position:relative; }
+  .trilha-item li::before { content:'—'; position:absolute; left:0; color:var(--green); }
+
+  .ia-rec { display:flex; gap:14px; padding:16px 0; border-top:1px solid var(--line); }
+  .ia-rec:first-of-type { border-top:none; padding-top:0; }
+  .ia-ico { flex:none; width:34px; height:34px; border-radius:9px; background:var(--gold-soft); border:1px solid rgba(160,125,28,0.4); display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:0.72rem; color:var(--gold-text); }
+  .ia-rec h4 { font-size:0.95rem; font-weight:600; margin-bottom:2px; }
+  .ia-rec .ia-eixo { font-family:var(--mono); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-text); }
+  .ia-rec p { color:var(--ink-soft); font-size:0.86rem; margin-top:4px; }
+
+  .rel-acoes { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin:26px 0 10px; }
+  .copiado-ok { display:none; font-family:var(--mono); font-size:0.72rem; letter-spacing:0.08em; color:var(--green); text-align:center; margin-top:8px; }
+  .copiado-ok.on { display:block; }
+
+  footer { border-top:1px solid var(--line); margin-top:50px; padding:28px 22px 44px; text-align:center; color:var(--ink-soft); font-size:0.7rem; font-family:var(--mono); letter-spacing:0.08em; }
+  footer a { color:var(--ink-soft); }
+  footer a:hover { color:var(--green); }
+
+  @media (prefers-reduced-motion:no-preference){
+    .fade { animation:f .6s ease both; }
+    @keyframes f { from { opacity:0; transform:translateY(8px); } to { opacity:1; } }
+  }
+  @media print {
+    header.nav, .acao, .rel-acoes, form { display:none !important; }
+    #relatorio { display:block !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">Clinic Now <small>DIAGNÓSTICO DO NEGÓCIO · V1</small></div>
+    <a class="back" href="./">← CLINIC NOW</a>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <div class="hero fade">
+    <span class="kicker">◆ Diagnóstico · 5 eixos · ~10 minutos</span>
+    <h1>Onde o seu negócio de saúde <em>trava</em> — e o que aprender primeiro.</h1>
+    <p class="lead">25 perguntas rápidas sobre marketing, gestão, vendas, serviço e comunicação. Ao final, você recebe na própria tela: a pontuação por eixo, os 3 pontos mais vulneráveis, uma trilha do que estudar primeiro e onde a IA ajudaria de forma estratégica.</p>
+    <div class="aviso"><strong>Privacidade:</strong> nada é enviado a servidor nenhum. As respostas ficam só nesta página, no seu aparelho. O relatório é gerado aqui e você decide se copia e compartilha (por exemplo, colando no WhatsApp).</div>
+    <div class="escala-legenda">
+      <strong>Como responder:</strong> avalie cada afirmação de 1 a 5, pensando em como o negócio funciona <em>hoje</em> — não em como deveria ser.<br>
+      <span class="par"><b>1</b> não acontece</span>
+      <span class="par"><b>2</b> raramente</span>
+      <span class="par"><b>3</b> às vezes</span>
+      <span class="par"><b>4</b> quase sempre</span>
+      <span class="par"><b>5</b> acontece de forma consistente</span>
+    </div>
+  </div>
+
+  <form id="form-diag" novalidate>
+    <div id="eixos"></div>
+
+    <section class="abertas fade" aria-labelledby="t-abertas">
+      <div class="eixo-head">
+        <span class="eixo-num">PARTE FINAL</span>
+        <h2 id="t-abertas">Na sua palavra</h2>
+      </div>
+      <p class="eixo-sub">Três respostas curtas — entram no relatório do seu jeito, sem nota.</p>
+      <div class="aberta">
+        <label for="ab1">Em uma frase: qual é hoje a maior dor do negócio, na sua visão?<span class="opcional">OPCIONAL</span></label>
+        <textarea id="ab1" maxlength="300" placeholder="Ex.: a agenda vive com buracos e eu não sei por quê."></textarea>
+      </div>
+      <div class="aberta">
+        <label for="ab2">Se você tivesse um assistente de IA amanhã, qual tarefa entregaria primeiro para ele?<span class="opcional">OPCIONAL</span></label>
+        <textarea id="ab2" maxlength="300" placeholder="Ex.: responder o WhatsApp e marcar os horários."></textarea>
+      </div>
+      <div class="aberta">
+        <label for="ab3">Que resultado, daqui a 90 dias, faria você dizer &ldquo;valeu a pena&rdquo;?<span class="opcional">OPCIONAL</span></label>
+        <textarea id="ab3" maxlength="300" placeholder="Ex.: agenda cheia com 2 semanas de antecedência."></textarea>
+      </div>
+    </section>
+
+    <div class="acao">
+      <p class="progresso"><b id="prog-n">0</b> de 25 perguntas respondidas</p>
+      <button type="submit" class="btn">Gerar meu relatório</button>
+      <p class="erro-msg" id="erro-msg">Faltam perguntas: as que estão sem resposta ficaram marcadas em vermelho acima.</p>
+    </div>
+  </form>
+
+  <!-- ============ RELATÓRIO ============ -->
+  <div id="relatorio" aria-live="polite">
+    <div class="rel-head">
+      <span class="kicker">◆ Relatório gerado nesta página · nada foi enviado</span>
+      <h2 style="font-family:var(--serif);font-weight:500;font-size:clamp(1.5rem,3.5vw,2rem);">Diagnóstico do seu negócio</h2>
+      <p style="color:var(--ink-soft);font-size:0.9rem;margin-top:6px;" id="rel-data"></p>
+    </div>
+
+    <div class="rel-bloco">
+      <span class="rel-tag">PONTUAÇÃO POR EIXO</span>
+      <h3 id="rel-resumo-titulo"></h3>
+      <p class="rel-sub" id="rel-resumo-sub"></p>
+      <div class="radar-grid">
+        <div class="radar-box" id="radar-box"></div>
+        <div class="barras" id="barras"></div>
+      </div>
+    </div>
+
+    <div class="rel-bloco">
+      <span class="rel-tag">3 MAIORES PONTOS DE VULNERABILIDADE</span>
+      <h3>Onde o negócio está mais exposto hoje</h3>
+      <p class="rel-sub">As três respostas mais baixas do questionário — e o risco concreto que cada uma representa.</p>
+      <div id="vulns"></div>
+    </div>
+
+    <div class="rel-bloco">
+      <span class="rel-tag">TRILHA DE APRENDIZADO PRIORIZADA</span>
+      <h3>O que estudar primeiro — e por quê</h3>
+      <p class="rel-sub">Ordenada pelos eixos mais fracos: dominar o item 1 destrava os seguintes.</p>
+      <div id="trilha"></div>
+    </div>
+
+    <div class="rel-bloco">
+      <span class="rel-tag">ONDE IMPLEMENTAR IA ESTRATEGICAMENTE</span>
+      <h3>3 recomendações calibradas pelas suas respostas</h3>
+      <p class="rel-sub">Priorizamos os pontos onde a IA resolve um eixo fraco com pouco uso atual de tecnologia — maior retorno pelo menor esforço.</p>
+      <div id="ia-recs"></div>
+    </div>
+
+    <div class="rel-acoes">
+      <button type="button" class="btn" id="btn-copiar">Copiar relatório (para WhatsApp)</button>
+      <button type="button" class="btn sec" id="btn-refazer">Refazer diagnóstico</button>
+    </div>
+    <p class="copiado-ok" id="copiado-ok">✓ RELATÓRIO COPIADO — É SÓ COLAR NO WHATSAPP</p>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  Clinic Now · Diagnóstico v1<br><br>
+  <a href="./">Clinic Now</a> · <a href="../">Ecossistema Zatheon</a> · Nenhuma resposta sai desta página.
+</footer>
+
+<script>
+'use strict';
+
+/* ============ DADOS ============ */
+const EIXOS = [
+  {
+    id:'mkt', nome:'Marketing / Captação', curto:'Marketing',
+    sub:'Como novos clientes descobrem e chegam até o negócio.',
+    perguntas:[
+      { t:'Sei dizer de onde veio cada novo cliente (indicação, redes sociais, busca no Google, fachada).',
+        vuln:'Sem saber a origem dos clientes, todo investimento em divulgação é aposta às cegas — não dá para repetir o que funciona nem cortar o que não funciona.' },
+      { t:'O negócio tem presença ativa e regular nas redes sociais ou no Google (pelo menos uma publicação ou atualização por semana).',
+        vuln:'Quem procura e não encontra presença recente assume que o negócio parou. A vitrine digital vazia entrega clientes prontos para o concorrente.' },
+      { t:'Existe um esforço planejado (tempo ou dinheiro) dedicado a atrair novos clientes, com acompanhamento do que está dando resultado.',
+        vuln:'Captação sem plano vira captação por sorte: nos meses bons ninguém sabe por quê, e nos meses ruins não há alavanca para puxar.' },
+      { t:'Novos clientes chegam todos os meses sem depender apenas de indicação espontânea.',
+        vuln:'Depender só de indicação é ter um único canal — e um canal que você não controla. Qualquer oscilação vira queda direta de faturamento.' },
+      { t:'Uso alguma ferramenta digital ou IA para ajudar na divulgação (criar posts, responder avaliações, planejar conteúdo).', ia:true,
+        vuln:'Fazer divulgação 100% manualmente limita a constância ao seu tempo livre — que é exatamente o recurso mais escasso de quem toca o negócio.' },
+    ],
+    trilha:{ titulo:'Fundamentos de captação para negócios de saúde',
+      passos:['Definir posicionamento: qual problema você resolve e para quem','Google Perfil da Empresa completo e com avaliações respondidas','Rotina mínima de conteúdo: 1 publicação útil por semana','Transformar indicação em sistema: pedir, facilitar e agradecer'] },
+    ia:{ titulo:'IA para presença digital constante',
+      desc:'Usar IA para montar o calendário mensal de publicações, escrever legendas no tom do negócio e responder avaliações. Uma hora por semana com apoio de IA sustenta a constância que hoje não existe.' },
+  },
+  {
+    id:'ges', nome:'Gestão / Processos', curto:'Gestão',
+    sub:'Como o negócio funciona por dentro: números, rotinas e dependências.',
+    perguntas:[
+      { t:'Agenda, cadastro de clientes e financeiro estão registrados em algum sistema ou planilha — não só no papel ou na memória.',
+        vuln:'O que está só na cabeça ou no caderno se perde, não gera número e faz o negócio inteiro depender da memória de uma pessoa.' },
+      { t:'Sei quanto o negócio fatura e quanto gasta por mês, com números atualizados.',
+        vuln:'Sem faturamento e custo na mão, toda decisão — contratar, investir, dar desconto — é tomada no escuro. É o risco mais silencioso de um negócio pequeno.' },
+      { t:'As rotinas principais (agendamento, atendimento, cobrança) seguem um passo a passo definido, que outra pessoa conseguiria executar.',
+        vuln:'Rotina sem passo a passo escrito não pode ser delegada nem melhorada — e quebra no primeiro imprevisto com a pessoa que a carrega.' },
+      { t:'Consigo me afastar por uma semana sem que o negócio pare ou perca qualidade.',
+        vuln:'Se o negócio para quando você para, você não tem um negócio — tem um emprego sem férias. É o teste mais honesto de gestão.' },
+      { t:'Uso automação ou IA em tarefas repetitivas do dia a dia (lembretes de horário, organização de planilhas, resumos e relatórios).', ia:true,
+        vuln:'Horas gastas em tarefa repetitiva são horas roubadas do atendimento e da estratégia — e são as primeiras que a tecnologia devolve.' },
+    ],
+    trilha:{ titulo:'Gestão por números e processos escritos',
+      passos:['Fluxo de caixa simples: entradas e saídas do mês em um só lugar','Tirar agenda e cadastro do papel: sistema ou planilha única','Escrever o passo a passo das 3 rotinas principais','Delegar a primeira rotina usando o passo a passo escrito'] },
+    ia:{ titulo:'Automação da rotina administrativa',
+      desc:'Começar por lembretes automáticos de horário (reduz faltas de imediato) e usar IA para gerar o resumo semanal do negócio: agenda, entradas, pendências. Menos planilha manual, mais visão.' },
+  },
+  {
+    id:'ven', nome:'Vendas / Conversão', curto:'Vendas',
+    sub:'O caminho entre alguém demonstrar interesse e virar cliente — e voltar.',
+    perguntas:[
+      { t:'Quem entra em contato pedindo preço ou informação recebe resposta em menos de 1 hora.',
+        vuln:'Interessado sem resposta rápida esfria em horas e agenda com quem respondeu primeiro. Tempo de resposta é o fator nº 1 de conversão que você controla.' },
+      { t:'Registro quem demonstrou interesse e não fechou, e volto a falar com essas pessoas depois (follow-up).',
+        vuln:'Sem registro e follow-up, cada "vou pensar" é um cliente perdido para sempre — sendo que boa parte fecharia com um simples segundo contato.' },
+      { t:'Sei minha taxa de conversão: de cada 10 pessoas interessadas, quantas viram clientes.',
+        vuln:'Sem taxa de conversão, não dá para saber se o problema é atrair pouca gente ou aproveitar mal quem chega — e cada problema tem um remédio diferente.' },
+      { t:'Clientes antigos são chamados de volta de forma ativa (retorno, reavaliação, reativação de quem sumiu).',
+        vuln:'O cliente mais barato de conquistar é o que você já conquistou. Sem recall ativo, a base antiga esfria e o negócio recomeça a captação do zero todo mês.' },
+      { t:'Uso alguma ferramenta ou IA para responder, agendar ou acompanhar interessados (por exemplo, WhatsApp com respostas e agendamento organizados).', ia:true,
+        vuln:'Atender o WhatsApp na mão significa perder os contatos que chegam fora do seu horário — justamente quando boa parte das pessoas pesquisa e decide.' },
+    ],
+    trilha:{ titulo:'Funil de conversão e follow-up',
+      passos:['Regra de resposta em 1 hora no horário comercial','Lista viva de interessados: quem chegou, de onde, em que ponto parou','Roteiro simples de conversa: acolher, entender, propor, agendar','Rotina semanal de follow-up e reativação de clientes sumidos'] },
+    ia:{ titulo:'Assistente de WhatsApp para resposta e agendamento',
+      desc:'Um assistente de IA no WhatsApp que responde na hora, registra cada interessado e oferece horários — o mecanismo central do Clinic Now. Nenhum contato fica sem resposta, nem fora do expediente.' },
+  },
+  {
+    id:'pro', nome:'Produto / Serviço', curto:'Serviço',
+    sub:'A qualidade e a evolução daquilo que o cliente recebe.',
+    perguntas:[
+      { t:'Peço e registro o feedback dos clientes de forma regular (não só quando alguém reclama).',
+        vuln:'Sem ouvir o cliente de forma sistemática, os problemas do serviço só aparecem quando viram cancelamento ou avaliação negativa — tarde demais.' },
+      { t:'Sei qual serviço dá mais lucro e qual dá mais trabalho, com números — não por intuição.',
+        vuln:'Sem margem por serviço, é comum dedicar mais energia justamente ao serviço que menos sustenta o negócio — esforço alto, retorno baixo.' },
+      { t:'Nos últimos 12 meses, lancei ou melhorei algum serviço com base no que os clientes pedem ou precisam.',
+        vuln:'Serviço parado envelhece: o mercado muda, o concorrente lança, e a oferta que era diferencial vira commodity disputada por preço.' },
+      { t:'A experiência é padronizada: qualquer cliente, em qualquer dia, recebe o mesmo nível de cuidado do início ao fim.',
+        vuln:'Experiência que varia conforme o dia gera avaliações imprevisíveis — e indicação só nasce de experiência consistentemente boa, não de picos.' },
+      { t:'Já uso ou testei IA para melhorar o serviço em si (apoiar protocolos, personalizar o atendimento, analisar os dados dos atendimentos).', ia:true,
+        vuln:'Os dados dos seus atendimentos guardam padrões que ninguém tem tempo de enxergar manualmente — deixá-los parados é desperdiçar seu maior ativo.' },
+    ],
+    trilha:{ titulo:'Melhoria contínua do serviço',
+      passos:['Pergunta única de satisfação após o atendimento, com registro','Calcular margem e tempo dos 3 principais serviços','Padronizar a jornada do cliente: da chegada ao pós-atendimento','Ciclo trimestral: uma melhoria concreta por trimestre, vinda do feedback'] },
+    ia:{ titulo:'IA para ouvir o cliente em escala',
+      desc:'Usar IA para resumir feedbacks, mensagens e avaliações em padrões acionáveis — o que elogiam, do que reclamam, o que pedem — e transformar isso em uma melhoria concreta por mês no serviço.' },
+  },
+  {
+    id:'com', nome:'Comunicação', curto:'Comunicação',
+    sub:'A clareza com que o negócio explica o que oferece, para quem e por quanto.',
+    perguntas:[
+      { t:'Quem chega pelo Instagram, WhatsApp ou site entende em 30 segundos o que oferecemos e para quem é.',
+        vuln:'Confusão não converte: se a pessoa precisa se esforçar para entender o que você faz, ela desiste antes de perguntar — e você nunca fica sabendo.' },
+      { t:'Preços, formas de pagamento e diferenciais são comunicados com clareza, sem o cliente precisar insistir para descobrir.',
+        vuln:'Opacidade em preço gera desconfiança e afasta quem já estava pronto para fechar — a pessoa entende o silêncio como "deve ser caro demais para mim".' },
+      { t:'Mantemos contato com a base de clientes pelo menos uma vez por mês (novidades, cuidados, datas importantes).',
+        vuln:'Base sem contato regular esquece de você no momento exato da necessidade — e ser lembrado na hora certa é o marketing mais barato que existe.' },
+      { t:'A comunicação tem identidade consistente: mesmo tom, visual e mensagem em todos os canais.',
+        vuln:'Cada canal com uma cara diferente dilui a marca: o cliente não reconhece, não memoriza e não indica com convicção.' },
+      { t:'Uso IA para escrever ou revisar mensagens, legendas e comunicações do negócio.', ia:true,
+        vuln:'Escrever tudo do zero, na correria, produz comunicação irregular — ora boa, ora apressada. É constância desperdiçada por falta de apoio.' },
+    ],
+    trilha:{ titulo:'Comunicação clara e consistente',
+      passos:['Mensagem-núcleo: o que oferecemos, para quem, por que nós','Tabela de serviços e preços apresentável, sem constrangimento','Rotina mensal de contato com a base (1 mensagem útil por mês)','Guia curto de tom e identidade para todos os canais'] },
+    ia:{ titulo:'IA como revisora e guardiã do tom',
+      desc:'Definir o tom do negócio uma única vez e usar IA para escrever e revisar toda comunicação nesse padrão: respostas a dúvidas frequentes, legendas, mensagens à base. Consistência sem esforço extra.' },
+  },
+];
+
+const NIVEIS = [
+  { min:0,  max:40,  rotulo:'crítico',  classe:'nivel-critico' },
+  { min:41, max:60,  rotulo:'atenção',  classe:'nivel-atencao' },
+  { min:61, max:80,  rotulo:'bom',      classe:'nivel-bom' },
+  { min:81, max:100, rotulo:'forte',    classe:'nivel-forte' },
+];
+const nivelDe = p => NIVEIS.find(n => p >= n.min && p <= n.max) || NIVEIS[0];
+
+/* ============ RENDER DO FORMULÁRIO ============ */
+const elEixos = document.getElementById('eixos');
+let html = '';
+EIXOS.forEach((eixo, ei) => {
+  html += `<section class="eixo fade" aria-labelledby="t-${eixo.id}">
+    <div class="eixo-head"><span class="eixo-num">EIXO ${ei+1} / 5</span><h2 id="t-${eixo.id}">${eixo.nome}</h2></div>
+    <p class="eixo-sub">${eixo.sub}</p>`;
+  eixo.perguntas.forEach((q, qi) => {
+    const name = `q-${eixo.id}-${qi}`;
+    html += `<div class="q" id="card-${name}">
+      <div class="q-top">
+        <span class="q-num">${String(ei*5+qi+1).padStart(2,'0')}</span>
+        <p class="q-texto">${q.t}${q.ia ? '<span class="q-tag-ia">TECNOLOGIA / IA</span>' : ''}</p>
+      </div>
+      <div class="opcoes" role="radiogroup" aria-label="Nota de 1 a 5">`;
+    for (let v = 1; v <= 5; v++) {
+      html += `<label><input type="radio" name="${name}" value="${v}"><span class="pill">${v}</span></label>`;
+    }
+    html += `</div>
+      <div class="opcoes-rotulos"><span>não acontece</span><span>consistente</span></div>
+    </div>`;
+  });
+  html += `</section>`;
+});
+elEixos.innerHTML = html;
+
+/* ============ PROGRESSO ============ */
+const form = document.getElementById('form-diag');
+const progN = document.getElementById('prog-n');
+function contarRespostas(){
+  let n = 0;
+  EIXOS.forEach(e => e.perguntas.forEach((q, qi) => {
+    if (form.querySelector(`input[name="q-${e.id}-${qi}"]:checked`)) n++;
+  }));
+  return n;
+}
+form.addEventListener('change', () => { progN.textContent = contarRespostas(); });
+
+/* ============ GERAÇÃO DO RELATÓRIO ============ */
+let ultimoRelatorioTexto = '';
+
+form.addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  const erroMsg = document.getElementById('erro-msg');
+  let faltando = [];
+
+  // Coleta
+  const dados = EIXOS.map(e => {
+    const notas = e.perguntas.map((q, qi) => {
+      const sel = form.querySelector(`input[name="q-${e.id}-${qi}"]:checked`);
+      const card = document.getElementById(`card-q-${e.id}-${qi}`);
+      card.classList.toggle('sem-resposta', !sel);
+      if (!sel) faltando.push(`q-${e.id}-${qi}`);
+      return sel ? parseInt(sel.value, 10) : 0;
+    });
+    const soma = notas.reduce((a,b) => a+b, 0);
+    const pct = Math.round(((soma - 5) / 20) * 100); // 5..25 -> 0..100
+    const iaIdx = e.perguntas.findIndex(q => q.ia);
+    return { eixo:e, notas, soma, pct: Math.max(0, pct), notaIA: notas[iaIdx] };
+  });
+
+  if (faltando.length){
+    erroMsg.classList.add('on');
+    document.getElementById(`card-${faltando[0]}`).scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
+  }
+  erroMsg.classList.remove('on');
+
+  const abertas = {
+    dor: document.getElementById('ab1').value.trim(),
+    tarefaIA: document.getElementById('ab2').value.trim(),
+    resultado90: document.getElementById('ab3').value.trim(),
+  };
+
+  gerarRelatorio(dados, abertas);
+});
+
+function gerarRelatorio(dados, abertas){
+  const hoje = new Date();
+  const dataFmt = hoje.toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
+  document.getElementById('rel-data').textContent = `Gerado em ${dataFmt} · 25 respostas · escala 1–5`;
+
+  /* --- Resumo geral --- */
+  const ordenado = [...dados].sort((a,b) => a.pct - b.pct);
+  const geral = Math.round(dados.reduce((a,d) => a + d.pct, 0) / dados.length);
+  const maisFraco = ordenado[0], maisForte = ordenado[ordenado.length-1];
+  document.getElementById('rel-resumo-titulo').textContent =
+    `Saúde geral do negócio: ${geral}/100 (${nivelDe(geral).rotulo})`;
+  document.getElementById('rel-resumo-sub').textContent =
+    `Eixo mais forte: ${maisForte.eixo.nome} (${maisForte.pct}). Eixo que mais pede atenção: ${maisFraco.eixo.nome} (${maisFraco.pct}). O diagnóstico abaixo parte daí.`;
+
+  /* --- Radar SVG --- */
+  const cx = 150, cy = 140, R = 100;
+  const ang = i => -Math.PI/2 + i * (2*Math.PI/5);
+  const pt = (i, r) => `${(cx + r*Math.cos(ang(i))).toFixed(1)},${(cy + r*Math.sin(ang(i))).toFixed(1)}`;
+  let svg = `<svg viewBox="-30 0 360 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Radar com a pontuação dos 5 eixos">`;
+  [0.25, 0.5, 0.75, 1].forEach(f => {
+    svg += `<polygon points="${[0,1,2,3,4].map(i => pt(i, R*f)).join(' ')}" fill="none" stroke="#e3ded2" stroke-width="1"/>`;
+  });
+  for (let i = 0; i < 5; i++) svg += `<line x1="${cx}" y1="${cy}" x2="${pt(i,R).split(',')[0]}" y2="${pt(i,R).split(',')[1]}" stroke="#e3ded2" stroke-width="1"/>`;
+  svg += `<polygon points="${dados.map((d,i) => pt(i, R * Math.max(0.04, d.pct/100))).join(' ')}" fill="rgba(29,122,85,0.18)" stroke="#1d7a55" stroke-width="2" stroke-linejoin="round"/>`;
+  dados.forEach((d,i) => {
+    const [x,y] = pt(i, R * Math.max(0.04, d.pct/100)).split(',');
+    svg += `<circle cx="${x}" cy="${y}" r="3.5" fill="#1d7a55"/>`;
+    const lx = cx + (R+24)*Math.cos(ang(i)), ly = cy + (R+24)*Math.sin(ang(i));
+    svg += `<text x="${lx.toFixed(1)}" y="${(ly+4).toFixed(1)}" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="#5b615c">${d.eixo.curto}</text>`;
+    svg += `<text x="${lx.toFixed(1)}" y="${(ly+18).toFixed(1)}" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10.5" font-weight="500" fill="#1d7a55">${d.pct}</text>`;
+  });
+  svg += `</svg>`;
+  document.getElementById('radar-box').innerHTML = svg;
+
+  /* --- Barras --- */
+  document.getElementById('barras').innerHTML = dados.map(d => {
+    const nv = nivelDe(d.pct);
+    return `<div class="barra-linha">
+      <span class="barra-nome">${d.eixo.nome}<small>${nv.rotulo.toUpperCase()} · ${d.soma}/25 PONTOS</small></span>
+      <span class="barra-pct">${d.pct}</span>
+      <span class="barra-trilho"><span class="barra-fill ${nv.classe}" style="width:${Math.max(3, d.pct)}%"></span></span>
+    </div>`;
+  }).join('');
+
+  /* --- Vulnerabilidades: 3 menores notas (desempate: eixo mais fraco primeiro) --- */
+  const todas = [];
+  dados.forEach(d => d.eixo.perguntas.forEach((q, qi) => {
+    todas.push({ q, nota: d.notas[qi], eixo: d.eixo, eixoPct: d.pct });
+  }));
+  todas.sort((a,b) => a.nota - b.nota || a.eixoPct - b.eixoPct);
+  const top3 = todas.slice(0, 3);
+  document.getElementById('vulns').innerHTML = top3.map((v,i) => `
+    <div class="vuln">
+      <span class="vuln-rank">${i+1}</span>
+      <div>
+        <span class="vuln-eixo">${v.eixo.nome} · NOTA ${v.nota}/5</span>
+        <h4>${v.q.t}</h4>
+        <p>${v.q.vuln}</p>
+      </div>
+    </div>`).join('');
+
+  /* --- Trilha de aprendizado: eixos do mais fraco ao mais forte --- */
+  document.getElementById('trilha').innerHTML = ordenado.map((d,i) => {
+    const nv = nivelDe(d.pct);
+    const porque = i === 0
+      ? `Por que primeiro: é o seu eixo mais fraco (${d.pct}/100, nível ${nv.rotulo}) — é onde cada hora de estudo rende mais.`
+      : (i === 1
+        ? `Por que em seguida: segundo eixo mais frágil (${d.pct}/100) — consolida o avanço do item 1.`
+        : `Pontuação: ${d.pct}/100 (${nv.rotulo}) — manter em observação e evoluir no ritmo.`);
+    return `<div class="trilha-item">
+      <span class="trilha-ord">${i+1}</span>
+      <div>
+        <h4>${d.eixo.trilha.titulo}</h4>
+        <p class="porque">${porque}</p>
+        <ul>${d.eixo.trilha.passos.map(p => `<li>${p}</li>`).join('')}</ul>
+      </div>
+    </div>`;
+  }).join('');
+
+  /* --- IA: prioridade = eixo fraco + baixa adoção atual de tecnologia --- */
+  const iaOrden = [...dados]
+    .map(d => ({ ...d, prioIA: (5 - d.notaIA) * 10 + (100 - d.pct) }))
+    .sort((a,b) => b.prioIA - a.prioIA)
+    .slice(0, 3);
+  document.getElementById('ia-recs').innerHTML = iaOrden.map((d,i) => `
+    <div class="ia-rec">
+      <span class="ia-ico">IA</span>
+      <div>
+        <span class="ia-eixo">${d.eixo.nome} · USO ATUAL DE TECNOLOGIA: ${d.notaIA}/5</span>
+        <h4>${i+1}. ${d.eixo.ia.titulo}</h4>
+        <p>${d.eixo.ia.desc}</p>
+      </div>
+    </div>`).join('');
+
+  /* --- Texto para WhatsApp --- */
+  const L = [];
+  L.push('*Clinic Now — Diagnóstico do negócio (v1)*');
+  L.push(`Gerado em ${hoje.toLocaleDateString('pt-BR')}`);
+  L.push('');
+  L.push(`*Saúde geral: ${geral}/100* (${nivelDe(geral).rotulo})`);
+  L.push('');
+  L.push('*Pontuação por eixo (0–100):*');
+  dados.forEach(d => L.push(`• ${d.eixo.nome}: ${d.pct} (${nivelDe(d.pct).rotulo})`));
+  L.push('');
+  L.push('*3 maiores vulnerabilidades:*');
+  top3.forEach((v,i) => L.push(`${i+1}. [${v.eixo.curto} · nota ${v.nota}/5] ${v.q.t}`));
+  L.push('');
+  L.push('*Trilha de aprendizado (nesta ordem):*');
+  ordenado.forEach((d,i) => L.push(`${i+1}. ${d.eixo.trilha.titulo} — eixo em ${d.pct}/100`));
+  L.push('');
+  L.push('*Onde implementar IA primeiro:*');
+  iaOrden.forEach((d,i) => L.push(`${i+1}. ${d.eixo.ia.titulo} (${d.eixo.curto})`));
+  if (abertas.dor || abertas.tarefaIA || abertas.resultado90) {
+    L.push('');
+    L.push('*Nas palavras de quem respondeu:*');
+    if (abertas.dor) L.push(`• Maior dor hoje: ${abertas.dor}`);
+    if (abertas.tarefaIA) L.push(`• Primeira tarefa para uma IA: ${abertas.tarefaIA}`);
+    if (abertas.resultado90) L.push(`• Resultado que valeria a pena em 90 dias: ${abertas.resultado90}`);
+  }
+  L.push('');
+  L.push('_Clinic Now · Diagnóstico v1 — relatório gerado no aparelho, sem envio a servidor._');
+  ultimoRelatorioTexto = L.join('\n');
+
+  /* --- Mostrar --- */
+  const rel = document.getElementById('relatorio');
+  rel.classList.add('on');
+  rel.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+/* ============ AÇÕES DO RELATÓRIO ============ */
+document.getElementById('btn-copiar').addEventListener('click', async () => {
+  const ok = document.getElementById('copiado-ok');
+  try {
+    await navigator.clipboard.writeText(ultimoRelatorioTexto);
+  } catch (e) {
+    const ta = document.createElement('textarea');
+    ta.value = ultimoRelatorioTexto;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+  }
+  ok.classList.add('on');
+  setTimeout(() => ok.classList.remove('on'), 4000);
+});
+
+document.getElementById('btn-refazer').addEventListener('click', () => {
+  if (!confirm('Limpar todas as respostas e recomeçar?')) return;
+  form.reset();
+  document.querySelectorAll('.q.sem-resposta').forEach(el => el.classList.remove('sem-resposta'));
+  document.getElementById('relatorio').classList.remove('on');
+  progN.textContent = '0';
+  window.scrollTo({ top:0, behavior:'smooth' });
+});
+</script>
+
+</body>
+</html>
