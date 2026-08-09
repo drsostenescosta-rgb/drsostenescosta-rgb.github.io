@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sóstenes Costa Paiva — Zatheon · healthcare + IA</title>
-<meta name="description" content="Zatheon é o ecossistema de healthcare + IA construído em público por Sóstenes Costa Paiva: ClinicNow, ClinicNow Cabin, Emily, CareLoop, MedVerse e Genecys — teses em validação, com selos de status honestos — e o blog do fundador." />
-<meta property="og:title" content="Sóstenes Costa Paiva — Zatheon · healthcare + IA" />
-<meta property="og:description" content="Um ecossistema de healthcare + inteligência artificial, construído em público: ClinicNow, Emily, CareLoop, MedVerse, Genecys e a história do fundador — com honestidade sobre o estágio de cada projeto." />
+<title>Sóstenes Costa Paiva — ClinicNow · Zatheon</title>
+<meta name="description" content="ClinicNow: a clínica que não depende de indicação. Funil, CRM, agenda e a Emily respondendo e agendando pelo WhatsApp — em estruturação, com o primeiro caso de uso em teste com clínica parceira. Construído em público por Sóstenes Costa Paiva (Zatheon)." />
+<meta property="og:title" content="ClinicNow — a clínica que não depende de indicação · Sóstenes Costa Paiva" />
+<meta property="og:description" content="Funil, CRM, agenda e a Emily no WhatsApp, num só motor para clínicas de estética. Em estruturação, buscando clínicas parceiras como design partners — construído em público por Sóstenes Costa Paiva (Zatheon)." />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="https://drsostenescosta-rgb.github.io/assets/sostenes-brooklyn-portrait.jpeg" />
 <meta property="og:url" content="https://drsostenescosta-rgb.github.io/" />
@@ -137,8 +137,7 @@
   .agora .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
 
-  /* Cards de projetos */
-  .grid-proj { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); grid-auto-rows: 1fr; gap: 16px; margin-top: 22px; }
+  /* Card do produto */
   .card {
     background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px;
     display: flex; flex-direction: column; gap: 12px;
@@ -164,6 +163,22 @@
     align-self: flex-start; border-bottom-width: 1px;
   }
   .card .card-link:hover { border-color: var(--accent); }
+  .card-produto { padding: 26px 28px; margin-top: 22px; gap: 14px; }
+  .card-produto .card-logo { width: 54px; height: 54px; }
+  .card-produto p { flex: none; max-width: 660px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--bg-soft); color: var(--ink); white-space: nowrap;
+  }
+  .chip-prox { background: #f4ecdc; color: var(--gold); border-color: transparent; }
+  .links-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+  .eco-nota {
+    margin-top: 26px; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-soft);
+  }
+  .linha-teses { margin-top: 18px; font-size: 0.85rem; color: var(--ink-soft); }
 
   /* Faixa Emily — a agente que atravessa o ecossistema */
   .card-emily {
@@ -188,15 +203,6 @@
     font-size: 0.85rem; color: var(--ink-soft);
   }
   .disclaimer strong { color: var(--ink); }
-  .mapa-links { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 22px; font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.08em; }
-  .mapa-links a { border-bottom: none; }
-  /* Portfólio fora do ecossistema */
-  .portfolio { margin-top: 36px; }
-  .grid-port { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 12px; }
-  .card-sec { padding: 16px 18px; gap: 8px; }
-  .card-sec h3 { font-size: 1rem; font-weight: 600; display: inline-block; margin-right: 8px; }
-  .card-sec p { font-size: 0.88rem; }
-  .bastidores { margin-top: 14px; font-size: 0.82rem; color: var(--ink-soft); }
 
   /* Fundador */
   .fundador-grid { display: grid; grid-template-columns: 260px 1fr; gap: 36px; align-items: start; margin-top: 8px; }
@@ -258,8 +264,8 @@
   <div class="nav-inner">
     <a class="nav-name" href="#">Sóstenes Costa Paiva</a>
     <nav class="nav-links" aria-label="Navegação principal">
-      <a href="#projetos"><span class="pt">Projetos</span><span class="en">Projects</span></a>
-      <a href="#fundador"><span class="pt">Fundador</span><span class="en">Founder</span></a>
+      <a href="#projetos">ClinicNow</a>
+      <a href="fundador/"><span class="pt">Fundador</span><span class="en">Founder</span></a>
       <a href="#blog">Blog</a>
       <a href="avaliacoes/"><span class="pt">Avaliações</span><span class="en">Reviews</span></a>
       <a href="#contato"><span class="pt">Contato</span><span class="en">Contact</span></a>
@@ -280,150 +286,77 @@
 <section class="hero-z">
 <div class="orbit" aria-hidden="true"><div class="orbit-foto orbit-marca"><svg viewBox="0 0 64 64" role="img" aria-label="Zatheon"><path fill="currentColor" fill-rule="evenodd" d="M18 4h28c7.732 0 14 6.268 14 14v40H46v-8H18v8H4V18C4 10.268 10.268 4 18 4Zm-2 13h32v7L29 41h19v7H16v-7l19-17H16v-7Z"/></svg></div><div class="orbit-ring" id="orbitRing"></div></div>
   <div class="wrap-wide reveal">
-    <span class="kicker">ZATHEON · HEALTHCARE + IA</span>
+    <span class="kicker">ZATHEON · CLINICNOW</span>
     <h1>
-      <span class="pt">Zatheon — um ecossistema de <em>healthcare + inteligência artificial</em>, construído em público.</span>
-      <span class="en">Zatheon — a <em>healthcare + artificial intelligence</em> ecosystem, built in public.</span>
+      <span class="pt">A clínica que não depende de <em>indicação</em>.</span>
+      <span class="en">The clinic that doesn't depend on <em>referrals</em>.</span>
     </h1>
     <p class="missao">
-      <span class="pt">Inteligência a serviço da vida: ferramentas que ajudam quem cuida — e quem é cuidado — numa escala que o consultório sozinho nunca alcançaria.</span>
-      <span class="en">Intelligence in service of life: tools that help those who care — and those being cared for — at a scale a single practice could never reach.</span>
+      <span class="pt">Clínicas de estética perdem 2–3 dias por semana em agendamento manual. O ClinicNow devolve esse tempo: a Emily responde e agenda pelo WhatsApp — funil, CRM e agenda num só motor.</span>
+      <span class="en">Aesthetic clinics lose 2–3 days a week to manual scheduling. ClinicNow gives that time back: Emily replies and books over WhatsApp — funnel, CRM and calendar in one engine.</span>
     </p>
     <div class="agora"><span class="dot"></span>
-      <span class="pt">Agora: aprendendo e construindo no ecossistema do Vale do Silício</span>
-      <span class="en">Now: learning and building in the Silicon Valley ecosystem</span>
+      <span class="pt">Em estruturação · primeiro caso de uso — agendamento por texto no WhatsApp — em teste com clínica parceira</span>
+      <span class="en">In structuring · first use case — text-based WhatsApp scheduling — being tested with a partner clinic</span>
     </div>
-    <p class="sub pt">Nada aqui é promessa de produto pronto. São projetos e teses em validação, com selos de status honestos — a evidência vem antes da escala, e os erros ficam visíveis junto com os acertos.</p>
-    <p class="sub en">Nothing here is a finished-product promise. These are projects and theses under validation, with honest status badges — evidence comes before scale, and mistakes stay visible next to the wins.</p>
+    <p class="sub pt">Buscamos clínicas de estética como design partners: quem entra agora ajuda a moldar o produto. Nada aqui é promessa de produto pronto — o estágio real está sempre à vista.</p>
+    <p class="sub en">We're looking for aesthetic clinics as design partners: those who join now help shape the product. Nothing here is a finished-product promise — the real stage is always in view.</p>
     <div class="cta-row">
-      <a class="btn btn-solid" href="#projetos"><span class="pt">Ver os projetos</span><span class="en">See the projects</span></a>
-      <a class="btn btn-line" href="projetos/ecossistema.html"><span class="pt">Como tudo se conecta</span><span class="en">How it all connects</span></a>
+      <a class="btn btn-solid" href="https://wa.me/5584999869468" target="_blank" rel="noopener"><span class="pt">Quero ser clínica parceira</span><span class="en">I want to be a partner clinic</span></a>
+      <a class="btn btn-line" href="clinicnow/"><span class="pt">Ver o produto</span><span class="en">See the product</span></a>
     </div>
+    <p class="eco-nota">
+      <span class="pt">Ecossistema Zatheon em construção — foco atual: ClinicNow.</span>
+      <span class="en">Zatheon ecosystem under construction — current focus: ClinicNow.</span>
+    </p>
   </div>
 </section>
 
-<!-- PROJETOS -->
+<!-- CLINICNOW -->
 <section id="projetos">
   <div class="wrap-wide reveal">
-    <span class="kicker pt">O ECOSSISTEMA</span>
-    <span class="kicker en">THE ECOSYSTEM</span>
+    <span class="kicker pt">O PRODUTO</span>
+    <span class="kicker en">THE PRODUCT</span>
     <h2>
-      <span class="pt">Cinco frentes de saúde, um organismo só — e uma agente que atravessa tudo.</span>
-      <span class="en">Five health fronts, one organism — and one agent running through it all.</span>
+      <span class="pt">ClinicNow — um motor só: funil, agenda, CRM e a Emily.</span>
+      <span class="en">ClinicNow — one engine: funnel, calendar, CRM and Emily.</span>
     </h2>
     <p style="color:var(--ink-soft); max-width:660px;">
-      <span class="pt">O ClinicNow é o centro operacional; os demais existem para alimentá-lo e ser alimentados por ele — quem vende preenche o CRM, quem fideliza gera dados, quem forma médicos os traz para dentro, quem dá acesso gera demanda.</span>
-      <span class="en">ClinicNow is the operational center; the others exist to feed it and be fed by it — selling fills the CRM, loyalty generates data, education brings doctors in, access creates demand.</span>
+      <span class="pt">Cada lead vira consulta, cada consulta vira dado, cada dado vira crescimento — sem depender de indicação e sem perder dias na agenda manual.</span>
+      <span class="en">Every lead becomes a visit, every visit becomes data, every data point becomes growth — without depending on referrals or losing days to manual scheduling.</span>
     </p>
 
-    <div class="grid-proj">
-      <!-- ClinicNow -->
-      <article class="card">
-        <div class="card-top">
-          <span class="card-logo" aria-hidden="true">
-            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <rect width="48" height="48" rx="12" fill="#1d7a55"/>
-              <path d="M8 34 L15 34 L19 26 L24 37 L28 18 L32 24 L40 11" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M34 11 H40 V17" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </span>
-          <div>
-            <h3>ClinicNow</h3>
-            <span class="badge b-produto"><span class="pt">EM ESTRUTURAÇÃO</span><span class="en">IN STRUCTURING</span></span>
-          </div>
+    <!-- Card do produto -->
+    <article class="card card-produto">
+      <div class="card-top">
+        <span class="card-logo" aria-hidden="true">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="12" fill="#1d7a55"/>
+            <path d="M8 34 L15 34 L19 26 L24 37 L28 18 L32 24 L40 11" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M34 11 H40 V17" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <div>
+          <h3>ClinicNow</h3>
+          <span class="badge b-produto"><span class="pt">EM ESTRUTURAÇÃO</span><span class="en">IN STRUCTURING</span></span>
         </div>
-        <p class="pt">A clínica que não depende de indicação. Funil, IA de atendimento e CRM num só motor — cada lead vira consulta, cada consulta vira dado, cada dado vira crescimento. Inclui o Radar Criativo: benchmark do que roda melhor no marketing médico.</p>
-        <p class="en">The clinic that doesn't depend on referrals. Funnel, front-desk AI and CRM in one engine — every lead becomes a visit, every visit becomes data, every data point becomes growth. Includes Radar Criativo: a benchmark of what performs best in medical marketing.</p>
-        <a class="card-link" href="clinicnow/"><span class="pt">PÁGINA DO PROJETO →</span><span class="en">PROJECT PAGE →</span></a>
-      </article>
+      </div>
+      <p class="pt">O primeiro caso de uso — agendamento por texto no WhatsApp — está em teste com clínica parceira. Os demais módulos evoluem em protótipos navegáveis, sempre com dados sintéticos: nenhum dado real de paciente.</p>
+      <p class="en">The first use case — text-based WhatsApp scheduling — is being tested with a partner clinic. The other modules evolve as navigable prototypes, always with synthetic data: no real patient data.</p>
+      <div class="chips">
+        <span class="chip"><span class="pt">Funil + CRM</span><span class="en">Funnel + CRM</span></span>
+        <span class="chip"><span class="pt">Agenda</span><span class="en">Calendar</span></span>
+        <span class="chip"><span class="pt">Emily — WhatsApp e voz</span><span class="en">Emily — WhatsApp &amp; voice</span></span>
+        <span class="chip">Radar Criativo</span>
+        <span class="chip chip-prox"><span class="pt">Upsell em consulta · PRÓXIMO</span><span class="en">In-visit upsell · NEXT</span></span>
+      </div>
+      <div class="links-row">
+        <a class="card-link" href="clinicnow/"><span class="pt">PÁGINA DO PRODUTO →</span><span class="en">PRODUCT PAGE →</span></a>
+        <a class="card-link" href="clinicnow/#t-prototipos"><span class="pt">PROTÓTIPOS NAVEGÁVEIS →</span><span class="en">NAVIGABLE PROTOTYPES →</span></a>
+      </div>
+    </article>
 
-      <!-- ClinicNow Cabin -->
-      <article class="card">
-        <div class="card-top">
-          <span class="card-logo" aria-hidden="true">
-            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <rect width="48" height="48" rx="12" fill="#2e6e63"/>
-              <rect x="14" y="7" width="20" height="30" rx="3" fill="none" stroke="#fff" stroke-width="2.2"/>
-              <circle cx="24" cy="18" r="3.2" fill="none" stroke="#fff" stroke-width="2"/>
-              <path d="M18.5 30 c1 -4.5 10 -4.5 11 0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-              <path d="M10 41 H38" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
-            </svg>
-          </span>
-          <div>
-            <h3>ClinicNow Cabin</h3>
-            <span class="badge b-tese"><span class="pt">TESE EM VALIDAÇÃO</span><span class="en">THESIS IN VALIDATION</span></span>
-          </div>
-        </div>
-        <p class="pt">Especialista a minutos de qualquer lugar. A cabine que transforma fila de encaminhamento em próximo passo documentado — com aferição de sinais no local, do aeroporto à farmácia.</p>
-        <p class="en">A specialist minutes away from anywhere. The booth that turns referral queues into a documented next step — with on-site vital-sign readings, from the airport to the pharmacy.</p>
-        <a class="card-link" href="clinicnow/cabin.html"><span class="pt">PÁGINA DA TESE →</span><span class="en">THESIS PAGE →</span></a>
-      </article>
-
-      <!-- CareLoop -->
-      <article class="card">
-        <div class="card-top">
-          <span class="card-logo" aria-hidden="true">
-            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <rect width="48" height="48" rx="12" fill="#a07d1c"/>
-              <path d="M24 10 a14 14 0 1 1 -14 14" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
-              <path d="M4.5 28.5 L10 24 L14.5 29.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="24" cy="24" r="3" fill="#fff"/>
-            </svg>
-          </span>
-          <div>
-            <h3>CareLoop</h3>
-            <span class="badge b-ideia"><span class="pt">IDEIA MAPEADA</span><span class="en">MAPPED IDEA</span></span>
-          </div>
-        </div>
-        <p class="pt">Receita previsível para a clínica, cuidado contínuo para o paciente. O plano de assinatura próprio, com cobrança automática — o modelo que o Brasil já provou que paga.</p>
-        <p class="en">Predictable revenue for the clinic, continuous care for the patient. The clinic's own subscription plan, with automatic billing — the model Brazil has already proven it pays for.</p>
-        <a class="card-link" href="careloop/"><span class="pt">PÁGINA DO PROJETO →</span><span class="en">PROJECT PAGE →</span></a>
-      </article>
-
-      <!-- MedVerse -->
-      <article class="card">
-        <div class="card-top">
-          <span class="card-logo" aria-hidden="true">
-            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <rect width="48" height="48" rx="12" fill="#5b4a9e"/>
-              <path d="M24 15 C20 11 13 10.5 9.5 12.5 V33.5 C13 31.5 20 32 24 36" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M24 15 C28 11 35 10.5 38.5 12.5 V33.5 C35 31.5 28 32 24 36" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M24 15 V36" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </span>
-          <div>
-            <h3>MedVerse</h3>
-            <span class="badge b-ideia"><span class="pt">IDEIA MAPEADA</span><span class="en">MAPPED IDEA</span></span>
-          </div>
-        </div>
-        <p class="pt">O atlas que forma o médico do futuro: gamificação por perfil comportamental, ciência com integridade e IA aplicada à rotina — do primeiro ano à pesquisa.</p>
-        <p class="en">The atlas shaping the doctor of the future: gamification by behavioral profile, science with integrity, and AI applied to daily practice — from year one to research.</p>
-        <a class="card-link" href="medverse/"><span class="pt">PÁGINA DO PROJETO →</span><span class="en">PROJECT PAGE →</span></a>
-      </article>
-
-      <!-- Genecys -->
-      <article class="card">
-        <div class="card-top">
-          <span class="card-logo" aria-hidden="true">
-            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <rect width="48" height="48" rx="12" fill="#3d6b8e"/>
-              <path d="M9.5 22.5 L24 10 L38.5 22.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M13 24 V38 H35 V24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M24 33.5 c-3.4 -2.9 -5.1 -5 -3.6 -7.1 c1.2 -1.6 3.6 -0.9 3.6 0.9 c0 -1.8 2.4 -2.5 3.6 -0.9 c1.5 2.1 -0.2 4.2 -3.6 7.1 z" fill="#fff"/>
-            </svg>
-          </span>
-          <div>
-            <h3>Genecys</h3>
-            <span class="badge b-tese"><span class="pt">TESE EM VALIDAÇÃO</span><span class="en">THESIS IN VALIDATION</span></span>
-          </div>
-        </div>
-        <p class="pt">Envelhecer em casa, com a família vendo tudo e a medicina a um alerta de distância. Monitoramento que termina em desfecho clínico, não em notificação ignorada.</p>
-        <p class="en">Aging at home, with the family seeing everything and medicine one alert away. Monitoring that ends in a clinical outcome — not in an ignored notification.</p>
-        <a class="card-link" href="genecys/"><span class="pt">PÁGINA DO PROJETO →</span><span class="en">PROJECT PAGE →</span></a>
-      </article>
-    </div>
-
-    <!-- Emily — a agente que atravessa o ecossistema -->
+    <!-- Fale com a Emily — a voz do ClinicNow -->
     <article class="card card-emily">
       <div class="card-top">
         <span class="card-logo" aria-hidden="true">
@@ -440,66 +373,83 @@
         </div>
       </div>
       <div class="emily-body">
-        <span class="kicker pt">A AGENTE QUE ATRAVESSA O ECOSSISTEMA</span>
-        <span class="kicker en">THE AGENT RUNNING THROUGH THE ECOSYSTEM</span>
-        <p class="pt">A voz que vende pela clínica e organiza a vida do fundador — duas vertentes, um cérebro. Atende por voz e WhatsApp como a secretária do próprio médico: responde, agenda, converte, faz follow-up e alimenta o CRM do ClinicNow.</p>
-        <p class="en">The voice that sells for the clinic and runs the founder's life — two fronts, one brain. She answers by voice and WhatsApp like the doctor's own secretary: replying, scheduling, converting, following up and feeding ClinicNow's CRM.</p>
+        <span class="kicker pt">FALE COM A EMILY · A VOZ DO CLINICNOW</span>
+        <span class="kicker en">TALK TO EMILY · THE VOICE OF CLINICNOW</span>
+        <p class="pt">A Emily é a voz do ClinicNow: atende por WhatsApp e voz como a secretária da própria clínica — responde, agenda, faz follow-up e alimenta o CRM. Conheça a agente por trás do produto.</p>
+        <p class="en">Emily is the voice of ClinicNow: she answers by WhatsApp and voice like the clinic's own secretary — replying, scheduling, following up and feeding the CRM. Meet the agent behind the product.</p>
       </div>
-      <a class="card-link" href="emily/"><span class="pt">PÁGINA DO PROJETO →</span><span class="en">PROJECT PAGE →</span></a>
-    </article>
-
-    <article class="card card-emily card-elevo">
-      <div class="card-top">
-        <span class="card-logo" aria-hidden="true">
-          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-            <rect width="48" height="48" rx="12" fill="#c2703d"/>
-            <polyline points="9,36 18,27 25,31 39,15" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="18" cy="27" r="2.6" fill="#fff"/><circle cx="25" cy="31" r="2.6" fill="#fff"/>
-            <circle cx="36.5" cy="10.5" r="3.4" fill="none" stroke="#fff" stroke-width="2"/>
-          </svg>
-        </span>
-        <div>
-          <h3>Elevo</h3>
-          <span class="badge b-tese"><span class="pt">BETA FECHADO — TURMA FUNDADORA</span><span class="en">CLOSED BETA — FOUNDING COHORT</span></span>
-        </div>
-      </div>
-      <div class="emily-body">
-        <span class="kicker pt">A REDE SOCIAL DA EVOLUÇÃO PESSOAL</span>
-        <span class="kicker en">THE PERSONAL-EVOLUTION SOCIAL NETWORK</span>
-        <p class="pt">O Strava da evolução pessoal: a rede social onde a prática diária de mente, corpo e propósito vira treino registrado, comunidade e uma Bússola privada de evolução. Algoritmos que motivam sem manipular — seu estado emocional nunca vira ranking.</p>
-        <p class="en">The Strava of personal evolution: the social network where daily practice of mind, body and purpose becomes a logged workout, community and a private evolution Compass. Algorithms that motivate without manipulating — your emotional state never becomes a ranking.</p>
-      </div>
-      <a class="card-link" href="elevo/"><span class="pt">PÁGINA DO PROJETO →</span><span class="en">PROJECT PAGE →</span></a>
+      <a class="card-link" href="emily/"><span class="pt">FALE COM A EMILY →</span><span class="en">TALK TO EMILY →</span></a>
     </article>
 
     <div class="disclaimer">
       <strong class="pt">Honestidade primeiro:</strong><strong class="en">Honesty first:</strong>
-      <span class="pt"> os selos dizem o estado real de cada projeto. “Em estruturação”, “tese” e “ideia” significam exatamente isso — ainda não são produtos validados com clientes. Demos usam dados fictícios. Nenhuma ferramenta aqui substitui a decisão de um profissional de saúde licenciado.</span>
-      <span class="en"> the badges state each project's real stage. “In structuring”, “thesis” and “idea” mean exactly that — these are not yet client-validated products. Demos use fictional data. No tool here replaces the judgment of a licensed health professional.</span>
+      <span class="pt"> o selo diz o estado real. “Em estruturação” significa exatamente isso — ainda não é um produto validado com clientes. Demos e protótipos usam dados fictícios. Nenhuma ferramenta aqui substitui a decisão de um profissional de saúde licenciado.</span>
+      <span class="en"> the badge states the real stage. “In structuring” means exactly that — not yet a client-validated product. Demos and prototypes use fictional data. No tool here replaces the judgment of a licensed health professional.</span>
     </div>
 
-    <div class="mapa-links">
-      <a href="projetos/"><span class="pt">MAPA COMPLETO DE PROJETOS →</span><span class="en">FULL PROJECT MAP →</span></a>
-      <a href="projetos/ecossistema.html"><span class="pt">O ECOSSISTEMA — COMO TUDO SE CONECTA →</span><span class="en">THE ECOSYSTEM — HOW IT CONNECTS →</span></a>
-    </div>
+    <p class="linha-teses">
+      <span class="pt">As demais teses do ecossistema (ClinicNow Cabin, CareLoop, MedVerse, Genecys, Elevo) seguem documentadas no <a href="projetos/">mapa de projetos →</a></span>
+      <span class="en">The ecosystem's other theses (ClinicNow Cabin, CareLoop, MedVerse, Genecys, Elevo) remain documented in the <a href="projetos/">project map →</a></span>
+    </p>
 
-    <div class="portfolio">
-      <span class="kicker pt">FORA DO ECOSSISTEMA · PORTFÓLIO</span>
-      <span class="kicker en">BEYOND THE ECOSYSTEM · PORTFOLIO</span>
-      <div class="grid-port">
-        <article class="card card-sec">
-          <div>
-            <h3><span class="pt">Monitoramento inteligente de e-mails</span><span class="en">Intelligent e-mail monitoring</span></h3>
-            <span class="badge"><span class="pt">EM USO INTERNO</span><span class="en">INTERNAL USE</span></span>
-          </div>
-          <p class="pt">IA que lê e interpreta os e-mails recebidos e devolve um feedback completo ao cliente — o que chegou, o que importa e o que fazer. Em uso interno; produto em estruturação.</p>
-          <p class="en">AI that reads and interprets incoming e-mail and returns complete feedback to the client — what arrived, what matters and what to do next. In internal use; product being structured.</p>
-        </article>
-      </div>
-      <p class="bastidores">
-        <span class="pt">Nos bastidores: o pitch da Zatheon vive organizado num painel 3D de agentes — o Zatheon Pitch App, ferramenta interna.</span>
-        <span class="en">Behind the scenes: Zatheon's pitch lives organized in a 3D agent panel — the Zatheon Pitch App, an internal tool.</span>
-      </p>
+    <!-- Fonte das logos da órbita 3D do hero (7 itens) — não renderiza; o script clona estes SVGs -->
+    <div class="logos-fonte" hidden aria-hidden="true">
+      <span class="card-logo"><!-- ClinicNow -->
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="12" fill="#1d7a55"/>
+          <path d="M8 34 L15 34 L19 26 L24 37 L28 18 L32 24 L40 11" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M34 11 H40 V17" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="card-logo"><!-- ClinicNow Cabin -->
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="12" fill="#2e6e63"/>
+          <rect x="14" y="7" width="20" height="30" rx="3" fill="none" stroke="#fff" stroke-width="2.2"/>
+          <circle cx="24" cy="18" r="3.2" fill="none" stroke="#fff" stroke-width="2"/>
+          <path d="M18.5 30 c1 -4.5 10 -4.5 11 0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+          <path d="M10 41 H38" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="card-logo"><!-- CareLoop -->
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="12" fill="#a07d1c"/>
+          <path d="M24 10 a14 14 0 1 1 -14 14" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M4.5 28.5 L10 24 L14.5 29.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="24" cy="24" r="3" fill="#fff"/>
+        </svg>
+      </span>
+      <span class="card-logo"><!-- MedVerse -->
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="12" fill="#5b4a9e"/>
+          <path d="M24 15 C20 11 13 10.5 9.5 12.5 V33.5 C13 31.5 20 32 24 36" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M24 15 C28 11 35 10.5 38.5 12.5 V33.5 C35 31.5 28 32 24 36" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M24 15 V36" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="card-logo"><!-- Genecys -->
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="12" fill="#3d6b8e"/>
+          <path d="M9.5 22.5 L24 10 L38.5 22.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13 24 V38 H35 V24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M24 33.5 c-3.4 -2.9 -5.1 -5 -3.6 -7.1 c1.2 -1.6 3.6 -0.9 3.6 0.9 c0 -1.8 2.4 -2.5 3.6 -0.9 c1.5 2.1 -0.2 4.2 -3.6 7.1 z" fill="#fff"/>
+        </svg>
+      </span>
+      <span class="card-logo"><!-- Emily -->
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="12" fill="#b8556e"/>
+          <rect x="8" y="9" width="32" height="22" rx="8" fill="none" stroke="#fff" stroke-width="2.2"/>
+          <path d="M15 30.5 L12 39 L22 31" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M17 17v6 M24 14.5v11 M31 17v6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="card-logo"><!-- Elevo -->
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="12" fill="#c2703d"/>
+          <polyline points="9,36 18,27 25,31 39,15" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="18" cy="27" r="2.6" fill="#fff"/><circle cx="25" cy="31" r="2.6" fill="#fff"/>
+          <circle cx="36.5" cy="10.5" r="3.4" fill="none" stroke="#fff" stroke-width="2"/>
+        </svg>
+      </span>
     </div>
   </div>
 </section>
@@ -533,7 +483,7 @@
         <p class="en">And I'll be honest from the very first line: <strong>I was afraid</strong>. Some days I still am. The <a href="#blog">blog</a> below exists to tell that story as it is — doubts included.</p>
         <div class="cta-row">
           <a class="btn btn-line" href="https://www.linkedin.com/in/s%C3%B3stenes-costa-paiva-184137165/" target="_blank" rel="noopener">LinkedIn</a>
-          <a class="btn btn-line" href="#blog"><span class="pt">Ler a história completa</span><span class="en">Read the full story</span></a>
+          <a class="btn btn-line" href="fundador/"><span class="pt">Ler a história completa</span><span class="en">Read the full story</span></a>
         </div>
       </div>
     </div>
@@ -697,8 +647,8 @@
 </section>
 
 <footer>
-  <span class="pt">&copy; 2026 SÓSTENES COSTA PAIVA · ZATHEON · CONSTRUINDO EM PÚBLICO · <a href="avaliacoes/" style="color:inherit; border-bottom:1px solid currentColor">AVALIAÇÕES</a> · <a href="privacidade.html" style="color:inherit; border-bottom:1px solid currentColor">PRIVACIDADE</a> · <span style="opacity:.55;font-variant-numeric:tabular-nums">ATUALIZADO EM 06.08.2026</span></span>
-  <span class="en">&copy; 2026 SÓSTENES COSTA PAIVA · ZATHEON · BUILDING IN PUBLIC · <a href="avaliacoes/" style="color:inherit; border-bottom:1px solid currentColor">REVIEWS</a> · <a href="privacidade.html" style="color:inherit; border-bottom:1px solid currentColor">PRIVACY</a> · <span style="opacity:.55;font-variant-numeric:tabular-nums">UPDATED AUG 6, 2026</span></span>
+  <span class="pt">&copy; 2026 SÓSTENES COSTA PAIVA · ZATHEON · CONSTRUINDO EM PÚBLICO · <a href="avaliacoes/" style="color:inherit; border-bottom:1px solid currentColor">AVALIAÇÕES</a> · <a href="privacidade.html" style="color:inherit; border-bottom:1px solid currentColor">PRIVACIDADE</a> · <span style="opacity:.55;font-variant-numeric:tabular-nums">ATUALIZADO EM 07.08.2026</span></span>
+  <span class="en">&copy; 2026 SÓSTENES COSTA PAIVA · ZATHEON · BUILDING IN PUBLIC · <a href="avaliacoes/" style="color:inherit; border-bottom:1px solid currentColor">REVIEWS</a> · <a href="privacidade.html" style="color:inherit; border-bottom:1px solid currentColor">PRIVACY</a> · <span style="opacity:.55;font-variant-numeric:tabular-nums">UPDATED AUG 7, 2026</span></span>
 </footer>
 
 <script>
@@ -730,7 +680,7 @@
 (function () {
   var ring = document.getElementById('orbitRing');
   if (!ring) return;
-  var logos = document.querySelectorAll('#projetos .card-logo svg');
+  var logos = document.querySelectorAll('#projetos .logos-fonte .card-logo svg');
   if (!logos.length) return;
   logos.forEach(function (svg, i) {
     var item = document.createElement('div');
