@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!-- PASSO 1 · A primeira linha diz ao navegador: "isto é HTML moderno". -->
+<html lang="pt-BR">
+<!-- lang="pt-BR" ajuda leitores de tela e o Google a saberem o idioma. -->
+
+<head>
+  <!-- PASSO 2 · O <head> é o que o navegador precisa saber ANTES de desenhar a página. Nada daqui aparece na tela. -->
+  <meta charset="utf-8" />
+  <!-- charset: garante acentos corretos (ç, ã, é). -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- viewport: faz a página se adaptar à tela do celular. -->
+  <title>Content OS — Delegar execução, manter julgamento · Zatheon</title>
+  <!-- title: o texto da aba do navegador e do resultado no Google. -->
+  <meta name="description" content="O sistema operacional de conteúdo da jornada Zatheon: o agente executa, o fundador decide. Captura, memória, decisão e execução — com funil até o produto." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- PASSO 5 · O <style> é a "roupa" da página. Regras CSS: seletor { propriedade: valor; } -->
+  <style>
+    /* Variáveis: defina a cor uma vez, use em todo lugar. Mudou aqui, mudou tudo. */
+    :root {
+      --bg: #faf8f3;        /* fundo creme, mesmo tom do restante do site Zatheon */
+      --ink: #1f2421;       /* texto principal (quase preto) */
+      --ink-soft: #5b615c;  /* texto secundário (cinza esverdeado) */
+      --line: #e3ded2;      /* bordas suaves */
+      --green: #1d7a55;     /* verde da marca */
+      --gold: #a07d1c;      /* dourado de destaque */
+      --card: #ffffff;      /* fundo dos cartões */
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Georgia, 'Times New Roman', serif;
+      line-height: 1.7;
+      font-size: 17px;
+    }
+    /* .wrap centraliza o conteúdo e impede linhas largas demais para ler. */
+    .wrap { max-width: 860px; margin: 0 auto; padding: 0 22px; }
+
+    header { padding: 72px 0 8px; }
+    .kicker {
+      font-family: monospace; font-size: 0.72rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+    }
+    h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; margin: 14px 0 6px; }
+    h1 em { color: var(--green); font-style: italic; }
+    .lead { color: var(--ink-soft); max-width: 60ch; margin-top: 10px; }
+
+    section { padding: 44px 0 4px; }
+    h2 { font-size: 1.5rem; margin-bottom: 16px; }
+
+    /* Grade de cartões: 1 coluna no celular, 2 no computador. */
+    .grid { display: grid; gap: 16px; margin-top: 18px; }
+    @media (min-width: 700px) { .grid { grid-template-columns: 1fr 1fr; } }
+    .card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 12px; padding: 20px 22px;
+    }
+    .card h3 { font-size: 1.05rem; margin-bottom: 6px; }
+    .card p { color: var(--ink-soft); font-size: 0.92rem; }
+    .card .num {
+      font-family: monospace; font-size: 0.7rem; color: var(--gold);
+      letter-spacing: 0.12em;
+    }
+    .card.humano { border-left: 4px solid var(--gold); }
+
+    /* Tabela do funil */
+    table { width: 100%; border-collapse: collapse; margin-top: 18px; background: var(--card); }
+    th, td { border: 1px solid var(--line); padding: 12px 14px; text-align: left; font-size: 0.9rem; }
+    th { font-family: monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+    td strong { color: var(--green); }
+
+    .regra {
+      margin-top: 18px; padding: 18px 22px; background: var(--card);
+      border: 1px solid var(--line); border-left: 4px solid var(--green);
+      border-radius: 10px; font-size: 0.94rem; color: var(--ink-soft);
+    }
+    .regra strong { color: var(--ink); }
+
+    footer {
+      margin-top: 64px; padding: 26px 0 40px; border-top: 1px solid var(--line);
+      font-size: 0.8rem; color: var(--ink-soft); font-family: monospace;
+    }
+    footer a { color: var(--green); }
+  </style>
+</head>
+
+<body>
+  <!-- PASSO 3 · O <body> é tudo o que aparece na tela, de cima para baixo. -->
+
+  <header class="wrap">
+    <span class="kicker">Zatheon · Sistema interno · Ata do comitê nº 1</span>
+    <h1>Delegar execução.<br /><em>Manter julgamento.</em></h1>
+    <p class="lead">
+      O sistema operacional de conteúdo da jornada em São Francisco: o agente
+      trabalha ao redor da decisão — captura, organiza, prepara e distribui.
+      As decisões que tornam o conteúdo nosso continuam humanas.
+    </p>
+  </header>
+
+  <!-- PASSO 4a · Seção 1: as quatro camadas do sistema. -->
+  <section class="wrap">
+    <h2>As quatro camadas</h2>
+    <div class="grid">
+      <div class="card">
+        <span class="num">01 · CAPTURA</span>
+        <h3>WhatsApp é interface, não memória</h3>
+        <p>Áudio de 1 minuto, foto ou link no momento em que a ideia acontece.
+           Emily transcreve e guarda com fonte e data. Nada fica preso no chat.</p>
+      </div>
+      <div class="card">
+        <span class="num">02 · MEMÓRIA</span>
+        <h3>O repositório é a fonte da verdade</h3>
+        <p>Referências, ideias e pipeline vivem em arquivos versionados
+           (<code>ideias/</code> e <code>conteudo/</code>) — sobrevivem a
+           qualquer troca de ferramenta ou modelo.</p>
+      </div>
+      <div class="card humano">
+        <span class="num">03 · DECISÃO — PORTÃO HUMANO</span>
+        <h3>O agente pode propor. Sóstenes decide.</h3>
+        <p>Tema, ângulo, opinião, estrutura e aprovação final são do fundador.
+           A aprovação é exata: vale para aquele texto, aquele asset e aquele
+           horário. Mudou algo, volta para aprovação.</p>
+      </div>
+      <div class="card">
+        <span class="num">04 · EXECUÇÃO</span>
+        <h3>Pacotes de conteúdo, não improviso</h3>
+        <p>Depois do ângulo aprovado: roteiro, adaptação de formato
+           (vídeo ↔ artigo ↔ post) e agenda. Produção agrupada em dois dias
+           fixos por semana — sem imposto operacional diário.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PASSO 4b · Seção 2: o funil que dá intenção ao conteúdo. -->
+  <section class="wrap">
+    <h2>O funil da jornada</h2>
+    <table>
+      <tr><th>Degrau</th><th>Conteúdo</th><th>Chamada</th></tr>
+      <tr>
+        <td><strong>Topo — audiência</strong></td>
+        <td>A jornada em São Francisco: bastidores, aprendizados de IA aplicada
+            à saúde, erros e custos reais.</td>
+        <td>Seguir a jornada</td>
+      </tr>
+      <tr>
+        <td><strong>Meio — autoridade</strong></td>
+        <td>Build in public do ClinicNow e da Emily: um insight reutilizável por
+            peça; números de processo, nunca promessa de resultado.</td>
+        <td>Conversar no WhatsApp</td>
+      </tr>
+      <tr>
+        <td><strong>Fundo — venda</strong></td>
+        <td>Diagnóstico do consultório primeiro; depois, clínicas parceiras de
+            design da Emily e o ClinicNow.</td>
+        <td>Agendar diagnóstico</td>
+      </tr>
+    </table>
+    <p class="regra">
+      <strong>Métrica-estrela:</strong> conversas qualificadas com médicos por
+      semana — não seguidores.
+    </p>
+  </section>
+
+  <!-- PASSO 4c · Seção 3: a fronteira que não se automatiza. -->
+  <section class="wrap">
+    <h2>O que nunca será automatizado</h2>
+    <p class="regra">
+      <strong>Comentários, DMs e conversas diretas.</strong> É onde a linguagem
+      real do comprador aparece, onde o ponto de vista se forma e onde nasce a
+      próxima peça. Automatizar essa camada economizaria tempo destruindo
+      exatamente o que o resto do sistema existe para proteger.
+    </p>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      Comitê gerencial — Sheldon · Emily · Sóstenes ·
+      ata em <a href="/ideias/2026-08-content-os-funil-sf.md">ideias/2026-08-content-os-funil-sf.md</a>
+      · inspirado em "Delegate execution, keep judgment" (Bernardo Precht, ago/2026)
+    </div>
+  </footer>
+</body>
+</html>
